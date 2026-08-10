@@ -1,0 +1,14 @@
+{
+  "name": "riha-legal-plugins",
+  "owner": {
+    "name": "JUDr. Vojtěch Říha, Ph.D."
+  },
+  "plugins": [
+    {
+      "name": "lhutnik",
+      "description": "Lhůtník pro českou advokátní praxi — ze záznamu z jednání založí hlídané lhůty a termíny v kalendáři; konce lhůt počítá dle § 57 o. s. ř. včetně posunu z víkendů a svátků",
+      "source": "./plugins/lhutnik",
+      "category": "legal"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "lhutnik",
+  "description": "Lhůtník pro českou advokátní praxi — ze záznamu z jednání založí hlídané lhůty a termíny v kalendáři",
+  "version": "1.0.0",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D."
+  },
+  "keywords": [
+    "lhuty",
+    "jednani",
+    "soud",
+    "advokacie",
+    "kalendar",
+    "osr"
+  ],
+  "license": "Apache-2.0",
+  "skills": "./skills"
+}
