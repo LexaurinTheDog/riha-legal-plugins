@@ -1,0 +1,16 @@
+{
+  "uuid": "c286fa94-da7c-487e-874b-e16a852a8d1d",
+  "name": "it-pravo-kyberbezpecnost",
+  "version": "1.0.0",
+  "description": "Czech IT law and cybersecurity practice skill - software development and licensing contracts, SaaS and cloud, IT outsourcing and SLA, open source, NIS2 and the new Cybersecurity Act, regulated entities and incident reporting, DORA, security breach liability, e-commerce platforms and DSA, electronic signatures and eIDAS, data localisation, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["IT právo", "software", "licence", "SaaS", "cloud", "NIS2", "kybernetická bezpečnost", "NÚKIB", "DORA", "eIDAS", "DSA", "IT law", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "it"],
+  "i18n": {
+    "cs": { "displayName": "IT právo a kyberbezpečnost ČR", "description": "Smlouvy o vývoji a licencování software, SaaS a cloud, IT outsourcing a SLA, open source, NIS2 a nový zákon o kybernetické bezpečnosti, regulované subjekty a hlášení incidentů, DORA, odpovědnost za bezpečnostní incident, platformy a DSA, elektronické podpisy a eIDAS.", "tagLabels": { "legal": "Právo", "czech": "Česko", "it": "IT" } },
+    "en": { "displayName": "Czech IT Law & Cybersecurity", "description": "Software development and licensing contracts, SaaS and cloud, IT outsourcing and SLA, open source, NIS2 and the new Cybersecurity Act, regulated entities and incident reporting, DORA, security breach liability, platforms and DSA, electronic signatures and eIDAS.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "it": "IT" } },
+    "sk": { "displayName": "IT právo a kyberbezpečnosť ČR", "description": "Zmluvy o vývoji a licencovaní softvéru, SaaS a cloud, IT outsourcing a SLA, open source, NIS2 a nový zákon o kybernetickej bezpečnosti, regulované subjekty a hlásenie incidentov, DORA, zodpovednosť za bezpečnostný incident, platformy a DSA, elektronické podpisy a eIDAS.", "tagLabels": { "legal": "Právo", "czech": "Česko", "it": "IT" } }
+  },
+  "skills": "./skills"
+}

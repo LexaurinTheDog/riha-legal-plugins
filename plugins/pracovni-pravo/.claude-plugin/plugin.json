@@ -1,0 +1,16 @@
+{
+  "uuid": "047e367f-d9f0-4c32-81a1-65598b160b72",
+  "name": "pracovni-pravo",
+  "version": "1.0.0",
+  "description": "Czech labour law practice skill - employment contracts, termination and its invalidity, working time and pay, liability, non-compete, agency work, disguised employment and labour disputes under zákoník práce, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["pracovní právo", "labour law", "zákoník práce", "výpověď", "okamžité zrušení", "neplatnost rozvázání", "odstupné", "konkurenční doložka", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "labour"],
+  "i18n": {
+    "cs": { "displayName": "Pracovní právo ČR", "description": "Pracovní poměr od vzniku po skončení - výpověď a její neplatnost, odstupné, mzda a pracovní doba, odpovědnost, konkurenční doložka, dohody, švarcsystém, spory.", "tagLabels": { "legal": "Právo", "czech": "Česko", "labour": "Pracovní právo" } },
+    "en": { "displayName": "Czech Labour Law", "description": "Employment from formation to termination - notice and its invalidity, severance, pay and working time, liability, non-compete, agreements outside employment, disguised employment, disputes.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "labour": "Labour Law" } },
+    "sk": { "displayName": "Pracovné právo ČR", "description": "Český pracovný pomer od vzniku po skončenie - výpoveď a jej neplatnosť, odstupné, mzda a pracovný čas, zodpovednosť, konkurenčná doložka, dohody, švarcsystém, spory.", "tagLabels": { "legal": "Právo", "czech": "Česko", "labour": "Pracovné právo" } }
+  },
+  "skills": "./skills"
+}

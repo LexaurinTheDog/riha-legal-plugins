@@ -1,0 +1,16 @@
+{
+  "uuid": "d0e414ae-a466-489b-86d4-f40db9319c9e",
+  "name": "dopravni-pravo-nehody",
+  "version": "1.0.0",
+  "description": "Czech traffic and road accident practice skill - accident liability and compensation, motor insurance claims, traffic offences and the points system, driving licence suspension, traffic crimes, carriers and passengers, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["dopravní nehoda", "dopravní přestupek", "bodový systém", "řidičský průkaz", "povinné ručení", "náhrada škody", "alkohol za volantem", "traffic law", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "traffic"],
+  "i18n": {
+    "cs": { "displayName": "Dopravní právo a nehody ČR", "description": "Odpovědnost a náhrada újmy z dopravní nehody, pojistné plnění z povinného ručení, dopravní přestupky a bodový systém, zadržení řidičského průkazu, trestné činy v dopravě, dopravci a cestující.", "tagLabels": { "legal": "Právo", "czech": "Česko", "traffic": "Doprava" } },
+    "en": { "displayName": "Czech Traffic Law and Accidents", "description": "Accident liability and compensation, motor insurance claims, traffic offences and the points system, licence suspension, traffic crimes, carriers and passengers.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "traffic": "Traffic" } },
+    "sk": { "displayName": "Dopravné právo a nehody ČR", "description": "Zodpovednosť a náhrada ujmy z dopravnej nehody v ČR, poistné plnenie z povinného zmluvného poistenia, dopravné priestupky a bodový systém, zadržanie vodičského preukazu, trestné činy v doprave, dopravcovia a cestujúci.", "tagLabels": { "legal": "Právo", "czech": "Česko", "traffic": "Doprava" } }
+  },
+  "skills": "./skills"
+}

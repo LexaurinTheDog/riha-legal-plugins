@@ -1,0 +1,16 @@
+{
+  "uuid": "be8eb2b6-ece2-41e2-93ea-979d18ef1484",
+  "name": "ochrana-osobnosti-gdpr",
+  "version": "1.0.0",
+  "description": "Czech personality rights, defamation, media and data protection practice skill - claims against unlawful publications, right of reply, non-material damages, GDPR rights and compliance, ÚOOÚ proceedings, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["ochrana osobnosti", "pomluva", "GDPR", "osobní údaje", "právo na odpověď", "nemajetková újma", "ÚOOÚ", "media law", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "privacy"],
+  "i18n": {
+    "cs": { "displayName": "Ochrana osobnosti a GDPR ČR", "description": "Zásahy do cti, soukromí a podoby, pomluva, právo na odpověď, omluva a peněžité zadostiučinění, práva subjektu údajů, GDPR compliance, ÚOOÚ, DSA.", "tagLabels": { "legal": "Právo", "czech": "Česko", "privacy": "Osobnost a soukromí" } },
+    "en": { "displayName": "Czech Personality Rights and GDPR", "description": "Interference with honour, privacy and likeness, defamation, right of reply, apology and monetary satisfaction, data subject rights, GDPR compliance, ÚOOÚ, DSA.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "privacy": "Personality and Privacy" } },
+    "sk": { "displayName": "Ochrana osobnosti a GDPR ČR", "description": "Zásahy do cti, súkromia a podoby, ohováranie, právo na odpoveď, ospravedlnenie a peňažné zadosťučinenie, práva dotknutej osoby, GDPR compliance, ÚOOÚ, DSA v ČR.", "tagLabels": { "legal": "Právo", "czech": "Česko", "privacy": "Osobnosť a súkromie" } }
+  },
+  "skills": "./skills"
+}

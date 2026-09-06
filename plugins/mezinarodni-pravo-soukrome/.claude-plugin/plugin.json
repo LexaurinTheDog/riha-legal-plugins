@@ -1,0 +1,16 @@
+{
+  "uuid": "e3eb486c-304d-44ba-bc8d-fc459b7b1fa8",
+  "name": "mezinarodni-pravo-soukrome",
+  "version": "1.0.0",
+  "description": "Czech cross-border private law practice skill - jurisdiction and applicable law under EU regulations and the Czech PIL Act, service and evidence abroad, recognition and enforcement of foreign judgments and arbitral awards, legalisation of documents, drafting choice-of-law and forum clauses, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["mezinárodní právo soukromé", "Brusel I bis", "Řím I", "Řím II", "ZMPS", "uznání cizího rozhodnutí", "apostila", "rozhodné právo", "volba soudu", "cross-border", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "cross-border"],
+  "i18n": {
+    "cs": { "displayName": "Mezinárodní právo soukromé ČR", "description": "Přeshraniční spory a smlouvy - pravomoc soudů a rozhodné právo podle nařízení EU a ZMPS, doručování a dokazování do ciziny, uznání a výkon cizích rozhodnutí a rozhodčích nálezů, ověřování listin, doložky o volbě práva a soudu.", "tagLabels": { "legal": "Právo", "czech": "Česko", "cross-border": "Přeshraniční věci" } },
+    "en": { "displayName": "Czech Cross-border Private Law", "description": "Cross-border disputes and contracts - jurisdiction and applicable law under EU regulations and the PIL Act, service and evidence abroad, recognition and enforcement of foreign judgments and awards, legalisation of documents, choice-of-law and forum clauses.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "cross-border": "Cross-border" } },
+    "sk": { "displayName": "Medzinárodné právo súkromné ČR", "description": "Cezhraničné spory a zmluvy z pohľadu ČR - právomoc súdov a rozhodné právo podľa nariadení EÚ a ZMPS, doručovanie a dokazovanie do cudziny, uznanie a výkon cudzích rozhodnutí a rozhodcovských nálezov, overovanie listín, doložky o voľbe práva a súdu.", "tagLabels": { "legal": "Právo", "czech": "Česko", "cross-border": "Cezhraničné veci" } }
+  },
+  "skills": "./skills"
+}

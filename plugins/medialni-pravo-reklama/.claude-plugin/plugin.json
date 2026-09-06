@@ -1,0 +1,16 @@
+{
+  "uuid": "8da7c973-2190-4dd6-b7c0-64a6dd1b5c43",
+  "name": "medialni-pravo-reklama",
+  "version": "1.0.0",
+  "description": "Czech media and advertising law practice skill - press law and right of reply, broadcasting and on-demand audiovisual services regulation, advertising regulation including pharmaceuticals, alcohol, tobacco, gambling and food, misleading and comparative advertising, unfair commercial practices and consumer protection, influencer marketing, defamation and personality rights versus freedom of expression, journalists' source protection, Digital Services Act and European Media Freedom Act, direct marketing and spam, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["mediální právo", "tiskový zákon", "právo na odpověď", "reklama", "regulace reklamy", "klamavá reklama", "srovnávací reklama", "nekalé obchodní praktiky", "influencer", "ochrana osobnosti", "difamace", "svoboda projevu", "RRTV", "DSA", "media law", "advertising", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "media"],
+  "i18n": {
+    "cs": { "displayName": "Mediální právo a reklama ČR", "description": "Tiskový zákon a právo na odpověď, regulace vysílání a audiovizuálních služeb na vyžádání, regulace reklamy včetně léčiv, alkoholu, tabáku, hazardu a potravin, klamavá a srovnávací reklama, nekalé obchodní praktiky a ochrana spotřebitele, influencer marketing, difamace a ochrana osobnosti versus svoboda projevu, ochrana zdroje novináře, DSA a EMFA, přímý marketing a spam.", "tagLabels": { "legal": "Právo", "czech": "Česko", "media": "Média a reklama" } },
+    "en": { "displayName": "Czech Media & Advertising Law", "description": "Press law and right of reply, broadcasting and on-demand audiovisual services regulation, advertising regulation including pharmaceuticals, alcohol, tobacco, gambling and food, misleading and comparative advertising, unfair commercial practices and consumer protection, influencer marketing, defamation and personality rights versus freedom of expression, journalists' source protection, Digital Services Act and European Media Freedom Act, direct marketing and spam.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "media": "Media & advertising" } },
+    "sk": { "displayName": "Mediálne právo a reklama ČR", "description": "Tlačový zákon a právo na odpoveď, regulácia vysielania a audiovizuálnych služieb na požiadanie, regulácia reklamy vrátane liečiv, alkoholu, tabaku, hazardu a potravín, klamlivá a porovnávacia reklama, nekalé obchodné praktiky a ochrana spotrebiteľa, influencer marketing, difamácia a ochrana osobnosti verzus sloboda prejavu, ochrana zdroja novinára, DSA a EMFA, priamy marketing a spam.", "tagLabels": { "legal": "Právo", "czech": "Česko", "media": "Médiá a reklama" } }
+  },
+  "skills": "./skills"
+}

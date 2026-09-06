@@ -1,0 +1,16 @@
+{
+  "uuid": "25c2ac16-603b-4cab-a2ea-a5c633334c18",
+  "name": "cizinecke-a-azylove-pravo",
+  "version": "1.0.0",
+  "description": "Czech immigration and asylum practice skill - visas, long-term and permanent residence, employee and blue cards, EU citizens and family members, expulsion and detention, international protection, temporary protection, citizenship and employment of foreigners, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["cizinecké právo", "pobyt cizinců", "zaměstnanecká karta", "trvalý pobyt", "vyhoštění", "azyl", "mezinárodní ochrana", "státní občanství", "immigration", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "immigration"],
+  "i18n": {
+    "cs": { "displayName": "Cizinecké a azylové právo ČR", "description": "Víza a pobytová oprávnění, zaměstnanecké a modré karty, občané EU a rodinní příslušníci, vyhoštění a zajištění, mezinárodní a dočasná ochrana, státní občanství, zaměstnávání cizinců.", "tagLabels": { "legal": "Právo", "czech": "Česko", "immigration": "Cizinecké právo" } },
+    "en": { "displayName": "Czech Immigration and Asylum Law", "description": "Visas and residence permits, employee and blue cards, EU citizens and family members, expulsion and detention, international and temporary protection, citizenship, employment of foreigners.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "immigration": "Immigration Law" } },
+    "sk": { "displayName": "Cudzinecké a azylové právo ČR", "description": "Víza a pobytové oprávnenia v ČR, zamestnanecké a modré karty, občania EÚ a rodinní príslušníci, vyhostenie a zaistenie, medzinárodná a dočasná ochrana, štátne občianstvo, zamestnávanie cudzincov.", "tagLabels": { "legal": "Právo", "czech": "Česko", "immigration": "Cudzinecké právo" } }
+  },
+  "skills": "./skills"
+}

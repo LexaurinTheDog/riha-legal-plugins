@@ -1,0 +1,16 @@
+{
+  "uuid": "c012ce8d-32dd-4c4e-90fc-52e2e242716e",
+  "name": "e-commerce-digitalni-sluzby",
+  "version": "1.0.0",
+  "description": "Czech e-commerce and digital-services practice skill - online shops and distance contracts, consumer information duties and the 14-day withdrawal, terms and conditions, sale of goods and digital content conformity and warranty, complaints handling and ADR, unfair commercial practices and price-reduction rules, online marketplaces and platform obligations under the DSA and P2B, cookies and direct marketing, payment services and chargebacks, product safety, accessibility, cross-border sales, jurisdiction and VAT OSS, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["e-shop", "e-commerce", "distanční smlouva", "odstoupení od smlouvy", "obchodní podmínky", "reklamace", "digitální obsah", "online tržiště", "DSA", "cookies", "spotřebitel", "platební služby", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "consumer"],
+  "i18n": {
+    "cs": { "displayName": "E-commerce a digitální služby ČR", "description": "E-shopy a distanční smlouvy, informační povinnosti a 14denní odstoupení, obchodní podmínky, shoda a záruka u zboží a digitálního obsahu, reklamace a ADR, nekalé praktiky a pravidla slev, online tržiště a povinnosti platforem dle DSA a P2B, cookies a přímý marketing, platební služby a chargeback, bezpečnost výrobků, přístupnost, přeshraniční prodej, příslušnost a DPH OSS.", "tagLabels": { "legal": "Právo", "czech": "Česko", "consumer": "Spotřebitelské právo" } },
+    "en": { "displayName": "Czech E-commerce & Digital Services", "description": "Online shops and distance contracts, consumer information duties and the 14-day withdrawal, terms and conditions, conformity and warranty for goods and digital content, complaints and ADR, unfair commercial practices and price-reduction rules, online marketplaces and platform obligations under the DSA and P2B, cookies and direct marketing, payment services and chargebacks, product safety, accessibility, cross-border sales, jurisdiction and VAT OSS.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "consumer": "Consumer law" } },
+    "sk": { "displayName": "E-commerce a digitálne služby ČR", "description": "E-shopy a dištančné zmluvy, informačné povinnosti a 14-dňové odstúpenie, obchodné podmienky, zhoda a záruka pri tovare a digitálnom obsahu, reklamácie a ADR, nekalé praktiky a pravidlá zliav, online trhoviská a povinnosti platforiem podľa DSA a P2B, cookies a priamy marketing, platobné služby a chargeback, bezpečnosť výrobkov, prístupnosť, cezhraničný predaj, príslušnosť a DPH OSS.", "tagLabels": { "legal": "Právo", "czech": "Česko", "consumer": "Spotrebiteľské právo" } }
+  },
+  "skills": "./skills"
+}

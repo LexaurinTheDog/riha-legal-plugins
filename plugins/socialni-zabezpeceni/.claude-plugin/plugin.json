@@ -1,0 +1,16 @@
+{
+  "uuid": "0c539963-11d3-42c3-bcec-838314ba51cc",
+  "name": "socialni-zabezpeceni",
+  "version": "1.0.0",
+  "description": "Czech social security law practice skill - old-age, invalidity and survivors' pensions, sickness and maternity benefits, state social support and assistance in material need, disability allowances and care allowance, social insurance contributions and penalties, appeals against ČSSZ and labour office decisions, medical assessment review, EU coordination of social security, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["důchod", "invalidní důchod", "ČSSZ", "nemocenské", "mateřská", "rodičovský příspěvek", "příspěvek na péči", "hmotná nouze", "posudkový lékař", "námitky", "koordinace EU", "social security", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "social"],
+  "i18n": {
+    "cs": { "displayName": "Sociální zabezpečení ČR", "description": "Starobní, invalidní a pozůstalostní důchody, nemocenské a mateřská, státní sociální podpora a hmotná nouze, příspěvek na péči a dávky pro OZP, pojistné a penále, námitky a žaloby proti ČSSZ a úřadu práce, přezkum posudků, koordinace sociálního zabezpečení v EU.", "tagLabels": { "legal": "Právo", "czech": "Česko", "social": "Sociální právo" } },
+    "en": { "displayName": "Czech Social Security Law", "description": "Old-age, invalidity and survivors' pensions, sickness and maternity benefits, state social support and material need, care allowance and disability benefits, contributions and penalties, appeals against ČSSZ and labour office decisions, medical assessment review, EU coordination.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "social": "Social law" } },
+    "sk": { "displayName": "Sociálne zabezpečenie ČR", "description": "Starobné, invalidné a pozostalostné dôchodky, nemocenské a materská, štátna sociálna podpora a hmotná núdza, príspevok na starostlivosť a dávky pre ZŤP, poistné a penále, námietky a žaloby proti ČSSZ a úradu práce, preskúmanie posudkov, koordinácia v EÚ.", "tagLabels": { "legal": "Právo", "czech": "Česko", "social": "Sociálne právo" } }
+  },
+  "skills": "./skills"
+}

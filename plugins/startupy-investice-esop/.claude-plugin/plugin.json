@@ -1,0 +1,16 @@
+{
+  "uuid": "a71d6b3e-afc2-4ebd-9e59-690b8733cfeb",
+  "name": "startupy-investice-esop",
+  "version": "1.0.0",
+  "description": "Czech startup and venture-financing practice skill - founding and cap table, founders' agreements and vesting, convertible loans and SAFE-type instruments, seed and VC rounds with shareholders' agreements, liquidation preference, anti-dilution and drag/tag, employee share and option plans including Czech tax deferral, IP assignment and employee works, non-compete and confidentiality, grants and R&D deductions, crowdfunding and public-offer limits, exits and founder taxation, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["startup", "investice", "venture capital", "konvertibilní zápůjčka", "SAFE", "akcionářská dohoda", "vesting", "ESOP", "zaměstnanecké akcie", "opce", "cap table", "exit", "IP assignment", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "corporate"],
+  "i18n": {
+    "cs": { "displayName": "Startupy, investice a ESOP ČR", "description": "Založení a cap table, zakladatelské dohody a vesting, konvertibilní zápůjčky a SAFE, seed a VC kola s akcionářskou dohodou, likvidační preference, anti-dilution a drag/tag, zaměstnanecké akcie a opční plány včetně českého daňového odkladu, převod IP a zaměstnanecká díla, zákaz konkurence a mlčenlivost, dotace a odpočet na výzkum, crowdfunding a limity veřejné nabídky, exit a zdanění zakladatelů.", "tagLabels": { "legal": "Právo", "czech": "Česko", "corporate": "Korporátní právo" } },
+    "en": { "displayName": "Czech Startups, Investments & ESOP", "description": "Founding and cap table, founders' agreements and vesting, convertible loans and SAFE-type instruments, seed and VC rounds with shareholders' agreements, liquidation preference, anti-dilution and drag/tag, employee share and option plans including Czech tax deferral, IP assignment and employee works, non-compete and confidentiality, grants and R&D deductions, crowdfunding and public-offer limits, exits and founder taxation.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "corporate": "Corporate law" } },
+    "sk": { "displayName": "Startupy, investície a ESOP ČR", "description": "Založenie a cap table, zakladateľské dohody a vesting, konvertibilné pôžičky a SAFE, seed a VC kolá s akcionárskou dohodou, likvidačná preferencia, anti-dilution a drag/tag, zamestnanecké akcie a opčné plány vrátane českého daňového odkladu, prevod IP a zamestnanecké diela, zákaz konkurencie a mlčanlivosť, dotácie a odpočet na výskum, crowdfunding a limity verejnej ponuky, exit a zdanenie zakladateľov.", "tagLabels": { "legal": "Právo", "czech": "Česko", "corporate": "Korporátne právo" } }
+  },
+  "skills": "./skills"
+}

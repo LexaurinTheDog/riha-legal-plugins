@@ -1,0 +1,16 @@
+{
+  "uuid": "1a5d6452-24d6-4e09-9daa-9e66935fe02a",
+  "name": "smluvni-pravo",
+  "version": "1.0.0",
+  "description": "Czech contract law practice skill - contract review and deficiency analysis, drafting and revision under the Civil Code (89/2012 Sb.), B2B/B2C/public-sector regimes, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["smlouva", "contract", "revize smlouvy", "neplatnost", "obchodní podmínky", "smluvní pokuta", "občanský zákoník", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "contracts"],
+  "i18n": {
+    "cs": { "displayName": "Smluvní právo ČR", "description": "Analýza, revize a tvorba smluv podle občanského zákoníku - vady, neplatnost, rizikové klauzule, režim B2B / spotřebitel / veřejný sektor.", "tagLabels": { "legal": "Právo", "czech": "Česko", "contracts": "Smlouvy" } },
+    "en": { "displayName": "Czech Contract Law", "description": "Contract analysis, revision and drafting under the Czech Civil Code - defects, invalidity, risk clauses, B2B / consumer / public-sector regimes.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "contracts": "Contracts" } },
+    "sk": { "displayName": "Zmluvné právo ČR", "description": "Analýza, revízia a tvorba zmlúv podľa českého občianskeho zákonníka - vady, neplatnosť, rizikové klauzuly, režim B2B / spotrebiteľ / verejný sektor.", "tagLabels": { "legal": "Právo", "czech": "Česko", "contracts": "Zmluvy" } }
+  },
+  "skills": "./skills"
+}

@@ -1,0 +1,16 @@
+{
+  "uuid": "4430e619-e56c-40c8-9837-0379e55b19cd",
+  "name": "verejne-zakazky-dotace",
+  "version": "1.0.0",
+  "description": "Czech public procurement and subsidies practice skill - procurement regimes and procedures under ZZVZ, objections and ÚOHS review, contract changes, subsidy conditions, irregularities, budget discipline breaches and audits of public bodies, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["veřejné zakázky", "ZZVZ", "ÚOHS", "námitky", "dotace", "porušení rozpočtové kázně", "odvod", "audit", "public procurement", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "procurement"],
+  "i18n": {
+    "cs": { "displayName": "Veřejné zakázky a dotace ČR", "description": "Režimy a druhy zadávacích řízení, námitky a návrh k ÚOHS, změny závazku, dotační podmínky, nesrovnalosti, porušení rozpočtové kázně a odvody, audity a kontroly veřejného sektoru.", "tagLabels": { "legal": "Právo", "czech": "Česko", "procurement": "Veřejné zakázky" } },
+    "en": { "displayName": "Czech Public Procurement and Subsidies", "description": "Procurement regimes and procedures, objections and ÚOHS review, contract modifications, subsidy conditions, irregularities, budget discipline breaches and levies, audits of public bodies.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "procurement": "Public Procurement" } },
+    "sk": { "displayName": "Verejné zákazky a dotácie ČR", "description": "Režimy a druhy zadávacích konaní v ČR, námietky a návrh na ÚOHS, zmeny záväzku, dotačné podmienky, nezrovnalosti, porušenie rozpočtovej disciplíny a odvody, audity a kontroly verejného sektora.", "tagLabels": { "legal": "Právo", "czech": "Česko", "procurement": "Verejné zákazky" } }
+  },
+  "skills": "./skills"
+}

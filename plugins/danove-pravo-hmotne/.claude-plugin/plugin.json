@@ -1,0 +1,16 @@
+{
+  "uuid": "78300aa7-a794-4000-a079-cd282d82b81f",
+  "name": "danove-pravo-hmotne",
+  "version": "1.0.0",
+  "description": "Czech substantive tax law practice skill - personal and corporate income tax, VAT including deduction, reverse charge and chain fraud, real-estate transfer and property tax, tax residence and double-tax treaties, transfer pricing, abuse of law and substance, tax aspects of transactions and restructurings, employee vs. contractor, cryptoassets and digital economy, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["daň z příjmů", "DPH", "odpočet DPH", "zneužití práva", "daňová rezidence", "smlouva o zamezení dvojího zdanění", "převodní ceny", "daň z nemovitých věcí", "švarcsystém", "tax law", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "tax"],
+  "i18n": {
+    "cs": { "displayName": "Daňové právo hmotné ČR", "description": "Daň z příjmů FO a PO, DPH včetně odpočtu, reverse charge a řetězových podvodů, daň z nemovitých věcí, daňová rezidence a smlouvy o zamezení dvojího zdanění, převodní ceny, zneužití práva, daňové aspekty transakcí a přeměn, zaměstnanec × OSVČ, kryptoaktiva.", "tagLabels": { "legal": "Právo", "czech": "Česko", "tax": "Daně" } },
+    "en": { "displayName": "Czech Substantive Tax Law", "description": "Personal and corporate income tax, VAT including deduction, reverse charge and chain fraud, property tax, tax residence and double-tax treaties, transfer pricing, abuse of law, tax aspects of transactions and restructurings, employee vs. contractor, cryptoassets.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "tax": "Tax" } },
+    "sk": { "displayName": "Daňové právo hmotné ČR", "description": "Daň z príjmov FO a PO, DPH vrátane odpočtu, reverse charge a reťazových podvodov, daň z nehnuteľností, daňová rezidencia a zmluvy o zamedzení dvojitého zdanenia, transferové oceňovanie, zneužitie práva, daňové aspekty transakcií a premien, zamestnanec × SZČO, kryptoaktíva.", "tagLabels": { "legal": "Právo", "czech": "Česko", "tax": "Dane" } }
+  },
+  "skills": "./skills"
+}

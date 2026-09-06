@@ -1,0 +1,16 @@
+{
+  "uuid": "fe09edac-afc0-400b-a58a-32098eaf5534",
+  "name": "trestni-pravo-hospodarske",
+  "version": "1.0.0",
+  "description": "Czech white-collar and economic crime practice skill - fraud, credit and subsidy fraud, embezzlement, breach of fiduciary duty, insolvency and creditor offences, tax evasion and effective repentance, corruption and public procurement crimes, money laundering, corporate criminal liability and compliance defence, asset seizure and freezing, defence strategy and cooperation with authorities, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["hospodářská kriminalita", "podvod", "dotační podvod", "zpronevěra", "porušení povinnosti při správě cizího majetku", "zkrácení daně", "úpadkové delikty", "korupce", "legalizace", "TOPO", "compliance", "zajištění majetku", "economic crime", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "criminal"],
+  "i18n": {
+    "cs": { "displayName": "Hospodářské trestní právo ČR", "description": "Podvod, úvěrový a dotační podvod, zpronevěra, porušení povinnosti při správě cizího majetku, úpadkové a věřitelské delikty, zkrácení daně a účinná lítost, korupce a zakázkové delikty, legalizace, trestní odpovědnost právnických osob a compliance obhajoba, zajištění majetku, strategie obhajoby a spolupráce s orgány.", "tagLabels": { "legal": "Právo", "czech": "Česko", "criminal": "Trestní právo" } },
+    "en": { "displayName": "Czech Economic Crime & White-Collar Defence", "description": "Fraud, credit and subsidy fraud, embezzlement, breach of fiduciary duty, insolvency and creditor offences, tax evasion and effective repentance, corruption and procurement crimes, money laundering, corporate criminal liability and compliance defence, asset seizure, defence strategy and cooperation with authorities.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "criminal": "Criminal law" } },
+    "sk": { "displayName": "Hospodárske trestné právo ČR", "description": "Podvod, úverový a dotačný podvod, sprenevera, porušenie povinnosti pri správe cudzieho majetku, úpadkové a veriteľské delikty, skrátenie dane a účinná ľútosť, korupcia a zákazkové delikty, legalizácia, trestná zodpovednosť právnických osôb a compliance obhajoba, zaistenie majetku, stratégia obhajoby a spolupráca s orgánmi.", "tagLabels": { "legal": "Právo", "czech": "Česko", "criminal": "Trestné právo" } }
+  },
+  "skills": "./skills"
+}

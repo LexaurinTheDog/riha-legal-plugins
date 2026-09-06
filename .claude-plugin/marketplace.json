@@ -9,6 +9,1806 @@
       "description": "Lhůtník pro českou advokátní praxi — ze záznamu z jednání založí hlídané lhůty a termíny v kalendáři; konce lhůt počítá dle § 57 o. s. ř. včetně posunu z víkendů a svátků",
       "source": "./plugins/lhutnik",
       "category": "legal"
+    },
+    {
+      "uuid": "8f79dc16-0c3f-4b99-906f-f921fd2df76f",
+      "name": "insolvencni-pravo",
+      "description": "Czech insolvency law practice skill - creditor claims, claim review and denial, incidental disputes, debt relief, bankruptcy, moratorium and ISIR workflow on top of the CODEXIS legal database.",
+      "source": "./plugins/insolvencni-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Insolvenční právo ČR",
+          "description": "Pracovní postupy insolvenčního řízení pro věřitele, dlužníky i správce - přihlášky, přezkum, incidenční spory, oddlužení, konkurs, moratorium.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "insolvency": "Insolvence"
+          }
+        },
+        "en": {
+          "displayName": "Czech Insolvency Law",
+          "description": "Insolvency proceedings workflows for creditors, debtors and trustees - claims, review, incidental disputes, debt relief, bankruptcy, moratorium.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "insolvency": "Insolvency"
+          }
+        },
+        "sk": {
+          "displayName": "Insolvenčné právo ČR",
+          "description": "Pracovné postupy českého insolvenčného konania pre veriteľov, dlžníkov aj správcov - prihlášky, prieskum, incidenčné spory, oddlženie, konkurz, moratórium.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "insolvency": "Insolvencia"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "6dcc0792-5e12-4f46-9e2c-a2784de34a97",
+      "name": "nemovitosti-transakce",
+      "description": "Czech real estate transactions practice skill - purchase contracts, escrow, cadastre filings, liens, pre-emption rights, co-ownership, leases and transaction taxes on top of the CODEXIS legal database.",
+      "source": "./plugins/nemovitosti-transakce",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Nemovitosti a realitní transakce ČR",
+          "description": "Převody nemovitostí od prověrky LV po vklad - kupní smlouva, úschova, zástavní a předkupní práva, spoluvlastnictví, SVJ, nájem, daně převodu.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "real-estate": "Nemovitosti"
+          }
+        },
+        "en": {
+          "displayName": "Czech Real Estate Transactions",
+          "description": "Property transfers from title check to registration - purchase contract, escrow, liens and pre-emption rights, co-ownership, HOA, leases, transaction taxes.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "real-estate": "Real Estate"
+          }
+        },
+        "sk": {
+          "displayName": "Nehnuteľnosti a realitné transakcie ČR",
+          "description": "Prevody nehnuteľností v ČR od previerky LV po vklad - kúpna zmluva, úschova, záložné a predkupné práva, spoluvlastníctvo, SVJ, nájom, dane.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "real-estate": "Nehnuteľnosti"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "1a5d6452-24d6-4e09-9daa-9e66935fe02a",
+      "name": "smluvni-pravo",
+      "description": "Czech contract law practice skill - contract review and deficiency analysis, drafting and revision under the Civil Code (89/2012 Sb.), B2B/B2C/public-sector regimes, on top of the CODEXIS legal database.",
+      "source": "./plugins/smluvni-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Smluvní právo ČR",
+          "description": "Analýza, revize a tvorba smluv podle občanského zákoníku - vady, neplatnost, rizikové klauzule, režim B2B / spotřebitel / veřejný sektor.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "contracts": "Smlouvy"
+          }
+        },
+        "en": {
+          "displayName": "Czech Contract Law",
+          "description": "Contract analysis, revision and drafting under the Czech Civil Code - defects, invalidity, risk clauses, B2B / consumer / public-sector regimes.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "contracts": "Contracts"
+          }
+        },
+        "sk": {
+          "displayName": "Zmluvné právo ČR",
+          "description": "Analýza, revízia a tvorba zmlúv podľa českého občianskeho zákonníka - vady, neplatnosť, rizikové klauzuly, režim B2B / spotrebiteľ / verejný sektor.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "contracts": "Zmluvy"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "46fe5a16-047b-4b50-9735-256a256a5531",
+      "name": "spravni-a-danove-rizeni",
+      "description": "Czech administrative and tax procedure practice skill - remedies against authorities under správní řád, daňový řád and soudní řád správní: appeals, judicial review, cassation, tax audits, penalties, deadlines, on top of the CODEXIS legal database.",
+      "source": "./plugins/spravni-a-danove-rizeni",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Správní a daňové řízení ČR",
+          "description": "Obrana proti rozhodnutím a postupům úřadů a správce daně - odvolání, přezkum, správní žaloba, kasační stížnost, daňová kontrola, sankce, prekluze, lhůty.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "administrative": "Správní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Administrative and Tax Procedure",
+          "description": "Challenging decisions and conduct of authorities and tax administrators - appeals, review, judicial review action, cassation, tax audits, penalties, time bars, deadlines.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "administrative": "Administrative Law"
+          }
+        },
+        "sk": {
+          "displayName": "Správne a daňové konanie ČR",
+          "description": "Obrana proti rozhodnutiam a postupom úradov a správcu dane v ČR - odvolanie, preskúmanie, správna žaloba, kasačná sťažnosť, daňová kontrola, sankcie, preklúzia, lehoty.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "administrative": "Správne právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "d1587978-cd5a-46fe-bd7c-74f427cacb3c",
+      "name": "trestni-obhajoba",
+      "description": "Czech criminal procedure practice skill - defence counsel and victim representation across all stages, custody, asset seizure, remedies and deadlines under trestní řád and trestní zákoník, on top of the CODEXIS legal database.",
+      "source": "./plugins/trestni-obhajoba",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Trestní právo a obhajoba ČR",
+          "description": "Obhajoba a zastupování poškozeného ve všech fázích trestního řízení - lhůty, vazba, zajištění majetku, odklony, opravné prostředky, trestní odpovědnost právnických osob.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "criminal": "Trestní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Criminal Law and Defence",
+          "description": "Defence and victim representation at every stage of Czech criminal proceedings - deadlines, custody, asset seizure, diversions, remedies, corporate criminal liability.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "criminal": "Criminal Law"
+          }
+        },
+        "sk": {
+          "displayName": "Trestné právo a obhajoba ČR",
+          "description": "Obhajoba a zastupovanie poškodeného vo všetkých fázach českého trestného konania - lehoty, väzba, zaistenie majetku, odklony, opravné prostriedky, trestná zodpovednosť právnických osôb.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "criminal": "Trestné právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "80ec02a0-b63b-40f1-b2f0-c6b8d60d92d4",
+      "name": "vymahani-pohledavek",
+      "description": "Czech debt recovery practice skill - limitation check, pre-action notice, payment orders (EPR), litigation, costs and interest, enforcement (exekuce) and insolvency crossover on top of the CODEXIS legal database.",
+      "source": "./plugins/vymahani-pohledavek",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Vymáhání pohledávek ČR",
+          "description": "Od promlčení a předžalobní výzvy přes platební rozkaz a žalobu po exekuci - výpočet příslušenství, nákladů a poplatků, insolvenční křižovatka.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "debt-recovery": "Vymáhání pohledávek"
+          }
+        },
+        "en": {
+          "displayName": "Czech Debt Recovery",
+          "description": "From limitation and pre-action notice through payment orders and litigation to enforcement - interest, costs and fees, insolvency crossover.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "debt-recovery": "Debt Recovery"
+          }
+        },
+        "sk": {
+          "displayName": "Vymáhanie pohľadávok ČR",
+          "description": "Od premlčania a predžalobnej výzvy cez platobný rozkaz a žalobu po exekúciu v ČR - výpočet príslušenstva, trov a poplatkov, insolvenčná križovatka.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "debt-recovery": "Vymáhanie pohľadávok"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "c9daa96c-d953-423d-b5fd-04323b2c0184",
+      "name": "korporatni-pravo",
+      "description": "Czech corporate law practice skill - company formation, general meetings, share transfers, directors' duties and liability, shareholder agreements, profit distribution, registers and transformations under ZOK and the Civil Code, on top of the CODEXIS legal database.",
+      "source": "./plugins/korporatni-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Korporátní právo ČR",
+          "description": "Založení a fungování s.r.o. a a.s. - valná hromada, převod podílu, odpovědnost jednatelů, akcionářské dohody, rozdělení zisku, obchodní rejstřík, skuteční majitelé, přeměny, likvidace.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "corporate": "Korporátní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Corporate Law",
+          "description": "Formation and operation of s.r.o. and a.s. - general meetings, share transfers, directors' liability, shareholder agreements, profit distribution, commercial register, beneficial owners, transformations, liquidation.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "corporate": "Corporate Law"
+          }
+        },
+        "sk": {
+          "displayName": "Korporátne právo ČR",
+          "description": "Založenie a fungovanie českej s.r.o. a a.s. - valné zhromaždenie, prevod podielu, zodpovednosť konateľov, akcionárske dohody, rozdelenie zisku, obchodný register, koneční užívatelia výhod, premeny, likvidácia.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "corporate": "Korporátne právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "047e367f-d9f0-4c32-81a1-65598b160b72",
+      "name": "pracovni-pravo",
+      "description": "Czech labour law practice skill - employment contracts, termination and its invalidity, working time and pay, liability, non-compete, agency work, disguised employment and labour disputes under zákoník práce, on top of the CODEXIS legal database.",
+      "source": "./plugins/pracovni-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Pracovní právo ČR",
+          "description": "Pracovní poměr od vzniku po skončení - výpověď a její neplatnost, odstupné, mzda a pracovní doba, odpovědnost, konkurenční doložka, dohody, švarcsystém, spory.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "labour": "Pracovní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Labour Law",
+          "description": "Employment from formation to termination - notice and its invalidity, severance, pay and working time, liability, non-compete, agreements outside employment, disguised employment, disputes.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "labour": "Labour Law"
+          }
+        },
+        "sk": {
+          "displayName": "Pracovné právo ČR",
+          "description": "Český pracovný pomer od vzniku po skončenie - výpoveď a jej neplatnosť, odstupné, mzda a pracovný čas, zodpovednosť, konkurenčná doložka, dohody, švarcsystém, spory.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "labour": "Pracovné právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "52e38692-8399-42a8-bc3f-e3dede0f2c78",
+      "name": "rodinne-pravo",
+      "description": "Czech family law practice skill - divorce, child custody and contact, maintenance, matrimonial property (SJM), parentage, domestic violence and cross-border cases under the Civil Code and ZŘS, on top of the CODEXIS legal database.",
+      "source": "./plugins/rodinne-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Rodinné právo ČR",
+          "description": "Rozvod, péče o děti a styk, výživné, vypořádání SJM, rodičovství, domácí násilí, přeshraniční věci - hmotné právo OZ i řízení podle ZŘS.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "family": "Rodinné právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Family Law",
+          "description": "Divorce, custody and contact, maintenance, matrimonial property settlement, parentage, domestic violence, cross-border cases - substantive Civil Code rules and ZŘS proceedings.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "family": "Family Law"
+          }
+        },
+        "sk": {
+          "displayName": "Rodinné právo ČR",
+          "description": "Rozvod, starostlivosť o deti a styk, výživné, vyporiadanie SJM, rodičovstvo, domáce násilie, cezhraničné veci v ČR - hmotné právo OZ aj konanie podľa ZŘS.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "family": "Rodinné právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "afd1cc2a-21fd-4468-8664-5a29101c3bae",
+      "name": "dedicke-pravo",
+      "description": "Czech inheritance law practice skill - wills and inheritance contracts, forced heirs, disinheritance, renunciation and inventory reservation, debts of the estate, probate proceedings before the notary, disputes and estate planning, on top of the CODEXIS legal database.",
+      "source": "./plugins/dedicke-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Dědické právo ČR",
+          "description": "Závěť a dědická smlouva, nepominutelní dědici, vydědění, odmítnutí a výhrada soupisu, dluhy zůstavitele, pozůstalostní řízení u notáře, spory o dědické právo, plánování majetku.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "inheritance": "Dědické právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Inheritance Law",
+          "description": "Wills and inheritance contracts, forced heirs, disinheritance, renunciation and inventory reservation, estate debts, probate before the notary, inheritance disputes, estate planning.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "inheritance": "Inheritance Law"
+          }
+        },
+        "sk": {
+          "displayName": "Dedičské právo ČR",
+          "description": "Závet a dedičská zmluva, neopomenuteľní dedičia, vydedenie, odmietnutie a výhrada súpisu, dlhy poručiteľa, dedičské konanie u notára v ČR, spory o dedičské právo, plánovanie majetku.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "inheritance": "Dedičské právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "be8eb2b6-ece2-41e2-93ea-979d18ef1484",
+      "name": "ochrana-osobnosti-gdpr",
+      "description": "Czech personality rights, defamation, media and data protection practice skill - claims against unlawful publications, right of reply, non-material damages, GDPR rights and compliance, ÚOOÚ proceedings, on top of the CODEXIS legal database.",
+      "source": "./plugins/ochrana-osobnosti-gdpr",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Ochrana osobnosti a GDPR ČR",
+          "description": "Zásahy do cti, soukromí a podoby, pomluva, právo na odpověď, omluva a peněžité zadostiučinění, práva subjektu údajů, GDPR compliance, ÚOOÚ, DSA.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "privacy": "Osobnost a soukromí"
+          }
+        },
+        "en": {
+          "displayName": "Czech Personality Rights and GDPR",
+          "description": "Interference with honour, privacy and likeness, defamation, right of reply, apology and monetary satisfaction, data subject rights, GDPR compliance, ÚOOÚ, DSA.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "privacy": "Personality and Privacy"
+          }
+        },
+        "sk": {
+          "displayName": "Ochrana osobnosti a GDPR ČR",
+          "description": "Zásahy do cti, súkromia a podoby, ohováranie, právo na odpoveď, ospravedlnenie a peňažné zadosťučinenie, práva dotknutej osoby, GDPR compliance, ÚOOÚ, DSA v ČR.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "privacy": "Osobnosť a súkromie"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "660aa208-7e0b-4589-9ee7-2ae703b57e61",
+      "name": "stavebni-pravo",
+      "description": "Czech construction and planning law practice skill - permits under the new Building Act (283/2021 Sb.), transitional regime, participants and neighbours, unauthorised structures, removal, occupancy, nuisance and boundary disputes, construction contracts and defects, on top of the CODEXIS legal database.",
+      "source": "./plugins/stavebni-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Stavební právo ČR",
+          "description": "Povolování staveb podle nového stavebního zákona a přechodný režim, účastníci a sousedé, černé stavby a odstranění, kolaudace, imise a hranice, smlouva o dílo na stavbu a vady.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "construction": "Stavební právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Construction Law",
+          "description": "Permitting under the new Building Act and the transitional regime, participants and neighbours, unauthorised structures and removal, occupancy, nuisance and boundaries, construction contracts and defects.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "construction": "Construction Law"
+          }
+        },
+        "sk": {
+          "displayName": "Stavebné právo ČR",
+          "description": "Povoľovanie stavieb podľa nového českého stavebného zákona a prechodný režim, účastníci a susedia, čierne stavby a odstránenie, kolaudácia, imisie a hranice, zmluva o dielo na stavbu a vady.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "construction": "Stavebné právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "4430e619-e56c-40c8-9837-0379e55b19cd",
+      "name": "verejne-zakazky-dotace",
+      "description": "Czech public procurement and subsidies practice skill - procurement regimes and procedures under ZZVZ, objections and ÚOHS review, contract changes, subsidy conditions, irregularities, budget discipline breaches and audits of public bodies, on top of the CODEXIS legal database.",
+      "source": "./plugins/verejne-zakazky-dotace",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Veřejné zakázky a dotace ČR",
+          "description": "Režimy a druhy zadávacích řízení, námitky a návrh k ÚOHS, změny závazku, dotační podmínky, nesrovnalosti, porušení rozpočtové kázně a odvody, audity a kontroly veřejného sektoru.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "procurement": "Veřejné zakázky"
+          }
+        },
+        "en": {
+          "displayName": "Czech Public Procurement and Subsidies",
+          "description": "Procurement regimes and procedures, objections and ÚOHS review, contract modifications, subsidy conditions, irregularities, budget discipline breaches and levies, audits of public bodies.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "procurement": "Public Procurement"
+          }
+        },
+        "sk": {
+          "displayName": "Verejné zákazky a dotácie ČR",
+          "description": "Režimy a druhy zadávacích konaní v ČR, námietky a návrh na ÚOHS, zmeny záväzku, dotačné podmienky, nezrovnalosti, porušenie rozpočtovej disciplíny a odvody, audity a kontroly verejného sektora.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "procurement": "Verejné zákazky"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "25c2ac16-603b-4cab-a2ea-a5c633334c18",
+      "name": "cizinecke-a-azylove-pravo",
+      "description": "Czech immigration and asylum practice skill - visas, long-term and permanent residence, employee and blue cards, EU citizens and family members, expulsion and detention, international protection, temporary protection, citizenship and employment of foreigners, on top of the CODEXIS legal database.",
+      "source": "./plugins/cizinecke-a-azylove-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Cizinecké a azylové právo ČR",
+          "description": "Víza a pobytová oprávnění, zaměstnanecké a modré karty, občané EU a rodinní příslušníci, vyhoštění a zajištění, mezinárodní a dočasná ochrana, státní občanství, zaměstnávání cizinců.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "immigration": "Cizinecké právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Immigration and Asylum Law",
+          "description": "Visas and residence permits, employee and blue cards, EU citizens and family members, expulsion and detention, international and temporary protection, citizenship, employment of foreigners.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "immigration": "Immigration Law"
+          }
+        },
+        "sk": {
+          "displayName": "Cudzinecké a azylové právo ČR",
+          "description": "Víza a pobytové oprávnenia v ČR, zamestnanecké a modré karty, občania EÚ a rodinní príslušníci, vyhostenie a zaistenie, medzinárodná a dočasná ochrana, štátne občianstvo, zamestnávanie cudzincov.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "immigration": "Cudzinecké právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "b9d6ed9b-0b66-41f3-a3b5-2e8773cd2987",
+      "name": "dusevni-vlastnictvi",
+      "description": "Czech intellectual property practice skill - copyright and software, employee and commissioned works, licences, trade marks, patents, utility and industrial designs, domain names, trade secrets, enforcement and ÚPV proceedings, on top of the CODEXIS legal database.",
+      "source": "./plugins/dusevni-vlastnictvi",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Duševní vlastnictví ČR",
+          "description": "Autorské právo a software, zaměstnanecká díla a díla na objednávku, licence, ochranné známky, patenty, užitné a průmyslové vzory, domény, obchodní tajemství, vymáhání a řízení před ÚPV.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "ip": "Duševní vlastnictví"
+          }
+        },
+        "en": {
+          "displayName": "Czech Intellectual Property",
+          "description": "Copyright and software, employee and commissioned works, licences, trade marks, patents, utility and industrial designs, domains, trade secrets, enforcement and ÚPV proceedings.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "ip": "Intellectual Property"
+          }
+        },
+        "sk": {
+          "displayName": "Duševné vlastníctvo ČR",
+          "description": "Autorské právo a softvér, zamestnanecké diela a diela na objednávku, licencie, ochranné známky, patenty, úžitkové a priemyselné vzory, domény, obchodné tajomstvo, vymáhanie a konanie pred ÚPV v ČR.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "ip": "Duševné vlastníctvo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "d53bc586-1421-4b1f-8d92-8698e528c244",
+      "name": "hospodarska-a-nekala-soutez",
+      "description": "Czech competition and unfair competition practice skill - cartels, abuse of dominance, merger control and ÚOHS proceedings, private damages, unfair competition claims, advertising and consumer practices, on top of the CODEXIS legal database.",
+      "source": "./plugins/hospodarska-a-nekala-soutez",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Hospodářská a nekalá soutěž ČR",
+          "description": "Kartely, zneužití dominance, spojování soutěžitelů a řízení před ÚOHS, náhrada škody, nekalá soutěž a její nároky, regulace reklamy a nekalé obchodní praktiky.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "competition": "Hospodářská soutěž"
+          }
+        },
+        "en": {
+          "displayName": "Czech Competition and Unfair Competition",
+          "description": "Cartels, abuse of dominance, merger control and ÚOHS proceedings, damages, unfair competition claims, advertising regulation and unfair commercial practices.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "competition": "Competition Law"
+          }
+        },
+        "sk": {
+          "displayName": "Hospodárska a nekalá súťaž ČR",
+          "description": "Kartely, zneužitie dominancie, koncentrácie a konanie pred ÚOHS, náhrada škody, nekalá súťaž a jej nároky, regulácia reklamy a nekalé obchodné praktiky v ČR.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "competition": "Hospodárska súťaž"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "8ca08a12-3b9c-4138-83ef-58775acbed71",
+      "name": "zdravotnicke-pravo",
+      "description": "Czech medical and health law practice skill - patient rights and informed consent, medical records, malpractice and personal injury claims, complaints and disciplinary proceedings, public health insurance coverage, providers' licensing and compliance, on top of the CODEXIS legal database.",
+      "source": "./plugins/zdravotnicke-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Zdravotnické právo ČR",
+          "description": "Práva pacienta a informovaný souhlas, zdravotnická dokumentace, újma na zdraví a postup non lege artis, stížnosti a disciplinární řízení, úhrady z veřejného zdravotního pojištění, provoz a compliance poskytovatelů.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "health": "Zdravotnictví"
+          }
+        },
+        "en": {
+          "displayName": "Czech Medical and Health Law",
+          "description": "Patient rights and informed consent, medical records, malpractice and injury claims, complaints and disciplinary proceedings, public health insurance coverage, provider licensing and compliance.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "health": "Health Law"
+          }
+        },
+        "sk": {
+          "displayName": "Zdravotnícke právo ČR",
+          "description": "Práva pacienta a informovaný súhlas, zdravotná dokumentácia, ujma na zdraví a postup non lege artis, sťažnosti a disciplinárne konania, úhrady z verejného zdravotného poistenia, prevádzka a compliance poskytovateľov v ČR.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "health": "Zdravotníctvo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "6b42ab7e-cda4-4b61-aebc-5491119894b7",
+      "name": "bytove-pravo-najem-svj",
+      "description": "Czech housing law practice skill - residential and commercial leases, termination and eviction, rent and service charges, owners' associations (SVJ), housing cooperatives and short-term rentals, on top of the CODEXIS legal database.",
+      "source": "./plugins/bytove-pravo-najem-svj",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Bytové právo - nájem a SVJ ČR",
+          "description": "Nájem bytu a prostor sloužících podnikání, výpověď a vyklizení, nájemné a vyúčtování služeb, společenství vlastníků, bytová družstva, krátkodobé pronájmy.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "housing": "Bydlení"
+          }
+        },
+        "en": {
+          "displayName": "Czech Housing Law - Leases and HOAs",
+          "description": "Residential and commercial leases, termination and eviction, rent and service charges, owners' associations (SVJ), housing cooperatives, short-term rentals.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "housing": "Housing"
+          }
+        },
+        "sk": {
+          "displayName": "Bytové právo - nájom a SVJ ČR",
+          "description": "Nájom bytu a priestorov slúžiacich podnikaniu v ČR, výpoveď a vypratanie, nájomné a vyúčtovanie služieb, spoločenstvá vlastníkov, bytové družstvá, krátkodobé prenájmy.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "housing": "Bývanie"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "d0e414ae-a466-489b-86d4-f40db9319c9e",
+      "name": "dopravni-pravo-nehody",
+      "description": "Czech traffic and road accident practice skill - accident liability and compensation, motor insurance claims, traffic offences and the points system, driving licence suspension, traffic crimes, carriers and passengers, on top of the CODEXIS legal database.",
+      "source": "./plugins/dopravni-pravo-nehody",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Dopravní právo a nehody ČR",
+          "description": "Odpovědnost a náhrada újmy z dopravní nehody, pojistné plnění z povinného ručení, dopravní přestupky a bodový systém, zadržení řidičského průkazu, trestné činy v dopravě, dopravci a cestující.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "traffic": "Doprava"
+          }
+        },
+        "en": {
+          "displayName": "Czech Traffic Law and Accidents",
+          "description": "Accident liability and compensation, motor insurance claims, traffic offences and the points system, licence suspension, traffic crimes, carriers and passengers.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "traffic": "Traffic"
+          }
+        },
+        "sk": {
+          "displayName": "Dopravné právo a nehody ČR",
+          "description": "Zodpovednosť a náhrada ujmy z dopravnej nehody v ČR, poistné plnenie z povinného zmluvného poistenia, dopravné priestupky a bodový systém, zadržanie vodičského preukazu, trestné činy v doprave, dopravcovia a cestujúci.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "traffic": "Doprava"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "0bee16bb-e182-4e25-a7dc-44f2314c6fc5",
+      "name": "exekuce-obrana-dluznika",
+      "description": "Czech enforcement defence practice skill - auditing the enforcement title, motions to stay and stop enforcement, protected minimum and protected account, seizure of movables, real estate and marital property, third-party claims, costs, complaints against bailiffs and the debt-relief exit, on top of the CODEXIS legal database.",
+      "source": "./plugins/exekuce-obrana-dluznika",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Exekuce - obrana povinného ČR",
+          "description": "Audit exekučního titulu, návrhy na odklad a zastavení, nezabavitelné minimum a chráněný účet, mobiliární exekuce, nemovitost a SJM, vylučovací žaloby třetích osob, náklady, stížnosti na exekutora, oddlužení jako východisko.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "enforcement": "Exekuce"
+          }
+        },
+        "en": {
+          "displayName": "Czech Enforcement Defence",
+          "description": "Auditing the enforcement title, motions to stay and stop, protected minimum and protected account, seizure of movables, real estate and marital property, third-party claims, costs, complaints against bailiffs, debt relief as an exit.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "enforcement": "Enforcement"
+          }
+        },
+        "sk": {
+          "displayName": "Exekúcia - obrana povinného ČR",
+          "description": "Audit exekučného titulu v ČR, návrhy na odklad a zastavenie, nezabaviteľné minimum a chránený účet, mobiliárna exekúcia, nehnuteľnosť a BSM, vylučovacie žaloby tretích osôb, trovy, sťažnosti na exekútora, oddlženie ako východisko.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "enforcement": "Exekúcia"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "18e7ea07-0dca-4c91-a35f-0f5349996b2f",
+      "name": "spotrebitelske-pravo",
+      "description": "Czech consumer law practice skill - consumer contracts and e-commerce, withdrawal, defects and complaints, unfair terms and practices, consumer credit, ADR and collective redress, and compliance for traders, on top of the CODEXIS legal database.",
+      "source": "./plugins/spotrebitelske-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Spotřebitelské právo ČR",
+          "description": "Spotřebitelské smlouvy a e-shopy, odstoupení, vady a reklamace, zakázaná ujednání a nekalé praktiky, spotřebitelský úvěr, mimosoudní řešení a hromadné řízení, compliance obchodníka.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "consumer": "Spotřebitel"
+          }
+        },
+        "en": {
+          "displayName": "Czech Consumer Law",
+          "description": "Consumer contracts and e-commerce, withdrawal, defects and complaints, unfair terms and practices, consumer credit, ADR and collective redress, trader compliance.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "consumer": "Consumer"
+          }
+        },
+        "sk": {
+          "displayName": "Spotrebiteľské právo ČR",
+          "description": "Spotrebiteľské zmluvy a e-shopy v ČR, odstúpenie, vady a reklamácie, zakázané dojednania a nekalé praktiky, spotrebiteľský úver, mimosúdne riešenie a hromadné konanie, compliance obchodníka.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "consumer": "Spotrebiteľ"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "e3eb486c-304d-44ba-bc8d-fc459b7b1fa8",
+      "name": "mezinarodni-pravo-soukrome",
+      "description": "Czech cross-border private law practice skill - jurisdiction and applicable law under EU regulations and the Czech PIL Act, service and evidence abroad, recognition and enforcement of foreign judgments and arbitral awards, legalisation of documents, drafting choice-of-law and forum clauses, on top of the CODEXIS legal database.",
+      "source": "./plugins/mezinarodni-pravo-soukrome",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Mezinárodní právo soukromé ČR",
+          "description": "Přeshraniční spory a smlouvy - pravomoc soudů a rozhodné právo podle nařízení EU a ZMPS, doručování a dokazování do ciziny, uznání a výkon cizích rozhodnutí a rozhodčích nálezů, ověřování listin, doložky o volbě práva a soudu.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "cross-border": "Přeshraniční věci"
+          }
+        },
+        "en": {
+          "displayName": "Czech Cross-border Private Law",
+          "description": "Cross-border disputes and contracts - jurisdiction and applicable law under EU regulations and the PIL Act, service and evidence abroad, recognition and enforcement of foreign judgments and awards, legalisation of documents, choice-of-law and forum clauses.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "cross-border": "Cross-border"
+          }
+        },
+        "sk": {
+          "displayName": "Medzinárodné právo súkromné ČR",
+          "description": "Cezhraničné spory a zmluvy z pohľadu ČR - právomoc súdov a rozhodné právo podľa nariadení EÚ a ZMPS, doručovanie a dokazovanie do cudziny, uznanie a výkon cudzích rozhodnutí a rozhodcovských nálezov, overovanie listín, doložky o voľbe práva a súdu.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "cross-border": "Cezhraničné veci"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "11ff2fec-6a54-4668-b1e8-0975abeea7a9",
+      "name": "obce-a-verejna-sprava",
+      "description": "Czech municipal and public-administration practice skill - competences of municipal bodies, disposal of municipal property and publication of intent, by-laws and their review, freedom of information, municipal grants and companies, referendum, supervision and audit, liability of councillors, on top of the CODEXIS legal database.",
+      "source": "./plugins/obce-a-verejna-sprava",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Obce a veřejná správa ČR",
+          "description": "Působnost orgánů obce, nakládání s obecním majetkem a záměr, vyhlášky a jejich přezkum, svobodný přístup k informacím, dotace a obecní společnosti, referendum, dozor a přezkoumání hospodaření, odpovědnost zastupitelů.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "municipal": "Samospráva"
+          }
+        },
+        "en": {
+          "displayName": "Czech Municipal Law",
+          "description": "Competences of municipal bodies, disposal of municipal property and publication of intent, by-laws and their review, freedom of information, municipal grants and companies, referendum, supervision and audit, liability of councillors.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "municipal": "Local Government"
+          }
+        },
+        "sk": {
+          "displayName": "Obce a verejná správa ČR",
+          "description": "Pôsobnosť orgánov obce v ČR, nakladanie s obecným majetkom a zámer, vyhlášky a ich preskúmanie, slobodný prístup k informáciám, dotácie a obecné spoločnosti, referendum, dozor a preskúmanie hospodárenia, zodpovednosť poslancov.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "municipal": "Samospráva"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "110729b6-f846-4b8e-8b00-65e3ae40db75",
+      "name": "spolky-nadace-neziskovy-sektor",
+      "description": "Czech non-profit law practice skill - associations, foundations, endowment funds and institutes: formation and registers, governance and member disputes, review of body decisions, donations, public collections, grants, tax status of public-benefit taxpayers, accounting duties, dissolution and liability, on top of the CODEXIS legal database.",
+      "source": "./plugins/spolky-nadace-neziskovy-sektor",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Spolky, nadace a neziskový sektor ČR",
+          "description": "Spolky, nadace, nadační fondy a ústavy - založení a rejstříky, vnitřní správa a spory členů, přezkum rozhodnutí orgánů, dary, veřejné sbírky, dotace, daňový režim, účetní povinnosti, zánik a odpovědnost.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "nonprofit": "Neziskový sektor"
+          }
+        },
+        "en": {
+          "displayName": "Czech Non-profit Law",
+          "description": "Associations, foundations, endowment funds and institutes - formation and registers, governance and member disputes, review of body decisions, donations, public collections, grants, tax status, accounting duties, dissolution and liability.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "nonprofit": "Non-profit"
+          }
+        },
+        "sk": {
+          "displayName": "Spolky, nadácie a neziskový sektor ČR",
+          "description": "Spolky, nadácie, nadačné fondy a ústavy v ČR - založenie a registre, vnútorná správa a spory členov, preskúmanie rozhodnutí orgánov, dary, verejné zbierky, dotácie, daňový režim, účtovné povinnosti, zánik a zodpovednosť.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "nonprofit": "Neziskový sektor"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "d811e4e0-77f1-4bb4-981c-ef739f721b71",
+      "name": "sportovni-pravo",
+      "description": "Czech sports law practice skill - athlete and club contracts, federation rules and disciplinary review, transfers and arbitration, liability for sports injuries, event organisation, sponsorship, donations and public funding, anti-doping and minors, on top of the CODEXIS legal database.",
+      "source": "./plugins/sportovni-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Sportovní právo ČR",
+          "description": "Smlouvy sportovců a klubů, svazové řády a přezkum disciplinárních rozhodnutí, přestupy a arbitráž, odpovědnost za sportovní úrazy, pořádání akcí, sponzoring, dary a veřejná podpora, antidoping, mládež.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "sports": "Sport"
+          }
+        },
+        "en": {
+          "displayName": "Czech Sports Law",
+          "description": "Athlete and club contracts, federation rules and disciplinary review, transfers and arbitration, liability for sports injuries, event organisation, sponsorship, donations and public funding, anti-doping, minors.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "sports": "Sports"
+          }
+        },
+        "sk": {
+          "displayName": "Športové právo ČR",
+          "description": "Zmluvy športovcov a klubov v ČR, zväzové poriadky a preskúmanie disciplinárnych rozhodnutí, prestupy a arbitráž, zodpovednosť za športové úrazy, organizácia podujatí, sponzoring, dary a verejná podpora, antidoping, mládež.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "sports": "Šport"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "1c16e9f2-7e56-422d-9b2b-5f469b7d5c34",
+      "name": "ustavni-stiznost-lidska-prava",
+      "description": "Czech constitutional complaint and human-rights practice skill - admissibility and exhaustion of remedies, the two-month deadline, drafting the petition, fundamental-rights argumentation, proportionality test, ECHR application to Strasbourg, EU Charter and preliminary references, on top of the CODEXIS legal database.",
+      "source": "./plugins/ustavni-stiznost-lidska-prava",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Ústavní stížnost a lidská práva",
+          "description": "Přípustnost a vyčerpání opravných prostředků, dvouměsíční lhůta, sepis ústavní stížnosti, argumentace základními právy, test proporcionality, stížnost k ESLP, Listina EU a předběžná otázka.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "constitutional": "Ústavní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Constitutional Complaint & Human Rights",
+          "description": "Admissibility and exhaustion of remedies, the two-month deadline, drafting the petition, fundamental-rights argumentation, proportionality test, ECHR application, EU Charter and preliminary references.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "constitutional": "Constitutional law"
+          }
+        },
+        "sk": {
+          "displayName": "Ústavná sťažnosť a ľudské práva ČR",
+          "description": "Prípustnosť a vyčerpanie opravných prostriedkov, dvojmesačná lehota, spísanie ústavnej sťažnosti, argumentácia základnými právami, test proporcionality, sťažnosť na ESĽP, Charta EÚ a prejudiciálna otázka.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "constitutional": "Ústavné právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "9c257c89-0cd6-4678-b46b-3eb15738fba0",
+      "name": "rozhodci-rizeni-mediace",
+      "description": "Czech arbitration and mediation practice skill - validity of arbitration clauses, consumer and employment limits, permanent courts of arbitration and ad hoc tribunals, conduct of proceedings, setting aside and enforcement of awards, New York Convention, mediation act, mediation agreements and court-ordered first meetings, on top of the CODEXIS legal database.",
+      "source": "./plugins/rozhodci-rizeni-mediace",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Rozhodčí řízení a mediace ČR",
+          "description": "Platnost rozhodčích doložek, spotřebitelské a pracovní limity, stálé rozhodčí soudy a ad hoc rozhodci, průběh řízení, zrušení a výkon nálezů, Newyorská úmluva, zákon o mediaci, mediační dohody a soudem nařízené první setkání.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "adr": "ADR"
+          }
+        },
+        "en": {
+          "displayName": "Czech Arbitration & Mediation",
+          "description": "Validity of arbitration clauses, consumer and employment limits, permanent courts of arbitration and ad hoc tribunals, conduct of proceedings, setting aside and enforcement of awards, New York Convention, mediation act, mediation agreements and court-ordered first meetings.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "adr": "ADR"
+          }
+        },
+        "sk": {
+          "displayName": "Rozhodcovské konanie a mediácia ČR",
+          "description": "Platnosť rozhodcovských doložiek, spotrebiteľské a pracovné limity, stále rozhodcovské súdy a ad hoc rozhodcovia, priebeh konania, zrušenie a výkon nálezov, Newyorský dohovor, zákon o mediácii, mediačné dohody a súdom nariadené prvé stretnutie.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "adr": "ADR"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "0ac6cf03-3bb7-47a5-86aa-cb9f0bdf26c1",
+      "name": "pojistne-pravo",
+      "description": "Czech insurance law practice skill - insurance contract under the Civil Code, pre-contractual duties and disclosure, claims handling deadlines, refusal and reduction of indemnity, motor third-party liability and the guarantee fund, property, liability, life and travel insurance, insurance distribution rules, ombudsman and financial arbiter, limitation periods, on top of the CODEXIS legal database.",
+      "source": "./plugins/pojistne-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Pojistné právo ČR",
+          "description": "Pojistná smlouva podle OZ, předsmluvní povinnosti a pravdivé odpovědi, lhůty likvidace, odmítnutí a snížení plnění, povinné ručení a garanční fond, majetkové, odpovědnostní, životní a cestovní pojištění, distribuce pojištění, ombudsman a finanční arbitr, promlčení.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "insurance": "Pojištění"
+          }
+        },
+        "en": {
+          "displayName": "Czech Insurance Law",
+          "description": "Insurance contract under the Civil Code, pre-contractual duties and disclosure, claims handling deadlines, refusal and reduction of indemnity, motor third-party liability and the guarantee fund, property, liability, life and travel insurance, distribution rules, ombudsman and financial arbiter, limitation.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "insurance": "Insurance"
+          }
+        },
+        "sk": {
+          "displayName": "Poistné právo ČR",
+          "description": "Poistná zmluva podľa OZ, predzmluvné povinnosti a pravdivé odpovede, lehoty likvidácie, odmietnutie a zníženie plnenia, povinné zmluvné poistenie a garančný fond, majetkové, zodpovednostné, životné a cestovné poistenie, distribúcia poistenia, ombudsman a finančný arbiter, premlčanie.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "insurance": "Poistenie"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "2cdd74f1-a8d6-41c7-afd7-ace2b1f7deb2",
+      "name": "aml-compliance",
+      "description": "Czech AML/CFT compliance practice skill - obliged persons, customer identification and due diligence, beneficial owner and PEP checks, sanctions screening, suspicious transaction reports to FAÚ, internal policies and training, attorney-specific duties and privilege, real-estate and escrow triggers, beneficial owner register, inspections and penalties, EU AML package, on top of the CODEXIS legal database.",
+      "source": "./plugins/aml-compliance",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "AML compliance ČR",
+          "description": "Povinné osoby, identifikace a kontrola klienta, skutečný majitel a PEP, sankční screening, oznámení podezřelého obchodu FAÚ, systém vnitřních zásad a školení, zvláštní povinnosti advokáta a mlčenlivost, spouštěče u nemovitostí a úschov, evidence skutečných majitelů, kontroly a sankce, AML balíček EU.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "compliance": "Compliance"
+          }
+        },
+        "en": {
+          "displayName": "Czech AML Compliance",
+          "description": "Obliged persons, customer identification and due diligence, beneficial owner and PEP checks, sanctions screening, suspicious transaction reports to FAÚ, internal policies and training, attorney-specific duties and privilege, real-estate and escrow triggers, beneficial owner register, inspections and penalties, EU AML package.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "compliance": "Compliance"
+          }
+        },
+        "sk": {
+          "displayName": "AML compliance ČR",
+          "description": "Povinné osoby, identifikácia a kontrola klienta, konečný užívateľ výhod a PEP, sankčný screening, hlásenie podozrivého obchodu FAÚ, systém vnútorných zásad a školenia, osobitné povinnosti advokáta a mlčanlivosť, spúšťače pri nehnuteľnostiach a úschovách, evidencia skutočných majiteľov, kontroly a sankcie, AML balík EÚ.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "compliance": "Compliance"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "960a7e4a-b3a6-4a5e-a3e2-a7afc5f3d16d",
+      "name": "energeticke-pravo",
+      "description": "Czech energy law practice skill - Energy Act licences and ERÚ regulation, electricity and gas supply contracts and switching, renewable sources support and permitting, community energy and self-consumption, grid connection, price regulation and disputes, heat supply, energy performance of buildings, on top of the CODEXIS legal database.",
+      "source": "./plugins/energeticke-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Energetické právo ČR",
+          "description": "Licence a regulace ERÚ, smlouvy o dodávce elektřiny a plynu a změna dodavatele, podpora a povolování OZE, komunitní energetika a sdílení, připojení k síti, cenová regulace a spory, teplárenství, energetická náročnost budov.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "energy": "Energetika"
+          }
+        },
+        "en": {
+          "displayName": "Czech Energy Law",
+          "description": "Energy Act licences and ERÚ regulation, electricity and gas supply contracts and switching, renewable support and permitting, community energy and self-consumption, grid connection, price regulation and disputes, heat supply, energy performance of buildings.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "energy": "Energy"
+          }
+        },
+        "sk": {
+          "displayName": "Energetické právo ČR",
+          "description": "Licencie a regulácia ERÚ, zmluvy o dodávke elektriny a plynu a zmena dodávateľa, podpora a povoľovanie OZE, komunitná energetika a zdieľanie, pripojenie do siete, cenová regulácia a spory, teplárenstvo, energetická náročnosť budov.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "energy": "Energetika"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "c286fa94-da7c-487e-874b-e16a852a8d1d",
+      "name": "it-pravo-kyberbezpecnost",
+      "description": "Czech IT law and cybersecurity practice skill - software development and licensing contracts, SaaS and cloud, IT outsourcing and SLA, open source, NIS2 and the new Cybersecurity Act, regulated entities and incident reporting, DORA, security breach liability, e-commerce platforms and DSA, electronic signatures and eIDAS, data localisation, on top of the CODEXIS legal database.",
+      "source": "./plugins/it-pravo-kyberbezpecnost",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "IT právo a kyberbezpečnost ČR",
+          "description": "Smlouvy o vývoji a licencování software, SaaS a cloud, IT outsourcing a SLA, open source, NIS2 a nový zákon o kybernetické bezpečnosti, regulované subjekty a hlášení incidentů, DORA, odpovědnost za bezpečnostní incident, platformy a DSA, elektronické podpisy a eIDAS.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "it": "IT"
+          }
+        },
+        "en": {
+          "displayName": "Czech IT Law & Cybersecurity",
+          "description": "Software development and licensing contracts, SaaS and cloud, IT outsourcing and SLA, open source, NIS2 and the new Cybersecurity Act, regulated entities and incident reporting, DORA, security breach liability, platforms and DSA, electronic signatures and eIDAS.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "it": "IT"
+          }
+        },
+        "sk": {
+          "displayName": "IT právo a kyberbezpečnosť ČR",
+          "description": "Zmluvy o vývoji a licencovaní softvéru, SaaS a cloud, IT outsourcing a SLA, open source, NIS2 a nový zákon o kybernetickej bezpečnosti, regulované subjekty a hlásenie incidentov, DORA, zodpovednosť za bezpečnostný incident, platformy a DSA, elektronické podpisy a eIDAS.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "it": "IT"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "262e5b75-e1a6-49b8-8fe7-a62495e569ef",
+      "name": "pravo-zivotniho-prostredi",
+      "description": "Czech environmental law practice skill - EIA and integrated permitting, water law and discharge permits, air protection, waste and packaging, nature and landscape protection, forests and agricultural land, noise, environmental liability and remediation, inspections and penalties by ČIŽP, public participation and NGO standing, on top of the CODEXIS legal database.",
+      "source": "./plugins/pravo-zivotniho-prostredi",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Právo životního prostředí ČR",
+          "description": "EIA a integrované povolování, vodní právo a povolení k vypouštění, ochrana ovzduší, odpady a obaly, ochrana přírody a krajiny, lesy a zemědělská půda, hluk, ekologická újma a sanace, kontroly a pokuty ČIŽP, účast veřejnosti a spolků.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "environment": "Životní prostředí"
+          }
+        },
+        "en": {
+          "displayName": "Czech Environmental Law",
+          "description": "EIA and integrated permitting, water law and discharge permits, air protection, waste and packaging, nature and landscape protection, forests and agricultural land, noise, environmental liability and remediation, inspections and penalties by ČIŽP, public participation and NGO standing.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "environment": "Environment"
+          }
+        },
+        "sk": {
+          "displayName": "Právo životného prostredia ČR",
+          "description": "EIA a integrované povoľovanie, vodné právo a povolenie na vypúšťanie, ochrana ovzdušia, odpady a obaly, ochrana prírody a krajiny, lesy a poľnohospodárska pôda, hluk, ekologická ujma a sanácia, kontroly a pokuty ČIŽP, účasť verejnosti a spolkov.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "environment": "Životné prostredie"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "6043e129-b26a-4810-9e31-5db0cccee57a",
+      "name": "skolske-pravo",
+      "description": "Czech education law practice skill - school admissions and appeals, catchment areas, special educational needs and support measures, school discipline and expulsion, bullying and safety, teachers' employment under the pedagogical staff act, school as a legal entity and its founder, school inspection, tuition and fees, universities and student status, on top of the CODEXIS legal database.",
+      "source": "./plugins/skolske-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Školské právo ČR",
+          "description": "Přijímání do škol a odvolání, spádovost, speciální vzdělávací potřeby a podpůrná opatření, kázeňská opatření a vyloučení, šikana a bezpečnost, pracovní vztahy pedagogů, škola jako právnická osoba a zřizovatel, ČŠI, úplata a školné, vysoké školy a studenti.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "education": "Školství"
+          }
+        },
+        "en": {
+          "displayName": "Czech Education Law",
+          "description": "School admissions and appeals, catchment areas, special educational needs and support measures, discipline and expulsion, bullying and safety, teachers' employment, school as a legal entity and its founder, school inspection, tuition and fees, universities and students.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "education": "Education"
+          }
+        },
+        "sk": {
+          "displayName": "Školské právo ČR",
+          "description": "Prijímanie do škôl a odvolania, spádovosť, špeciálne výchovno-vzdelávacie potreby a podporné opatrenia, disciplinárne opatrenia a vylúčenie, šikana a bezpečnosť, pracovné vzťahy pedagógov, škola ako právnická osoba a zriaďovateľ, ČŠI, úplata a školné, vysoké školy a študenti.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "education": "Školstvo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "78300aa7-a794-4000-a079-cd282d82b81f",
+      "name": "danove-pravo-hmotne",
+      "description": "Czech substantive tax law practice skill - personal and corporate income tax, VAT including deduction, reverse charge and chain fraud, real-estate transfer and property tax, tax residence and double-tax treaties, transfer pricing, abuse of law and substance, tax aspects of transactions and restructurings, employee vs. contractor, cryptoassets and digital economy, on top of the CODEXIS legal database.",
+      "source": "./plugins/danove-pravo-hmotne",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Daňové právo hmotné ČR",
+          "description": "Daň z příjmů FO a PO, DPH včetně odpočtu, reverse charge a řetězových podvodů, daň z nemovitých věcí, daňová rezidence a smlouvy o zamezení dvojího zdanění, převodní ceny, zneužití práva, daňové aspekty transakcí a přeměn, zaměstnanec × OSVČ, kryptoaktiva.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "tax": "Daně"
+          }
+        },
+        "en": {
+          "displayName": "Czech Substantive Tax Law",
+          "description": "Personal and corporate income tax, VAT including deduction, reverse charge and chain fraud, property tax, tax residence and double-tax treaties, transfer pricing, abuse of law, tax aspects of transactions and restructurings, employee vs. contractor, cryptoassets.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "tax": "Tax"
+          }
+        },
+        "sk": {
+          "displayName": "Daňové právo hmotné ČR",
+          "description": "Daň z príjmov FO a PO, DPH vrátane odpočtu, reverse charge a reťazových podvodov, daň z nehnuteľností, daňová rezidencia a zmluvy o zamedzení dvojitého zdanenia, transferové oceňovanie, zneužitie práva, daňové aspekty transakcií a premien, zamestnanec × SZČO, kryptoaktíva.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "tax": "Dane"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "6c97fbe9-6329-4fc0-bb95-c6868e179554",
+      "name": "bankovnictvi-a-uvery",
+      "description": "Czech banking and credit law practice skill - loan and credit agreements, consumer credit act and creditworthiness assessment, early repayment and default, mortgages and security packages, guarantees and accessory security, payment services and unauthorised transactions, bank secrecy and account freezes, financial arbiter, ČNB supervision and licensing, non-bank lenders, on top of the CODEXIS legal database.",
+      "source": "./plugins/bankovnictvi-a-uvery",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Bankovnictví a úvěry ČR",
+          "description": "Smlouvy o úvěru a zápůjčce, zákon o spotřebitelském úvěru a posouzení úvěruschopnosti, předčasné splacení a prodlení, hypotéky a zajištění, ručení a akcesorická zajištění, platební služby a neautorizované transakce, bankovní tajemství a blokace účtů, finanční arbitr, dohled a licence ČNB, nebankovní poskytovatelé.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "banking": "Bankovnictví"
+          }
+        },
+        "en": {
+          "displayName": "Czech Banking & Credit Law",
+          "description": "Loan and credit agreements, consumer credit act and creditworthiness assessment, early repayment and default, mortgages and security packages, guarantees, payment services and unauthorised transactions, bank secrecy and account freezes, financial arbiter, ČNB supervision and licensing, non-bank lenders.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "banking": "Banking"
+          }
+        },
+        "sk": {
+          "displayName": "Bankovníctvo a úvery ČR",
+          "description": "Zmluvy o úvere a pôžičke, zákon o spotrebiteľskom úvere a posúdenie úverovej schopnosti, predčasné splatenie a omeškanie, hypotéky a zabezpečenie, ručenie, platobné služby a neautorizované transakcie, bankové tajomstvo a blokácie účtov, finančný arbiter, dohľad a licencie ČNB, nebankoví poskytovatelia.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "banking": "Bankovníctvo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "0c539963-11d3-42c3-bcec-838314ba51cc",
+      "name": "socialni-zabezpeceni",
+      "description": "Czech social security law practice skill - old-age, invalidity and survivors' pensions, sickness and maternity benefits, state social support and assistance in material need, disability allowances and care allowance, social insurance contributions and penalties, appeals against ČSSZ and labour office decisions, medical assessment review, EU coordination of social security, on top of the CODEXIS legal database.",
+      "source": "./plugins/socialni-zabezpeceni",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Sociální zabezpečení ČR",
+          "description": "Starobní, invalidní a pozůstalostní důchody, nemocenské a mateřská, státní sociální podpora a hmotná nouze, příspěvek na péči a dávky pro OZP, pojistné a penále, námitky a žaloby proti ČSSZ a úřadu práce, přezkum posudků, koordinace sociálního zabezpečení v EU.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "social": "Sociální právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Social Security Law",
+          "description": "Old-age, invalidity and survivors' pensions, sickness and maternity benefits, state social support and material need, care allowance and disability benefits, contributions and penalties, appeals against ČSSZ and labour office decisions, medical assessment review, EU coordination.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "social": "Social law"
+          }
+        },
+        "sk": {
+          "displayName": "Sociálne zabezpečenie ČR",
+          "description": "Starobné, invalidné a pozostalostné dôchodky, nemocenské a materská, štátna sociálna podpora a hmotná núdza, príspevok na starostlivosť a dávky pre ZŤP, poistné a penále, námietky a žaloby proti ČSSZ a úradu práce, preskúmanie posudkov, koordinácia v EÚ.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "social": "Sociálne právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "045a0bcb-4cc0-4973-aa39-064f34a64b04",
+      "name": "obcanske-procesni-pravo",
+      "description": "Czech civil procedure practice skill - jurisdiction and venue, drafting claims and petitions, court fees, service and deadlines, evidence and burden of proof, judgments by default and payment orders, interim measures, appeals and extraordinary remedies including admissibility of dovolání, costs of proceedings and attorney tariff, non-contentious proceedings, on top of the CODEXIS legal database.",
+      "source": "./plugins/obcanske-procesni-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Občanské procesní právo ČR",
+          "description": "Pravomoc a příslušnost, sepis žaloby a petitu, soudní poplatky, doručování a lhůty, dokazování a důkazní břemeno, rozsudek pro zmeškání a platební rozkaz, předběžná opatření, odvolání a mimořádné opravné prostředky včetně přípustnosti dovolání, náklady řízení a advokátní tarif, nesporná řízení.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "procedure": "Civilní proces"
+          }
+        },
+        "en": {
+          "displayName": "Czech Civil Procedure",
+          "description": "Jurisdiction and venue, drafting claims and petitions, court fees, service and deadlines, evidence and burden of proof, default judgments and payment orders, interim measures, appeals and extraordinary remedies including admissibility of dovolání, costs and attorney tariff, non-contentious proceedings.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "procedure": "Civil procedure"
+          }
+        },
+        "sk": {
+          "displayName": "Občianske procesné právo ČR",
+          "description": "Právomoc a príslušnosť, spísanie žaloby a petitu, súdne poplatky, doručovanie a lehoty, dokazovanie a dôkazné bremeno, rozsudok pre zmeškanie a platobný rozkaz, predbežné opatrenia, odvolanie a mimoriadne opravné prostriedky vrátane prípustnosti dovolania, trovy konania a advokátska tarifa, nesporové konania.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "procedure": "Civilný proces"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "2e5922f3-6d1a-4661-9296-ca12348537c0",
+      "name": "nahrada-ujmy-odpovednost",
+      "description": "Czech tort and liability practice skill - general and strict liability under the Civil Code, damage to property and pure economic loss, personal injury and the Supreme Court methodology for non-pecuniary harm, wrongful death and secondary victims, product liability, liability of employers, professionals and public bodies, causation and contributory fault, limitation, insurance interplay and quantification, on top of the CODEXIS legal database.",
+      "source": "./plugins/nahrada-ujmy-odpovednost",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Náhrada újmy a odpovědnost ČR",
+          "description": "Obecná a objektivní odpovědnost podle OZ, škoda na věci a čistě ekonomická újma, újma na zdraví a Metodika NS k nemajetkové újmě, usmrcení a sekundární oběti, odpovědnost za výrobek, odpovědnost zaměstnavatelů, profesionálů a státu, příčinná souvislost a spoluzavinění, promlčení, vazba na pojištění a vyčíslení.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "torts": "Náhrada újmy"
+          }
+        },
+        "en": {
+          "displayName": "Czech Tort & Liability Law",
+          "description": "General and strict liability under the Civil Code, property damage and pure economic loss, personal injury and the Supreme Court methodology for non-pecuniary harm, wrongful death and secondary victims, product liability, liability of employers, professionals and public bodies, causation and contributory fault, limitation, insurance and quantification.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "torts": "Torts"
+          }
+        },
+        "sk": {
+          "displayName": "Náhrada ujmy a zodpovednosť ČR",
+          "description": "Všeobecná a objektívna zodpovednosť podľa OZ, škoda na veci a čisto ekonomická ujma, ujma na zdraví a Metodika NS k nemajetkovej ujme, usmrtenie a sekundárne obete, zodpovednosť za výrobok, zodpovednosť zamestnávateľov, profesionálov a štátu, príčinná súvislosť a spoluzavinenie, premlčanie, väzba na poistenie a vyčíslenie.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "torts": "Náhrada ujmy"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "d603603f-c237-4b72-a62b-683a75d0db8a",
+      "name": "vecna-prava-sousedske-spory",
+      "description": "Czech property-rights disputes practice skill - ownership and possession actions, co-ownership and its dissolution, boundaries and neighbour immissions, easements and rights of way, necessary access, building on another's land, superficies principle and transitional rules, acquisitive prescription, land registry corrections and disputes, on top of the CODEXIS legal database.",
+      "source": "./plugins/vecna-prava-sousedske-spory",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Věcná práva a sousedské spory ČR",
+          "description": "Vlastnické a držební žaloby, spoluvlastnictví a jeho zrušení, hranice a sousedské imise, služebnosti a cesty, nezbytná cesta, stavba na cizím pozemku, superficiální zásada a přechodná ustanovení, vydržení, opravy a spory v katastru nemovitostí.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "property": "Věcná práva"
+          }
+        },
+        "en": {
+          "displayName": "Czech Property Rights & Neighbour Disputes",
+          "description": "Ownership and possession actions, co-ownership and its dissolution, boundaries and neighbour immissions, easements and rights of way, necessary access, building on another's land, superficies principle and transitional rules, acquisitive prescription, land registry corrections and disputes.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "property": "Property rights"
+          }
+        },
+        "sk": {
+          "displayName": "Vecné práva a susedské spory ČR",
+          "description": "Vlastnícke a držobné žaloby, spoluvlastníctvo a jeho zrušenie, hranice a susedské imisie, služobnosti a cesty, nevyhnutná cesta, stavba na cudzom pozemku, superficiálna zásada a prechodné ustanovenia, vydržanie, opravy a spory v katastri nehnuteľností.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "property": "Vecné práva"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "bf1cd5be-8ffc-4522-8f2d-a61a878a3d36",
+      "name": "opatrovnictvi-svepravnost",
+      "description": "Czech legal capacity and guardianship practice skill - limitation of legal capacity and its review, supportive measures (assistance in decision-making, representation by a household member, advance directive), guardianship of adults and its supervision, guardian's duties and court approvals, public guardians, detention in health-care facilities, protection of vulnerable adults, dementia and estate planning, on top of the CODEXIS legal database.",
+      "source": "./plugins/opatrovnictvi-svepravnost",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Opatrovnictví a svéprávnost ČR",
+          "description": "Omezení svéprávnosti a jeho přezkum, podpůrná opatření (nápomoc při rozhodování, zastoupení členem domácnosti, předběžné prohlášení), opatrovnictví dospělých a dohled, povinnosti opatrovníka a schvalování soudem, veřejný opatrovník, detence ve zdravotnickém zařízení, ochrana zranitelných dospělých, demence a plánování majetku.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "guardianship": "Opatrovnictví"
+          }
+        },
+        "en": {
+          "displayName": "Czech Legal Capacity & Guardianship",
+          "description": "Limitation of legal capacity and its review, supportive measures (assisted decision-making, representation by a household member, advance directive), adult guardianship and supervision, guardian's duties and court approvals, public guardians, detention in health-care facilities, protection of vulnerable adults, dementia and estate planning.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "guardianship": "Guardianship"
+          }
+        },
+        "sk": {
+          "displayName": "Opatrovníctvo a spôsobilosť ČR",
+          "description": "Obmedzenie spôsobilosti na právne úkony a jeho preskúmanie, podporné opatrenia (nápomoc pri rozhodovaní, zastúpenie členom domácnosti, predbežné vyhlásenie), opatrovníctvo dospelých a dohľad, povinnosti opatrovníka a schvaľovanie súdom, verejný opatrovník, detencia v zdravotníckom zariadení, ochrana zraniteľných dospelých, demencia a plánovanie majetku.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "guardianship": "Opatrovníctvo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "fe09edac-afc0-400b-a58a-32098eaf5534",
+      "name": "trestni-pravo-hospodarske",
+      "description": "Czech white-collar and economic crime practice skill - fraud, credit and subsidy fraud, embezzlement, breach of fiduciary duty, insolvency and creditor offences, tax evasion and effective repentance, corruption and public procurement crimes, money laundering, corporate criminal liability and compliance defence, asset seizure and freezing, defence strategy and cooperation with authorities, on top of the CODEXIS legal database.",
+      "source": "./plugins/trestni-pravo-hospodarske",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Hospodářské trestní právo ČR",
+          "description": "Podvod, úvěrový a dotační podvod, zpronevěra, porušení povinnosti při správě cizího majetku, úpadkové a věřitelské delikty, zkrácení daně a účinná lítost, korupce a zakázkové delikty, legalizace, trestní odpovědnost právnických osob a compliance obhajoba, zajištění majetku, strategie obhajoby a spolupráce s orgány.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "criminal": "Trestní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Economic Crime & White-Collar Defence",
+          "description": "Fraud, credit and subsidy fraud, embezzlement, breach of fiduciary duty, insolvency and creditor offences, tax evasion and effective repentance, corruption and procurement crimes, money laundering, corporate criminal liability and compliance defence, asset seizure, defence strategy and cooperation with authorities.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "criminal": "Criminal law"
+          }
+        },
+        "sk": {
+          "displayName": "Hospodárske trestné právo ČR",
+          "description": "Podvod, úverový a dotačný podvod, sprenevera, porušenie povinnosti pri správe cudzieho majetku, úpadkové a veriteľské delikty, skrátenie dane a účinná ľútosť, korupcia a zákazkové delikty, legalizácia, trestná zodpovednosť právnických osôb a compliance obhajoba, zaistenie majetku, stratégia obhajoby a spolupráca s orgánmi.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "criminal": "Trestné právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "656fea00-42a1-4856-ab7e-8742f3881ccf",
+      "name": "obeti-trestnych-cinu",
+      "description": "Czech crime-victim and injured-party representation skill - victims' rights under Act 45/2013, especially vulnerable victims, injured party in criminal proceedings, adhesion claims for damages and non-pecuniary harm, state financial assistance, protective and preliminary measures, interview protection, confidant and counsel, complaints against dismissal, settlement and mediation, domestic and sexual violence cases, on top of the CODEXIS legal database.",
+      "source": "./plugins/obeti-trestnych-cinu",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Oběti trestných činů a poškození ČR",
+          "description": "Práva obětí dle zákona 45/2013, zvlášť zranitelná oběť, poškozený v trestním řízení, adhezní nárok na náhradu škody a nemajetkové újmy, peněžitá pomoc státu, předběžná a ochranná opatření, ochrana při výslechu, důvěrník a zmocněnec, stížnost proti odložení, narovnání a mediace, domácí a sexuální násilí.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "criminal": "Trestní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Crime Victims & Injured Parties",
+          "description": "Victims' rights under Act 45/2013, especially vulnerable victims, injured party in criminal proceedings, adhesion claims for damages and non-pecuniary harm, state financial assistance, preliminary and protective measures, interview protection, confidant and counsel, complaints against dismissal, settlement and mediation, domestic and sexual violence cases.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "criminal": "Criminal law"
+          }
+        },
+        "sk": {
+          "displayName": "Obete trestných činov a poškodení ČR",
+          "description": "Práva obetí podľa zákona 45/2013, obzvlášť zraniteľná obeť, poškodený v trestnom konaní, adhézny nárok na náhradu škody a nemajetkovej ujmy, peňažná pomoc štátu, predbežné a ochranné opatrenia, ochrana pri výsluchu, dôverník a splnomocnenec, sťažnosť proti odloženiu, narovnanie a mediácia, domáce a sexuálne násilie.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "criminal": "Trestné právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "6fd7b845-12ab-4ed8-8b6d-de5988b8b8ab",
+      "name": "prestupkove-pravo-spravni-trestani",
+      "description": "Czech misdemeanour and administrative-penalty practice skill - liability for administrative offences under Act 250/2016, offences of individuals, entrepreneurs and legal entities with exculpation, limitation periods, penalties and their assessment, penalty orders and objections, on-the-spot fines, oral hearings and evidence, traffic offences and the points system, appeals with the ban on reformatio in peius, review proceedings, judicial review and moderation of penalties, ne bis in idem with criminal law, on top of the CODEXIS legal database.",
+      "source": "./plugins/prestupkove-pravo-spravni-trestani",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Přestupkové právo a správní trestání ČR",
+          "description": "Odpovědnost za přestupek dle zákona 250/2016, přestupky fyzických osob, podnikatelů a právnických osob s liberací, promlčení, správní tresty a jejich výměra, příkaz a odpor, příkazový blok, ústní jednání a dokazování, dopravní přestupky a bodový systém, odvolání se zákazem reformationis in peius, přezkumné řízení, správní žaloba a moderace trestu, ne bis in idem s trestním právem.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "administrative": "Správní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Misdemeanours & Administrative Penalties",
+          "description": "Liability for administrative offences under Act 250/2016, offences of individuals, entrepreneurs and legal entities with exculpation, limitation periods, penalties and their assessment, penalty orders and objections, on-the-spot fines, oral hearings and evidence, traffic offences and the points system, appeals with the ban on reformatio in peius, review proceedings, judicial review and moderation of penalties, ne bis in idem with criminal law.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "administrative": "Administrative law"
+          }
+        },
+        "sk": {
+          "displayName": "Priestupkové právo a správne trestanie ČR",
+          "description": "Zodpovednosť za priestupok podľa zákona 250/2016, priestupky fyzických osôb, podnikateľov a právnických osôb s liberáciou, premlčanie, správne tresty a ich výmera, príkaz a odpor, príkazový blok, ústne pojednávanie a dokazovanie, dopravné priestupky a bodový systém, odvolanie so zákazom reformationis in peius, preskúmavacie konanie, správna žaloba a moderácia trestu, ne bis in idem s trestným právom.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "administrative": "Správne právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "8da7c973-2190-4dd6-b7c0-64a6dd1b5c43",
+      "name": "medialni-pravo-reklama",
+      "description": "Czech media and advertising law practice skill - press law and right of reply, broadcasting and on-demand audiovisual services regulation, advertising regulation including pharmaceuticals, alcohol, tobacco, gambling and food, misleading and comparative advertising, unfair commercial practices and consumer protection, influencer marketing, defamation and personality rights versus freedom of expression, journalists' source protection, Digital Services Act and European Media Freedom Act, direct marketing and spam, on top of the CODEXIS legal database.",
+      "source": "./plugins/medialni-pravo-reklama",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Mediální právo a reklama ČR",
+          "description": "Tiskový zákon a právo na odpověď, regulace vysílání a audiovizuálních služeb na vyžádání, regulace reklamy včetně léčiv, alkoholu, tabáku, hazardu a potravin, klamavá a srovnávací reklama, nekalé obchodní praktiky a ochrana spotřebitele, influencer marketing, difamace a ochrana osobnosti versus svoboda projevu, ochrana zdroje novináře, DSA a EMFA, přímý marketing a spam.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "media": "Média a reklama"
+          }
+        },
+        "en": {
+          "displayName": "Czech Media & Advertising Law",
+          "description": "Press law and right of reply, broadcasting and on-demand audiovisual services regulation, advertising regulation including pharmaceuticals, alcohol, tobacco, gambling and food, misleading and comparative advertising, unfair commercial practices and consumer protection, influencer marketing, defamation and personality rights versus freedom of expression, journalists' source protection, Digital Services Act and European Media Freedom Act, direct marketing and spam.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "media": "Media & advertising"
+          }
+        },
+        "sk": {
+          "displayName": "Mediálne právo a reklama ČR",
+          "description": "Tlačový zákon a právo na odpoveď, regulácia vysielania a audiovizuálnych služieb na požiadanie, regulácia reklamy vrátane liečiv, alkoholu, tabaku, hazardu a potravín, klamlivá a porovnávacia reklama, nekalé obchodné praktiky a ochrana spotrebiteľa, influencer marketing, difamácia a ochrana osobnosti verzus sloboda prejavu, ochrana zdroja novinára, DSA a EMFA, priamy marketing a spam.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "media": "Médiá a reklama"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "c012ce8d-32dd-4c4e-90fc-52e2e242716e",
+      "name": "e-commerce-digitalni-sluzby",
+      "description": "Czech e-commerce and digital-services practice skill - online shops and distance contracts, consumer information duties and the 14-day withdrawal, terms and conditions, sale of goods and digital content conformity and warranty, complaints handling and ADR, unfair commercial practices and price-reduction rules, online marketplaces and platform obligations under the DSA and P2B, cookies and direct marketing, payment services and chargebacks, product safety, accessibility, cross-border sales, jurisdiction and VAT OSS, on top of the CODEXIS legal database.",
+      "source": "./plugins/e-commerce-digitalni-sluzby",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "E-commerce a digitální služby ČR",
+          "description": "E-shopy a distanční smlouvy, informační povinnosti a 14denní odstoupení, obchodní podmínky, shoda a záruka u zboží a digitálního obsahu, reklamace a ADR, nekalé praktiky a pravidla slev, online tržiště a povinnosti platforem dle DSA a P2B, cookies a přímý marketing, platební služby a chargeback, bezpečnost výrobků, přístupnost, přeshraniční prodej, příslušnost a DPH OSS.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "consumer": "Spotřebitelské právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech E-commerce & Digital Services",
+          "description": "Online shops and distance contracts, consumer information duties and the 14-day withdrawal, terms and conditions, conformity and warranty for goods and digital content, complaints and ADR, unfair commercial practices and price-reduction rules, online marketplaces and platform obligations under the DSA and P2B, cookies and direct marketing, payment services and chargebacks, product safety, accessibility, cross-border sales, jurisdiction and VAT OSS.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "consumer": "Consumer law"
+          }
+        },
+        "sk": {
+          "displayName": "E-commerce a digitálne služby ČR",
+          "description": "E-shopy a dištančné zmluvy, informačné povinnosti a 14-dňové odstúpenie, obchodné podmienky, zhoda a záruka pri tovare a digitálnom obsahu, reklamácie a ADR, nekalé praktiky a pravidlá zliav, online trhoviská a povinnosti platforiem podľa DSA a P2B, cookies a priamy marketing, platobné služby a chargeback, bezpečnosť výrobkov, prístupnosť, cezhraničný predaj, príslušnosť a DPH OSS.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "consumer": "Spotrebiteľské právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "39034f0a-fefa-46f7-add3-101ff8b5d803",
+      "name": "kapitalovy-trh-investice",
+      "description": "Czech capital-markets and investment-services practice skill - investment firms and intermediaries under MiFID II, suitability and appropriateness, investor claims against brokers, public offers and prospectus exemptions, bonds and bondholder meetings, investment funds and AIFMD regimes, crowdfunding, crypto-assets under MiCA, market abuse and insider dealing, issuer disclosure and major holdings, takeover bids and squeeze-outs, CNB supervision and sanctions, financial arbitrator, taxation of investment income, on top of the CODEXIS legal database.",
+      "source": "./plugins/kapitalovy-trh-investice",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Kapitálový trh a investice ČR",
+          "description": "Obchodníci s cennými papíry a zprostředkovatelé dle MiFID II, vhodnost a přiměřenost, nároky investorů vůči obchodníkům, veřejná nabídka a výjimky z prospektu, dluhopisy a schůze vlastníků, investiční fondy a režimy ZISIF, crowdfunding, kryptoaktiva dle MiCA, zneužití trhu a insider dealing, informační povinnosti emitentů a oznámení podílů, nabídky převzetí a squeeze-out, dohled a sankce ČNB, finanční arbitr, zdanění investičních příjmů.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "finance": "Finanční právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Capital Markets & Investments",
+          "description": "Investment firms and intermediaries under MiFID II, suitability and appropriateness, investor claims against brokers, public offers and prospectus exemptions, bonds and bondholder meetings, investment funds and AIFMD regimes, crowdfunding, crypto-assets under MiCA, market abuse and insider dealing, issuer disclosure and major holdings, takeover bids and squeeze-outs, CNB supervision and sanctions, financial arbitrator, taxation of investment income.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "finance": "Financial law"
+          }
+        },
+        "sk": {
+          "displayName": "Kapitálový trh a investície ČR",
+          "description": "Obchodníci s cennými papiermi a sprostredkovatelia podľa MiFID II, vhodnosť a primeranosť, nároky investorov voči obchodníkom, verejná ponuka a výnimky z prospektu, dlhopisy a schôdze vlastníkov, investičné fondy a režimy ZISIF, crowdfunding, kryptoaktíva podľa MiCA, zneužitie trhu a insider dealing, informačné povinnosti emitentov a oznámenie podielov, ponuky na prevzatie a squeeze-out, dohľad a sankcie ČNB, finančný arbiter, zdanenie investičných príjmov.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "finance": "Finančné právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "3844909e-222f-486b-a855-3694aa03b394",
+      "name": "fuze-akvizice",
+      "description": "Czech M&A practice skill - share deals and asset deals, letters of intent and exclusivity, due diligence, SPA structure with price mechanisms, representations and warranties, indemnities and escrow, conditions precedent, shareholders' agreements, corporate transformations under the Transformations Act, merger control before the Czech competition office and the Commission, FDI screening, transfer of employees, regulatory approvals, tax structuring, closing and post-closing disputes, on top of the CODEXIS legal database.",
+      "source": "./plugins/fuze-akvizice",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Fúze a akvizice ČR",
+          "description": "Share deal a asset deal, letter of intent a exkluzivita, due diligence, struktura SPA s cenovými mechanismy, prohlášení a záruky, odškodnění a escrow, odkládací podmínky, akcionářské dohody, přeměny dle zákona o přeměnách, kontrola spojení u ÚOHS a Komise, prověřování zahraničních investic, přechod zaměstnanců, regulatorní souhlasy, daňové strukturování, closing a spory po closingu.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "corporate": "Korporátní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Mergers & Acquisitions",
+          "description": "Share deals and asset deals, letters of intent and exclusivity, due diligence, SPA structure with price mechanisms, representations and warranties, indemnities and escrow, conditions precedent, shareholders' agreements, corporate transformations under the Transformations Act, merger control before the Czech competition office and the Commission, FDI screening, transfer of employees, regulatory approvals, tax structuring, closing and post-closing disputes.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "corporate": "Corporate law"
+          }
+        },
+        "sk": {
+          "displayName": "Fúzie a akvizície ČR",
+          "description": "Share deal a asset deal, letter of intent a exkluzivita, due diligence, štruktúra SPA s cenovými mechanizmami, vyhlásenia a záruky, odškodnenie a escrow, odkladacie podmienky, akcionárske dohody, premeny podľa zákona o premenách, kontrola koncentrácií na ÚOHS a Komisii, preverovanie zahraničných investícií, prechod zamestnancov, regulačné súhlasy, daňové štruktúrovanie, closing a spory po closingu.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "corporate": "Korporátne právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "a71d6b3e-afc2-4ebd-9e59-690b8733cfeb",
+      "name": "startupy-investice-esop",
+      "description": "Czech startup and venture-financing practice skill - founding and cap table, founders' agreements and vesting, convertible loans and SAFE-type instruments, seed and VC rounds with shareholders' agreements, liquidation preference, anti-dilution and drag/tag, employee share and option plans including Czech tax deferral, IP assignment and employee works, non-compete and confidentiality, grants and R&D deductions, crowdfunding and public-offer limits, exits and founder taxation, on top of the CODEXIS legal database.",
+      "source": "./plugins/startupy-investice-esop",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Startupy, investice a ESOP ČR",
+          "description": "Založení a cap table, zakladatelské dohody a vesting, konvertibilní zápůjčky a SAFE, seed a VC kola s akcionářskou dohodou, likvidační preference, anti-dilution a drag/tag, zaměstnanecké akcie a opční plány včetně českého daňového odkladu, převod IP a zaměstnanecká díla, zákaz konkurence a mlčenlivost, dotace a odpočet na výzkum, crowdfunding a limity veřejné nabídky, exit a zdanění zakladatelů.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "corporate": "Korporátní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Startups, Investments & ESOP",
+          "description": "Founding and cap table, founders' agreements and vesting, convertible loans and SAFE-type instruments, seed and VC rounds with shareholders' agreements, liquidation preference, anti-dilution and drag/tag, employee share and option plans including Czech tax deferral, IP assignment and employee works, non-compete and confidentiality, grants and R&D deductions, crowdfunding and public-offer limits, exits and founder taxation.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "corporate": "Corporate law"
+          }
+        },
+        "sk": {
+          "displayName": "Startupy, investície a ESOP ČR",
+          "description": "Založenie a cap table, zakladateľské dohody a vesting, konvertibilné pôžičky a SAFE, seed a VC kolá s akcionárskou dohodou, likvidačná preferencia, anti-dilution a drag/tag, zamestnanecké akcie a opčné plány vrátane českého daňového odkladu, prevod IP a zamestnanecké diela, zákaz konkurencie a mlčanlivosť, dotácie a odpočet na výskum, crowdfunding a limity verejnej ponuky, exit a zdanenie zakladateľov.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "corporate": "Korporátne právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "2f479337-987d-46c2-9258-1899d6499753",
+      "name": "franchising-distribuce-obchodni-zastoupeni",
+      "description": "Czech franchising, distribution and commercial-agency practice skill - franchise agreements and pre-contractual disclosure, know-how and brand licensing, exclusive and selective distribution, vertical restraints and the block exemption, resale price maintenance and online sales bans, commercial agents' commission, termination and goodwill indemnity, non-compete clauses, disguised employment risks, cross-border governing law and jurisdiction, VAT and withholding on royalties, on top of the CODEXIS legal database.",
+      "source": "./plugins/franchising-distribuce-obchodni-zastoupeni",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Franchising, distribuce a obchodní zastoupení ČR",
+          "description": "Franšízové smlouvy a předsmluvní informace, licence know-how a značky, výhradní a selektivní distribuce, vertikální omezení a bloková výjimka, určování cen pro další prodej a zákazy online prodeje, provize obchodního zástupce, ukončení a zvláštní odměna, konkurenční doložky, riziko zastřeného zaměstnání, přeshraniční rozhodné právo a příslušnost, DPH a srážková daň z licenčních poplatků.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "commercial": "Obchodní právo"
+          }
+        },
+        "en": {
+          "displayName": "Czech Franchising, Distribution & Agency",
+          "description": "Franchise agreements and pre-contractual disclosure, know-how and brand licensing, exclusive and selective distribution, vertical restraints and the block exemption, resale price maintenance and online sales bans, commercial agents' commission, termination and goodwill indemnity, non-compete clauses, disguised employment risks, cross-border governing law and jurisdiction, VAT and withholding on royalties.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "commercial": "Commercial law"
+          }
+        },
+        "sk": {
+          "displayName": "Franchising, distribúcia a obchodné zastúpenie ČR",
+          "description": "Franšízové zmluvy a predzmluvné informácie, licencie know-how a značky, výhradná a selektívna distribúcia, vertikálne obmedzenia a bloková výnimka, určovanie cien pre ďalší predaj a zákazy online predaja, provízia obchodného zástupcu, ukončenie a osobitná odmena, konkurenčné doložky, riziko zastretého zamestnania, cezhraničné rozhodné právo a príslušnosť, DPH a zrážková daň z licenčných poplatkov.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "commercial": "Obchodné právo"
+          }
+        }
+      }
+    },
+    {
+      "uuid": "f542fffa-5645-46f2-82c8-972550235a71",
+      "name": "zemedelske-pravo",
+      "description": "Czech agricultural law practice skill - agricultural lease and its termination, land consolidation, protection of the agricultural land fund and land withdrawal, CAP direct payments and conditionality, subsidy sanctions and appeals, LPIS and the farm register, game damage and hunting, water and fertiliser rules, animal welfare and veterinary law, food primary production and direct sales, organic farming, agri-photovoltaics, farm succession and taxation of farmers, on top of the CODEXIS legal database.",
+      "source": "./plugins/zemedelske-pravo",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Zemědělské právo ČR",
+          "description": "Zemědělský pacht a jeho výpověď, pozemkové úpravy, ochrana zemědělského půdního fondu a vynětí, přímé platby SZP a podmíněnost, sankce a odvolání u dotací, LPIS a evidence zemědělského podnikatele, škody zvěří a myslivost, vodní právo a hnojiva, welfare zvířat a veterinární právo, prvovýroba potravin a prodej ze dvora, ekologické zemědělství, agrovoltaika, předání farmy a zdanění zemědělců.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "agriculture": "Zemědělství"
+          }
+        },
+        "en": {
+          "displayName": "Czech Agricultural Law",
+          "description": "Agricultural lease and its termination, land consolidation, protection of the agricultural land fund and land withdrawal, CAP direct payments and conditionality, subsidy sanctions and appeals, LPIS and the farm register, game damage and hunting, water and fertiliser rules, animal welfare and veterinary law, food primary production and direct sales, organic farming, agri-photovoltaics, farm succession and taxation of farmers.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "agriculture": "Agriculture"
+          }
+        },
+        "sk": {
+          "displayName": "Poľnohospodárske právo ČR",
+          "description": "Poľnohospodársky nájom (pacht) a jeho výpoveď, pozemkové úpravy, ochrana poľnohospodárskeho pôdneho fondu a vyňatie, priame platby SPP a podmienenosť, sankcie a odvolania pri dotáciách, LPIS a evidencia poľnohospodárskeho podnikateľa, škody zverou a poľovníctvo, vodné právo a hnojivá, welfare zvierat a veterinárne právo, prvovýroba potravín a predaj z dvora, ekologické poľnohospodárstvo, agrovoltaika, odovzdanie farmy a zdanenie poľnohospodárov.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "agriculture": "Poľnohospodárstvo"
+          }
+        }
+      }
     }
   ]
 }

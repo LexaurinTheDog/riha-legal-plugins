@@ -1,0 +1,16 @@
+{
+  "uuid": "2e5922f3-6d1a-4661-9296-ca12348537c0",
+  "name": "nahrada-ujmy-odpovednost",
+  "version": "1.0.0",
+  "description": "Czech tort and liability practice skill - general and strict liability under the Civil Code, damage to property and pure economic loss, personal injury and the Supreme Court methodology for non-pecuniary harm, wrongful death and secondary victims, product liability, liability of employers, professionals and public bodies, causation and contributory fault, limitation, insurance interplay and quantification, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["náhrada škody", "náhrada újmy", "nemajetková újma", "bolestné", "ztížení společenského uplatnění", "Metodika NS", "ušlý zisk", "příčinná souvislost", "spoluzavinění", "promlčení", "odpovědnost za výrobek", "tort law", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "torts"],
+  "i18n": {
+    "cs": { "displayName": "Náhrada újmy a odpovědnost ČR", "description": "Obecná a objektivní odpovědnost podle OZ, škoda na věci a čistě ekonomická újma, újma na zdraví a Metodika NS k nemajetkové újmě, usmrcení a sekundární oběti, odpovědnost za výrobek, odpovědnost zaměstnavatelů, profesionálů a státu, příčinná souvislost a spoluzavinění, promlčení, vazba na pojištění a vyčíslení.", "tagLabels": { "legal": "Právo", "czech": "Česko", "torts": "Náhrada újmy" } },
+    "en": { "displayName": "Czech Tort & Liability Law", "description": "General and strict liability under the Civil Code, property damage and pure economic loss, personal injury and the Supreme Court methodology for non-pecuniary harm, wrongful death and secondary victims, product liability, liability of employers, professionals and public bodies, causation and contributory fault, limitation, insurance and quantification.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "torts": "Torts" } },
+    "sk": { "displayName": "Náhrada ujmy a zodpovednosť ČR", "description": "Všeobecná a objektívna zodpovednosť podľa OZ, škoda na veci a čisto ekonomická ujma, ujma na zdraví a Metodika NS k nemajetkovej ujme, usmrtenie a sekundárne obete, zodpovednosť za výrobok, zodpovednosť zamestnávateľov, profesionálov a štátu, príčinná súvislosť a spoluzavinenie, premlčanie, väzba na poistenie a vyčíslenie.", "tagLabels": { "legal": "Právo", "czech": "Česko", "torts": "Náhrada ujmy" } }
+  },
+  "skills": "./skills"
+}

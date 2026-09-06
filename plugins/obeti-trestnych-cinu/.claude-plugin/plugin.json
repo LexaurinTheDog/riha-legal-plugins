@@ -1,0 +1,16 @@
+{
+  "uuid": "656fea00-42a1-4856-ab7e-8742f3881ccf",
+  "name": "obeti-trestnych-cinu",
+  "version": "1.0.0",
+  "description": "Czech crime-victim and injured-party representation skill - victims' rights under Act 45/2013, especially vulnerable victims, injured party in criminal proceedings, adhesion claims for damages and non-pecuniary harm, state financial assistance, protective and preliminary measures, interview protection, confidant and counsel, complaints against dismissal, settlement and mediation, domestic and sexual violence cases, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["oběť trestného činu", "poškozený", "adhezní řízení", "náhrada újmy", "zvlášť zranitelná oběť", "peněžitá pomoc", "zmocněnec poškozeného", "předběžné opatření", "domácí násilí", "narovnání", "victim", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "criminal"],
+  "i18n": {
+    "cs": { "displayName": "Oběti trestných činů a poškození ČR", "description": "Práva obětí dle zákona 45/2013, zvlášť zranitelná oběť, poškozený v trestním řízení, adhezní nárok na náhradu škody a nemajetkové újmy, peněžitá pomoc státu, předběžná a ochranná opatření, ochrana při výslechu, důvěrník a zmocněnec, stížnost proti odložení, narovnání a mediace, domácí a sexuální násilí.", "tagLabels": { "legal": "Právo", "czech": "Česko", "criminal": "Trestní právo" } },
+    "en": { "displayName": "Czech Crime Victims & Injured Parties", "description": "Victims' rights under Act 45/2013, especially vulnerable victims, injured party in criminal proceedings, adhesion claims for damages and non-pecuniary harm, state financial assistance, preliminary and protective measures, interview protection, confidant and counsel, complaints against dismissal, settlement and mediation, domestic and sexual violence cases.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "criminal": "Criminal law" } },
+    "sk": { "displayName": "Obete trestných činov a poškodení ČR", "description": "Práva obetí podľa zákona 45/2013, obzvlášť zraniteľná obeť, poškodený v trestnom konaní, adhézny nárok na náhradu škody a nemajetkovej ujmy, peňažná pomoc štátu, predbežné a ochranné opatrenia, ochrana pri výsluchu, dôverník a splnomocnenec, sťažnosť proti odloženiu, narovnanie a mediácia, domáce a sexuálne násilie.", "tagLabels": { "legal": "Právo", "czech": "Česko", "criminal": "Trestné právo" } }
+  },
+  "skills": "./skills"
+}

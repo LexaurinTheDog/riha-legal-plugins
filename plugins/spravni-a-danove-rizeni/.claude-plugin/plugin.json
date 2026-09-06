@@ -1,0 +1,16 @@
+{
+  "uuid": "46fe5a16-047b-4b50-9735-256a256a5531",
+  "name": "spravni-a-danove-rizeni",
+  "version": "1.0.0",
+  "description": "Czech administrative and tax procedure practice skill - remedies against authorities under správní řád, daňový řád and soudní řád správní: appeals, judicial review, cassation, tax audits, penalties, deadlines, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["správní řízení", "správní řád", "daňový řád", "daňová kontrola", "odvolání", "správní žaloba", "kasační stížnost", "NSS", "administrative law", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "administrative"],
+  "i18n": {
+    "cs": { "displayName": "Správní a daňové řízení ČR", "description": "Obrana proti rozhodnutím a postupům úřadů a správce daně - odvolání, přezkum, správní žaloba, kasační stížnost, daňová kontrola, sankce, prekluze, lhůty.", "tagLabels": { "legal": "Právo", "czech": "Česko", "administrative": "Správní právo" } },
+    "en": { "displayName": "Czech Administrative and Tax Procedure", "description": "Challenging decisions and conduct of authorities and tax administrators - appeals, review, judicial review action, cassation, tax audits, penalties, time bars, deadlines.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "administrative": "Administrative Law" } },
+    "sk": { "displayName": "Správne a daňové konanie ČR", "description": "Obrana proti rozhodnutiam a postupom úradov a správcu dane v ČR - odvolanie, preskúmanie, správna žaloba, kasačná sťažnosť, daňová kontrola, sankcie, preklúzia, lehoty.", "tagLabels": { "legal": "Právo", "czech": "Česko", "administrative": "Správne právo" } }
+  },
+  "skills": "./skills"
+}

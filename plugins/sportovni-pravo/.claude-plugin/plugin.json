@@ -1,0 +1,16 @@
+{
+  "uuid": "d811e4e0-77f1-4bb4-981c-ef739f721b71",
+  "name": "sportovni-pravo",
+  "version": "1.0.0",
+  "description": "Czech sports law practice skill - athlete and club contracts, federation rules and disciplinary review, transfers and arbitration, liability for sports injuries, event organisation, sponsorship, donations and public funding, anti-doping and minors, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["sportovní právo", "sportovec", "klub", "svaz", "FAČR", "přestup", "sponzoring", "dotace NSA", "antidoping", "sports law", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "sports"],
+  "i18n": {
+    "cs": { "displayName": "Sportovní právo ČR", "description": "Smlouvy sportovců a klubů, svazové řády a přezkum disciplinárních rozhodnutí, přestupy a arbitráž, odpovědnost za sportovní úrazy, pořádání akcí, sponzoring, dary a veřejná podpora, antidoping, mládež.", "tagLabels": { "legal": "Právo", "czech": "Česko", "sports": "Sport" } },
+    "en": { "displayName": "Czech Sports Law", "description": "Athlete and club contracts, federation rules and disciplinary review, transfers and arbitration, liability for sports injuries, event organisation, sponsorship, donations and public funding, anti-doping, minors.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "sports": "Sports" } },
+    "sk": { "displayName": "Športové právo ČR", "description": "Zmluvy športovcov a klubov v ČR, zväzové poriadky a preskúmanie disciplinárnych rozhodnutí, prestupy a arbitráž, zodpovednosť za športové úrazy, organizácia podujatí, sponzoring, dary a verejná podpora, antidoping, mládež.", "tagLabels": { "legal": "Právo", "czech": "Česko", "sports": "Šport" } }
+  },
+  "skills": "./skills"
+}

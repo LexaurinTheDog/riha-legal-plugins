@@ -1,0 +1,16 @@
+{
+  "uuid": "c9daa96c-d953-423d-b5fd-04323b2c0184",
+  "name": "korporatni-pravo",
+  "version": "1.0.0",
+  "description": "Czech corporate law practice skill - company formation, general meetings, share transfers, directors' duties and liability, shareholder agreements, profit distribution, registers and transformations under ZOK and the Civil Code, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["korporátní právo", "corporate law", "ZOK", "s.r.o.", "a.s.", "valná hromada", "převod podílu", "jednatel", "péče řádného hospodáře", "obchodní rejstřík", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "corporate"],
+  "i18n": {
+    "cs": { "displayName": "Korporátní právo ČR", "description": "Založení a fungování s.r.o. a a.s. - valná hromada, převod podílu, odpovědnost jednatelů, akcionářské dohody, rozdělení zisku, obchodní rejstřík, skuteční majitelé, přeměny, likvidace.", "tagLabels": { "legal": "Právo", "czech": "Česko", "corporate": "Korporátní právo" } },
+    "en": { "displayName": "Czech Corporate Law", "description": "Formation and operation of s.r.o. and a.s. - general meetings, share transfers, directors' liability, shareholder agreements, profit distribution, commercial register, beneficial owners, transformations, liquidation.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "corporate": "Corporate Law" } },
+    "sk": { "displayName": "Korporátne právo ČR", "description": "Založenie a fungovanie českej s.r.o. a a.s. - valné zhromaždenie, prevod podielu, zodpovednosť konateľov, akcionárske dohody, rozdelenie zisku, obchodný register, koneční užívatelia výhod, premeny, likvidácia.", "tagLabels": { "legal": "Právo", "czech": "Česko", "corporate": "Korporátne právo" } }
+  },
+  "skills": "./skills"
+}

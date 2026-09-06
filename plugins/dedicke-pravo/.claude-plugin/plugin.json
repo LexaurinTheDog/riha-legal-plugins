@@ -1,0 +1,16 @@
+{
+  "uuid": "afd1cc2a-21fd-4468-8664-5a29101c3bae",
+  "name": "dedicke-pravo",
+  "version": "1.0.0",
+  "description": "Czech inheritance law practice skill - wills and inheritance contracts, forced heirs, disinheritance, renunciation and inventory reservation, debts of the estate, probate proceedings before the notary, disputes and estate planning, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["dědické právo", "inheritance", "závěť", "pozůstalost", "dědictví", "nepominutelný dědic", "vydědění", "notář", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "inheritance"],
+  "i18n": {
+    "cs": { "displayName": "Dědické právo ČR", "description": "Závěť a dědická smlouva, nepominutelní dědici, vydědění, odmítnutí a výhrada soupisu, dluhy zůstavitele, pozůstalostní řízení u notáře, spory o dědické právo, plánování majetku.", "tagLabels": { "legal": "Právo", "czech": "Česko", "inheritance": "Dědické právo" } },
+    "en": { "displayName": "Czech Inheritance Law", "description": "Wills and inheritance contracts, forced heirs, disinheritance, renunciation and inventory reservation, estate debts, probate before the notary, inheritance disputes, estate planning.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "inheritance": "Inheritance Law" } },
+    "sk": { "displayName": "Dedičské právo ČR", "description": "Závet a dedičská zmluva, neopomenuteľní dedičia, vydedenie, odmietnutie a výhrada súpisu, dlhy poručiteľa, dedičské konanie u notára v ČR, spory o dedičské právo, plánovanie majetku.", "tagLabels": { "legal": "Právo", "czech": "Česko", "inheritance": "Dedičské právo" } }
+  },
+  "skills": "./skills"
+}

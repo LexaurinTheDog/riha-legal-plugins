@@ -1,0 +1,16 @@
+{
+  "uuid": "80ec02a0-b63b-40f1-b2f0-c6b8d60d92d4",
+  "name": "vymahani-pohledavek",
+  "version": "1.0.0",
+  "description": "Czech debt recovery practice skill - limitation check, pre-action notice, payment orders (EPR), litigation, costs and interest, enforcement (exekuce) and insolvency crossover on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["pohledávka", "vymáhání", "debt recovery", "platební rozkaz", "EPR", "exekuce", "promlčení", "úrok z prodlení", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "debt-recovery"],
+  "i18n": {
+    "cs": { "displayName": "Vymáhání pohledávek ČR", "description": "Od promlčení a předžalobní výzvy přes platební rozkaz a žalobu po exekuci - výpočet příslušenství, nákladů a poplatků, insolvenční křižovatka.", "tagLabels": { "legal": "Právo", "czech": "Česko", "debt-recovery": "Vymáhání pohledávek" } },
+    "en": { "displayName": "Czech Debt Recovery", "description": "From limitation and pre-action notice through payment orders and litigation to enforcement - interest, costs and fees, insolvency crossover.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "debt-recovery": "Debt Recovery" } },
+    "sk": { "displayName": "Vymáhanie pohľadávok ČR", "description": "Od premlčania a predžalobnej výzvy cez platobný rozkaz a žalobu po exekúciu v ČR - výpočet príslušenstva, trov a poplatkov, insolvenčná križovatka.", "tagLabels": { "legal": "Právo", "czech": "Česko", "debt-recovery": "Vymáhanie pohľadávok" } }
+  },
+  "skills": "./skills"
+}

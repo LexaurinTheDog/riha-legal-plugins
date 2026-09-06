@@ -1,0 +1,16 @@
+{
+  "uuid": "39034f0a-fefa-46f7-add3-101ff8b5d803",
+  "name": "kapitalovy-trh-investice",
+  "version": "1.0.0",
+  "description": "Czech capital-markets and investment-services practice skill - investment firms and intermediaries under MiFID II, suitability and appropriateness, investor claims against brokers, public offers and prospectus exemptions, bonds and bondholder meetings, investment funds and AIFMD regimes, crowdfunding, crypto-assets under MiCA, market abuse and insider dealing, issuer disclosure and major holdings, takeover bids and squeeze-outs, CNB supervision and sanctions, financial arbitrator, taxation of investment income, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["kapitálový trh", "investiční služby", "obchodník s cennými papíry", "MiFID", "prospekt", "dluhopisy", "investiční fond", "ZISIF", "crowdfunding", "MiCA", "kryptoaktiva", "zneužití trhu", "ČNB", "squeeze-out", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "finance"],
+  "i18n": {
+    "cs": { "displayName": "Kapitálový trh a investice ČR", "description": "Obchodníci s cennými papíry a zprostředkovatelé dle MiFID II, vhodnost a přiměřenost, nároky investorů vůči obchodníkům, veřejná nabídka a výjimky z prospektu, dluhopisy a schůze vlastníků, investiční fondy a režimy ZISIF, crowdfunding, kryptoaktiva dle MiCA, zneužití trhu a insider dealing, informační povinnosti emitentů a oznámení podílů, nabídky převzetí a squeeze-out, dohled a sankce ČNB, finanční arbitr, zdanění investičních příjmů.", "tagLabels": { "legal": "Právo", "czech": "Česko", "finance": "Finanční právo" } },
+    "en": { "displayName": "Czech Capital Markets & Investments", "description": "Investment firms and intermediaries under MiFID II, suitability and appropriateness, investor claims against brokers, public offers and prospectus exemptions, bonds and bondholder meetings, investment funds and AIFMD regimes, crowdfunding, crypto-assets under MiCA, market abuse and insider dealing, issuer disclosure and major holdings, takeover bids and squeeze-outs, CNB supervision and sanctions, financial arbitrator, taxation of investment income.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "finance": "Financial law" } },
+    "sk": { "displayName": "Kapitálový trh a investície ČR", "description": "Obchodníci s cennými papiermi a sprostredkovatelia podľa MiFID II, vhodnosť a primeranosť, nároky investorov voči obchodníkom, verejná ponuka a výnimky z prospektu, dlhopisy a schôdze vlastníkov, investičné fondy a režimy ZISIF, crowdfunding, kryptoaktíva podľa MiCA, zneužitie trhu a insider dealing, informačné povinnosti emitentov a oznámenie podielov, ponuky na prevzatie a squeeze-out, dohľad a sankcie ČNB, finančný arbiter, zdanenie investičných príjmov.", "tagLabels": { "legal": "Právo", "czech": "Česko", "finance": "Finančné právo" } }
+  },
+  "skills": "./skills"
+}

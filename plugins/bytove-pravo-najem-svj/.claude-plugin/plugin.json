@@ -1,0 +1,16 @@
+{
+  "uuid": "6b42ab7e-cda4-4b61-aebc-5491119894b7",
+  "name": "bytove-pravo-najem-svj",
+  "version": "1.0.0",
+  "description": "Czech housing law practice skill - residential and commercial leases, termination and eviction, rent and service charges, owners' associations (SVJ), housing cooperatives and short-term rentals, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["nájem bytu", "výpověď z nájmu", "vyklizení", "SVJ", "společenství vlastníků", "bytové družstvo", "služby", "vyúčtování", "Airbnb", "housing law", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "housing"],
+  "i18n": {
+    "cs": { "displayName": "Bytové právo - nájem a SVJ ČR", "description": "Nájem bytu a prostor sloužících podnikání, výpověď a vyklizení, nájemné a vyúčtování služeb, společenství vlastníků, bytová družstva, krátkodobé pronájmy.", "tagLabels": { "legal": "Právo", "czech": "Česko", "housing": "Bydlení" } },
+    "en": { "displayName": "Czech Housing Law - Leases and HOAs", "description": "Residential and commercial leases, termination and eviction, rent and service charges, owners' associations (SVJ), housing cooperatives, short-term rentals.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "housing": "Housing" } },
+    "sk": { "displayName": "Bytové právo - nájom a SVJ ČR", "description": "Nájom bytu a priestorov slúžiacich podnikaniu v ČR, výpoveď a vypratanie, nájomné a vyúčtovanie služieb, spoločenstvá vlastníkov, bytové družstvá, krátkodobé prenájmy.", "tagLabels": { "legal": "Právo", "czech": "Česko", "housing": "Bývanie" } }
+  },
+  "skills": "./skills"
+}

@@ -1,0 +1,16 @@
+{
+  "uuid": "bf1cd5be-8ffc-4522-8f2d-a61a878a3d36",
+  "name": "opatrovnictvi-svepravnost",
+  "version": "1.0.0",
+  "description": "Czech legal capacity and guardianship practice skill - limitation of legal capacity and its review, supportive measures (assistance in decision-making, representation by a household member, advance directive), guardianship of adults and its supervision, guardian's duties and court approvals, public guardians, detention in health-care facilities, protection of vulnerable adults, dementia and estate planning, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["svéprávnost", "omezení svéprávnosti", "opatrovník", "opatrovnictví", "nápomoc při rozhodování", "zastoupení členem domácnosti", "předběžné prohlášení", "veřejný opatrovník", "detenční řízení", "opatrovnická rada", "guardianship", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "guardianship"],
+  "i18n": {
+    "cs": { "displayName": "Opatrovnictví a svéprávnost ČR", "description": "Omezení svéprávnosti a jeho přezkum, podpůrná opatření (nápomoc při rozhodování, zastoupení členem domácnosti, předběžné prohlášení), opatrovnictví dospělých a dohled, povinnosti opatrovníka a schvalování soudem, veřejný opatrovník, detence ve zdravotnickém zařízení, ochrana zranitelných dospělých, demence a plánování majetku.", "tagLabels": { "legal": "Právo", "czech": "Česko", "guardianship": "Opatrovnictví" } },
+    "en": { "displayName": "Czech Legal Capacity & Guardianship", "description": "Limitation of legal capacity and its review, supportive measures (assisted decision-making, representation by a household member, advance directive), adult guardianship and supervision, guardian's duties and court approvals, public guardians, detention in health-care facilities, protection of vulnerable adults, dementia and estate planning.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "guardianship": "Guardianship" } },
+    "sk": { "displayName": "Opatrovníctvo a spôsobilosť ČR", "description": "Obmedzenie spôsobilosti na právne úkony a jeho preskúmanie, podporné opatrenia (nápomoc pri rozhodovaní, zastúpenie členom domácnosti, predbežné vyhlásenie), opatrovníctvo dospelých a dohľad, povinnosti opatrovníka a schvaľovanie súdom, verejný opatrovník, detencia v zdravotníckom zariadení, ochrana zraniteľných dospelých, demencia a plánovanie majetku.", "tagLabels": { "legal": "Právo", "czech": "Česko", "guardianship": "Opatrovníctvo" } }
+  },
+  "skills": "./skills"
+}

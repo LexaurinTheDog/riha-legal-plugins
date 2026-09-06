@@ -1,0 +1,16 @@
+{
+  "uuid": "6dcc0792-5e12-4f46-9e2c-a2784de34a97",
+  "name": "nemovitosti-transakce",
+  "version": "1.0.0",
+  "description": "Czech real estate transactions practice skill - purchase contracts, escrow, cadastre filings, liens, pre-emption rights, co-ownership, leases and transaction taxes on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["nemovitost", "real estate", "kupní smlouva", "katastr", "úschova", "zástavní právo", "předkupní právo", "nájem", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "real-estate"],
+  "i18n": {
+    "cs": { "displayName": "Nemovitosti a realitní transakce ČR", "description": "Převody nemovitostí od prověrky LV po vklad - kupní smlouva, úschova, zástavní a předkupní práva, spoluvlastnictví, SVJ, nájem, daně převodu.", "tagLabels": { "legal": "Právo", "czech": "Česko", "real-estate": "Nemovitosti" } },
+    "en": { "displayName": "Czech Real Estate Transactions", "description": "Property transfers from title check to registration - purchase contract, escrow, liens and pre-emption rights, co-ownership, HOA, leases, transaction taxes.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "real-estate": "Real Estate" } },
+    "sk": { "displayName": "Nehnuteľnosti a realitné transakcie ČR", "description": "Prevody nehnuteľností v ČR od previerky LV po vklad - kúpna zmluva, úschova, záložné a predkupné práva, spoluvlastníctvo, SVJ, nájom, dane.", "tagLabels": { "legal": "Právo", "czech": "Česko", "real-estate": "Nehnuteľnosti" } }
+  },
+  "skills": "./skills"
+}

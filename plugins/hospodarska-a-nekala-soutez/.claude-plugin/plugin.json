@@ -1,0 +1,16 @@
+{
+  "uuid": "d53bc586-1421-4b1f-8d92-8698e528c244",
+  "name": "hospodarska-a-nekala-soutez",
+  "version": "1.0.0",
+  "description": "Czech competition and unfair competition practice skill - cartels, abuse of dominance, merger control and ÚOHS proceedings, private damages, unfair competition claims, advertising and consumer practices, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["hospodářská soutěž", "nekalá soutěž", "kartel", "dominantní postavení", "spojení soutěžitelů", "ÚOHS", "reklama", "competition law", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "competition"],
+  "i18n": {
+    "cs": { "displayName": "Hospodářská a nekalá soutěž ČR", "description": "Kartely, zneužití dominance, spojování soutěžitelů a řízení před ÚOHS, náhrada škody, nekalá soutěž a její nároky, regulace reklamy a nekalé obchodní praktiky.", "tagLabels": { "legal": "Právo", "czech": "Česko", "competition": "Hospodářská soutěž" } },
+    "en": { "displayName": "Czech Competition and Unfair Competition", "description": "Cartels, abuse of dominance, merger control and ÚOHS proceedings, damages, unfair competition claims, advertising regulation and unfair commercial practices.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "competition": "Competition Law" } },
+    "sk": { "displayName": "Hospodárska a nekalá súťaž ČR", "description": "Kartely, zneužitie dominancie, koncentrácie a konanie pred ÚOHS, náhrada škody, nekalá súťaž a jej nároky, regulácia reklamy a nekalé obchodné praktiky v ČR.", "tagLabels": { "legal": "Právo", "czech": "Česko", "competition": "Hospodárska súťaž" } }
+  },
+  "skills": "./skills"
+}

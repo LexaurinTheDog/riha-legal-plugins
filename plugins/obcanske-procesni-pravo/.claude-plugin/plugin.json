@@ -1,0 +1,16 @@
+{
+  "uuid": "045a0bcb-4cc0-4973-aa39-064f34a64b04",
+  "name": "obcanske-procesni-pravo",
+  "version": "1.0.0",
+  "description": "Czech civil procedure practice skill - jurisdiction and venue, drafting claims and petitions, court fees, service and deadlines, evidence and burden of proof, judgments by default and payment orders, interim measures, appeals and extraordinary remedies including admissibility of dovolání, costs of proceedings and attorney tariff, non-contentious proceedings, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["občanský soudní řád", "žaloba", "příslušnost soudu", "soudní poplatek", "doručování", "lhůty", "dokazování", "rozsudek pro zmeškání", "předběžné opatření", "odvolání", "dovolání", "náklady řízení", "civil procedure", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "procedure"],
+  "i18n": {
+    "cs": { "displayName": "Občanské procesní právo ČR", "description": "Pravomoc a příslušnost, sepis žaloby a petitu, soudní poplatky, doručování a lhůty, dokazování a důkazní břemeno, rozsudek pro zmeškání a platební rozkaz, předběžná opatření, odvolání a mimořádné opravné prostředky včetně přípustnosti dovolání, náklady řízení a advokátní tarif, nesporná řízení.", "tagLabels": { "legal": "Právo", "czech": "Česko", "procedure": "Civilní proces" } },
+    "en": { "displayName": "Czech Civil Procedure", "description": "Jurisdiction and venue, drafting claims and petitions, court fees, service and deadlines, evidence and burden of proof, default judgments and payment orders, interim measures, appeals and extraordinary remedies including admissibility of dovolání, costs and attorney tariff, non-contentious proceedings.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "procedure": "Civil procedure" } },
+    "sk": { "displayName": "Občianske procesné právo ČR", "description": "Právomoc a príslušnosť, spísanie žaloby a petitu, súdne poplatky, doručovanie a lehoty, dokazovanie a dôkazné bremeno, rozsudok pre zmeškanie a platobný rozkaz, predbežné opatrenia, odvolanie a mimoriadne opravné prostriedky vrátane prípustnosti dovolania, trovy konania a advokátska tarifa, nesporové konania.", "tagLabels": { "legal": "Právo", "czech": "Česko", "procedure": "Civilný proces" } }
+  },
+  "skills": "./skills"
+}

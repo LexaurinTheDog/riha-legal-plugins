@@ -1,0 +1,16 @@
+{
+  "uuid": "18e7ea07-0dca-4c91-a35f-0f5349996b2f",
+  "name": "spotrebitelske-pravo",
+  "version": "1.0.0",
+  "description": "Czech consumer law practice skill - consumer contracts and e-commerce, withdrawal, defects and complaints, unfair terms and practices, consumer credit, ADR and collective redress, and compliance for traders, on top of the CODEXIS legal database.",
+  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
+  "keywords": ["spotřebitel", "spotřebitelské právo", "e-shop", "odstoupení od smlouvy", "reklamace", "spotřebitelský úvěr", "ČOI", "consumer law", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "tags": ["legal", "czech", "consumer"],
+  "i18n": {
+    "cs": { "displayName": "Spotřebitelské právo ČR", "description": "Spotřebitelské smlouvy a e-shopy, odstoupení, vady a reklamace, zakázaná ujednání a nekalé praktiky, spotřebitelský úvěr, mimosoudní řešení a hromadné řízení, compliance obchodníka.", "tagLabels": { "legal": "Právo", "czech": "Česko", "consumer": "Spotřebitel" } },
+    "en": { "displayName": "Czech Consumer Law", "description": "Consumer contracts and e-commerce, withdrawal, defects and complaints, unfair terms and practices, consumer credit, ADR and collective redress, trader compliance.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "consumer": "Consumer" } },
+    "sk": { "displayName": "Spotrebiteľské právo ČR", "description": "Spotrebiteľské zmluvy a e-shopy v ČR, odstúpenie, vady a reklamácie, zakázané dojednania a nekalé praktiky, spotrebiteľský úver, mimosúdne riešenie a hromadné konanie, compliance obchodníka.", "tagLabels": { "legal": "Právo", "czech": "Česko", "consumer": "Spotrebiteľ" } }
+  },
+  "skills": "./skills"
+}
