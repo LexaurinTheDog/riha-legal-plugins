@@ -3,14 +3,58 @@
   "name": "pojistne-pravo",
   "version": "1.0.0",
   "description": "Czech insurance law practice skill - insurance contract under the Civil Code, pre-contractual duties and disclosure, claims handling deadlines, refusal and reduction of indemnity, motor third-party liability and the guarantee fund, property, liability, life and travel insurance, insurance distribution rules, ombudsman and financial arbiter, limitation periods, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["pojištění", "pojistná smlouva", "pojistné plnění", "pojistná událost", "likvidace", "povinné ručení", "Kancelář pojistitelů", "regres", "insurance", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "pojištění",
+    "pojistná smlouva",
+    "pojistné plnění",
+    "pojistná událost",
+    "likvidace",
+    "povinné ručení",
+    "Kancelář pojistitelů",
+    "regres",
+    "insurance",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "insurance"],
+  "tags": [
+    "legal",
+    "czech",
+    "insurance"
+  ],
   "i18n": {
-    "cs": { "displayName": "Pojistné právo ČR", "description": "Pojistná smlouva podle OZ, předsmluvní povinnosti a pravdivé odpovědi, lhůty likvidace, odmítnutí a snížení plnění, povinné ručení a garanční fond, majetkové, odpovědnostní, životní a cestovní pojištění, distribuce pojištění, ombudsman a finanční arbitr, promlčení.", "tagLabels": { "legal": "Právo", "czech": "Česko", "insurance": "Pojištění" } },
-    "en": { "displayName": "Czech Insurance Law", "description": "Insurance contract under the Civil Code, pre-contractual duties and disclosure, claims handling deadlines, refusal and reduction of indemnity, motor third-party liability and the guarantee fund, property, liability, life and travel insurance, distribution rules, ombudsman and financial arbiter, limitation.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "insurance": "Insurance" } },
-    "sk": { "displayName": "Poistné právo ČR", "description": "Poistná zmluva podľa OZ, predzmluvné povinnosti a pravdivé odpovede, lehoty likvidácie, odmietnutie a zníženie plnenia, povinné zmluvné poistenie a garančný fond, majetkové, zodpovednostné, životné a cestovné poistenie, distribúcia poistenia, ombudsman a finančný arbiter, premlčanie.", "tagLabels": { "legal": "Právo", "czech": "Česko", "insurance": "Poistenie" } }
+    "cs": {
+      "displayName": "Pojistné právo ČR",
+      "description": "Pojistná smlouva podle OZ, předsmluvní povinnosti a pravdivé odpovědi, lhůty likvidace, odmítnutí a snížení plnění, povinné ručení a garanční fond, majetkové, odpovědnostní, životní a cestovní pojištění, distribuce pojištění, ombudsman a finanční arbitr, promlčení.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "insurance": "Pojištění"
+      }
+    },
+    "en": {
+      "displayName": "Czech Insurance Law",
+      "description": "Insurance contract under the Civil Code, pre-contractual duties and disclosure, claims handling deadlines, refusal and reduction of indemnity, motor third-party liability and the guarantee fund, property, liability, life and travel insurance, distribution rules, ombudsman and financial arbiter, limitation.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "insurance": "Insurance"
+      }
+    },
+    "sk": {
+      "displayName": "Poistné právo ČR",
+      "description": "Poistná zmluva podľa OZ, predzmluvné povinnosti a pravdivé odpovede, lehoty likvidácie, odmietnutie a zníženie plnenia, povinné zmluvné poistenie a garančný fond, majetkové, zodpovednostné, životné a cestovné poistenie, distribúcia poistenia, ombudsman a finančný arbiter, premlčanie.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "insurance": "Poistenie"
+      }
+    }
   },
   "skills": "./skills"
 }

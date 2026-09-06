@@ -3,14 +3,58 @@
   "name": "rozhodci-rizeni-mediace",
   "version": "1.0.0",
   "description": "Czech arbitration and mediation practice skill - validity of arbitration clauses, consumer and employment limits, permanent courts of arbitration and ad hoc tribunals, conduct of proceedings, setting aside and enforcement of awards, New York Convention, mediation act, mediation agreements and court-ordered first meetings, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["rozhodčí řízení", "rozhodčí doložka", "rozhodčí nález", "zrušení rozhodčího nálezu", "Rozhodčí soud", "mediace", "mediační dohoda", "arbitration", "mediation", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "rozhodčí řízení",
+    "rozhodčí doložka",
+    "rozhodčí nález",
+    "zrušení rozhodčího nálezu",
+    "Rozhodčí soud",
+    "mediace",
+    "mediační dohoda",
+    "arbitration",
+    "mediation",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "adr"],
+  "tags": [
+    "legal",
+    "czech",
+    "adr"
+  ],
   "i18n": {
-    "cs": { "displayName": "Rozhodčí řízení a mediace ČR", "description": "Platnost rozhodčích doložek, spotřebitelské a pracovní limity, stálé rozhodčí soudy a ad hoc rozhodci, průběh řízení, zrušení a výkon nálezů, Newyorská úmluva, zákon o mediaci, mediační dohody a soudem nařízené první setkání.", "tagLabels": { "legal": "Právo", "czech": "Česko", "adr": "ADR" } },
-    "en": { "displayName": "Czech Arbitration & Mediation", "description": "Validity of arbitration clauses, consumer and employment limits, permanent courts of arbitration and ad hoc tribunals, conduct of proceedings, setting aside and enforcement of awards, New York Convention, mediation act, mediation agreements and court-ordered first meetings.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "adr": "ADR" } },
-    "sk": { "displayName": "Rozhodcovské konanie a mediácia ČR", "description": "Platnosť rozhodcovských doložiek, spotrebiteľské a pracovné limity, stále rozhodcovské súdy a ad hoc rozhodcovia, priebeh konania, zrušenie a výkon nálezov, Newyorský dohovor, zákon o mediácii, mediačné dohody a súdom nariadené prvé stretnutie.", "tagLabels": { "legal": "Právo", "czech": "Česko", "adr": "ADR" } }
+    "cs": {
+      "displayName": "Rozhodčí řízení a mediace ČR",
+      "description": "Platnost rozhodčích doložek, spotřebitelské a pracovní limity, stálé rozhodčí soudy a ad hoc rozhodci, průběh řízení, zrušení a výkon nálezů, Newyorská úmluva, zákon o mediaci, mediační dohody a soudem nařízené první setkání.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "adr": "ADR"
+      }
+    },
+    "en": {
+      "displayName": "Czech Arbitration & Mediation",
+      "description": "Validity of arbitration clauses, consumer and employment limits, permanent courts of arbitration and ad hoc tribunals, conduct of proceedings, setting aside and enforcement of awards, New York Convention, mediation act, mediation agreements and court-ordered first meetings.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "adr": "ADR"
+      }
+    },
+    "sk": {
+      "displayName": "Rozhodcovské konanie a mediácia ČR",
+      "description": "Platnosť rozhodcovských doložiek, spotrebiteľské a pracovné limity, stále rozhodcovské súdy a ad hoc rozhodcovia, priebeh konania, zrušenie a výkon nálezov, Newyorský dohovor, zákon o mediácii, mediačné dohody a súdom nariadené prvé stretnutie.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "adr": "ADR"
+      }
+    }
   },
   "skills": "./skills"
 }

@@ -3,14 +3,61 @@
   "name": "skolske-pravo",
   "version": "1.0.0",
   "description": "Czech education law practice skill - school admissions and appeals, catchment areas, special educational needs and support measures, school discipline and expulsion, bullying and safety, teachers' employment under the pedagogical staff act, school as a legal entity and its founder, school inspection, tuition and fees, universities and student status, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["školský zákon", "škola", "přijímací řízení", "spádovost", "podpůrná opatření", "vyloučení žáka", "šikana", "pedagogický pracovník", "ředitel školy", "ČŠI", "vysoká škola", "education law", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "školský zákon",
+    "škola",
+    "přijímací řízení",
+    "spádovost",
+    "podpůrná opatření",
+    "vyloučení žáka",
+    "šikana",
+    "pedagogický pracovník",
+    "ředitel školy",
+    "ČŠI",
+    "vysoká škola",
+    "education law",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "education"],
+  "tags": [
+    "legal",
+    "czech",
+    "education"
+  ],
   "i18n": {
-    "cs": { "displayName": "Školské právo ČR", "description": "Přijímání do škol a odvolání, spádovost, speciální vzdělávací potřeby a podpůrná opatření, kázeňská opatření a vyloučení, šikana a bezpečnost, pracovní vztahy pedagogů, škola jako právnická osoba a zřizovatel, ČŠI, úplata a školné, vysoké školy a studenti.", "tagLabels": { "legal": "Právo", "czech": "Česko", "education": "Školství" } },
-    "en": { "displayName": "Czech Education Law", "description": "School admissions and appeals, catchment areas, special educational needs and support measures, discipline and expulsion, bullying and safety, teachers' employment, school as a legal entity and its founder, school inspection, tuition and fees, universities and students.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "education": "Education" } },
-    "sk": { "displayName": "Školské právo ČR", "description": "Prijímanie do škôl a odvolania, spádovosť, špeciálne výchovno-vzdelávacie potreby a podporné opatrenia, disciplinárne opatrenia a vylúčenie, šikana a bezpečnosť, pracovné vzťahy pedagógov, škola ako právnická osoba a zriaďovateľ, ČŠI, úplata a školné, vysoké školy a študenti.", "tagLabels": { "legal": "Právo", "czech": "Česko", "education": "Školstvo" } }
+    "cs": {
+      "displayName": "Školské právo ČR",
+      "description": "Přijímání do škol a odvolání, spádovost, speciální vzdělávací potřeby a podpůrná opatření, kázeňská opatření a vyloučení, šikana a bezpečnost, pracovní vztahy pedagogů, škola jako právnická osoba a zřizovatel, ČŠI, úplata a školné, vysoké školy a studenti.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "education": "Školství"
+      }
+    },
+    "en": {
+      "displayName": "Czech Education Law",
+      "description": "School admissions and appeals, catchment areas, special educational needs and support measures, discipline and expulsion, bullying and safety, teachers' employment, school as a legal entity and its founder, school inspection, tuition and fees, universities and students.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "education": "Education"
+      }
+    },
+    "sk": {
+      "displayName": "Školské právo ČR",
+      "description": "Prijímanie do škôl a odvolania, spádovosť, špeciálne výchovno-vzdelávacie potreby a podporné opatrenia, disciplinárne opatrenia a vylúčenie, šikana a bezpečnosť, pracovné vzťahy pedagógov, škola ako právnická osoba a zriaďovateľ, ČŠI, úplata a školné, vysoké školy a študenti.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "education": "Školstvo"
+      }
+    }
   },
   "skills": "./skills"
 }

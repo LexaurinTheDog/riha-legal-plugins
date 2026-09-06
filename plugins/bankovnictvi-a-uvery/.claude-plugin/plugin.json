@@ -3,14 +3,62 @@
   "name": "bankovnictvi-a-uvery",
   "version": "1.0.0",
   "description": "Czech banking and credit law practice skill - loan and credit agreements, consumer credit act and creditworthiness assessment, early repayment and default, mortgages and security packages, guarantees and accessory security, payment services and unauthorised transactions, bank secrecy and account freezes, financial arbiter, ČNB supervision and licensing, non-bank lenders, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["úvěr", "spotřebitelský úvěr", "hypotéka", "úvěruschopnost", "předčasné splacení", "zástavní právo", "ručení", "platební služby", "neautorizovaná transakce", "bankovní tajemství", "ČNB", "finanční arbitr", "banking law", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "úvěr",
+    "spotřebitelský úvěr",
+    "hypotéka",
+    "úvěruschopnost",
+    "předčasné splacení",
+    "zástavní právo",
+    "ručení",
+    "platební služby",
+    "neautorizovaná transakce",
+    "bankovní tajemství",
+    "ČNB",
+    "finanční arbitr",
+    "banking law",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "banking"],
+  "tags": [
+    "legal",
+    "czech",
+    "banking"
+  ],
   "i18n": {
-    "cs": { "displayName": "Bankovnictví a úvěry ČR", "description": "Smlouvy o úvěru a zápůjčce, zákon o spotřebitelském úvěru a posouzení úvěruschopnosti, předčasné splacení a prodlení, hypotéky a zajištění, ručení a akcesorická zajištění, platební služby a neautorizované transakce, bankovní tajemství a blokace účtů, finanční arbitr, dohled a licence ČNB, nebankovní poskytovatelé.", "tagLabels": { "legal": "Právo", "czech": "Česko", "banking": "Bankovnictví" } },
-    "en": { "displayName": "Czech Banking & Credit Law", "description": "Loan and credit agreements, consumer credit act and creditworthiness assessment, early repayment and default, mortgages and security packages, guarantees, payment services and unauthorised transactions, bank secrecy and account freezes, financial arbiter, ČNB supervision and licensing, non-bank lenders.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "banking": "Banking" } },
-    "sk": { "displayName": "Bankovníctvo a úvery ČR", "description": "Zmluvy o úvere a pôžičke, zákon o spotrebiteľskom úvere a posúdenie úverovej schopnosti, predčasné splatenie a omeškanie, hypotéky a zabezpečenie, ručenie, platobné služby a neautorizované transakcie, bankové tajomstvo a blokácie účtov, finančný arbiter, dohľad a licencie ČNB, nebankoví poskytovatelia.", "tagLabels": { "legal": "Právo", "czech": "Česko", "banking": "Bankovníctvo" } }
+    "cs": {
+      "displayName": "Bankovnictví a úvěry ČR",
+      "description": "Smlouvy o úvěru a zápůjčce, zákon o spotřebitelském úvěru a posouzení úvěruschopnosti, předčasné splacení a prodlení, hypotéky a zajištění, ručení a akcesorická zajištění, platební služby a neautorizované transakce, bankovní tajemství a blokace účtů, finanční arbitr, dohled a licence ČNB, nebankovní poskytovatelé.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "banking": "Bankovnictví"
+      }
+    },
+    "en": {
+      "displayName": "Czech Banking & Credit Law",
+      "description": "Loan and credit agreements, consumer credit act and creditworthiness assessment, early repayment and default, mortgages and security packages, guarantees, payment services and unauthorised transactions, bank secrecy and account freezes, financial arbiter, ČNB supervision and licensing, non-bank lenders.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "banking": "Banking"
+      }
+    },
+    "sk": {
+      "displayName": "Bankovníctvo a úvery ČR",
+      "description": "Zmluvy o úvere a pôžičke, zákon o spotrebiteľskom úvere a posúdenie úverovej schopnosti, predčasné splatenie a omeškanie, hypotéky a zabezpečenie, ručenie, platobné služby a neautorizované transakcie, bankové tajomstvo a blokácie účtov, finančný arbiter, dohľad a licencie ČNB, nebankoví poskytovatelia.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "banking": "Bankovníctvo"
+      }
+    }
   },
   "skills": "./skills"
 }

@@ -3,14 +3,63 @@
   "name": "fuze-akvizice",
   "version": "1.0.0",
   "description": "Czech M&A practice skill - share deals and asset deals, letters of intent and exclusivity, due diligence, SPA structure with price mechanisms, representations and warranties, indemnities and escrow, conditions precedent, shareholders' agreements, corporate transformations under the Transformations Act, merger control before the Czech competition office and the Commission, FDI screening, transfer of employees, regulatory approvals, tax structuring, closing and post-closing disputes, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["M&A", "fúze", "akvizice", "převod podílu", "prodej závodu", "due diligence", "SPA", "prohlášení a záruky", "escrow", "přeměny", "spojení soutěžitelů", "ÚOHS", "prověřování zahraničních investic", "přechod zaměstnanců", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "M&A",
+    "fúze",
+    "akvizice",
+    "převod podílu",
+    "prodej závodu",
+    "due diligence",
+    "SPA",
+    "prohlášení a záruky",
+    "escrow",
+    "přeměny",
+    "spojení soutěžitelů",
+    "ÚOHS",
+    "prověřování zahraničních investic",
+    "přechod zaměstnanců",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "corporate"],
+  "tags": [
+    "legal",
+    "czech",
+    "corporate"
+  ],
   "i18n": {
-    "cs": { "displayName": "Fúze a akvizice ČR", "description": "Share deal a asset deal, letter of intent a exkluzivita, due diligence, struktura SPA s cenovými mechanismy, prohlášení a záruky, odškodnění a escrow, odkládací podmínky, akcionářské dohody, přeměny dle zákona o přeměnách, kontrola spojení u ÚOHS a Komise, prověřování zahraničních investic, přechod zaměstnanců, regulatorní souhlasy, daňové strukturování, closing a spory po closingu.", "tagLabels": { "legal": "Právo", "czech": "Česko", "corporate": "Korporátní právo" } },
-    "en": { "displayName": "Czech Mergers & Acquisitions", "description": "Share deals and asset deals, letters of intent and exclusivity, due diligence, SPA structure with price mechanisms, representations and warranties, indemnities and escrow, conditions precedent, shareholders' agreements, corporate transformations under the Transformations Act, merger control before the Czech competition office and the Commission, FDI screening, transfer of employees, regulatory approvals, tax structuring, closing and post-closing disputes.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "corporate": "Corporate law" } },
-    "sk": { "displayName": "Fúzie a akvizície ČR", "description": "Share deal a asset deal, letter of intent a exkluzivita, due diligence, štruktúra SPA s cenovými mechanizmami, vyhlásenia a záruky, odškodnenie a escrow, odkladacie podmienky, akcionárske dohody, premeny podľa zákona o premenách, kontrola koncentrácií na ÚOHS a Komisii, preverovanie zahraničných investícií, prechod zamestnancov, regulačné súhlasy, daňové štruktúrovanie, closing a spory po closingu.", "tagLabels": { "legal": "Právo", "czech": "Česko", "corporate": "Korporátne právo" } }
+    "cs": {
+      "displayName": "Fúze a akvizice ČR",
+      "description": "Share deal a asset deal, letter of intent a exkluzivita, due diligence, struktura SPA s cenovými mechanismy, prohlášení a záruky, odškodnění a escrow, odkládací podmínky, akcionářské dohody, přeměny dle zákona o přeměnách, kontrola spojení u ÚOHS a Komise, prověřování zahraničních investic, přechod zaměstnanců, regulatorní souhlasy, daňové strukturování, closing a spory po closingu.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "corporate": "Korporátní právo"
+      }
+    },
+    "en": {
+      "displayName": "Czech Mergers & Acquisitions",
+      "description": "Share deals and asset deals, letters of intent and exclusivity, due diligence, SPA structure with price mechanisms, representations and warranties, indemnities and escrow, conditions precedent, shareholders' agreements, corporate transformations under the Transformations Act, merger control before the Czech competition office and the Commission, FDI screening, transfer of employees, regulatory approvals, tax structuring, closing and post-closing disputes.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "corporate": "Corporate law"
+      }
+    },
+    "sk": {
+      "displayName": "Fúzie a akvizície ČR",
+      "description": "Share deal a asset deal, letter of intent a exkluzivita, due diligence, štruktúra SPA s cenovými mechanizmami, vyhlásenia a záruky, odškodnenie a escrow, odkladacie podmienky, akcionárske dohody, premeny podľa zákona o premenách, kontrola koncentrácií na ÚOHS a Komisii, preverovanie zahraničných investícií, prechod zamestnancov, regulačné súhlasy, daňové štruktúrovanie, closing a spory po closingu.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "corporate": "Korporátne právo"
+      }
+    }
   },
   "skills": "./skills"
 }

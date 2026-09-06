@@ -3,14 +3,57 @@
   "name": "rodinne-pravo",
   "version": "1.0.0",
   "description": "Czech family law practice skill - divorce, child custody and contact, maintenance, matrimonial property (SJM), parentage, domestic violence and cross-border cases under the Civil Code and ZŘS, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["rodinné právo", "family law", "rozvod", "péče o dítě", "výživné", "SJM", "styk s dítětem", "otcovství", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "rodinné právo",
+    "family law",
+    "rozvod",
+    "péče o dítě",
+    "výživné",
+    "SJM",
+    "styk s dítětem",
+    "otcovství",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "family"],
+  "tags": [
+    "legal",
+    "czech",
+    "family"
+  ],
   "i18n": {
-    "cs": { "displayName": "Rodinné právo ČR", "description": "Rozvod, péče o děti a styk, výživné, vypořádání SJM, rodičovství, domácí násilí, přeshraniční věci - hmotné právo OZ i řízení podle ZŘS.", "tagLabels": { "legal": "Právo", "czech": "Česko", "family": "Rodinné právo" } },
-    "en": { "displayName": "Czech Family Law", "description": "Divorce, custody and contact, maintenance, matrimonial property settlement, parentage, domestic violence, cross-border cases - substantive Civil Code rules and ZŘS proceedings.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "family": "Family Law" } },
-    "sk": { "displayName": "Rodinné právo ČR", "description": "Rozvod, starostlivosť o deti a styk, výživné, vyporiadanie SJM, rodičovstvo, domáce násilie, cezhraničné veci v ČR - hmotné právo OZ aj konanie podľa ZŘS.", "tagLabels": { "legal": "Právo", "czech": "Česko", "family": "Rodinné právo" } }
+    "cs": {
+      "displayName": "Rodinné právo ČR",
+      "description": "Rozvod, péče o děti a styk, výživné, vypořádání SJM, rodičovství, domácí násilí, přeshraniční věci - hmotné právo OZ i řízení podle ZŘS.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "family": "Rodinné právo"
+      }
+    },
+    "en": {
+      "displayName": "Czech Family Law",
+      "description": "Divorce, custody and contact, maintenance, matrimonial property settlement, parentage, domestic violence, cross-border cases - substantive Civil Code rules and ZŘS proceedings.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "family": "Family Law"
+      }
+    },
+    "sk": {
+      "displayName": "Rodinné právo ČR",
+      "description": "Rozvod, starostlivosť o deti a styk, výživné, vyporiadanie SJM, rodičovstvo, domáce násilie, cezhraničné veci v ČR - hmotné právo OZ aj konanie podľa ZŘS.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "family": "Rodinné právo"
+      }
+    }
   },
   "skills": "./skills"
 }

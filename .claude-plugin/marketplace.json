@@ -8,7 +8,8 @@
       "name": "lhutnik",
       "description": "Lhůtník pro českou advokátní praxi — ze záznamu z jednání založí hlídané lhůty a termíny v kalendáři; konce lhůt počítá dle § 57 o. s. ř. včetně posunu z víkendů a svátků",
       "source": "./plugins/lhutnik",
-      "category": "legal"
+      "category": "legal",
+      "icon": "./plugins/lhutnik/icon.svg"
     },
     {
       "uuid": "8f79dc16-0c3f-4b99-906f-f921fd2df76f",
@@ -44,7 +45,8 @@
             "insolvency": "Insolvencia"
           }
         }
-      }
+      },
+      "icon": "./plugins/insolvencni-pravo/icon.svg"
     },
     {
       "uuid": "6dcc0792-5e12-4f46-9e2c-a2784de34a97",
@@ -80,7 +82,8 @@
             "real-estate": "Nehnuteľnosti"
           }
         }
-      }
+      },
+      "icon": "./plugins/nemovitosti-transakce/icon.svg"
     },
     {
       "uuid": "1a5d6452-24d6-4e09-9daa-9e66935fe02a",
@@ -116,7 +119,8 @@
             "contracts": "Zmluvy"
           }
         }
-      }
+      },
+      "icon": "./plugins/smluvni-pravo/icon.svg"
     },
     {
       "uuid": "46fe5a16-047b-4b50-9735-256a256a5531",
@@ -152,7 +156,8 @@
             "administrative": "Správne právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/spravni-a-danove-rizeni/icon.svg"
     },
     {
       "uuid": "d1587978-cd5a-46fe-bd7c-74f427cacb3c",
@@ -188,7 +193,8 @@
             "criminal": "Trestné právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/trestni-obhajoba/icon.svg"
     },
     {
       "uuid": "80ec02a0-b63b-40f1-b2f0-c6b8d60d92d4",
@@ -224,7 +230,8 @@
             "debt-recovery": "Vymáhanie pohľadávok"
           }
         }
-      }
+      },
+      "icon": "./plugins/vymahani-pohledavek/icon.svg"
     },
     {
       "uuid": "c9daa96c-d953-423d-b5fd-04323b2c0184",
@@ -260,7 +267,8 @@
             "corporate": "Korporátne právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/korporatni-pravo/icon.svg"
     },
     {
       "uuid": "047e367f-d9f0-4c32-81a1-65598b160b72",
@@ -296,7 +304,8 @@
             "labour": "Pracovné právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/pracovni-pravo/icon.svg"
     },
     {
       "uuid": "52e38692-8399-42a8-bc3f-e3dede0f2c78",
@@ -332,7 +341,8 @@
             "family": "Rodinné právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/rodinne-pravo/icon.svg"
     },
     {
       "uuid": "afd1cc2a-21fd-4468-8664-5a29101c3bae",
@@ -368,7 +378,8 @@
             "inheritance": "Dedičské právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/dedicke-pravo/icon.svg"
     },
     {
       "uuid": "be8eb2b6-ece2-41e2-93ea-979d18ef1484",
@@ -404,7 +415,8 @@
             "privacy": "Osobnosť a súkromie"
           }
         }
-      }
+      },
+      "icon": "./plugins/ochrana-osobnosti-gdpr/icon.svg"
     },
     {
       "uuid": "660aa208-7e0b-4589-9ee7-2ae703b57e61",
@@ -440,7 +452,8 @@
             "construction": "Stavebné právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/stavebni-pravo/icon.svg"
     },
     {
       "uuid": "4430e619-e56c-40c8-9837-0379e55b19cd",
@@ -476,7 +489,8 @@
             "procurement": "Verejné zákazky"
           }
         }
-      }
+      },
+      "icon": "./plugins/verejne-zakazky-dotace/icon.svg"
     },
     {
       "uuid": "25c2ac16-603b-4cab-a2ea-a5c633334c18",
@@ -512,7 +526,8 @@
             "immigration": "Cudzinecké právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/cizinecke-a-azylove-pravo/icon.svg"
     },
     {
       "uuid": "b9d6ed9b-0b66-41f3-a3b5-2e8773cd2987",
@@ -548,7 +563,8 @@
             "ip": "Duševné vlastníctvo"
           }
         }
-      }
+      },
+      "icon": "./plugins/dusevni-vlastnictvi/icon.svg"
     },
     {
       "uuid": "d53bc586-1421-4b1f-8d92-8698e528c244",
@@ -584,7 +600,8 @@
             "competition": "Hospodárska súťaž"
           }
         }
-      }
+      },
+      "icon": "./plugins/hospodarska-a-nekala-soutez/icon.svg"
     },
     {
       "uuid": "8ca08a12-3b9c-4138-83ef-58775acbed71",
@@ -620,7 +637,8 @@
             "health": "Zdravotníctvo"
           }
         }
-      }
+      },
+      "icon": "./plugins/zdravotnicke-pravo/icon.svg"
     },
     {
       "uuid": "6b42ab7e-cda4-4b61-aebc-5491119894b7",
@@ -656,7 +674,8 @@
             "housing": "Bývanie"
           }
         }
-      }
+      },
+      "icon": "./plugins/bytove-pravo-najem-svj/icon.svg"
     },
     {
       "uuid": "d0e414ae-a466-489b-86d4-f40db9319c9e",
@@ -692,7 +711,8 @@
             "traffic": "Doprava"
           }
         }
-      }
+      },
+      "icon": "./plugins/dopravni-pravo-nehody/icon.svg"
     },
     {
       "uuid": "0bee16bb-e182-4e25-a7dc-44f2314c6fc5",
@@ -728,7 +748,8 @@
             "enforcement": "Exekúcia"
           }
         }
-      }
+      },
+      "icon": "./plugins/exekuce-obrana-dluznika/icon.svg"
     },
     {
       "uuid": "18e7ea07-0dca-4c91-a35f-0f5349996b2f",
@@ -764,7 +785,8 @@
             "consumer": "Spotrebiteľ"
           }
         }
-      }
+      },
+      "icon": "./plugins/spotrebitelske-pravo/icon.svg"
     },
     {
       "uuid": "e3eb486c-304d-44ba-bc8d-fc459b7b1fa8",
@@ -800,7 +822,8 @@
             "cross-border": "Cezhraničné veci"
           }
         }
-      }
+      },
+      "icon": "./plugins/mezinarodni-pravo-soukrome/icon.svg"
     },
     {
       "uuid": "11ff2fec-6a54-4668-b1e8-0975abeea7a9",
@@ -836,7 +859,8 @@
             "municipal": "Samospráva"
           }
         }
-      }
+      },
+      "icon": "./plugins/obce-a-verejna-sprava/icon.svg"
     },
     {
       "uuid": "110729b6-f846-4b8e-8b00-65e3ae40db75",
@@ -872,7 +896,8 @@
             "nonprofit": "Neziskový sektor"
           }
         }
-      }
+      },
+      "icon": "./plugins/spolky-nadace-neziskovy-sektor/icon.svg"
     },
     {
       "uuid": "d811e4e0-77f1-4bb4-981c-ef739f721b71",
@@ -908,7 +933,8 @@
             "sports": "Šport"
           }
         }
-      }
+      },
+      "icon": "./plugins/sportovni-pravo/icon.svg"
     },
     {
       "uuid": "1c16e9f2-7e56-422d-9b2b-5f469b7d5c34",
@@ -944,7 +970,8 @@
             "constitutional": "Ústavné právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/ustavni-stiznost-lidska-prava/icon.svg"
     },
     {
       "uuid": "9c257c89-0cd6-4678-b46b-3eb15738fba0",
@@ -980,7 +1007,8 @@
             "adr": "ADR"
           }
         }
-      }
+      },
+      "icon": "./plugins/rozhodci-rizeni-mediace/icon.svg"
     },
     {
       "uuid": "0ac6cf03-3bb7-47a5-86aa-cb9f0bdf26c1",
@@ -1016,7 +1044,8 @@
             "insurance": "Poistenie"
           }
         }
-      }
+      },
+      "icon": "./plugins/pojistne-pravo/icon.svg"
     },
     {
       "uuid": "2cdd74f1-a8d6-41c7-afd7-ace2b1f7deb2",
@@ -1052,7 +1081,8 @@
             "compliance": "Compliance"
           }
         }
-      }
+      },
+      "icon": "./plugins/aml-compliance/icon.svg"
     },
     {
       "uuid": "960a7e4a-b3a6-4a5e-a3e2-a7afc5f3d16d",
@@ -1088,7 +1118,8 @@
             "energy": "Energetika"
           }
         }
-      }
+      },
+      "icon": "./plugins/energeticke-pravo/icon.svg"
     },
     {
       "uuid": "c286fa94-da7c-487e-874b-e16a852a8d1d",
@@ -1124,7 +1155,8 @@
             "it": "IT"
           }
         }
-      }
+      },
+      "icon": "./plugins/it-pravo-kyberbezpecnost/icon.svg"
     },
     {
       "uuid": "262e5b75-e1a6-49b8-8fe7-a62495e569ef",
@@ -1160,7 +1192,8 @@
             "environment": "Životné prostredie"
           }
         }
-      }
+      },
+      "icon": "./plugins/pravo-zivotniho-prostredi/icon.svg"
     },
     {
       "uuid": "6043e129-b26a-4810-9e31-5db0cccee57a",
@@ -1196,7 +1229,8 @@
             "education": "Školstvo"
           }
         }
-      }
+      },
+      "icon": "./plugins/skolske-pravo/icon.svg"
     },
     {
       "uuid": "78300aa7-a794-4000-a079-cd282d82b81f",
@@ -1232,7 +1266,8 @@
             "tax": "Dane"
           }
         }
-      }
+      },
+      "icon": "./plugins/danove-pravo-hmotne/icon.svg"
     },
     {
       "uuid": "6c97fbe9-6329-4fc0-bb95-c6868e179554",
@@ -1268,7 +1303,8 @@
             "banking": "Bankovníctvo"
           }
         }
-      }
+      },
+      "icon": "./plugins/bankovnictvi-a-uvery/icon.svg"
     },
     {
       "uuid": "0c539963-11d3-42c3-bcec-838314ba51cc",
@@ -1304,7 +1340,8 @@
             "social": "Sociálne právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/socialni-zabezpeceni/icon.svg"
     },
     {
       "uuid": "045a0bcb-4cc0-4973-aa39-064f34a64b04",
@@ -1340,7 +1377,8 @@
             "procedure": "Civilný proces"
           }
         }
-      }
+      },
+      "icon": "./plugins/obcanske-procesni-pravo/icon.svg"
     },
     {
       "uuid": "2e5922f3-6d1a-4661-9296-ca12348537c0",
@@ -1376,7 +1414,8 @@
             "torts": "Náhrada ujmy"
           }
         }
-      }
+      },
+      "icon": "./plugins/nahrada-ujmy-odpovednost/icon.svg"
     },
     {
       "uuid": "d603603f-c237-4b72-a62b-683a75d0db8a",
@@ -1412,7 +1451,8 @@
             "property": "Vecné práva"
           }
         }
-      }
+      },
+      "icon": "./plugins/vecna-prava-sousedske-spory/icon.svg"
     },
     {
       "uuid": "bf1cd5be-8ffc-4522-8f2d-a61a878a3d36",
@@ -1448,7 +1488,8 @@
             "guardianship": "Opatrovníctvo"
           }
         }
-      }
+      },
+      "icon": "./plugins/opatrovnictvi-svepravnost/icon.svg"
     },
     {
       "uuid": "fe09edac-afc0-400b-a58a-32098eaf5534",
@@ -1484,7 +1525,8 @@
             "criminal": "Trestné právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/trestni-pravo-hospodarske/icon.svg"
     },
     {
       "uuid": "656fea00-42a1-4856-ab7e-8742f3881ccf",
@@ -1520,7 +1562,8 @@
             "criminal": "Trestné právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/obeti-trestnych-cinu/icon.svg"
     },
     {
       "uuid": "6fd7b845-12ab-4ed8-8b6d-de5988b8b8ab",
@@ -1556,7 +1599,8 @@
             "administrative": "Správne právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/prestupkove-pravo-spravni-trestani/icon.svg"
     },
     {
       "uuid": "8da7c973-2190-4dd6-b7c0-64a6dd1b5c43",
@@ -1592,7 +1636,8 @@
             "media": "Médiá a reklama"
           }
         }
-      }
+      },
+      "icon": "./plugins/medialni-pravo-reklama/icon.svg"
     },
     {
       "uuid": "c012ce8d-32dd-4c4e-90fc-52e2e242716e",
@@ -1628,7 +1673,8 @@
             "consumer": "Spotrebiteľské právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/e-commerce-digitalni-sluzby/icon.svg"
     },
     {
       "uuid": "39034f0a-fefa-46f7-add3-101ff8b5d803",
@@ -1664,7 +1710,8 @@
             "finance": "Finančné právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/kapitalovy-trh-investice/icon.svg"
     },
     {
       "uuid": "3844909e-222f-486b-a855-3694aa03b394",
@@ -1700,7 +1747,8 @@
             "corporate": "Korporátne právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/fuze-akvizice/icon.svg"
     },
     {
       "uuid": "a71d6b3e-afc2-4ebd-9e59-690b8733cfeb",
@@ -1736,7 +1784,8 @@
             "corporate": "Korporátne právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/startupy-investice-esop/icon.svg"
     },
     {
       "uuid": "2f479337-987d-46c2-9258-1899d6499753",
@@ -1772,7 +1821,8 @@
             "commercial": "Obchodné právo"
           }
         }
-      }
+      },
+      "icon": "./plugins/franchising-distribuce-obchodni-zastoupeni/icon.svg"
     },
     {
       "uuid": "f542fffa-5645-46f2-82c8-972550235a71",
@@ -1808,7 +1858,9 @@
             "agriculture": "Poľnohospodárstvo"
           }
         }
-      }
+      },
+      "icon": "./plugins/zemedelske-pravo/icon.svg"
     }
-  ]
+  ],
+  "icon": "./icon.svg"
 }

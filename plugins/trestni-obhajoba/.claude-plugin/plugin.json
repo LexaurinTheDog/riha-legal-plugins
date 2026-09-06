@@ -3,14 +3,58 @@
   "name": "trestni-obhajoba",
   "version": "1.0.0",
   "description": "Czech criminal procedure practice skill - defence counsel and victim representation across all stages, custody, asset seizure, remedies and deadlines under trestní řád and trestní zákoník, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["trestní právo", "criminal law", "obhajoba", "trestní řízení", "vazba", "zajištění majetku", "odvolání", "dovolání", "poškozený", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "trestní právo",
+    "criminal law",
+    "obhajoba",
+    "trestní řízení",
+    "vazba",
+    "zajištění majetku",
+    "odvolání",
+    "dovolání",
+    "poškozený",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "criminal"],
+  "tags": [
+    "legal",
+    "czech",
+    "criminal"
+  ],
   "i18n": {
-    "cs": { "displayName": "Trestní právo a obhajoba ČR", "description": "Obhajoba a zastupování poškozeného ve všech fázích trestního řízení - lhůty, vazba, zajištění majetku, odklony, opravné prostředky, trestní odpovědnost právnických osob.", "tagLabels": { "legal": "Právo", "czech": "Česko", "criminal": "Trestní právo" } },
-    "en": { "displayName": "Czech Criminal Law and Defence", "description": "Defence and victim representation at every stage of Czech criminal proceedings - deadlines, custody, asset seizure, diversions, remedies, corporate criminal liability.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "criminal": "Criminal Law" } },
-    "sk": { "displayName": "Trestné právo a obhajoba ČR", "description": "Obhajoba a zastupovanie poškodeného vo všetkých fázach českého trestného konania - lehoty, väzba, zaistenie majetku, odklony, opravné prostriedky, trestná zodpovednosť právnických osôb.", "tagLabels": { "legal": "Právo", "czech": "Česko", "criminal": "Trestné právo" } }
+    "cs": {
+      "displayName": "Trestní právo a obhajoba ČR",
+      "description": "Obhajoba a zastupování poškozeného ve všech fázích trestního řízení - lhůty, vazba, zajištění majetku, odklony, opravné prostředky, trestní odpovědnost právnických osob.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "criminal": "Trestní právo"
+      }
+    },
+    "en": {
+      "displayName": "Czech Criminal Law and Defence",
+      "description": "Defence and victim representation at every stage of Czech criminal proceedings - deadlines, custody, asset seizure, diversions, remedies, corporate criminal liability.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "criminal": "Criminal Law"
+      }
+    },
+    "sk": {
+      "displayName": "Trestné právo a obhajoba ČR",
+      "description": "Obhajoba a zastupovanie poškodeného vo všetkých fázach českého trestného konania - lehoty, väzba, zaistenie majetku, odklony, opravné prostriedky, trestná zodpovednosť právnických osôb.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "criminal": "Trestné právo"
+      }
+    }
   },
   "skills": "./skills"
 }

@@ -3,14 +3,62 @@
   "name": "prestupkove-pravo-spravni-trestani",
   "version": "1.0.0",
   "description": "Czech misdemeanour and administrative-penalty practice skill - liability for administrative offences under Act 250/2016, offences of individuals, entrepreneurs and legal entities with exculpation, limitation periods, penalties and their assessment, penalty orders and objections, on-the-spot fines, oral hearings and evidence, traffic offences and the points system, appeals with the ban on reformatio in peius, review proceedings, judicial review and moderation of penalties, ne bis in idem with criminal law, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["přestupek", "přestupkové řízení", "správní trestání", "příkaz", "odpor", "pokuta", "zákaz činnosti", "bodový systém", "dopravní přestupek", "promlčení přestupku", "liberace", "ne bis in idem", "administrative offence", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "přestupek",
+    "přestupkové řízení",
+    "správní trestání",
+    "příkaz",
+    "odpor",
+    "pokuta",
+    "zákaz činnosti",
+    "bodový systém",
+    "dopravní přestupek",
+    "promlčení přestupku",
+    "liberace",
+    "ne bis in idem",
+    "administrative offence",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "administrative"],
+  "tags": [
+    "legal",
+    "czech",
+    "administrative"
+  ],
   "i18n": {
-    "cs": { "displayName": "Přestupkové právo a správní trestání ČR", "description": "Odpovědnost za přestupek dle zákona 250/2016, přestupky fyzických osob, podnikatelů a právnických osob s liberací, promlčení, správní tresty a jejich výměra, příkaz a odpor, příkazový blok, ústní jednání a dokazování, dopravní přestupky a bodový systém, odvolání se zákazem reformationis in peius, přezkumné řízení, správní žaloba a moderace trestu, ne bis in idem s trestním právem.", "tagLabels": { "legal": "Právo", "czech": "Česko", "administrative": "Správní právo" } },
-    "en": { "displayName": "Czech Misdemeanours & Administrative Penalties", "description": "Liability for administrative offences under Act 250/2016, offences of individuals, entrepreneurs and legal entities with exculpation, limitation periods, penalties and their assessment, penalty orders and objections, on-the-spot fines, oral hearings and evidence, traffic offences and the points system, appeals with the ban on reformatio in peius, review proceedings, judicial review and moderation of penalties, ne bis in idem with criminal law.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "administrative": "Administrative law" } },
-    "sk": { "displayName": "Priestupkové právo a správne trestanie ČR", "description": "Zodpovednosť za priestupok podľa zákona 250/2016, priestupky fyzických osôb, podnikateľov a právnických osôb s liberáciou, premlčanie, správne tresty a ich výmera, príkaz a odpor, príkazový blok, ústne pojednávanie a dokazovanie, dopravné priestupky a bodový systém, odvolanie so zákazom reformationis in peius, preskúmavacie konanie, správna žaloba a moderácia trestu, ne bis in idem s trestným právom.", "tagLabels": { "legal": "Právo", "czech": "Česko", "administrative": "Správne právo" } }
+    "cs": {
+      "displayName": "Přestupkové právo a správní trestání ČR",
+      "description": "Odpovědnost za přestupek dle zákona 250/2016, přestupky fyzických osob, podnikatelů a právnických osob s liberací, promlčení, správní tresty a jejich výměra, příkaz a odpor, příkazový blok, ústní jednání a dokazování, dopravní přestupky a bodový systém, odvolání se zákazem reformationis in peius, přezkumné řízení, správní žaloba a moderace trestu, ne bis in idem s trestním právem.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "administrative": "Správní právo"
+      }
+    },
+    "en": {
+      "displayName": "Czech Misdemeanours & Administrative Penalties",
+      "description": "Liability for administrative offences under Act 250/2016, offences of individuals, entrepreneurs and legal entities with exculpation, limitation periods, penalties and their assessment, penalty orders and objections, on-the-spot fines, oral hearings and evidence, traffic offences and the points system, appeals with the ban on reformatio in peius, review proceedings, judicial review and moderation of penalties, ne bis in idem with criminal law.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "administrative": "Administrative law"
+      }
+    },
+    "sk": {
+      "displayName": "Priestupkové právo a správne trestanie ČR",
+      "description": "Zodpovednosť za priestupok podľa zákona 250/2016, priestupky fyzických osôb, podnikateľov a právnických osôb s liberáciou, premlčanie, správne tresty a ich výmera, príkaz a odpor, príkazový blok, ústne pojednávanie a dokazovanie, dopravné priestupky a bodový systém, odvolanie so zákazom reformationis in peius, preskúmavacie konanie, správna žaloba a moderácia trestu, ne bis in idem s trestným právom.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "administrative": "Správne právo"
+      }
+    }
   },
   "skills": "./skills"
 }

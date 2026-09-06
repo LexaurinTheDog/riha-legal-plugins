@@ -3,14 +3,59 @@
   "name": "spolky-nadace-neziskovy-sektor",
   "version": "1.0.0",
   "description": "Czech non-profit law practice skill - associations, foundations, endowment funds and institutes: formation and registers, governance and member disputes, review of body decisions, donations, public collections, grants, tax status of public-benefit taxpayers, accounting duties, dissolution and liability, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["spolek", "nadace", "nadační fond", "ústav", "nezisková organizace", "členská schůze", "vyloučení člena", "veřejně prospěšný poplatník", "veřejná sbírka", "non-profit", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "spolek",
+    "nadace",
+    "nadační fond",
+    "ústav",
+    "nezisková organizace",
+    "členská schůze",
+    "vyloučení člena",
+    "veřejně prospěšný poplatník",
+    "veřejná sbírka",
+    "non-profit",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "nonprofit"],
+  "tags": [
+    "legal",
+    "czech",
+    "nonprofit"
+  ],
   "i18n": {
-    "cs": { "displayName": "Spolky, nadace a neziskový sektor ČR", "description": "Spolky, nadace, nadační fondy a ústavy - založení a rejstříky, vnitřní správa a spory členů, přezkum rozhodnutí orgánů, dary, veřejné sbírky, dotace, daňový režim, účetní povinnosti, zánik a odpovědnost.", "tagLabels": { "legal": "Právo", "czech": "Česko", "nonprofit": "Neziskový sektor" } },
-    "en": { "displayName": "Czech Non-profit Law", "description": "Associations, foundations, endowment funds and institutes - formation and registers, governance and member disputes, review of body decisions, donations, public collections, grants, tax status, accounting duties, dissolution and liability.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "nonprofit": "Non-profit" } },
-    "sk": { "displayName": "Spolky, nadácie a neziskový sektor ČR", "description": "Spolky, nadácie, nadačné fondy a ústavy v ČR - založenie a registre, vnútorná správa a spory členov, preskúmanie rozhodnutí orgánov, dary, verejné zbierky, dotácie, daňový režim, účtovné povinnosti, zánik a zodpovednosť.", "tagLabels": { "legal": "Právo", "czech": "Česko", "nonprofit": "Neziskový sektor" } }
+    "cs": {
+      "displayName": "Spolky, nadace a neziskový sektor ČR",
+      "description": "Spolky, nadace, nadační fondy a ústavy - založení a rejstříky, vnitřní správa a spory členů, přezkum rozhodnutí orgánů, dary, veřejné sbírky, dotace, daňový režim, účetní povinnosti, zánik a odpovědnost.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "nonprofit": "Neziskový sektor"
+      }
+    },
+    "en": {
+      "displayName": "Czech Non-profit Law",
+      "description": "Associations, foundations, endowment funds and institutes - formation and registers, governance and member disputes, review of body decisions, donations, public collections, grants, tax status, accounting duties, dissolution and liability.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "nonprofit": "Non-profit"
+      }
+    },
+    "sk": {
+      "displayName": "Spolky, nadácie a neziskový sektor ČR",
+      "description": "Spolky, nadácie, nadačné fondy a ústavy v ČR - založenie a registre, vnútorná správa a spory členov, preskúmanie rozhodnutí orgánov, dary, verejné zbierky, dotácie, daňový režim, účtovné povinnosti, zánik a zodpovednosť.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "nonprofit": "Neziskový sektor"
+      }
+    }
   },
   "skills": "./skills"
 }

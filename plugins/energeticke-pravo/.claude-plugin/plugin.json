@@ -3,14 +3,59 @@
   "name": "energeticke-pravo",
   "version": "1.0.0",
   "description": "Czech energy law practice skill - Energy Act licences and ERÚ regulation, electricity and gas supply contracts and switching, renewable sources support and permitting, community energy and self-consumption, grid connection, price regulation and disputes, heat supply, energy performance of buildings, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["energetika", "energetický zákon", "ERÚ", "licence", "fotovoltaika", "OZE", "komunitní energetika", "připojení k síti", "dodavatel energie", "energy law", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "energetika",
+    "energetický zákon",
+    "ERÚ",
+    "licence",
+    "fotovoltaika",
+    "OZE",
+    "komunitní energetika",
+    "připojení k síti",
+    "dodavatel energie",
+    "energy law",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "energy"],
+  "tags": [
+    "legal",
+    "czech",
+    "energy"
+  ],
   "i18n": {
-    "cs": { "displayName": "Energetické právo ČR", "description": "Licence a regulace ERÚ, smlouvy o dodávce elektřiny a plynu a změna dodavatele, podpora a povolování OZE, komunitní energetika a sdílení, připojení k síti, cenová regulace a spory, teplárenství, energetická náročnost budov.", "tagLabels": { "legal": "Právo", "czech": "Česko", "energy": "Energetika" } },
-    "en": { "displayName": "Czech Energy Law", "description": "Energy Act licences and ERÚ regulation, electricity and gas supply contracts and switching, renewable support and permitting, community energy and self-consumption, grid connection, price regulation and disputes, heat supply, energy performance of buildings.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "energy": "Energy" } },
-    "sk": { "displayName": "Energetické právo ČR", "description": "Licencie a regulácia ERÚ, zmluvy o dodávke elektriny a plynu a zmena dodávateľa, podpora a povoľovanie OZE, komunitná energetika a zdieľanie, pripojenie do siete, cenová regulácia a spory, teplárenstvo, energetická náročnosť budov.", "tagLabels": { "legal": "Právo", "czech": "Česko", "energy": "Energetika" } }
+    "cs": {
+      "displayName": "Energetické právo ČR",
+      "description": "Licence a regulace ERÚ, smlouvy o dodávce elektřiny a plynu a změna dodavatele, podpora a povolování OZE, komunitní energetika a sdílení, připojení k síti, cenová regulace a spory, teplárenství, energetická náročnost budov.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "energy": "Energetika"
+      }
+    },
+    "en": {
+      "displayName": "Czech Energy Law",
+      "description": "Energy Act licences and ERÚ regulation, electricity and gas supply contracts and switching, renewable support and permitting, community energy and self-consumption, grid connection, price regulation and disputes, heat supply, energy performance of buildings.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "energy": "Energy"
+      }
+    },
+    "sk": {
+      "displayName": "Energetické právo ČR",
+      "description": "Licencie a regulácia ERÚ, zmluvy o dodávke elektriny a plynu a zmena dodávateľa, podpora a povoľovanie OZE, komunitná energetika a zdieľanie, pripojenie do siete, cenová regulácia a spory, teplárenstvo, energetická náročnosť budov.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "energy": "Energetika"
+      }
+    }
   },
   "skills": "./skills"
 }

@@ -3,14 +3,59 @@
   "name": "aml-compliance",
   "version": "1.0.0",
   "description": "Czech AML/CFT compliance practice skill - obliged persons, customer identification and due diligence, beneficial owner and PEP checks, sanctions screening, suspicious transaction reports to FAÚ, internal policies and training, attorney-specific duties and privilege, real-estate and escrow triggers, beneficial owner register, inspections and penalties, EU AML package, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["AML", "praní špinavých peněz", "identifikace klienta", "kontrola klienta", "skutečný majitel", "PEP", "sankce", "FAÚ", "podezřelý obchod", "compliance", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "AML",
+    "praní špinavých peněz",
+    "identifikace klienta",
+    "kontrola klienta",
+    "skutečný majitel",
+    "PEP",
+    "sankce",
+    "FAÚ",
+    "podezřelý obchod",
+    "compliance",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "compliance"],
+  "tags": [
+    "legal",
+    "czech",
+    "compliance"
+  ],
   "i18n": {
-    "cs": { "displayName": "AML compliance ČR", "description": "Povinné osoby, identifikace a kontrola klienta, skutečný majitel a PEP, sankční screening, oznámení podezřelého obchodu FAÚ, systém vnitřních zásad a školení, zvláštní povinnosti advokáta a mlčenlivost, spouštěče u nemovitostí a úschov, evidence skutečných majitelů, kontroly a sankce, AML balíček EU.", "tagLabels": { "legal": "Právo", "czech": "Česko", "compliance": "Compliance" } },
-    "en": { "displayName": "Czech AML Compliance", "description": "Obliged persons, customer identification and due diligence, beneficial owner and PEP checks, sanctions screening, suspicious transaction reports to FAÚ, internal policies and training, attorney-specific duties and privilege, real-estate and escrow triggers, beneficial owner register, inspections and penalties, EU AML package.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "compliance": "Compliance" } },
-    "sk": { "displayName": "AML compliance ČR", "description": "Povinné osoby, identifikácia a kontrola klienta, konečný užívateľ výhod a PEP, sankčný screening, hlásenie podozrivého obchodu FAÚ, systém vnútorných zásad a školenia, osobitné povinnosti advokáta a mlčanlivosť, spúšťače pri nehnuteľnostiach a úschovách, evidencia skutočných majiteľov, kontroly a sankcie, AML balík EÚ.", "tagLabels": { "legal": "Právo", "czech": "Česko", "compliance": "Compliance" } }
+    "cs": {
+      "displayName": "AML compliance ČR",
+      "description": "Povinné osoby, identifikace a kontrola klienta, skutečný majitel a PEP, sankční screening, oznámení podezřelého obchodu FAÚ, systém vnitřních zásad a školení, zvláštní povinnosti advokáta a mlčenlivost, spouštěče u nemovitostí a úschov, evidence skutečných majitelů, kontroly a sankce, AML balíček EU.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "compliance": "Compliance"
+      }
+    },
+    "en": {
+      "displayName": "Czech AML Compliance",
+      "description": "Obliged persons, customer identification and due diligence, beneficial owner and PEP checks, sanctions screening, suspicious transaction reports to FAÚ, internal policies and training, attorney-specific duties and privilege, real-estate and escrow triggers, beneficial owner register, inspections and penalties, EU AML package.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "compliance": "Compliance"
+      }
+    },
+    "sk": {
+      "displayName": "AML compliance ČR",
+      "description": "Povinné osoby, identifikácia a kontrola klienta, konečný užívateľ výhod a PEP, sankčný screening, hlásenie podozrivého obchodu FAÚ, systém vnútorných zásad a školenia, osobitné povinnosti advokáta a mlčanlivosť, spúšťače pri nehnuteľnostiach a úschovách, evidencia skutočných majiteľov, kontroly a sankcie, AML balík EÚ.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "compliance": "Compliance"
+      }
+    }
   },
   "skills": "./skills"
 }

@@ -3,14 +3,58 @@
   "name": "stavebni-pravo",
   "version": "1.0.0",
   "description": "Czech construction and planning law practice skill - permits under the new Building Act (283/2021 Sb.), transitional regime, participants and neighbours, unauthorised structures, removal, occupancy, nuisance and boundary disputes, construction contracts and defects, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["stavební právo", "stavební zákon", "povolení stavby", "kolaudace", "černá stavba", "sousedský spor", "imise", "smlouva o dílo", "construction law", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "stavební právo",
+    "stavební zákon",
+    "povolení stavby",
+    "kolaudace",
+    "černá stavba",
+    "sousedský spor",
+    "imise",
+    "smlouva o dílo",
+    "construction law",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "construction"],
+  "tags": [
+    "legal",
+    "czech",
+    "construction"
+  ],
   "i18n": {
-    "cs": { "displayName": "Stavební právo ČR", "description": "Povolování staveb podle nového stavebního zákona a přechodný režim, účastníci a sousedé, černé stavby a odstranění, kolaudace, imise a hranice, smlouva o dílo na stavbu a vady.", "tagLabels": { "legal": "Právo", "czech": "Česko", "construction": "Stavební právo" } },
-    "en": { "displayName": "Czech Construction Law", "description": "Permitting under the new Building Act and the transitional regime, participants and neighbours, unauthorised structures and removal, occupancy, nuisance and boundaries, construction contracts and defects.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "construction": "Construction Law" } },
-    "sk": { "displayName": "Stavebné právo ČR", "description": "Povoľovanie stavieb podľa nového českého stavebného zákona a prechodný režim, účastníci a susedia, čierne stavby a odstránenie, kolaudácia, imisie a hranice, zmluva o dielo na stavbu a vady.", "tagLabels": { "legal": "Právo", "czech": "Česko", "construction": "Stavebné právo" } }
+    "cs": {
+      "displayName": "Stavební právo ČR",
+      "description": "Povolování staveb podle nového stavebního zákona a přechodný režim, účastníci a sousedé, černé stavby a odstranění, kolaudace, imise a hranice, smlouva o dílo na stavbu a vady.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "construction": "Stavební právo"
+      }
+    },
+    "en": {
+      "displayName": "Czech Construction Law",
+      "description": "Permitting under the new Building Act and the transitional regime, participants and neighbours, unauthorised structures and removal, occupancy, nuisance and boundaries, construction contracts and defects.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "construction": "Construction Law"
+      }
+    },
+    "sk": {
+      "displayName": "Stavebné právo ČR",
+      "description": "Povoľovanie stavieb podľa nového českého stavebného zákona a prechodný režim, účastníci a susedia, čierne stavby a odstránenie, kolaudácia, imisie a hranice, zmluva o dielo na stavbu a vady.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "construction": "Stavebné právo"
+      }
+    }
   },
   "skills": "./skills"
 }

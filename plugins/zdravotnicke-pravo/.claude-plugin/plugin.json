@@ -3,14 +3,58 @@
   "name": "zdravotnicke-pravo",
   "version": "1.0.0",
   "description": "Czech medical and health law practice skill - patient rights and informed consent, medical records, malpractice and personal injury claims, complaints and disciplinary proceedings, public health insurance coverage, providers' licensing and compliance, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["zdravotnické právo", "medicínské právo", "informovaný souhlas", "lege artis", "újma na zdraví", "zdravotnická dokumentace", "zdravotní pojišťovna", "poskytovatel zdravotních služeb", "health law", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "zdravotnické právo",
+    "medicínské právo",
+    "informovaný souhlas",
+    "lege artis",
+    "újma na zdraví",
+    "zdravotnická dokumentace",
+    "zdravotní pojišťovna",
+    "poskytovatel zdravotních služeb",
+    "health law",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "health"],
+  "tags": [
+    "legal",
+    "czech",
+    "health"
+  ],
   "i18n": {
-    "cs": { "displayName": "Zdravotnické právo ČR", "description": "Práva pacienta a informovaný souhlas, zdravotnická dokumentace, újma na zdraví a postup non lege artis, stížnosti a disciplinární řízení, úhrady z veřejného zdravotního pojištění, provoz a compliance poskytovatelů.", "tagLabels": { "legal": "Právo", "czech": "Česko", "health": "Zdravotnictví" } },
-    "en": { "displayName": "Czech Medical and Health Law", "description": "Patient rights and informed consent, medical records, malpractice and injury claims, complaints and disciplinary proceedings, public health insurance coverage, provider licensing and compliance.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "health": "Health Law" } },
-    "sk": { "displayName": "Zdravotnícke právo ČR", "description": "Práva pacienta a informovaný súhlas, zdravotná dokumentácia, ujma na zdraví a postup non lege artis, sťažnosti a disciplinárne konania, úhrady z verejného zdravotného poistenia, prevádzka a compliance poskytovateľov v ČR.", "tagLabels": { "legal": "Právo", "czech": "Česko", "health": "Zdravotníctvo" } }
+    "cs": {
+      "displayName": "Zdravotnické právo ČR",
+      "description": "Práva pacienta a informovaný souhlas, zdravotnická dokumentace, újma na zdraví a postup non lege artis, stížnosti a disciplinární řízení, úhrady z veřejného zdravotního pojištění, provoz a compliance poskytovatelů.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "health": "Zdravotnictví"
+      }
+    },
+    "en": {
+      "displayName": "Czech Medical and Health Law",
+      "description": "Patient rights and informed consent, medical records, malpractice and injury claims, complaints and disciplinary proceedings, public health insurance coverage, provider licensing and compliance.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "health": "Health Law"
+      }
+    },
+    "sk": {
+      "displayName": "Zdravotnícke právo ČR",
+      "description": "Práva pacienta a informovaný súhlas, zdravotná dokumentácia, ujma na zdraví a postup non lege artis, sťažnosti a disciplinárne konania, úhrady z verejného zdravotného poistenia, prevádzka a compliance poskytovateľov v ČR.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "health": "Zdravotníctvo"
+      }
+    }
   },
   "skills": "./skills"
 }

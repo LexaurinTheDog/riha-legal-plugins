@@ -3,14 +3,56 @@
   "name": "insolvencni-pravo",
   "version": "1.0.0",
   "description": "Czech insolvency law practice skill - creditor claims, claim review and denial, incidental disputes, debt relief, bankruptcy, moratorium and ISIR workflow on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["insolvence", "insolvency", "konkurs", "oddlužení", "přihláška pohledávky", "incidenční spor", "ISIR", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "insolvence",
+    "insolvency",
+    "konkurs",
+    "oddlužení",
+    "přihláška pohledávky",
+    "incidenční spor",
+    "ISIR",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "insolvency"],
+  "tags": [
+    "legal",
+    "czech",
+    "insolvency"
+  ],
   "i18n": {
-    "cs": { "displayName": "Insolvenční právo ČR", "description": "Pracovní postupy insolvenčního řízení pro věřitele, dlužníky i správce - přihlášky, přezkum, incidenční spory, oddlužení, konkurs, moratorium.", "tagLabels": { "legal": "Právo", "czech": "Česko", "insolvency": "Insolvence" } },
-    "en": { "displayName": "Czech Insolvency Law", "description": "Insolvency proceedings workflows for creditors, debtors and trustees - claims, review, incidental disputes, debt relief, bankruptcy, moratorium.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "insolvency": "Insolvency" } },
-    "sk": { "displayName": "Insolvenčné právo ČR", "description": "Pracovné postupy českého insolvenčného konania pre veriteľov, dlžníkov aj správcov - prihlášky, prieskum, incidenčné spory, oddlženie, konkurz, moratórium.", "tagLabels": { "legal": "Právo", "czech": "Česko", "insolvency": "Insolvencia" } }
+    "cs": {
+      "displayName": "Insolvenční právo ČR",
+      "description": "Pracovní postupy insolvenčního řízení pro věřitele, dlužníky i správce - přihlášky, přezkum, incidenční spory, oddlužení, konkurs, moratorium.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "insolvency": "Insolvence"
+      }
+    },
+    "en": {
+      "displayName": "Czech Insolvency Law",
+      "description": "Insolvency proceedings workflows for creditors, debtors and trustees - claims, review, incidental disputes, debt relief, bankruptcy, moratorium.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "insolvency": "Insolvency"
+      }
+    },
+    "sk": {
+      "displayName": "Insolvenčné právo ČR",
+      "description": "Pracovné postupy českého insolvenčného konania pre veriteľov, dlžníkov aj správcov - prihlášky, prieskum, incidenčné spory, oddlženie, konkurz, moratórium.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "insolvency": "Insolvencia"
+      }
+    }
   },
   "skills": "./skills"
 }

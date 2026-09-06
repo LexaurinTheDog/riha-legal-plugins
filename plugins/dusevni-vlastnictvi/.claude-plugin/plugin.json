@@ -3,14 +3,57 @@
   "name": "dusevni-vlastnictvi",
   "version": "1.0.0",
   "description": "Czech intellectual property practice skill - copyright and software, employee and commissioned works, licences, trade marks, patents, utility and industrial designs, domain names, trade secrets, enforcement and ÚPV proceedings, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["duševní vlastnictví", "autorské právo", "ochranná známka", "patent", "licence", "software", "ÚPV", "intellectual property", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "duševní vlastnictví",
+    "autorské právo",
+    "ochranná známka",
+    "patent",
+    "licence",
+    "software",
+    "ÚPV",
+    "intellectual property",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "ip"],
+  "tags": [
+    "legal",
+    "czech",
+    "ip"
+  ],
   "i18n": {
-    "cs": { "displayName": "Duševní vlastnictví ČR", "description": "Autorské právo a software, zaměstnanecká díla a díla na objednávku, licence, ochranné známky, patenty, užitné a průmyslové vzory, domény, obchodní tajemství, vymáhání a řízení před ÚPV.", "tagLabels": { "legal": "Právo", "czech": "Česko", "ip": "Duševní vlastnictví" } },
-    "en": { "displayName": "Czech Intellectual Property", "description": "Copyright and software, employee and commissioned works, licences, trade marks, patents, utility and industrial designs, domains, trade secrets, enforcement and ÚPV proceedings.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "ip": "Intellectual Property" } },
-    "sk": { "displayName": "Duševné vlastníctvo ČR", "description": "Autorské právo a softvér, zamestnanecké diela a diela na objednávku, licencie, ochranné známky, patenty, úžitkové a priemyselné vzory, domény, obchodné tajomstvo, vymáhanie a konanie pred ÚPV v ČR.", "tagLabels": { "legal": "Právo", "czech": "Česko", "ip": "Duševné vlastníctvo" } }
+    "cs": {
+      "displayName": "Duševní vlastnictví ČR",
+      "description": "Autorské právo a software, zaměstnanecká díla a díla na objednávku, licence, ochranné známky, patenty, užitné a průmyslové vzory, domény, obchodní tajemství, vymáhání a řízení před ÚPV.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "ip": "Duševní vlastnictví"
+      }
+    },
+    "en": {
+      "displayName": "Czech Intellectual Property",
+      "description": "Copyright and software, employee and commissioned works, licences, trade marks, patents, utility and industrial designs, domains, trade secrets, enforcement and ÚPV proceedings.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "ip": "Intellectual Property"
+      }
+    },
+    "sk": {
+      "displayName": "Duševné vlastníctvo ČR",
+      "description": "Autorské právo a softvér, zamestnanecké diela a diela na objednávku, licencie, ochranné známky, patenty, úžitkové a priemyselné vzory, domény, obchodné tajomstvo, vymáhanie a konanie pred ÚPV v ČR.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "ip": "Duševné vlastníctvo"
+      }
+    }
   },
   "skills": "./skills"
 }

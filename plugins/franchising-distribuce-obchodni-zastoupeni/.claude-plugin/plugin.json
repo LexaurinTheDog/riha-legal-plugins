@@ -3,14 +3,63 @@
   "name": "franchising-distribuce-obchodni-zastoupeni",
   "version": "1.0.0",
   "description": "Czech franchising, distribution and commercial-agency practice skill - franchise agreements and pre-contractual disclosure, know-how and brand licensing, exclusive and selective distribution, vertical restraints and the block exemption, resale price maintenance and online sales bans, commercial agents' commission, termination and goodwill indemnity, non-compete clauses, disguised employment risks, cross-border governing law and jurisdiction, VAT and withholding on royalties, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["franchising", "franšíza", "distribuce", "distribuční smlouva", "obchodní zastoupení", "obchodní zástupce", "provize", "zvláštní odměna", "výhradní distribuce", "selektivní distribuce", "vertikální dohody", "bloková výjimka", "RPM", "konkurenční doložka", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "franchising",
+    "franšíza",
+    "distribuce",
+    "distribuční smlouva",
+    "obchodní zastoupení",
+    "obchodní zástupce",
+    "provize",
+    "zvláštní odměna",
+    "výhradní distribuce",
+    "selektivní distribuce",
+    "vertikální dohody",
+    "bloková výjimka",
+    "RPM",
+    "konkurenční doložka",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "commercial"],
+  "tags": [
+    "legal",
+    "czech",
+    "commercial"
+  ],
   "i18n": {
-    "cs": { "displayName": "Franchising, distribuce a obchodní zastoupení ČR", "description": "Franšízové smlouvy a předsmluvní informace, licence know-how a značky, výhradní a selektivní distribuce, vertikální omezení a bloková výjimka, určování cen pro další prodej a zákazy online prodeje, provize obchodního zástupce, ukončení a zvláštní odměna, konkurenční doložky, riziko zastřeného zaměstnání, přeshraniční rozhodné právo a příslušnost, DPH a srážková daň z licenčních poplatků.", "tagLabels": { "legal": "Právo", "czech": "Česko", "commercial": "Obchodní právo" } },
-    "en": { "displayName": "Czech Franchising, Distribution & Agency", "description": "Franchise agreements and pre-contractual disclosure, know-how and brand licensing, exclusive and selective distribution, vertical restraints and the block exemption, resale price maintenance and online sales bans, commercial agents' commission, termination and goodwill indemnity, non-compete clauses, disguised employment risks, cross-border governing law and jurisdiction, VAT and withholding on royalties.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "commercial": "Commercial law" } },
-    "sk": { "displayName": "Franchising, distribúcia a obchodné zastúpenie ČR", "description": "Franšízové zmluvy a predzmluvné informácie, licencie know-how a značky, výhradná a selektívna distribúcia, vertikálne obmedzenia a bloková výnimka, určovanie cien pre ďalší predaj a zákazy online predaja, provízia obchodného zástupcu, ukončenie a osobitná odmena, konkurenčné doložky, riziko zastretého zamestnania, cezhraničné rozhodné právo a príslušnosť, DPH a zrážková daň z licenčných poplatkov.", "tagLabels": { "legal": "Právo", "czech": "Česko", "commercial": "Obchodné právo" } }
+    "cs": {
+      "displayName": "Franchising, distribuce a obchodní zastoupení ČR",
+      "description": "Franšízové smlouvy a předsmluvní informace, licence know-how a značky, výhradní a selektivní distribuce, vertikální omezení a bloková výjimka, určování cen pro další prodej a zákazy online prodeje, provize obchodního zástupce, ukončení a zvláštní odměna, konkurenční doložky, riziko zastřeného zaměstnání, přeshraniční rozhodné právo a příslušnost, DPH a srážková daň z licenčních poplatků.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "commercial": "Obchodní právo"
+      }
+    },
+    "en": {
+      "displayName": "Czech Franchising, Distribution & Agency",
+      "description": "Franchise agreements and pre-contractual disclosure, know-how and brand licensing, exclusive and selective distribution, vertical restraints and the block exemption, resale price maintenance and online sales bans, commercial agents' commission, termination and goodwill indemnity, non-compete clauses, disguised employment risks, cross-border governing law and jurisdiction, VAT and withholding on royalties.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "commercial": "Commercial law"
+      }
+    },
+    "sk": {
+      "displayName": "Franchising, distribúcia a obchodné zastúpenie ČR",
+      "description": "Franšízové zmluvy a predzmluvné informácie, licencie know-how a značky, výhradná a selektívna distribúcia, vertikálne obmedzenia a bloková výnimka, určovanie cien pre ďalší predaj a zákazy online predaja, provízia obchodného zástupcu, ukončenie a osobitná odmena, konkurenčné doložky, riziko zastretého zamestnania, cezhraničné rozhodné právo a príslušnosť, DPH a zrážková daň z licenčných poplatkov.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "commercial": "Obchodné právo"
+      }
+    }
   },
   "skills": "./skills"
 }

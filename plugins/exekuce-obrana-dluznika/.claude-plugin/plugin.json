@@ -3,14 +3,57 @@
   "name": "exekuce-obrana-dluznika",
   "version": "1.0.0",
   "description": "Czech enforcement defence practice skill - auditing the enforcement title, motions to stay and stop enforcement, protected minimum and protected account, seizure of movables, real estate and marital property, third-party claims, costs, complaints against bailiffs and the debt-relief exit, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["exekuce", "obrana dlužníka", "zastavení exekuce", "odklad exekuce", "nezabavitelná částka", "chráněný účet", "exekutor", "výkon rozhodnutí", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "exekuce",
+    "obrana dlužníka",
+    "zastavení exekuce",
+    "odklad exekuce",
+    "nezabavitelná částka",
+    "chráněný účet",
+    "exekutor",
+    "výkon rozhodnutí",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "enforcement"],
+  "tags": [
+    "legal",
+    "czech",
+    "enforcement"
+  ],
   "i18n": {
-    "cs": { "displayName": "Exekuce - obrana povinného ČR", "description": "Audit exekučního titulu, návrhy na odklad a zastavení, nezabavitelné minimum a chráněný účet, mobiliární exekuce, nemovitost a SJM, vylučovací žaloby třetích osob, náklady, stížnosti na exekutora, oddlužení jako východisko.", "tagLabels": { "legal": "Právo", "czech": "Česko", "enforcement": "Exekuce" } },
-    "en": { "displayName": "Czech Enforcement Defence", "description": "Auditing the enforcement title, motions to stay and stop, protected minimum and protected account, seizure of movables, real estate and marital property, third-party claims, costs, complaints against bailiffs, debt relief as an exit.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "enforcement": "Enforcement" } },
-    "sk": { "displayName": "Exekúcia - obrana povinného ČR", "description": "Audit exekučného titulu v ČR, návrhy na odklad a zastavenie, nezabaviteľné minimum a chránený účet, mobiliárna exekúcia, nehnuteľnosť a BSM, vylučovacie žaloby tretích osôb, trovy, sťažnosti na exekútora, oddlženie ako východisko.", "tagLabels": { "legal": "Právo", "czech": "Česko", "enforcement": "Exekúcia" } }
+    "cs": {
+      "displayName": "Exekuce - obrana povinného ČR",
+      "description": "Audit exekučního titulu, návrhy na odklad a zastavení, nezabavitelné minimum a chráněný účet, mobiliární exekuce, nemovitost a SJM, vylučovací žaloby třetích osob, náklady, stížnosti na exekutora, oddlužení jako východisko.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "enforcement": "Exekuce"
+      }
+    },
+    "en": {
+      "displayName": "Czech Enforcement Defence",
+      "description": "Auditing the enforcement title, motions to stay and stop, protected minimum and protected account, seizure of movables, real estate and marital property, third-party claims, costs, complaints against bailiffs, debt relief as an exit.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "enforcement": "Enforcement"
+      }
+    },
+    "sk": {
+      "displayName": "Exekúcia - obrana povinného ČR",
+      "description": "Audit exekučného titulu v ČR, návrhy na odklad a zastavenie, nezabaviteľné minimum a chránený účet, mobiliárna exekúcia, nehnuteľnosť a BSM, vylučovacie žaloby tretích osôb, trovy, sťažnosti na exekútora, oddlženie ako východisko.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "enforcement": "Exekúcia"
+      }
+    }
   },
   "skills": "./skills"
 }

@@ -3,14 +3,57 @@
   "name": "ustavni-stiznost-lidska-prava",
   "version": "1.0.0",
   "description": "Czech constitutional complaint and human-rights practice skill - admissibility and exhaustion of remedies, the two-month deadline, drafting the petition, fundamental-rights argumentation, proportionality test, ECHR application to Strasbourg, EU Charter and preliminary references, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["ústavní stížnost", "Ústavní soud", "Listina", "ESLP", "Štrasburk", "test proporcionality", "základní práva", "constitutional complaint", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "ústavní stížnost",
+    "Ústavní soud",
+    "Listina",
+    "ESLP",
+    "Štrasburk",
+    "test proporcionality",
+    "základní práva",
+    "constitutional complaint",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "constitutional"],
+  "tags": [
+    "legal",
+    "czech",
+    "constitutional"
+  ],
   "i18n": {
-    "cs": { "displayName": "Ústavní stížnost a lidská práva", "description": "Přípustnost a vyčerpání opravných prostředků, dvouměsíční lhůta, sepis ústavní stížnosti, argumentace základními právy, test proporcionality, stížnost k ESLP, Listina EU a předběžná otázka.", "tagLabels": { "legal": "Právo", "czech": "Česko", "constitutional": "Ústavní právo" } },
-    "en": { "displayName": "Czech Constitutional Complaint & Human Rights", "description": "Admissibility and exhaustion of remedies, the two-month deadline, drafting the petition, fundamental-rights argumentation, proportionality test, ECHR application, EU Charter and preliminary references.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "constitutional": "Constitutional law" } },
-    "sk": { "displayName": "Ústavná sťažnosť a ľudské práva ČR", "description": "Prípustnosť a vyčerpanie opravných prostriedkov, dvojmesačná lehota, spísanie ústavnej sťažnosti, argumentácia základnými právami, test proporcionality, sťažnosť na ESĽP, Charta EÚ a prejudiciálna otázka.", "tagLabels": { "legal": "Právo", "czech": "Česko", "constitutional": "Ústavné právo" } }
+    "cs": {
+      "displayName": "Ústavní stížnost a lidská práva",
+      "description": "Přípustnost a vyčerpání opravných prostředků, dvouměsíční lhůta, sepis ústavní stížnosti, argumentace základními právy, test proporcionality, stížnost k ESLP, Listina EU a předběžná otázka.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "constitutional": "Ústavní právo"
+      }
+    },
+    "en": {
+      "displayName": "Czech Constitutional Complaint & Human Rights",
+      "description": "Admissibility and exhaustion of remedies, the two-month deadline, drafting the petition, fundamental-rights argumentation, proportionality test, ECHR application, EU Charter and preliminary references.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "constitutional": "Constitutional law"
+      }
+    },
+    "sk": {
+      "displayName": "Ústavná sťažnosť a ľudské práva ČR",
+      "description": "Prípustnosť a vyčerpanie opravných prostriedkov, dvojmesačná lehota, spísanie ústavnej sťažnosti, argumentácia základnými právami, test proporcionality, sťažnosť na ESĽP, Charta EÚ a prejudiciálna otázka.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "constitutional": "Ústavné právo"
+      }
+    }
   },
   "skills": "./skills"
 }

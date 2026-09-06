@@ -3,14 +3,61 @@
   "name": "vecna-prava-sousedske-spory",
   "version": "1.0.0",
   "description": "Czech property-rights disputes practice skill - ownership and possession actions, co-ownership and its dissolution, boundaries and neighbour immissions, easements and rights of way, necessary access, building on another's land, superficies principle and transitional rules, acquisitive prescription, land registry corrections and disputes, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["věcná práva", "vlastnická žaloba", "spoluvlastnictví", "zrušení spoluvlastnictví", "sousedské spory", "imise", "služebnost", "věcné břemeno", "nezbytná cesta", "vydržení", "katastr nemovitostí", "property law", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "věcná práva",
+    "vlastnická žaloba",
+    "spoluvlastnictví",
+    "zrušení spoluvlastnictví",
+    "sousedské spory",
+    "imise",
+    "služebnost",
+    "věcné břemeno",
+    "nezbytná cesta",
+    "vydržení",
+    "katastr nemovitostí",
+    "property law",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "property"],
+  "tags": [
+    "legal",
+    "czech",
+    "property"
+  ],
   "i18n": {
-    "cs": { "displayName": "Věcná práva a sousedské spory ČR", "description": "Vlastnické a držební žaloby, spoluvlastnictví a jeho zrušení, hranice a sousedské imise, služebnosti a cesty, nezbytná cesta, stavba na cizím pozemku, superficiální zásada a přechodná ustanovení, vydržení, opravy a spory v katastru nemovitostí.", "tagLabels": { "legal": "Právo", "czech": "Česko", "property": "Věcná práva" } },
-    "en": { "displayName": "Czech Property Rights & Neighbour Disputes", "description": "Ownership and possession actions, co-ownership and its dissolution, boundaries and neighbour immissions, easements and rights of way, necessary access, building on another's land, superficies principle and transitional rules, acquisitive prescription, land registry corrections and disputes.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "property": "Property rights" } },
-    "sk": { "displayName": "Vecné práva a susedské spory ČR", "description": "Vlastnícke a držobné žaloby, spoluvlastníctvo a jeho zrušenie, hranice a susedské imisie, služobnosti a cesty, nevyhnutná cesta, stavba na cudzom pozemku, superficiálna zásada a prechodné ustanovenia, vydržanie, opravy a spory v katastri nehnuteľností.", "tagLabels": { "legal": "Právo", "czech": "Česko", "property": "Vecné práva" } }
+    "cs": {
+      "displayName": "Věcná práva a sousedské spory ČR",
+      "description": "Vlastnické a držební žaloby, spoluvlastnictví a jeho zrušení, hranice a sousedské imise, služebnosti a cesty, nezbytná cesta, stavba na cizím pozemku, superficiální zásada a přechodná ustanovení, vydržení, opravy a spory v katastru nemovitostí.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "property": "Věcná práva"
+      }
+    },
+    "en": {
+      "displayName": "Czech Property Rights & Neighbour Disputes",
+      "description": "Ownership and possession actions, co-ownership and its dissolution, boundaries and neighbour immissions, easements and rights of way, necessary access, building on another's land, superficies principle and transitional rules, acquisitive prescription, land registry corrections and disputes.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "property": "Property rights"
+      }
+    },
+    "sk": {
+      "displayName": "Vecné práva a susedské spory ČR",
+      "description": "Vlastnícke a držobné žaloby, spoluvlastníctvo a jeho zrušenie, hranice a susedské imisie, služobnosti a cesty, nevyhnutná cesta, stavba na cudzom pozemku, superficiálna zásada a prechodné ustanovenia, vydržanie, opravy a spory v katastri nehnuteľností.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "property": "Vecné práva"
+      }
+    }
   },
   "skills": "./skills"
 }

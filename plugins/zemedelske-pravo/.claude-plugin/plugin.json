@@ -3,14 +3,63 @@
   "name": "zemedelske-pravo",
   "version": "1.0.0",
   "description": "Czech agricultural law practice skill - agricultural lease and its termination, land consolidation, protection of the agricultural land fund and land withdrawal, CAP direct payments and conditionality, subsidy sanctions and appeals, LPIS and the farm register, game damage and hunting, water and fertiliser rules, animal welfare and veterinary law, food primary production and direct sales, organic farming, agri-photovoltaics, farm succession and taxation of farmers, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["zemědělské právo", "zemědělský pacht", "výpověď pachtu", "pozemkové úpravy", "zemědělský půdní fond", "vynětí ze ZPF", "dotace SZIF", "přímé platby", "podmíněnost", "LPIS", "škody zvěří", "myslivost", "agrovoltaika", "ekologické zemědělství", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "zemědělské právo",
+    "zemědělský pacht",
+    "výpověď pachtu",
+    "pozemkové úpravy",
+    "zemědělský půdní fond",
+    "vynětí ze ZPF",
+    "dotace SZIF",
+    "přímé platby",
+    "podmíněnost",
+    "LPIS",
+    "škody zvěří",
+    "myslivost",
+    "agrovoltaika",
+    "ekologické zemědělství",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "agriculture"],
+  "tags": [
+    "legal",
+    "czech",
+    "agriculture"
+  ],
   "i18n": {
-    "cs": { "displayName": "Zemědělské právo ČR", "description": "Zemědělský pacht a jeho výpověď, pozemkové úpravy, ochrana zemědělského půdního fondu a vynětí, přímé platby SZP a podmíněnost, sankce a odvolání u dotací, LPIS a evidence zemědělského podnikatele, škody zvěří a myslivost, vodní právo a hnojiva, welfare zvířat a veterinární právo, prvovýroba potravin a prodej ze dvora, ekologické zemědělství, agrovoltaika, předání farmy a zdanění zemědělců.", "tagLabels": { "legal": "Právo", "czech": "Česko", "agriculture": "Zemědělství" } },
-    "en": { "displayName": "Czech Agricultural Law", "description": "Agricultural lease and its termination, land consolidation, protection of the agricultural land fund and land withdrawal, CAP direct payments and conditionality, subsidy sanctions and appeals, LPIS and the farm register, game damage and hunting, water and fertiliser rules, animal welfare and veterinary law, food primary production and direct sales, organic farming, agri-photovoltaics, farm succession and taxation of farmers.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "agriculture": "Agriculture" } },
-    "sk": { "displayName": "Poľnohospodárske právo ČR", "description": "Poľnohospodársky nájom (pacht) a jeho výpoveď, pozemkové úpravy, ochrana poľnohospodárskeho pôdneho fondu a vyňatie, priame platby SPP a podmienenosť, sankcie a odvolania pri dotáciách, LPIS a evidencia poľnohospodárskeho podnikateľa, škody zverou a poľovníctvo, vodné právo a hnojivá, welfare zvierat a veterinárne právo, prvovýroba potravín a predaj z dvora, ekologické poľnohospodárstvo, agrovoltaika, odovzdanie farmy a zdanenie poľnohospodárov.", "tagLabels": { "legal": "Právo", "czech": "Česko", "agriculture": "Poľnohospodárstvo" } }
+    "cs": {
+      "displayName": "Zemědělské právo ČR",
+      "description": "Zemědělský pacht a jeho výpověď, pozemkové úpravy, ochrana zemědělského půdního fondu a vynětí, přímé platby SZP a podmíněnost, sankce a odvolání u dotací, LPIS a evidence zemědělského podnikatele, škody zvěří a myslivost, vodní právo a hnojiva, welfare zvířat a veterinární právo, prvovýroba potravin a prodej ze dvora, ekologické zemědělství, agrovoltaika, předání farmy a zdanění zemědělců.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "agriculture": "Zemědělství"
+      }
+    },
+    "en": {
+      "displayName": "Czech Agricultural Law",
+      "description": "Agricultural lease and its termination, land consolidation, protection of the agricultural land fund and land withdrawal, CAP direct payments and conditionality, subsidy sanctions and appeals, LPIS and the farm register, game damage and hunting, water and fertiliser rules, animal welfare and veterinary law, food primary production and direct sales, organic farming, agri-photovoltaics, farm succession and taxation of farmers.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "agriculture": "Agriculture"
+      }
+    },
+    "sk": {
+      "displayName": "Poľnohospodárske právo ČR",
+      "description": "Poľnohospodársky nájom (pacht) a jeho výpoveď, pozemkové úpravy, ochrana poľnohospodárskeho pôdneho fondu a vyňatie, priame platby SPP a podmienenosť, sankcie a odvolania pri dotáciách, LPIS a evidencia poľnohospodárskeho podnikateľa, škody zverou a poľovníctvo, vodné právo a hnojivá, welfare zvierat a veterinárne právo, prvovýroba potravín a predaj z dvora, ekologické poľnohospodárstvo, agrovoltaika, odovzdanie farmy a zdanenie poľnohospodárov.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "agriculture": "Poľnohospodárstvo"
+      }
+    }
   },
   "skills": "./skills"
 }

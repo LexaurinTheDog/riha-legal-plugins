@@ -3,14 +3,60 @@
   "name": "pravo-zivotniho-prostredi",
   "version": "1.0.0",
   "description": "Czech environmental law practice skill - EIA and integrated permitting, water law and discharge permits, air protection, waste and packaging, nature and landscape protection, forests and agricultural land, noise, environmental liability and remediation, inspections and penalties by ČIŽP, public participation and NGO standing, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["životní prostředí", "EIA", "IPPC", "vodní zákon", "odpady", "ochrana ovzduší", "ochrana přírody", "ČIŽP", "ekologická újma", "hluk", "environmental law", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "životní prostředí",
+    "EIA",
+    "IPPC",
+    "vodní zákon",
+    "odpady",
+    "ochrana ovzduší",
+    "ochrana přírody",
+    "ČIŽP",
+    "ekologická újma",
+    "hluk",
+    "environmental law",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "environment"],
+  "tags": [
+    "legal",
+    "czech",
+    "environment"
+  ],
   "i18n": {
-    "cs": { "displayName": "Právo životního prostředí ČR", "description": "EIA a integrované povolování, vodní právo a povolení k vypouštění, ochrana ovzduší, odpady a obaly, ochrana přírody a krajiny, lesy a zemědělská půda, hluk, ekologická újma a sanace, kontroly a pokuty ČIŽP, účast veřejnosti a spolků.", "tagLabels": { "legal": "Právo", "czech": "Česko", "environment": "Životní prostředí" } },
-    "en": { "displayName": "Czech Environmental Law", "description": "EIA and integrated permitting, water law and discharge permits, air protection, waste and packaging, nature and landscape protection, forests and agricultural land, noise, environmental liability and remediation, inspections and penalties by ČIŽP, public participation and NGO standing.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "environment": "Environment" } },
-    "sk": { "displayName": "Právo životného prostredia ČR", "description": "EIA a integrované povoľovanie, vodné právo a povolenie na vypúšťanie, ochrana ovzdušia, odpady a obaly, ochrana prírody a krajiny, lesy a poľnohospodárska pôda, hluk, ekologická ujma a sanácia, kontroly a pokuty ČIŽP, účasť verejnosti a spolkov.", "tagLabels": { "legal": "Právo", "czech": "Česko", "environment": "Životné prostredie" } }
+    "cs": {
+      "displayName": "Právo životního prostředí ČR",
+      "description": "EIA a integrované povolování, vodní právo a povolení k vypouštění, ochrana ovzduší, odpady a obaly, ochrana přírody a krajiny, lesy a zemědělská půda, hluk, ekologická újma a sanace, kontroly a pokuty ČIŽP, účast veřejnosti a spolků.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "environment": "Životní prostředí"
+      }
+    },
+    "en": {
+      "displayName": "Czech Environmental Law",
+      "description": "EIA and integrated permitting, water law and discharge permits, air protection, waste and packaging, nature and landscape protection, forests and agricultural land, noise, environmental liability and remediation, inspections and penalties by ČIŽP, public participation and NGO standing.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "environment": "Environment"
+      }
+    },
+    "sk": {
+      "displayName": "Právo životného prostredia ČR",
+      "description": "EIA a integrované povoľovanie, vodné právo a povolenie na vypúšťanie, ochrana ovzdušia, odpady a obaly, ochrana prírody a krajiny, lesy a poľnohospodárska pôda, hluk, ekologická ujma a sanácia, kontroly a pokuty ČIŽP, účasť verejnosti a spolkov.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "environment": "Životné prostredie"
+      }
+    }
   },
   "skills": "./skills"
 }

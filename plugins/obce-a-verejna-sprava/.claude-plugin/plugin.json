@@ -3,14 +3,58 @@
   "name": "obce-a-verejna-sprava",
   "version": "1.0.0",
   "description": "Czech municipal and public-administration practice skill - competences of municipal bodies, disposal of municipal property and publication of intent, by-laws and their review, freedom of information, municipal grants and companies, referendum, supervision and audit, liability of councillors, on top of the CODEXIS legal database.",
-  "author": { "name": "JUDr. Vojtěch Říha, Ph.D.", "email": "vriha@ak-rihova.cz" },
-  "keywords": ["obec", "zastupitelstvo", "zákon o obcích", "záměr obce", "obecně závazná vyhláška", "svobodný přístup k informacím", "místní referendum", "příspěvková organizace", "municipal law", "czech", "legal"],
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "obec",
+    "zastupitelstvo",
+    "zákon o obcích",
+    "záměr obce",
+    "obecně závazná vyhláška",
+    "svobodný přístup k informacím",
+    "místní referendum",
+    "příspěvková organizace",
+    "municipal law",
+    "czech",
+    "legal"
+  ],
   "license": "PROPRIETARY",
-  "tags": ["legal", "czech", "municipal"],
+  "tags": [
+    "legal",
+    "czech",
+    "municipal"
+  ],
   "i18n": {
-    "cs": { "displayName": "Obce a veřejná správa ČR", "description": "Působnost orgánů obce, nakládání s obecním majetkem a záměr, vyhlášky a jejich přezkum, svobodný přístup k informacím, dotace a obecní společnosti, referendum, dozor a přezkoumání hospodaření, odpovědnost zastupitelů.", "tagLabels": { "legal": "Právo", "czech": "Česko", "municipal": "Samospráva" } },
-    "en": { "displayName": "Czech Municipal Law", "description": "Competences of municipal bodies, disposal of municipal property and publication of intent, by-laws and their review, freedom of information, municipal grants and companies, referendum, supervision and audit, liability of councillors.", "tagLabels": { "legal": "Law", "czech": "Czech Republic", "municipal": "Local Government" } },
-    "sk": { "displayName": "Obce a verejná správa ČR", "description": "Pôsobnosť orgánov obce v ČR, nakladanie s obecným majetkom a zámer, vyhlášky a ich preskúmanie, slobodný prístup k informáciám, dotácie a obecné spoločnosti, referendum, dozor a preskúmanie hospodárenia, zodpovednosť poslancov.", "tagLabels": { "legal": "Právo", "czech": "Česko", "municipal": "Samospráva" } }
+    "cs": {
+      "displayName": "Obce a veřejná správa ČR",
+      "description": "Působnost orgánů obce, nakládání s obecním majetkem a záměr, vyhlášky a jejich přezkum, svobodný přístup k informacím, dotace a obecní společnosti, referendum, dozor a přezkoumání hospodaření, odpovědnost zastupitelů.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "municipal": "Samospráva"
+      }
+    },
+    "en": {
+      "displayName": "Czech Municipal Law",
+      "description": "Competences of municipal bodies, disposal of municipal property and publication of intent, by-laws and their review, freedom of information, municipal grants and companies, referendum, supervision and audit, liability of councillors.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "municipal": "Local Government"
+      }
+    },
+    "sk": {
+      "displayName": "Obce a verejná správa ČR",
+      "description": "Pôsobnosť orgánov obce v ČR, nakladanie s obecným majetkom a zámer, vyhlášky a ich preskúmanie, slobodný prístup k informáciám, dotácie a obecné spoločnosti, referendum, dozor a preskúmanie hospodárenia, zodpovednosť poslancov.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "municipal": "Samospráva"
+      }
+    }
   },
   "skills": "./skills"
 }
