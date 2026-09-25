@@ -1,7 +1,7 @@
 ---
 uuid: ed3d46b9-393e-4191-8f9f-9102f46a7b61
 name: rodinne-pravo
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,86 +25,124 @@ i18n:
       - "Klientka chce nesporný rozvod s dvoma maloletými deťmi. Aké dokumenty a v akom poradí pripraviť?"
       - "Otec neplatí výživné 8 mesiacov a odsťahoval sa do Rakúska. Ako postupovať?"
       - "Manžel previedol pred rozvodom firmu na brata. Dá sa to zohľadniť pri vyporiadaní SJM?"
-description: Use when the user's matter involves Czech family law - rozvod (sporný, nesporný), manželství, registrované partnerství, nesezdané soužití, péče o nezletilé dítě, výlučná / střídavá / společná péče, styk s dítětem, rodičovská odpovědnost, výživné (na dítě, mezi manžely, rozvedeného manžela, neprovdané matky), neplacení výživného, společné jmění manželů (SJM), vypořádání SJM, smluvený režim, určení a popření otcovství, osvojení, poručenství, opatrovnictví, pěstounská péče, domácí násilí, vykázání, předběžné opatření, OSPOD, kolizní opatrovník, Cochemská praxe, mediace, mezinárodní únos dítěte, Brusel II ter, Haagská úmluva, řízení podle zákona o zvláštních řízeních soudních (292/2013 Sb.), občanský zákoník část druhá (§ 655-§ 975). Standalone skill - bundles CODEXIS methodology with family-law method; no need to load the general codexis skill.
+description: Použij pro manželství, partnerství a soužití, rozvod, péči a komunikaci s dítětem, rodičovskou odpovědnost a výživné, SJM a vypořádání, rodičovství, osvojení, poručenství a pěstounství, domácí násilí, OSPOD, mediaci, přeshraniční rodinu a únos dítěte. Právní zdroje pouze nativní CODEXIS v aplikaci.
 ---
 
 # Rodinné právo ČR
 
-Samostatný oborový skill pro rodinné věci. Rozhoduje **zájem dítěte a pořadí kroků**: u rozvodu s nezletilými se nejdřív upraví poměry dětí, teprve pak lze rozvést; dohody o dětech bez schválení soudem nejsou vykonatelné.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/89/2012/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf907'`, `cdx-cli get cdx://cz_law/292/2013/versions`, `cdx-cli search JD --query "střídavá péče zájem dítěte" --court "Ústavní soud" --limit 5`.
-- **Novela OZ účinná od 1. 1. 2026 přepsala rodičovskou odpovědnost a styk (§ 858, § 887-§ 891 - styk = osobní, nepřímý i informace).** Starší vzory a judikatura citují neplatné paragrafy. Každý § a lhůtu ověř přes `/versions` k datu, nikdy z paměti.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| OZ - část druhá | 89/2012 Sb. | `cz_law/89/2012` | Manželství (§ 655+), SJM (§ 708-§ 753), rozvod (§ 755-§ 758), výživné manželů (§ 697, § 760-§ 763), rodičovství (§ 775-§ 793), osvojení (§ 794+), rodičovská odpovědnost a styk (§ 858+, § 887-§ 891), péče (§ 906-§ 908), výživné dítěte (§ 910-§ 923), poručenství, opatrovnictví, pěstounství (§ 928+) |
-| ZŘS - zákon o zvláštních řízeních soudních | 292/2013 Sb. | `cz_law/292/2013` | Rozvod (§ 383+), péče o nezletilé (§ 466+), předběžná opatření (§ 452+), domácí násilí (§ 400+), opatrovník, rychlost řízení, mediace (§ 474) |
-| o. s. ř. | 99/1963 Sb. | `cz_law/99/1963` | Sporné řízení (vypořádání SJM, výživné zletilých), výkon rozhodnutí o výživném a styku |
-| Zákon o sociálně-právní ochraně dětí | 359/1999 Sb. | `cz_law/359/1999` | OSPOD - kolizní opatrovník, šetření, případové konference |
-| Zákon o mediaci | 202/2012 Sb. | `cz_law/202/2012` | Nařízené první setkání s mediátorem |
-| Zákon o policii | 273/2008 Sb. | `cz_law/273/2008` | Vykázání ze společného obydlí (§ 44+) |
-| ZMPS | 91/2012 Sb. | `cz_law/91/2012` | Mezinárodní prvek mimo EU |
-| Nařízení Brusel II ter | (EU) 2019/1111 | zdroj `EU` | Příslušnost a uznávání ve věcech manželských a rodičovské odpovědnosti, únosy |
-| Haagská úmluva o únosech | 1980 (sdělení 34/1998 Sb.) | zdroj `CR` | Návrat dítěte, ne rozhodování o péči |
-| Trestní zákoník | 40/2009 Sb. | `cz_law/40/2009` | Zanedbání povinné výživy (§ 196), týrání osoby žijící ve společném obydlí (§ 199) |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` **k datu** (pozor na 1. 1. 2026) → `/toc` → `/text?part=`.
-2. Judikatura: **ÚS** (zájem dítěte, střídavá péče, styk, právo na spravedlivý proces v opatrovnických věcech) má v rodinných věcech mimořádnou váhu; **NS** senát 24 Cdo / 30 Cdo (SJM, výživné, rodičovství). Filtr `--court "Ústavní soud"` / `"Nejvyšší soud"`. Ověř datum a zda rozhodnutí neřeší již přepsané ustanovení.
-3. Komentář (`COMMENT`) k pojmům (zájem dítěte, změna poměrů, potencialita příjmů); orientační tabulka výživného Ministerstva spravedlnosti je doporučující, ne závazná - uvádět jen jako orientaci.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow rodinného praktika
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Oblast a naléhavost.** Rozvod × děti × majetek × násilí × rodičovství × mezinárodní prvek - často současně. Nejprve ohrožení (násilí, únos, zadržení dítěte) → předběžné opatření (§ 452 ZŘS - soud rozhodne do 24 hodin; § 400+ ZŘS - ochrana proti domácímu násilí do 48 hodin; policejní vykázání § 44 zákona 273/2008 Sb.).
-2. **Děti první.** U nezletilých dětí nelze rozvést, dokud není rozhodnuto o péči a výživném (§ 755 odst. 3 OZ). Formy péče (§ 907): výlučná, střídavá, společná - kritéria zájmu dítěte (§ 906, § 907 odst. 2 - vazby, stabilita, názor dítěte § 867, výchovné schopnosti); střídavá péče není podmíněna souhlasem druhého rodiče. Styk (§ 887-§ 891 v novém znění) - osobní, nepřímý, informace; výkon rozhodnutí o styku (§ 500+ ZŘS). Dohoda rodičů vyžaduje schválení soudem (§ 906 odst. 2).
-3. **Výživné.** Nezletilé dítě: odůvodněné potřeby × schopnosti, možnosti a majetkové poměry rodiče vč. potenciálního příjmu (§ 913), stejná životní úroveň (§ 915), tvorba úspor (§ 917), zpětně nejdéle 3 roky (§ 922 - ověř), změna poměrů (§ 923). Zletilé dítě - sporné řízení, návrh dítěte. Manžel (§ 697), rozvedený manžel (§ 760-§ 763 - sankční výživné do 3 let), neprovdaná matka (§ 920). Neplacení: výkon rozhodnutí/exekuce, § 196 TZ (trestní oznámení jako páka), náhradní výživné (zákon 588/2020 Sb.).
-4. **Rozvod.** Nesporný (§ 757 - manželství alespoň 1 rok, alespoň 6 měsíců nežijí, dohody o dětech schválené soudem, dohoda o majetku a bydlení s úředně ověřenými podpisy) × sporný (§ 755-§ 756 - kvalifikovaný rozvrat, tvrdostní klauzule § 755 odst. 2). Řízení § 383+ ZŘS, soudní poplatek ověř.
-5. **SJM.** Rozsah (§ 709-§ 710) a výluky; smluvený režim notářským zápisem (§ 716+, Seznam listin o manželském majetkovém režimu); vypořádání: dohoda (§ 738-§ 739, u nemovitostí písemně) × soud (§ 740, zásady § 742 - rovné podíly, vnosy, potřeby dětí) × **domněnka po 3 letech** (§ 741). Zohlednění jednání zkracujícího SJM (§ 742 odst. 1 písm. f), relativní neplatnost § 714, odporovatelnost). Dluhy a ručení § 731-§ 732.
-6. **Rodičovství.** Domněnky otcovství (§ 776-§ 778), souhlasné prohlášení (§ 779), určení soudem (§ 783), popření - **šestiměsíční lhůty** (§ 785, § 789-§ 790) a zásah soudu ve výjimečných případech (§ 792); osvojení (§ 794+), poručenství, pěstounství.
-7. **Mezinárodní prvek.** Příslušnost podle obvyklého bydliště dítěte (Brusel II ter), únos - řízení o navrácení (Haagská úmluva, § 478+ ZŘS, výlučně Městský soud v Brně), uznání a výkon; přemístění dítěte do ciziny bez souhlasu druhého rodiče = protiprávní.
-8. **Řízení a taktika.** Nesporné řízení ZŘS (soud zjišťuje z úřední povinnosti), OSPOD kolizní opatrovník (§ 469 ZŘS), Cochemská praxe / nařízená mediace (§ 474 ZŘS), znalecký posudek, výslech dítěte (§ 867 OZ, § 100 odst. 3 o. s. ř.), odvolání 15 dnů, dovolání ve většině rodinných věcí nepřípustné (§ 30 ZŘS - ověř výjimky), ústavní stížnost.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Citace § 888 / § 891 OZ ve znění před 1. 1. 2026 (staré vzory) - styk je nyní upraven jinak, ověř aktuální znění.
-- Návrh na rozvod podaný dřív, než je pravomocně upravena péče o nezletilé.
-- Dohoda o výživném nebo styku bez schválení soudem - nevykonatelná.
-- Nárok na výživné uplatněný zpětně nad zákonnou hranici nebo bez tvrzení o změně poměrů.
-- Zmeškání tříleté domněnky vypořádání SJM (§ 741) - nemovitosti do podílového spoluvlastnictví, movité podle užívání.
-- Vypořádání SJM smlouvou bez písemné formy u nemovitostí nebo bez řešení dluhů.
-- Popření otcovství po uplynutí šestiměsíční lhůty bez argumentace § 792.
-- Předběžné opatření podle o. s. ř. tam, kde platí zvláštní režim § 452 ZŘS (a naopak).
-- Řešení „únosu" dítěte v rámci EU žalobou o péči místo návrhu na navrácení.
-- Trestní oznámení pro zanedbání výživy bez předchozího výkonu rozhodnutí nebo bez ověření, že povinný objektivně mohl plnit.
-- Doplňování dat narození, příjmů a adres z paměti - vždy z listin nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší krok** (co, kam, do kdy; u ohrožení dítěte předběžné opatření na prvním místě).
-2. **Oblast a pořadí řízení** (děti → rozvod → majetek).
-3. **Právní rámec** - OZ/ZŘS v aktuálním znění, s odkazy.
-4. **Postup a dokumenty** (návrhy, dohody, přílohy, podpisy, poplatky).
-5. **Argumentace zájmem dítěte / zásadami vypořádání** s judikaturou ÚS a NS.
-6. **Rizika a alternativy** (dohoda × spor, mediace, náklady, délka řízení).
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `ÚS - I. ÚS 123/25 - …`, `NS - 24 Cdo 1234/2024 - …`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („nejdéle za dobu tří let“, „alespoň“, „v zájmu dítěte“, „bez zbytečného odkladu“).
-- Jeden časový řez; u styku a rodičovské odpovědnosti výslovně uveď, že se použilo znění po 1. 1. 2026.
-- Citlivé údaje o dětech a obětech násilí uváděj jen v nezbytném rozsahu.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Mimo CODEXIS jen oficiální zdroje (justice.cz, MSp tabulka výživného jako orientace, ÚMPOD pro mezinárodní věci).
-- Částky výživného nikdy neurčuj jako jistotu - jen rozpětí s uvedením kritérií a orientační tabulky.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Rodina, klient a naléhavost
+
+Urči, koho zastupuješ, konkrétní zájem dítěte, cíl klienta a souběžné větve péče, rozvodu, majetku a ochrany před násilím. U dítěte z podkladů zjisti věk, potřeby, dosavadní péči, vazby, školu, zdraví, bydliště a skutečně zjištěný názor. Tvrzení rodiče neoznačuj za výpověď dítěte. U násilí nebo hrozícího přemístění označ naléhavou bezpečnostní větev dříve než běžné majetkové vyjednávání. Citlivé údaje dětí a obětí omez na nezbytný rozsah.
+
+Vyžádej dosavadní rozhodnutí a dohody, doručenky, rodinné listiny, příjmy a výdaje, výpisy skutečně relevantních plateb a majetkové dokumenty. Odděl doložené platby, neplacení a neznámý zůstatek. Neznámou preferenci dítěte nebo budoucí příjem rodiče nedoplňuj kvůli hladkému návrhu. U nesezdaného soužití a partnerství neaplikuj automaticky instituty manželství.
+
+## Nativní právní a procesní mapa
+
+V CODEXIS načti použitelnou rodinnou úpravu občanského zákoníku, zvláštní soudní řízení, subsidiární civilní proces, sociálně-právní ochranu, mediaci, policejní a civilní ochranu před násilím, náhradní výživné a příslušné trestní souvislosti. U cizího prvku přidej rodinná a výživná nařízení, Haagské úmluvy a mezinárodní právo soukromé. Každou hmotnou a procesní otázku podrob kontrole novel a přechodu; historické názvy péče ani staré šablony nesmějí předurčit nynější petit.
+
+Odděl podání návrhu, možnost spojit řízení a zákonné pořadí rozhodování. Podmínka rozhodnout o dítěti před rozvodem sama nedokládá zákaz současného zahájení. Prověř, kdy lze věci spojit, oddělit a kdo rozhoduje. U opravných prostředků a poplatků posuzuj každou větev samostatně; rodinná povaha nezakládá plošně stejné osvobození ani přípustnost dovolání.
+
+## Péče, komunikace a prozatímní ochrana
+
+Nejdříve rozliš naléhavou ochranu vážně ohroženého dítěte, běžnou prozatímní úpravu a samostatnou ochranu před domácím násilím. U každého nástroje ověř aktivní legitimaci, podmínky, vyjádření osob, příslušnost, rychlost rozhodnutí, dobu, vykonatelnost, prodloužení a opravný prostředek. Lhůtu krizového opatření nepřenášej do běžného prozatímního rozhodnutí. Policejní vykázání nepovažuj za konečnou úpravu rodinných vztahů.
+
+U konečné péče načti aktuální zákonnou terminologii, možnosti dohody a soudního určení jejího rozsahu. Posuď vazby, schopnosti rodičů, stabilitu, logistiku, zdravotní a školní potřeby, bezpečnost a názor dítěte po kritériích z ověřené judikatury. Z názoru dítěte ani rovnosti rodičů nevyvozuj automaticky rovnoměrný čas. Chybějící preference není důvod ponechat celý návrh prázdný; nabídni konkrétní podmíněný režim s důvodem a chybějícím podkladem.
+
+Petit a dohoda určují běžné období, předávání, místo, čas, dopravu, prázdniny a svátky s prioritou zvláštního režimu, začátek účinků, nepřímý kontakt a předávání informací. Prověř výkon, změnu poměrů, rodičovskou odpovědnost a zásadní rozhodnutí o dítěti odděleně. U OSPOD a kolizního opatrovníka zjisti procesní roli a skutečnou kolizi; odborné doporučení nepředstavuj jako rozhodnutí soudu.
+
+## Výživné a jeho výkon
+
+Rozliš výživné nezletilého, zletilého dítěte, manželů, rozvedeného manžela a neprovdané matky. U každého zjisti podmínky, oprávněného, povinného, počátek, zpětnost, splatnost a změnu. U dítěte dolož potřeby, majetek a životní úroveň, schopnosti a reálné možnosti rodiče, případnou potencialitu a úspory. Orientační tabulku dostupnou nativně označ za doporučení, ne automatický právní výpočet.
+
+Částky rozděl po obdobích před a po změně a po každém povinném. Doložené platby transparentně přiřaď; pohledávky nezletilého nezapočítej automaticky proti sobě. U dlužného výživného vypočti splátky, přijaté plnění a příslušenství jen z ověřených předpokladů. Prověř výkon či exekuci, náhradní výživné a trestní odpovědnost podle konkrétních znaků; trestní oznámení není náhradou civilního výpočtu a nesmí být vydáváno za povinný krok bez opory.
+
+## Rozvod a majetek
+
+U rozvodu zjisti použitelné podmínky smluvené a sporné cesty, shodu a zákonné překážky. Dobu manželství, případné další časové podmínky, podpisy a dohody načti z rozhodného znění; historickou podmínku odděleného života nepřenášej automaticky. Připrav konkrétní dohodu o bydlení, majetku a dalších potřebných otázkách a slaď ji s řízením o dítěti.
+
+U SJM nejprve urč rozsah, výluky, smluvený či soudní režim, vznik a zánik. Odděl dohodu manželů, soudní vypořádání a zákonný následek marného uplynutí lhůty. Zkontroluj vnosy, dluhy, ocenění, potřeby dětí, péči, nerovné podíly, souhlasy a ochranu věřitelů. Dohoda o rozdělení dluhu sama nezavazuje banku; nemovitost vyžaduje samostatnou formu a katastrální návaznost. Ekonomické a daňové varianty počítej z uvedených vstupů, ne univerzálního doporučení.
+
+## Rodičovství, náhradní péče a cizina
+
+U určení a popření rodičovství ověř domněnky, prohlášení, oprávněné osoby, počátky lhůt a výjimečnou soudní korekci. U osvojení, poručenství, opatrovnictví a pěstounství urč podmínky souhlasu, zájem dítěte, rozsah práv a soudní kontrolu. Zplnomocnění rodiče nepovažuj za univerzální náhradu zvláštního zastoupení.
+
+U přemístění do ciziny rozliš pravomoc k péči, obvyklý pobyt, zákonnost přemístění, návratové řízení a meritorní rozhodování. Ověř souhlas, práva péče, návratové výjimky, příslušný soud a uznání či výkon; každý přesun není automaticky únos a návratové řízení není rozhodnutím o nejlepší péči.
+
+## Hotové podání a strategie
+
+Dodej použitelný návrh, dohodu a přílohy v požadovaném rozsahu, časovou mapu a náklady po řízeních. Vypořádej nejsilnější protinávrh z perspektivy zájmu dítěte a doložených skutků. Mediaci a Cochemský přístup posuď podle bezpečí a reálné možnosti dohody, nikoli jako vynucený souhlas. Judikaturu českých a evropských soudů hledej pouze v CODEXIS a porovnej časový režim. Podání připravené, skutečně podané, dohoda podepsaná a soudem schválená jsou odlišné výsledky.

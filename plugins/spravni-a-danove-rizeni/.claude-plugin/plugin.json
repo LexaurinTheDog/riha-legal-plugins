@@ -1,7 +1,7 @@
 {
   "uuid": "46fe5a16-047b-4b50-9735-256a256a5531",
   "name": "spravni-a-danove-rizeni",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech administrative and tax procedure practice skill - remedies against authorities under správní řád, daňový řád and soudní řád správní: appeals, judicial review, cassation, tax audits, penalties, deadlines, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

@@ -1,7 +1,7 @@
 ---
 uuid: f5a03fe0-0212-4d96-9350-debb036e07eb
 name: pravo-zivotniho-prostredi
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,93 +25,118 @@ i18n:
       - "ČIŽP uložila klientovi pokutu 800 000 Kč za nakladanie s odpadmi bez povolenia. Aké sú lehoty a dôvody na odvolanie a možno pokutu znížiť?"
       - "Spolok chce napadnúť zámer skladovej haly pri obci. V akej fáze (EIA, územné konanie, povolenie) sa môže zúčastniť a ako založiť aktívnu legitimáciu?"
       - "Klient kúpil pozemok so starou ekologickou záťažou. Kto zodpovedá za sanáciu a ako sa brániť uloženiu nápravných opatrení?"
-description: Use when the user's matter involves environmental regulation, permitting or liability in the Czech Republic - životní prostředí, právo životního prostředí, EIA, posuzování vlivů na životní prostředí (100/2001 Sb.), integrované povolení, IPPC (76/2002 Sb.), vodní zákon (254/2001 Sb.), povolení k nakládání s vodami, vypouštění odpadních vod, ochrana ovzduší (201/2012 Sb.), zákon o odpadech (541/2020 Sb.), nakládání s odpady bez povolení, obaly, ochrana přírody a krajiny (114/1992 Sb.), kácení dřevin, zvláště chráněné druhy, Natura 2000, lesní zákon, odnětí lesa, zemědělský půdní fond, vynětí ze ZPF, hluk, hlukové limity, ekologická újma (167/2008 Sb.), sanace, nápravná opatření, Česká inspekce životního prostředí, ČIŽP, přestupky, účast veřejnosti, spolek jako účastník řízení, Aarhuská úmluva, změna klimatu, ESG a CSRD. Standalone skill - bundles CODEXIS methodology with environmental-practice method; no need to load the general codexis skill.
+description: Použij pro EIA, SEA, JES a IPPC, vodu, ovzduší, odpady a obaly, přírodu a krajinu, Natura, les a ZPF, hluk, ekologickou újmu a sanace, ČIŽP a sankce, účast veřejnosti a informace, environmentální transakce, klima, ETS, ESG a CSRD. Právní zdroje výhradně nativní CODEXIS v aplikaci.
 ---
 
 # Právo životního prostředí ČR
 
-Samostatný oborový skill pro environmentální regulaci, povolování a odpovědnost. Základní reflex: environmentální právo je **složkové** (voda, ovzduší, odpady, příroda, les, půda, hluk) a **procesní vrstvy se skládají** (EIA → územní plánování → povolení záměru dle nového stavebního zákona s integrovanými závaznými stanovisky → provozní povolení → kontrola ČIŽP) - vždy určit, ve které složce a vrstvě klient je a kdo je příslušný orgán. Druhý reflex: **lhůty pro účast veřejnosti a pro napadení jsou krátké a prekluzivní** (připomínky k EIA, přihlášení spolku do řízení do 8 dnů od informace - ověř, odvolání 15 dnů, žaloba 2 měsíce). Třetí: sankce ČIŽP jsou vysoké, ale často napadnutelné na přiměřenosti a na vymezení skutku.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/100/2001/versions`, `cdx-cli get cdx://cz_law/541/2020/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf70'`, `cdx-cli get cdx://cz_law/114/1992/versions`, `cdx-cli search JD --query "účastenství spolku řízení ochrana přírody 70 aktivní legitimace" --court "Nejvyšší správní soud" --limit 5`, `cdx-cli search JD --query "pokuta ČIŽP odpady přiměřenost výše" --court "Nejvyšší správní soud" --limit 5`.
-- Nový stavební zákon (283/2021 Sb.) a zákon o jednotném environmentálním stanovisku (148/2023 Sb.) změnily integraci složkových stanovisek do povolování; **čísla paragrafů, lhůty, limity (kácení, ZPF odvody, hluk), sazby pokut a příslušnost orgánů ověř v aktuálním znění k datu**; nikdy z paměti. Přechodná ustanovení určují, zda řízení běží podle starého nebo nového režimu.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| Zákon o posuzování vlivů na ŽP (EIA) | 100/2001 Sb. | `cz_law/100/2001` | Záměry (příloha 1 - kategorie I povinně, II zjišťovací řízení), zjišťovací řízení (§ 7), dokumentace, posudek, veřejné projednání, **závazné stanovisko** (§ 9a - platnost 7 let, ověření změn § 9a odst. 6), navazující řízení a dotčená veřejnost (§ 3 písm. i), § 9c - účast, § 9d - žaloba), SEA koncepcí (§ 10a+), přeshraniční |
-| Zákon o integrované prevenci (IPPC) | 76/2002 Sb. | `cz_law/76/2002` | Integrované povolení pro zařízení dle přílohy 1, BAT/BREF, změny povolení, přezkum, účast veřejnosti, sankce |
-| Zákon o jednotném environmentálním stanovisku | 148/2023 Sb. | `cz_law/148/2023` | JES nahrazuje složková stanoviska pro povolení záměru (rozsah, výjimky, lhůty) |
-| Vodní zákon | 254/2001 Sb. | `cz_law/254/2001` | Nakládání s vodami a povolení (§ 8+), odběr a studny (§ 8, § 55), vypouštění odpadních vod (§ 8, § 38 - limity NV 401/2015 Sb.), vodní díla (§ 55+, stavební povolení vodoprávním úřadem), záplavová území (§ 66+), ochranná pásma vodních zdrojů (§ 30), havárie (§ 40-§ 42), poplatky (§ 88+), přestupky (§ 116+), správce toku |
-| Zákon o ochraně ovzduší | 201/2012 Sb. | `cz_law/201/2012` | Stacionární zdroje (vyjmenované × nevyjmenované - příloha 2), povolení provozu (§ 11), emisní limity a stropy, provozní řád, měření, poplatky, nízkoemisní zóny, kotle (třídy), přestupky (§ 25) |
-| Zákon o odpadech + obaly + VUŽ | 541/2020 / 477/2001 / 542/2020 Sb. | `cz_law/541/2020`, `cz_law/477/2001`, `cz_law/542/2020` | Pojem odpad × vedlejší produkt × neodpad (§ 4-§ 10), původce a jeho povinnosti (§ 15), obchodník, zařízení a povolení KÚ (§ 21), skládkování a poplatek (§ 36+, zákaz skládkování využitelných odpadů 2030), evidence a ISPOP, přeshraniční přeprava (nařízení 1013/2006), přestupky (§ 117+ - pokuty až desítky mil.), obaly - EKO-KOM, VUŽ - baterie, elektro, pneumatiky, vozidla |
-| Zákon o ochraně přírody a krajiny | 114/1992 Sb. | `cz_law/114/1992` | Obecná ochrana (VKP § 4, dřeviny - kácení § 8-§ 9, krajinný ráz § 12, ÚSES), zvláštní ochrana (ZCHÚ § 14+, Natura 2000 § 45a+ - hodnocení vlivu § 45i), zvláště chráněné druhy (§ 48+, výjimky § 56), **účast spolků (§ 70 - žádost o informování, přihlášení do 8 dnů)**, náhrada újmy (§ 58), ČIŽP, orgány (OOP, KÚ, AOPK, správy NP), přestupky (§ 87-§ 88) |
-| Lesní zákon | 289/1995 Sb. | `cz_law/289/1995` | Pozemky určené k plnění funkcí lesa, odnětí a omezení (§ 15-§ 18, poplatek), ochranné pásmo 50 m (§ 14 odst. 2 - souhlas), hospodaření, LHP, škody |
-| Zákon o ochraně ZPF | 334/1992 Sb. | `cz_law/334/1992` | Vynětí ze ZPF (§ 9 - souhlas, odvody § 11-§ 11b dle tříd ochrany), výjimky (fotovoltaika - LEX OZE), skrývka ornice, rekultivace |
-| Zákon o ochraně veřejného zdraví + NV o hluku | 258/2000 Sb. + NV 272/2011 Sb. | `cz_law/258/2000`, `cz_law/272/2011` | Hlukové limity (chráněný venkovní prostor, staré hlukové zátěže), povinnosti provozovatele zdroje hluku (§ 30), KHS - měření, časově omezené povolení (§ 31), stavby v hluku, vibrace |
-| Zákon o předcházení ekologické újmě | 167/2008 Sb. | `cz_law/167/2008` | Provozní činnosti (příloha 1 - objektivní odpovědnost), preventivní a nápravná opatření, finanční zajištění, náklady; vztah k § 42 vodního zákona a starým zátěžím (sanace - metodika MŽP, ekologické smlouvy MF) |
-| Zákon o ČIŽP + kontrolní řád | 282/1991 / 255/2012 Sb. | `cz_law/282/1991`, `cz_law/255/2012` | Působnost inspekce, kontrola, protokol, námitky (15 dnů), přestupkové řízení (250/2016 Sb.) |
-| Stavební zákon | 283/2021 Sb. | `cz_law/283/2021` | Povolení záměru s integrovanými stanovisky, územní plánování, DTM; přechodná ustanovení × starý 183/2006 Sb. |
-| EU: směrnice EIA 2011/92, IED 2010/75, rámcová o vodě 2000/60, o stanovištích 92/43, o ptácích 2009/147, rámcová o odpadech 2008/98, nařízení ETS, CSRD 2022/2464, taxonomie 2020/852 | Úř. věst. | zdroj `EU` | Eurokonformní výklad, přímý účinek, Natura 2000, emisní obchodování, ESG reporting |
-| Aarhuská úmluva | sdělení 124/2004 Sb. m. s. | `cz_law/124/2004` | Přístup k informacím, účast veřejnosti, přístup k právní ochraně (čl. 9) |
-| Zákon o právu na informace o ŽP | 123/1998 Sb. | `cz_law/123/1998` | Speciální infozákon pro environmentální informace (lhůta 30 dnů), CENIA |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` **k datu rozhodnutí / skutku** → `/toc` → `/text?part=`; u povolování zkontrolovat přechodná ustanovení nového stavebního zákona a JES.
-2. Judikatura: **NSS** - klíčové (účastenství spolků § 70 ZOPK a § 9c EIA - rozsah námitek, lhůty; přezkum závazných stanovisek § 149 SŘ v odvolání a v žalobě; pokuty ČIŽP - vymezení skutku, přiměřenost, liberace; pojem odpad; kácení; Natura; hluk - staré zátěže; vynětí ze ZPF; opatření obecné povahy - územní plány a § 101a s. ř. s.), **ÚS** (účast veřejnosti, vlastnické právo × ochrana přírody, náhrada za omezení), **SDEU** (`ES`) - pojem odpad (autonomní, široký), Natura (odchylky, kumulace), EIA (přímý účinek, náprava vad), Aarhus (přístup k soudu spolků - C-240/09, C-664/15, C-873/19), IED. Ověř datum a znění.
-3. Komentář (`COMMENT`) ke složkovým zákonům; **metodické pokyny MŽP** (odpad × vedlejší produkt, EIA, kácení, ekologická újma), BREF dokumenty, stanoviska KHS - mimo CODEXIS oficiální zdroje s praktickou váhou.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Kvalifikace.** Role klienta: investor/provozovatel × vlastník pozemku × obec × spolek/dotčená veřejnost × soused; složka (voda, ovzduší, odpady, příroda, les, ZPF, hluk, ekologická újma, klima) a fáze (záměr - povolování - provoz - kontrola - sankce - nápravná opatření - soud); příslušný orgán (KÚ, ORP, ČIŽP, KHS, AOPK, správa NP, MŽP, vodoprávní úřad, stavební úřad); datum a přechodná ustanovení.
-2. **Povolování záměru.** (a) Screening: je záměr v příloze 1 EIA (kategorie I - vždy; II - zjišťovací řízení; podlimitní - oznámení podlimitního záměru § 6 odst. 5)? Kumulace se souvisejícími záměry, salámová metoda (judikatura); (b) **zjišťovací řízení** (§ 7 - závěr do 45 dnů, veřejnost může podat vyjádření do 30 dnů; závěr „nepodléhá" je rozhodnutí napadnutelné dotčenou veřejností - ověř); (c) dokumentace, posudek, veřejné projednání, **závazné stanovisko EIA** (§ 9a - podmínky přecházejí do navazujících řízení, platnost 7 let, coherence stamp § 9a odst. 6 při změně záměru); (d) **navazující řízení** (povolení záměru dle SZ, vodoprávní, IPPC) - dotčená veřejnost jako účastník (§ 9c - spolek s 3 lety existence nebo 200 podpisů - ověř), námitky, přezkum závazných stanovisek (§ 149 odst. 7 SŘ - v odvolání nadřízeným orgánem), **JES** (148/2023 Sb. - jedno stanovisko za složkové zákony, výjimky pro EIA, IPPC, Natura), Natura hodnocení (§ 45i ZOPK - vyloučení vlivu / naturové posouzení, kompenzace), výjimky ze ZCHD (§ 56 - důvody, převažující veřejný zájem, alternativy), kácení (§ 8 - povolení OOP, obvod nad 80 cm, náhradní výsadba; oznámení; havarijní), vynětí ze ZPF (souhlas, odvody, třídy ochrany I-II jen ve veřejném zájmu), odnětí lesa a ochranné pásmo 50 m, vodoprávní povolení (nakládání s vodami - odběr, vypouštění; stavební povolení vodního díla), hluková studie a stanovisko KHS, ovzduší (povolení provozu vyjmenovaného zdroje § 11 odst. 2 písm. d), rozptylová studie, odborný posudek), územní plán (soulad; změna ÚP; § 101a s. ř. s. návrh na zrušení OOP - lhůta 1 rok - ověř), IPPC (integrované povolení nahrazuje složková; BAT; změna podstatná × nepodstatná).
-3. **Provoz a compliance.** Odpady: **kvalifikace odpad × vedlejší produkt × neodpad** (§ 4-§ 10 zák. 541/2020 - kritéria, judikatura SDEU: široký pojem, úmysl se zbavit), povinnosti původce (třídění, evidence, ISPOP hlášení do 28. 2., předání jen oprávněné osobě - kontrola povolení!, identifikační listy NO, smlouvy s odpadovou firmou), zařízení k nakládání (povolení KÚ § 21, provozní řád, finanční rezerva u skládek), stavební a demoliční odpady (dokumentace, recykláty), obaly (EKO-KOM, evidence, zpětný odběr), VUŽ (kolektivní systémy); voda: podmínky povolení (množství, limity vypouštění, měření, hlášení), havarijní plán (§ 39), poplatky, kontrola vodoprávního úřadu; ovzduší: provozní řád, měření emisí, poplatky, hlášení ISPOP, nízkoemisní zóny, kotle; hluk: limity dle NV 272/2011 (den/noc, korekce), měření akreditovanou laboratoří, časově omezené povolení (§ 31 odst. 1 zák. 258/2000), protihluková opatření; ETS (emisní povolenky - vyřazení, sankce), F-plyny, chemické látky (REACH, CLP - ověř gestora), ESG/CSRD reporting (velké podniky - data ověř), taxonomie.
-4. **Kontrola a sankce.** Kontrola ČIŽP/KÚ/KHS podle kontrolního řádu (oznámení nebo bez, protokol, **námitky do 15 dnů**), přestupkové řízení (zákon 250/2016 Sb. - vymezení skutku, promlčení 1/3 roky - ověř § 30, liberace - vynaložení veškerého úsilí § 21, přitěžující/polehčující, výše pokuty do zákonného rozpětí a přiměřenost - **NSS: povinnost odůvodnit výši a majetkové poměry**), souběh složkových přestupků (absorpce), **nápravná opatření** (§ 42 vodního zákona - odstranění závadného stavu, i vlastník pozemku bez zavinění; § 125 odpadového zákona; ekologická újma - preventivní a nápravná opatření, náklady), zákaz činnosti, odnětí povolení, zveřejnění; obrana: odvolání 15 dnů → správní žaloba 2 měsíce (s. ř. s. - odkladný účinek na návrh), moderace pokuty soudem (§ 78 odst. 2 s. ř. s. - zjevná nepřiměřenost); trestní rovina (§ 293-§ 301 TZ - poškození a ohrožení ŽP, neoprávněné nakládání s odpady § 298, s chráněnými organismy § 299-§ 300; TOPO).
-5. **Ekologická újma a staré zátěže.** Zákon 167/2008 Sb.: provozní činnosti přílohy 1 - objektivní odpovědnost za újmu na chráněných druzích/stanovištích, vodě, půdě; ostatní jen při zavinění; **preventivní a nápravná opatření** (rozhodnutí ČIŽP), úhrada nákladů, finanční zajištění (hodnocení rizik), promlčení 30 let, vztah k náhradě škody (OZ § 2894+, § 2925 provoz zvlášť nebezpečný, § 2926 stavba, sousedské imise § 1013), **staré ekologické zátěže** (před 2007): odpovědnost dle § 42 vodního zákona (původce / nabyvatel - kdo závadný stav způsobil; vlastník pozemku jen subsidiárně - ověř), ekologické smlouvy MF s privatizovanými podniky, SEKM databáze, kupní smlouvy - prohlášení, indemnita, escrow na sanaci, environmental due diligence (fáze I/II), rekultivace a sanace (metodika MŽP, limity - MP MŽP), brownfieldy; havárie (§ 40-§ 41 vodního zákona - ohlášení HZS/ČIŽP ihned, likvidace).
-6. **Sousedské a soukromoprávní spory.** Imise (§ 1013 OZ - hluk, prach, pach, stínění: míra nepřiměřená poměrům; zdroj s úředním povolením - jen náhrada § 1013 odst. 2), zápůrčí žaloba, náhrada škody (kontaminace, zápach, snížení hodnoty), předběžné opatření, hlukové limity jako měřítko, dřeviny a kořeny (§ 1016-§ 1017), voda ze sousedního pozemku (§ 1019), zvířata a včely, provoz závodu (§ 2924), kolektivní/hromadné žaloby.
-7. **Veřejnost, spolky, informace.** Nástroje: **§ 70 ZOPK** (spolek s hlavním posláním ochrana přírody - žádost o informace o zahajovaných řízeních u orgánu předem; přihlášení do 8 dnů od informace - účastník řízení, kde mohou být dotčeny zájmy ochrany přírody; rozsah námitek omezen na tyto zájmy - judikatura NSS), **§ 9c EIA** (dotčená veřejnost v navazujících řízeních - podmínky 3 roky / 200 podpisů - ověř; **žaloba § 9d** proti rozhodnutí v navazujícím řízení i bez účasti), § 115 vodního zákona (spolky ve vodoprávních řízeních - ověř), územní plán (připomínky a námitky zástupce veřejnosti § 23 SZ, návrh na zrušení OOP), petice a místní referendum (viz skill obcí), právo na informace o ŽP (123/1998 Sb. - 30 dnů, aktivní zveřejňování), Aarhus čl. 9 odst. 3 - přístup k soudu i mimo EIA (judikatura SDEU a NSS), kárná/trestní oznámení, mediální strategie; pro investora: jak s veřejností jednat, aby řízení nespadlo (včasné informace, vypořádání námitek).
-8. **Transakce a smlouvy.** Environmental due diligence (povolení a jejich převoditelnost - přechod na nabyvatele zařízení ex lege × nutnost změny; zátěže; odpady; ETS; sankce běžící), kupní smlouvy (prohlášení a záruky, indemnity, cap, zádržné), pachty a nájmy (kdo je původce odpadu - ověř § 15 zák. 541/2020 - nájemce/provozovatel), smlouvy s odpadovými firmami (odpovědnost za nezákonné nakládání přechází? ne bez ověření oprávnění), věcná břemena pro vodní díla a přírodní prvky, kompenzace za omezení hospodaření (§ 58 ZOPK, lesní zákon - náhrada újmy vlastníkům).
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Spolek se přihlásí po lhůtě 8 dnů nebo bez předchozí žádosti o informace - není účastníkem; nebo namítá nad rámec zájmů ochrany přírody - námitky nepřípustné.
-- Závazné stanovisko EIA/JES nenapadeno v odvolání proti povolení - v žalobě už jen omezeně; naopak stanovisko není samostatně žalovatelné.
-- Salámování záměru (rozdělení pod limity EIA) - NSS ruší; nebo změna záměru po EIA bez ověření § 9a odst. 6.
-- Odpad předán firmě bez ověření povolení v registru zařízení - původce odpovídá dál (pokuta i za černou skládku jinde).
-- Vedlejší produkt / recyklát nakládaný jako neodpad bez splnění kritérií - přestupek za nakládání s odpady bez povolení.
-- Kácení „na vlastním" bez povolení nad obvod 80 cm / v památkové zóně / mimo vegetační klid - pokuta až 1 mil. Kč (FO 100 tis.) - ověř.
-- Studna nebo odběr vody bez povolení (i historická před 1955 × po) - přestupek; vypouštění přečištěné vody do vod bez povolení.
-- Hlukové měření zadané neakreditované laboratoři - nepoužitelné; obrana proti KHS bez vlastního měření.
-- Nápravné opatření dle § 42 vodního zákona uloženo vlastníkovi pozemku - bránit se nedostatkem příčinné souvislosti/původce, ale ne nečinností.
-- Koupě brownfieldu bez fáze II průzkumu a bez indemnity - kupující nese sanaci a nemůže se zhojit.
-- Pokuta ČIŽP napadena jen „je vysoká" bez argumentace ke skutku, promlčení, liberaci, souběhu a poměrům - odvolání neúspěšné.
-- Odvolání proti pokutě zapomenuto v 15denní lhůtě; žaloba bez návrhu na odkladný účinek - pokuta vykonatelná.
-- Doplňování limitů, sazeb pokut, lhůt a čísel příloh z paměti - vždy z aktuálního znění nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (co podat/nepodávat, ke kterému orgánu, do kdy).
-2. **Kvalifikace** - složka, fáze, role, příslušný orgán, použitelné znění a přechodný režim.
-3. **Právní rámec** - složkové zákony / EIA / SZ / EU v aktuálním znění, s odkazy.
-4. **Postup a nároky** - tabulka: krok | právní základ | orgán | lhůta | riziko/sankce.
-5. **Strategie** (investor: jak projít; veřejnost: kde a jak vstoupit; obviněný: obrana proti pokutě a nápravným opatřením).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace vč. NSS a SDEU.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NSS - 1 As 123/2024 - …`, `SDEU - C-240/09 - 08.03.2011`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („do 8 dnů ode dne, kdy mu bylo oznámeno zahájení řízení“, „mohou být dotčeny zájmy ochrany přírody“, „vynaložil veškeré úsilí, které bylo možno požadovat“, „převažující veřejný zájem“).
-- Jeden časový řez; znění zákona účinné k datu skutku / vydání rozhodnutí; přechodná ustanovení SZ a JES vždy zmínit.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions` k rozhodnému datu.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Limity, sazby pokut, lhůty, obsah příloh (EIA, IPPC, ekologická újma) nikdy z paměti - vždy z aktuálního znění s odkazem.
-- Údaje o povoleních, zařízeních a zátěžích výhradně z registrů (ISPOP, registr zařízení odpadů, SEKM, CENIA, EIA informační systém); mimo CODEXIS jen oficiální zdroje (mzp.gov.cz, cizp.cz, portal.cenia.cz, khs) když CODEXIS neodpovídá.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Složka, fáze a role
+
+Urči klienta: investora, provozovatele, vlastníka, obec, souseda, spolek nebo jinou dotčenou veřejnost. Rozliš záměr, územní plán, povolování, provoz, kontrolu, sankci a nápravu. Z dodaných listin identifikuj zařízení, pozemky, činnost, kapacitu, odpady, emise, vodu, hluk a chráněné hodnoty. Povolení, skutečný provoz a technické měření nejsou totéž. U každé chybějící licence, mapy, průzkumu či registru vyžádej podklad do aplikace; nevytvářej vlastní údaje ani externí prohlídku databází.
+
+Vytvoř mapu souběžných složkových a procesních režimů. Jedno povolení nemusí pokrývat všechny činnosti ani soukromoprávní vztahy. Nejbližší lhůtu účasti či obrany zjisti z konkrétního právního nástroje a doloženého oznámení, ne z obecného environmentálního checklistu.
+
+## Nativní prameny a povolování
+
+V CODEXIS vyhledej úpravu EIA a SEA, integrované prevence, jednotného environmentálního stanoviska, stavebního práva, vod, ovzduší, odpadů, obalů, výrobků s ukončenou životností, přírody, lesa, zemědělské půdy, veřejného zdraví a hluku. Podle věci přidej ekologickou újmu, kontrolu a přestupky, správní soudnictví, environmentální informace, Aarhuskou úmluvu a relevantní unijní akty. Přechod mezi povolovacími režimy vyřeš podle skutečné fáze a úkonů, včetně rozsahu nahrazovaných stanovisek.
+
+U záměru načti příslušnou přílohu a její definice; prověř prahy, podlimitní režim, kumulaci a změny projektu. Rozliš zjišťovací řízení, dokumentaci, posudek, projednání, stanovisko a navazující rozhodnutí. Zjisti platnost, prodloužení a ověření souladu změn, nikoli pevnou dobu ze vzoru. U SEA odliš koncepci od konkrétního záměru. U JES a IPPC přesně urč, co nahrazují, co nikoli a kdo rozhoduje; podstatnou změnu zařízení neodvozuj pouze z obchodního označení.
+
+U Natura a druhové ochrany zkoumej významný vliv, alternativy, veřejný zájem, výjimky a kompenzace. U dřevin prověř povolení, oznámení, havarijní situaci, náhradní výsadbu a další ochranu místa. U ZPF a lesa ověř odnětí či omezení, ochranné režimy, odvody, skrývku a rekultivaci. U vod rozliš nakládání, vodní dílo, odběr, vypouštění, ochranné pásmo a záplavové území; historický vznik zařízení sám nepředurčuje oprávnění.
+
+## Provoz a technické podmínky
+
+U odpadů nejprve kvalifikuj odpad, vedlejší produkt a ukončení odpadového režimu podle úplných kritérií a skutečného použití. Prověř původce, oprávnění příjemce, zařízení a provozní řád, evidenci, hlášení, nebezpečné a stavební odpady, skládku, finanční rezervu a přeshraniční přepravu. U obalů, baterií, elektrozařízení, pneumatik a vozidel zkoumej zpětný odběr a kolektivní systémy. Smlouva s odpadovou firmou sama neprokazuje splnění veřejnoprávních povinností.
+
+U vody ověř podmínky množství, jakosti, měření, havarijního plánu, hlášení a poplatků. U ovzduší urč zařazení zdroje, povolení, limity, BAT/BREF, provozní řád, měření a poplatky. U hluku a vibrací zkoumej chráněný prostor, dobu, korekce, zvláštní režim a průkaznost odborného měření; nevydávej vlastní technickou domněnku za posudek. Podle provozu přidej ETS, F-plyny, REACH, CLP, taxonomii a povinnost ESG/CSRD výkaznictví po ověření osobního a časového rozsahu.
+
+## Kontrola, sankce a nápravná odpovědnost
+
+U ČIŽP nebo jiného orgánu odděl kontrolní protokol, námitky, zahájení přestupku, rozhodnutí, zákaz provozu a nápravné opatření. Ověř kompetenci, vymezení skutku, časové znění včetně případné příznivější úpravy, promlčení, přičitatelnost, liberaci, souběh, důkazní břemeno a majetkové poměry. Výši sankce nenapadej jen přívlastkem vysoká; uveď konkrétní vadu výměry nebo předpokladů. Rozliš odvolání, žalobu, odkladný účinek a soudní moderaci včetně potřeby návrhu.
+
+U ekologické újmy a havárie vyhledej preventivní a nápravná opatření, okruh provozních činností, finanční zajištění, náklady, oznamování a vztah ke složkovým zákonům. Starou zátěž, kontaminaci způsobenou provozem a běžnou civilní škodu neposuzuj stejným titulem. U původce, provozovatele a vlastníka zjisti zvláštní podmínky odpovědnosti; vlastnictví samo nedokládá způsobení, ale ani nevylučuje všechny povinnosti. Trestní přesah posuď odděleně.
+
+## Veřejnost a soukromé nároky
+
+Účast spolku při ochraně přírody, kvalifikované veřejnosti v navazujícím EIA řízení a účast podle vodního či stavebního režimu mají vlastní podmínky. Pro každý nástroj ověř předchozí žádost o informace, kvalifikaci spolku, oznámení, počátek a délku přihlášení, rozsah námitek a opravná práva. Pravidlo jedné větve nepřenášej do jiné. Samostatně prověř odvolací oprávnění kvalifikované veřejnosti bez účasti v první instanci a žalobní legitimaci. Lhůtu pro rozhodnutí soudu nezaměňuj za lhůtu podání žaloby.
+
+U závazných stanovisek a opatření obecné povahy vyhledej konkrétní cestu přezkumu. U environmentálních informací, petic a referenda rozliš dostupný nástroj a jeho účinky. Investorovi navrhni transparentní vypořádání skutečných námitek, nikoli obcházení účasti. U sousedských imisí, kořenů, vody a škody prověř samostatný civilní titul, význam povolení, proporcionalitu a vykonatelný petit; hygienický limit nemusí sám vyčerpat soukromoprávní test.
+
+## Transakce a konečný výstup
+
+Při prověrce koupě či nájmu mapuj převoditelnost povolení, zátěže, odpady, probíhající řízení a náklady nápravy. Připrav konkrétní záruky, indemnity, zádržné, odpovědnostní limit a návratovou variantu v právně přípustném rozsahu; smluvní ochrana neváže automaticky dozor. U sanace a kompenzací uveď nutný odborný podklad a ekonomické či daňové předpoklady. Předej tabulku režim–orgán–úkon–lhůta–důkaz–riziko, požadované podání nebo smlouvu a rozpočet. Judikaturu v CODEXIS porovnej ke konkrétním podmínkám, nikoli podle pouhé tematické podobnosti.

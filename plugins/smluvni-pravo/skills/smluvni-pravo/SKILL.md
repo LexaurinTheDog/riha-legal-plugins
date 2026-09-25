@@ -1,7 +1,7 @@
 ---
 uuid: fe46b72f-b619-463b-93da-5998b1e7b6e0
 name: smluvni-pravo
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,100 +25,110 @@ i18n:
       - "Zreviduj priloženú zmluvu o dielo z pohľadu objednávateľa a roztrieď vady podľa závažnosti."
       - "Je zmluvná pokuta 0,5 % denne vymáhateľná a možno ju uplatniť popri náhrade škody?"
       - "Protistrana tvrdí, že zmluva je neplatná pre neurčitosť predmetu. Ako sa brániť?"
-description: Use when the user asks to review, draft, revise, redline, compare or challenge a contract governed by Czech law, or when a question turns on občanský zákoník (89/2012 Sb.) contract rules - smlouva, návrh smlouvy, dodatek, revize smlouvy, připomínky ke smlouvě, vady smlouvy, neplatnost, zdánlivost, neurčitost, forma, podpis, jednání za právnickou osobu, obchodní podmínky, adhezní smlouva, spotřebitel, smluvní pokuta, limitace náhrady škody, odstoupení, výpověď, promlčení, započtení, postoupení, ručení, zástava, neúměrné zkrácení, lichva, změna okolností, smlouva o dílo, kupní, nájemní, úvěrová, licenční, nepojmenovaná smlouva, registr smluv (340/2015 Sb.), veřejné zakázky. Standalone skill - bundles CODEXIS methodology with contract-review method; no need to load the general codexis skill.
+description: 'Use to review, draft, redline, compare or challenge Czech-law contracts: smlouva, dodatek, vady, zdánlivost a neplatnost, forma a podpis, zastoupení, obchodní podmínky, adheze a spotřebitel, sankce, odpovědnost, ukončení, promlčení, započtení, postoupení, zajištění, lichva, změna okolností, typové i nepojmenované smlouvy, registr smluv, veřejné zakázky a přeshraniční volba práva. Research legal sources only through native CODEXIS in the application.'
 ---
 
 # Smluvní právo ČR
 
-Samostatný oborový skill pro revizi, tvorbu a napadání smluv podle českého práva. Výstupem revize je vždy kategorizovaný seznam vad s právním základem a návrhem znění - ne obecný komentář.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS používej výhradně `cdx-cli`; je nainstalovaný a přihlášený, nedělej preflight.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/89/2012/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf2048'`, `cdx-cli search JD --query "smluvní pokuta moderace" --court "Nejvyšší soud" --limit 5`, `cdx-cli search VS --query "smlouva o dílo" --limit 5`.
-- Používej jen `search`, `get`, `schema`; preferuj flagy.
-- Konkrétní prahy, lhůty a sazby (úrok z prodlení, hranice zkrácení, doba promlčení) **vždy ověř v aktuálním znění**, nikdy z paměti.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| OZ - občanský zákoník | 89/2012 Sb. | `cz_law/89/2012` | Právní jednání (§ 545+), neplatnost (§ 574-§ 588), závazky (§ 1721+), typové smlouvy (§ 2055+), náhrada škody (§ 2894+) |
-| ZOK | 90/2012 Sb. | `cz_law/90/2012` | Jednání za korporaci, souhlasy orgánů, střet zájmů |
-| Zákon o ochraně spotřebitele | 634/1992 Sb. | `cz_law/634/1992` | Spotřebitelské smlouvy vedle § 1810+ OZ |
-| Nařízení vlády o úroku z prodlení | 351/2013 Sb. | `cz_law/351/2013` | Výše úroku z prodlení a paušál nákladů |
-| Zákon o registru smluv | 340/2015 Sb. | `cz_law/340/2015` | Smlouvy s veřejným subjektem - účinnost zveřejněním, sankce zrušení |
-| ZZVZ | 134/2016 Sb. | `cz_law/134/2016` | Smlouvy z veřejných zakázek - změny závazku, limity |
-| Zákon o rozhodčím řízení | 216/1994 Sb. | `cz_law/216/1994` | Rozhodčí doložky a jejich přípustnost |
-| Nařízení Řím I | (ES) 593/2008 | zdroj `EU` | Volba práva u přeshraničních smluv |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. **Paragraf první:** OZ přes `/versions` → `/toc` → `/text?part=paragrafNNNN`. Přechodná ustanovení (§ 3028+ OZ) rozhodují, zda smlouva uzavřená před 1. 1. 2014 podléhá starému zákoníku.
-2. **Judikatura NS** k výkladu klauzulí (`--court "Nejvyšší soud"`; senáty 23 Cdo obchodní, 33 Cdo občanské, 31 Cdo velký senát, 26 Cdo nájmy). Preferuj rozhodnutí kategorie A a rozhodnutí velkého senátu; ověř, zda se týkají OZ 2012, nebo starého ObchZ/OZ 1964.
-3. **Komentář** (`COMMENT`) k dispozitivnosti ustanovení (§ 1 odst. 2 OZ) a ke kogentním limitům.
-4. **Vzory** (`VS`) jen jako kostru - každý vzor přizpůsob a ověř paragrafové odkazy, staré vzory citují neplatná čísla.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow revize smlouvy
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Za koho revidujeme.** Určit klientovu stranu a její komerční cíl; revize bez strany je nepoužitelná.
-2. **Strany a zastoupení.** Identifikace (název, IČO, sídlo) a osoba jednající za právnickou osobu se ověřují ve veřejném rejstříku k datu podpisu - způsob jednání, prokura, plná moc, souhlas orgánu (§ 161-§ 167 OZ, § 440 OZ překročení, ZOK). Neověřené údaje označ `[DOPLNIT]`, nikdy nedoplňuj z paměti.
-3. **Režim smlouvy.** B2B × spotřebitel (§ 419, § 1810-§ 1867 OZ, § 1815 nepřihlíží se) × slabší strana / adheze (§ 433, § 1798-§ 1801) × veřejný subjekt (registr smluv - účinnost až zveřejněním, ZZVZ) × přeshraniční (Řím I, volba práva a soudu). Režim určuje, co je zakázané, a co jen nevýhodné.
-4. **Typ a předmět.** Typová smlouva × inominát (§ 1746 odst. 2); smíšená smlouva; určitost předmětu a ceny (§ 553, § 1792); forma (§ 559-§ 564 - písemná forma u nemovitostí § 560, změny jen písemně § 564).
-5. **Platnost a vymahatelnost.** Zdánlivost (§ 551-§ 554) × absolutní neplatnost (§ 588 - dobré mravy, veřejný pořádek, nemožné plnění) × relativní neplatnost (§ 586 - námitka, promlčení) × částečná neplatnost (§ 576). Přednost výkladu zachovávajícího platnost (§ 574).
-6. **Klauzulový audit** (viz seznam níže) - každou klauzuli posuď: co říká, co chybí, kogentní limit, riziko pro klienta, návrh znění.
-7. **Kategorizace vad:** 🔴 kritická (neplatnost, nevymahatelnost, otevřená odpovědnost, ztráta nároku), 🟠 závažná (nevyvážená, chybí ochrana, nejasný výklad), 🟡 formální (terminologie, odkazy, číslování). Ke každé: klauzule → problém → právní základ → závažnost → návrh znění.
-8. **Stress test.** Co se stane při prodlení, vadě, insolvenci protistrany, změně okolností, sporu o výklad - a zda smlouva na každý scénář odpovídá.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Klauzulový audit - kontrolní seznam
+### 2. Vyhledání a rozsah rešerše
 
-- **Cena a platební podmínky:** splatnost (§ 1963 - dispozitivní 30 dnů u podnikatelů, hrubě nespravedlivá ujednání § 1972), DPH, zálohy, zádržné, valorizace.
-- **Prodlení a sankce:** úrok z prodlení (§ 1970, NV 351/2013), smluvní pokuta (§ 2048-§ 2052; ujednání o vztahu k náhradě škody § 2050; moderace § 2051 jen na návrh; forma), paušál nákladů.
-- **Odpovědnost:** limitace náhrady škody (§ 2898 - nelze předem vyloučit úmysl, hrubou nedbalost, újmu na přirozených právech), vzdání se práv z vad (§ 1916 odst. 2 - jako vzdání se práva kupujícího, nezhojí zamlčené vady), záruka × odpovědnost za vady, vyšší moc (§ 2913 odst. 2).
-- **Ukončení:** výpověď (§ 1998-§ 2000), odstoupení (§ 2001-§ 2005 - podstatné porušení, účinky ex tunc/ex nunc, přetrvávající ujednání), vypořádání.
-- **Zajištění a utvrzení:** ručení (§ 2018), zástava (§ 1309), finanční záruka (§ 2029), uznání dluhu (§ 2053), ztráta výhody splátek (§ 1931).
-- **Obchodní podmínky:** inkorporace (§ 1751), překvapivá ujednání (§ 1753), jednostranná změna (§ 1752), pořadí dokumentů při rozporu.
-- **Změna okolností a hardship:** § 1765-§ 1766, převzetí nebezpečí změny okolností.
-- **Postoupení a započtení:** § 1879+, § 1982+, zákaz postoupení, zákaz započtení.
-- **Mlčenlivost, IP, konkurenční doložka** (§ 2975 - přiměřenost, územní a časové omezení).
-- **Řešení sporů:** volba práva, prorogace (§ 89a o. s. ř.), rozhodčí doložka (u spotřebitele nepřípustná - ověř § 2 zákona 216/1994 Sb.), mediace.
-- **Formality:** doručování, jazyk, počet vyhotovení, podpisy (elektronický podpis, úředně ověřené podpisy tam, kde to zákon vyžaduje), salvátorská klauzule, úplnost ujednání, přílohy.
-- **Zvláštní režimy:** neúměrné zkrácení (§ 1793 - jen zrušení smlouvy, hranice cca poloviny, restriktivní výklad, nepoužije se na podnikatele § 1797), lichva (§ 1796), předsmluvní odpovědnost (§ 1728-§ 1729).
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Časté pasti
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-- Aplikace OZ 2012 na smlouvu z doby před 1. 1. 2014 bez kontroly přechodných ustanovení (§ 3028 OZ).
-- Vyloučení odpovědnosti za vady formulované jako omezení prodávajícího místo vzdání se práva kupujícího (§ 1916 odst. 2).
-- Smluvní pokuta bez ujednání o vztahu k náhradě škody - § 2050 pak náhradu škody vylučuje.
-- Přenesení judikatury k ObchZ na OZ 2012 bez ověření, zda závěr obstál.
-- Spoléhání na salvátorskou klauzuli u vady, která zasahuje podstatu smlouvy (§ 576).
-- Smlouva s veřejným subjektem podepsaná, ale nezveřejněná v registru smluv - neúčinná, po lhůtě zrušená od počátku.
-- Opsání identifikace a jednajících osob ze staré smlouvy místo z aktuálního výpisu.
-- Citování § z paměti nebo ze starého vzoru - čísla odstavců se novelami mění; před finalizací dokumentu ověř každý odkaz.
-- Rozhodčí doložka nebo prorogace v neprospěch spotřebitele.
-- Záměna „doba trvání“ × „po uplynutí“, „nejpozději“ × „do“ - operativní kvalifikátory měnit jen vědomě.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Struktura výstupu revize
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-1. **Shrnutí pro klienta** - 3 až 5 vět: lze podepsat / jen po úpravách / nepodepisovat, hlavní důvod.
-2. **Tabulka vad** - sloupce: článek smlouvy | problém | právní základ (§ s odkazem) | závažnost 🔴🟠🟡 | návrh znění.
-3. **Chybějící ujednání**, která by klient měl doplnit.
-4. **Otázky na klienta** a předpoklady (komerční cíl, vyjednávací pozice).
-5. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-Při draftingu: nejprve osnova (strany, preambule, předmět, cena, plnění, odpovědnost, ukončení, závěrečná ujednání), pak text; placeholdery v hranatých závorkách pro každý neověřený údaj.
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-## Pravidla výstupu
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
 
-- Odkazy MUSÍ používat resolvovanou `https://` URL ze source bloku tool outputu; `cdx://` nikdy do výstupu; žádná raw ID ani API suffixy.
-- Paragraf je klikací referencí: `[§ 2050 OZ](https://…#paragraf2050)`.
-- Rozhodnutí cituj `SOUD - SP. ZN. / Č. J. - DD.MM.RRRR` (např. `NS - 23 Cdo 1234/2024 - 15.01.2025`) z metadat; spisové značky nikdy nevymýšlej.
-- Při parafrázi zákona zachovej kvalifikátory („nepřihlíží se“, „ledaže“, „bez zbytečného odkladu“).
-- Všechny paragrafy resolvuj ve stejné verzi OZ k datu dotazu; při smlouvě z jiného data uveď, které znění se použilo.
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
 
-## Hard Rules
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
 
-- Znáš-li paragraf, nezačínej broad searchem; pro změny zákona začni `/versions`.
-- `/toc` → `elementId` → `/text?part=`; nehádej `docId`.
-- Nepoužívej web, když CODEXIS odpovídá; pro údaje o firmách jen veřejný rejstřík / ARES.
-- Neupravuj, nedoplňuj ani nevymýšlej názvy, IČO, sídla a jednající osoby - jen ověřené nebo `[DOPLNIT]`.
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Revize a tvorba za konkrétní smluvní stranu
+
+Urči klientovu stranu, požadovaný hospodářský výsledek, vyjednávací sílu, nepřekročitelné podmínky a přesný rozsah výstupu. Revize není neutrálním komentářem: ukaž dopad na klienta a nabídni použitelné znění. Má-li být výsledkem smlouva nebo redline, samotný seznam rizik úkol nesplňuje.
+
+### Vstupy a právní režim
+
+Přečti celé znění smlouvy včetně příloh, definic a inkorporovaných podmínek. Rozliš pracovní návrh, dohodnutou verzi, podpis, vznik závazku, účinnost a plnění. Identitu stran, způsob zastoupení, prokuru, plnou moc, korporátní souhlasy a případný střet zájmů posuzuj k rozhodnému jednání. Neověřené identifikační údaje označ, nedoplňuj je ze starého vzoru.
+
+V CODEXIS zjisti, zda jde o podnikatele, spotřebitele, slabší stranu, adhezní kontrakt, veřejný subjekt či smíšený účel. Urči typovou, smíšenou nebo nepojmenovanou smlouvu. Pro historickou smlouvu, pozdější dodatek, porušení a procesní nárok samostatně ověř rozhodné právo, časové znění a přechodná pravidla. Volba rozhodného práva není volbou soudu; u cizího prvku ověř kogentní ochranu a meze prorogace či arbitráže.
+
+### Povinné otázky klauzulového auditu
+
+- Je určitý předmět, cena nebo mechanismus jejího určení, rozsah a místo plnění? Jaká forma, podpis a schválení jsou vyžadovány? Co je pouze neprokázáno a co skutečně chybí? Ověř rozdíl zdánlivosti, absolutní či relativní neplatnosti, částečné vady a výkladu zachovávajícího jednání; nepřisuzuj každému rozporu stejný následek.
+- Co tvoří cenu, daň, zálohu, zádržné, valorizaci a náklady? Podmíněná sleva musí mít popsanou podmínku, okamžik vzniku a důsledek jejího nesplnění. Ověř splatnost a zvláště nevýhodná platební ujednání odděleně od paušálních nákladů vymáhání. V modelu peněžních toků nepovažuj neznámé náklady za nulové.
+- Co nastane při prodlení nebo vadě? Ověř zákonné a smluvní úroky, pokutu, moderaci, kumulaci sankcí a vztah k náhradě škody. Zachovej zákonné výjimky z odpovědnosti za prodlení. Rozliš práva z vadného plnění, dobrovolnou záruku, převzetí s výhradou, oznamování a promlčení; vzdání se práva jedné strany není automaticky totožné s jednostranným omezením povinnosti druhé.
+- Jaký rozsah náhrady újmy klient nese a jak lze platně snížit jeho expozici? Posuď cap, jednotlivé a agregované limity, druhy škod, výluky, kauzalitu, vyšší moc, oznamovací a nápravné mechanismy. V CODEXIS ověř meze ochrany přirozených práv, úmyslu, hrubé nedbalosti a slabší strany. Odděl platnost limitu od toho, zda konkrétní porušení a škoda spadají pod jeho text. Neplatný všeobecný waiver není užitečná ochrana.
+- Jak funguje výpověď, odstoupení, doba trvání, prolongace, nápravná lhůta a vypořádání? Prověř časové účinky, pokračující plnění a přetrvávající ujednání. U IT služby odděl zákaznická data, dodavatelský software a cizí práva; navrhni proveditelný export, předání a přechod po ukončení.
+- Jak vzniká a zaniká ručení, zástava, finanční záruka či uznání dluhu? Ověř splátky a jejich zesplatnění, souhlasy, zápisy, insolvenční důsledky, postoupení a započtení. Zajištění a utvrzení neztotožňuj.
+- Byly podmínky skutečně začleněny? Prověř překvapivá ustanovení, pořadí dokumentů, jednostranné změny, doručování a dostupnost jazykové verze. Otestuj mlčenlivost, licence, práva k výsledkům, konkurenční doložku a její osobní, časový a věcný rozsah.
+- Jak řešit změnu okolností, neúměrné zkrácení, lichvu, omyl a předsmluvní odpovědnost? Před použitím institutu ověř podmínky, výluky, včasnost a procesní následek. Salvátorská klauzule sama neprokazuje zachování zbytku smlouvy.
+- Má veřejný subjekt povinnost uveřejnění či schválení? Ověř registr smluv, zadávací omezení změn, ochranu důvěrných informací a následky jednotlivých vad. Podpis není důkaz uveřejnění ani splnění podmínky účinnosti.
+
+### Výzkum, výstup a oponentní kontrola
+
+Judikaturu k výkladu, dispozitivnosti, sankcím a odpovědnosti vytěž pouze v CODEXIS. Starší rozhodnutí k jinému kodexu použij až po ověření přenositelnosti. Rekapitulace rozhodnutí nižšího soudu není schválením jeho názoru rozhodujícím soudem. Vzor z databáze je konstrukční pomůcka, nikoli ověřená norma.
+
+Dodej tabulku článek, problém, právní opora, závažnost, dopad na klienta a úplné náhradní znění; doplň chybějící ustanovení a kontrolu všech definic a odkazů. Návrh stresově otestuj na prodlení, vadě, insolvenci, změně okolností a sporu. U každé ekonomické a daňové varianty uveď vstupy a otevřené předpoklady. Při navrženém sporu připoj vykonatelný petit, důkazy a náklady. Závěrečné doporučení k podpisu musí odpovídat skutečnému stavu ověření, nikoli jen jazykové uhlazenosti dokumentu.

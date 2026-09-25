@@ -1,7 +1,7 @@
 {
   "uuid": "6fd7b845-12ab-4ed8-8b6d-de5988b8b8ab",
   "name": "prestupkove-pravo-spravni-trestani",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech misdemeanour and administrative-penalty practice skill - liability for administrative offences under Act 250/2016, offences of individuals, entrepreneurs and legal entities with exculpation, limitation periods, penalties and their assessment, penalty orders and objections, on-the-spot fines, oral hearings and evidence, traffic offences and the points system, appeals with the ban on reformatio in peius, review proceedings, judicial review and moderation of penalties, ne bis in idem with criminal law, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

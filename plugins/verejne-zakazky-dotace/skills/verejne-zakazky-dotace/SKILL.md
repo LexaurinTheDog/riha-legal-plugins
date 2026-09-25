@@ -1,7 +1,7 @@
 ---
 uuid: 1b215851-806f-46bb-8852-55dd0ca229c4
 name: verejne-zakazky-dotace
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,87 +25,122 @@ i18n:
       - "Obec chce rozdeliť rekonštrukciu školy na tri zákazky malého rozsahu. Je to prípustné a čo hrozí?"
       - "Boli sme vylúčení zo zadávacieho konania pre nesplnenie kvalifikácie. Aké lehoty bežia pre námietky a návrh na ÚOHS a aká je kaucia?"
       - "Poskytovateľ dotácie vyrubil odvod 100 % za chybu vo výberovom konaní dodávateľa. Ako sa brániť?"
-description: Use when the user's matter involves Czech public procurement, subsidies or public-sector spending control from any side (zadavatel, dodavatel, příjemce dotace, poskytovatel, auditor) - zákon o zadávání veřejných zakázek (134/2016 Sb.), veřejná zakázka, zakázka malého rozsahu, podlimitní, nadlimitní, předpokládaná hodnota, dělení zakázky, zjednodušené podlimitní řízení, JŘBU, zadávací dokumentace, kvalifikace, hodnocení, mimořádně nízká nabídková cena, vyloučení, námitky, návrh k ÚOHS, kauce, zákaz uzavření smlouvy, změna závazku ze smlouvy, profil zadavatele, registr smluv, střet zájmů, sankce, dotace, rozhodnutí o poskytnutí dotace, veřejnoprávní smlouva, rozpočtová pravidla (218/2000, 250/2000 Sb.), porušení rozpočtové kázně, odvod, penále, prominutí, nesrovnalost, finanční oprava, korekce, kontrola, audit, finanční kontrola, NKÚ, dotační podvod. Standalone skill - bundles CODEXIS methodology with procurement-and-subsidy method; no need to load the general codexis skill.
+description: 'Use for Czech public procurement and subsidies: contracting authority and supplier advice, tender preparation, evaluation, exclusions, objections and review, contract changes, grant eligibility, controls, financial corrections and recovery. Separate procurement, budget, tax, criminal and contractual consequences. Research legal sources only through native CODEXIS in the application.'
 ---
 
-# Veřejné zakázky a dotace ČR
+# Veřejné zakázky a dotace
 
-Samostatný oborový skill pro zadávání zakázek, dotace a kontrolu veřejných výdajů. Dvě pravidla nad ostatními: **lhůty pro námitky a návrh jsou prekluzivní a krátké** a **u dotací platí vždy přísnější z pravidel (zákon × podmínky poskytovatele)**.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/134/2016/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf222'`, `cdx-cli get cdx://cz_law/218/2000/versions`, `cdx-cli search JD --query "porušení rozpočtové kázně odvod proporcionalita" --court "Nejvyšší správní soud" --limit 5`.
-- Finanční limity (nařízení vlády o limitech), výše kauce, lhůty, procenta změn závazku a sazba penále **se mění** - vždy ověř v aktuálním znění k datu zahájení řízení / poskytnutí dotace; nikdy z paměti. Pravidla poskytovatele dotace (metodické pokyny, výzva, rozhodnutí) čti z dokumentů případu - CODEXIS je neobsahuje.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| ZZVZ | 134/2016 Sb. | `cz_law/134/2016` | Zásady (§ 6), zadavatel (§ 4), předpokládaná hodnota a zákaz dělení (§ 16-§ 23), režimy (§ 24-§ 31), druhy řízení (§ 52+), lhůty (§ 54+), zadávací podmínky (§ 36+), kvalifikace (§ 73+), vyloučení (§ 48), hodnocení (§ 114+), MNNC (§ 113), uveřejňování (§ 211+), změny závazku (§ 222), námitky (§ 241-§ 245), dozor ÚOHS (§ 248-§ 273), přestupky (§ 268+) |
-| NV o finančních limitech | (aktuální nařízení vlády - ověř číslo) | zdroj `CR` | Hranice nadlimitní zakázky |
-| Zákon o registru smluv | 340/2015 Sb. | `cz_law/340/2015` | Účinnost smluv zveřejněním, zrušení |
-| Rozpočtová pravidla | 218/2000 Sb. | `cz_law/218/2000` | Dotace ze státního rozpočtu (§ 14+), pozastavení a výzva k vrácení (§ 14e-§ 14f), porušení rozpočtové kázně (§ 44), odvod a penále (§ 44a), prominutí |
-| Rozpočtová pravidla územních rozpočtů | 250/2000 Sb. | `cz_law/250/2000` | Dotace obcí a krajů (§ 10a-§ 10d veřejnoprávní smlouva), PRK (§ 22) |
-| Zákon o finanční kontrole | 320/2001 Sb. | `cz_law/320/2001` | Veřejnosprávní kontrola, interní audit |
-| Kontrolní řád | 255/2012 Sb. | `cz_law/255/2012` | Průběh kontroly, protokol, námitky |
-| Daňový řád | 280/2009 Sb. | `cz_law/280/2009` | Řízení o odvodu a penále (platební výměr, odvolání, lhůty) |
-| Zákon o NKÚ | 166/1993 Sb. | `cz_law/166/1993` | Kontrola hospodaření se státním majetkem |
-| Nařízení o společných ustanoveních (CPR) | (EU) 2021/1060 | zdroj `EU` | Fondy EU 2021-2027, nesrovnalosti, finanční opravy, střet zájmů |
-| Trestní zákoník | 40/2009 Sb. | `cz_law/40/2009` | Dotační podvod (§ 212), zjednání výhody (§ 256), pletichy (§ 257) |
-| Správní řád / s. ř. s. | 500/2004 / 150/2002 Sb. | `cz_law/500/2004`, `cz_law/150/2002` | Řízení před ÚOHS, rozklad, žaloba (KS Brno), kasační stížnost |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` **k datu zahájení zadávacího řízení / vydání rozhodnutí o dotaci** → `/toc` → `/text?part=`.
-2. Judikatura: **NSS** (`--court "Nejvyšší správní soud"`, senáty Afs u odvodů, As u zakázek; rozšířený senát k proporcionalitě odvodu a k povaze výzvy k vrácení dotace), **KS Brno** (správní žaloby proti ÚOHS), **SDEU** (`ES` - zadávací směrnice 2014/24/EU, in-house, změny smluv). Rozhodovací praxe ÚOHS je v CODEXIS jen zčásti - odkaz na uohs.gov.cz.
-3. Komentář (`COMMENT`) k pojmům (funkční celek, jediný zadavatel, podstatná změna, střet zájmů); metodiky MMR a poskytovatelů jsou administrativní výklad, u dotací však smluvně závazný.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Role a cíl.** Zadavatel (obec, příspěvková organizace, ministerstvo, sektorový zadavatel, dotovaný zadavatel § 4 odst. 2) × dodavatel × příjemce dotace × poskytovatel × auditor. Rada se liší podle strany; u veřejného sektoru vždy zkontroluj, které režimy se překrývají (ZZVZ × pravidla dotace × rozpočtová pravidla × registr smluv × zákon o obcích).
-2. **Zadavatel - před zahájením.** Předpokládaná hodnota (§ 16-§ 23 - funkční celek, časová souvislost, **zákaz dělení § 18**), režim (VZMR mimo zákon, ale zásady § 6 a pravidla dotace; podlimitní; nadlimitní - limity dle nařízení vlády), druh řízení (ZPŘ § 53, otevřené § 56, užší, JŘSU, **JŘBU § 63 - jen taxativní důvody, zadavatel prokazuje**), výjimky (§ 29-§ 31, in-house § 11), předběžné tržní konzultace (§ 33), zadávací podmínky (§ 36 - nediskriminace, § 89 technické podmínky bez odkazu na výrobky), kvalifikace přiměřená (§ 73-§ 88), hodnoticí kritéria (§ 114-§ 118), lhůty (§ 54-§ 57), elektronizace (§ 211).
-3. **Zadavatel - průběh a smlouva.** Vysvětlení a změny zadávací dokumentace (§ 98-§ 99 - prodloužení lhůty), otevírání, posouzení a hodnocení, MNNC (§ 113), vyloučení (§ 48 - fakultativní × obligatorní), oznámení o výběru (§ 123), **zákaz uzavření smlouvy** v blokační lhůtě (§ 246), písemná zpráva (§ 217), uveřejnění smlouvy (§ 219, registr smluv), skutečně uhrazená cena, **změny závazku (§ 222 - de minimis, vyhrazené, nepředvídané, záměna dodavatele; překročení = nová zakázka)**, střet zájmů (§ 44), sankční omezení (nařízení EU 833/2014 - ověř).
-4. **Dodavatel - obrana.** Námitky (§ 241-§ 245): lhůta **15 dnů** od doručení / uveřejnění / dozvědění (u zadávacích podmínek nejpozději do konce lhůty pro nabídky - ověř), náležitosti (§ 244), zadavatel rozhodne do 15 dnů; **návrh k ÚOHS do 10 dnů** od doručení rozhodnutí o námitkách (§ 251), **kauce** (§ 255 - 1 % z nabídkové ceny v zákonných mezích, jinak paušál; ověř částky), návrh na zákaz plnění smlouvy (§ 254), předběžné opatření (§ 61 SŘ), rozklad 15 dnů, žaloba ke KS Brno; podnět (§ 258 - bez kauce, bez postavení účastníka). Náhrada škody proti zadavateli až po zrušení rozhodnutí.
-5. **Dotace - životní cyklus.** Výzva → žádost → rozhodnutí / veřejnoprávní smlouva (podmínky = závazná pravidla vč. metodiky pro výběr dodavatele) → realizace (zakázky v dotaci: přísnější z ZZVZ a pravidel poskytovatele; publicita; udržitelnost; archivace) → kontrola (kontrolní řád, finanční kontrola, audit EU) → nesrovnalost / finanční oprava (tabulka oprav podle závažnosti) → **porušení rozpočtové kázně**: výzva k vrácení (§ 14f zák. 218/2000 Sb. - dobrovolné vrácení bez penále), platební výměr na odvod (finanční úřad / poskytovatel u územních rozpočtů) v režimu daňového řádu - odvolání 30 dnů, výše odvodu podle závažnosti (proporcionalita - NSS), penále (§ 44a - sazba za den, strop; ověř), prominutí (§ 44a - žádost, důvody hodné zvláštního zřetele), lhůta pro vyměření (ověř), správní žaloba.
-6. **Audit veřejného sektoru.** Kolize režimů (zákon o obcích - schvalování zastupitelstvem, ZZVZ, rozpočtová pravidla, registr smluv, účetnictví); protokol a námitky (§ 13-§ 14 kontrolního řádu - lhůta 15 dnů, ověř); odpovědnost osob (zákon o obcích § 38 péče řádného hospodáře, trestní § 220-§ 221, § 256-§ 257 TZ); NKÚ bez sankční pravomoci, ale s podnětem.
-7. **Trestní a sankční rovina.** Dotační podvod (§ 212 TZ), poškození finančních zájmů EU (§ 260), zjednání výhody (§ 256), pletichy (§ 257); přestupky zadavatele (§ 268-§ 270 ZZVZ - pokuta do 10 % ceny / 20 mil. Kč - ověř); zákaz plnění smlouvy (§ 264).
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Dělení zakázky pod limit (§ 18) - nejčastější důvod odvodu dotace i pokuty ÚOHS.
-- VZMR brána jako „bez pravidel" - platí § 6 ZZVZ, pravidla poskytovatele a vnitřní směrnice zadavatele.
-- Námitky podané po 15denní lhůtě nebo návrh bez předchozích námitek / bez kauce - ÚOHS zastaví řízení.
-- Smlouva uzavřená v blokační lhůtě nebo bez uveřejnění v registru smluv - neúčinná, riziko zákazu plnění.
-- Dodatek nad limity § 222 podepsaný „protože se to nestihlo" - nová zakázka bez řízení.
-- JŘBU odůvodněné „jediným možným dodavatelem" bez průzkumu trhu a bez prokázání technických důvodů.
-- Odvod za porušení rozpočtové kázně přijatý jako automaticky 100 % - NSS vyžaduje proporcionalitu k závažnosti; napadnout výši, ne jen důvod.
-- Dobrovolné vrácení dotace po výzvě § 14f bez posouzení, zda porušení vůbec nastalo - vrácené prostředky se obtížně získávají zpět.
-- Odvolání proti platebnímu výměru počítané podle správního řádu (15 dnů) místo daňového řádu (30 dnů).
-- Kvalifikační požadavky opsané z předchozí zakázky bez přiměřenosti k předmětu - diskriminace.
-- Střet zájmů člena hodnoticí komise nebo příjemce (čl. 61 finančního nařízení EU, § 44 ZZVZ) neošetřen.
-- Doplňování limitů, sazeb, čísel jednacích a IČO dodavatelů z paměti - vždy z aktuálního znění, dokumentů nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a lhůta** (lze/nelze, jaký prostředek, kam, do kdy, kauce).
-2. **Role, režim a překrývající se pravidla** (ZZVZ × dotace × rozpočtová pravidla × registr smluv).
-3. **Právní rámec** - ZZVZ / rozpočtová pravidla / DŘ v aktuálním znění, s odkazy; co říkají podmínky dotace (`[DOPLNIT z rozhodnutí o dotaci]`).
-4. **Postup krok za krokem** (podání, náležitosti, lhůty, poplatky, důkazy).
-5. **Rizika** (odvod, penále, pokuta ÚOHS, zákaz plnění, trestní rovina) a **alternativy** (dobrovolná náprava, prominutí, dohoda).
-6. **Judikatura a rozhodovací praxe** - jen ověřená v CODEXIS / na uohs.gov.cz, kompaktní citace.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NSS - 2 Afs 123/2025 - …`, `KS Brno - 62 Af 12/2025 - …`) z metadat, nikdy vymyšlené; rozhodnutí ÚOHS s číslem jednacím z uohs.gov.cz.
-- Zachovej kvalifikátory („do 15 dnů ode dne, kdy se dozvěděl“, „nejpozději do skončení lhůty pro podání nabídek“, „podstatná změna“).
-- Jeden časový řez; u zakázky znění účinné k zahájení řízení, u dotace k datu rozhodnutí.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Limity, kauce, procenta změn, sazby penále a lhůty nikdy z paměti - vždy z aktuálního znění s odkazem a datem účinnosti.
-- Mimo CODEXIS jen oficiální zdroje (uohs.gov.cz, portal-vz.cz, mmr.gov.cz, mfcr.cz, dotační portály poskytovatelů) když CODEXIS neodpovídá; podmínky dotace vždy z dokumentů případu.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Oborový postup: veřejné zakázky a dotace
+
+### Postavení klienta a mapa režimů
+
+Urči klienta jako zadavatele, dodavatele, poddodavatele, poskytovatele či příjemce podpory. Vymez konkrétní zakázku nebo program, rozhodné období, fázi a požadovaný výsledek. Z dodaných podkladů sestav seznam zadávací dokumentace, vysvětlení a změn, nabídek, oznámení, rozhodnutí, smluv a doručení. U dotace odděl výzvu, žádost, rozhodnutí či smlouvu, podmínky, změny a kontrolní výstupy.
+
+V CODEXIS prověř rozhodné právní režimy a vzájemný vztah zákona, unijní úpravy, programu a konkrétních podmínek. Přísnější formulace poskytovatele nemusí být automaticky platná nebo nadřazená zákonu. Podklad klienta zachovej jako důkaz obsahu jeho věci, ne jako nezávisle ověřený pramen aktuálního práva.
+
+### Příprava a průběh zakázky
+
+Jaké postavení má zadavatel a jaký druh zakázky skutečně pořizuje? Ověř předpokládanou hodnotu, funkční a časové souvislosti plnění, agregaci, dělení, sektorový či dotovaný režim, relevantní limity a výjimky. U vnitřního zadání, spolupráce veřejných zadavatelů nebo jednacího řízení bez uveřejnění dolož všechny podmínky; nepovažuj provozní pohodlí za právní důvod výjimky.
+
+Posuď přípravnou tržní konzultaci, technické podmínky, kvalifikaci, hodnoticí kritéria, elektronickou komunikaci a přístup k dokumentaci. Zkoumej rovné zacházení, přiměřenost, transparentnost, střety zájmů a účast osob zapojených do přípravy. U vysvětlení nebo změny dokumentace ověř dopad na lhůtu a potřebné zveřejnění.
+
+Při hodnocení odliš splnění podmínek, objasnění nabídky, zakázanou změnu a samotné hodnocení. U mimořádně nízké nabídkové ceny zachovej celý sled: identifikace pochybnosti, konkrétní žádost o vysvětlení, obsah odpovědi a posouzení důvodů. V CODEXIS rozliš povinné a možné vyloučení a ověř, na které účastníky se konkrétní pravidlo vztahuje; nezúžuj automaticky ochranu pouze na vybraného dodavatele.
+
+U výběru, zrušení řízení a uzavření smlouvy prověř odůvodnění, oznámení, zákaz uzavření, zveřejnění a návaznost na registr smluv či jiné povinnosti. Uzavření, účinnost, zveřejnění a zaplacení nejsou stejnými událostmi.
+
+### Změny smlouvy a přezkum
+
+U dodatku určuj původní závazek, vyhrazenou změnu, další plnění, nepředvídatelnost, změnu dodavatele a přípustnost změny hodnoty či povahy. Jednotlivé tituly neslučuj; ověř pravidla součtu změn, jejich zdůvodnění a zveřejnění podle rozhodného znění. Přípustnost dodatku podle zadávacího práva neřeší automaticky jeho soukromoprávní účinnost.
+
+U námitek a návrhu k přezkumnému orgánu určuj napadený úkon, okamžik vědomosti, skutečné doručení a přesný adresát. Ověř zákonné náležitosti, legitimaci, včasnost, předchozí námitky, kauci a požadované přílohy. Kauci nezaměňuj s poplatkem; samostatně řeš její výpočet, složení, případné vrácení a propadnutí.
+
+Blokační dobu posuď podle konkrétního zahajovacího a ukončovacího důvodu. Pravomocné odmítnutí či zastavení může mít význam i uvnitř jinak uváděného časového intervalu. Následná soudní žaloba nemusí sama zákaz uzavřít smlouvu prodlužovat. Zvlášť ověř možnost a podmínky prozatímní ochrany.
+
+Petit musí směřovat k opatření, které orgán smí přijmout: odstranění vady, zrušení příslušného úkonu či jiná zákonná náprava, nikoli automatické přikázání vybrat klienta. U soudního přezkumu samostatně ověř přípustnost, lhůtu a rozsah kontroly.
+
+### Dotace, kontroly a vratky
+
+Pro dotaci sestav životní cyklus od způsobilosti a žádosti přes financování, plnění ukazatelů a změny projektu až po udržitelnost. Rozliš veřejnoprávní rozhodnutí a smlouvu, státní, územní a unijní prostředky, zálohu a proplacení výdaje. Ověř způsobilost konkrétního nákladu, zákaz dvojího financování, veřejnou podporu, zakázkové povinnosti a doklady skutečného plnění.
+
+U kontroly rozliš oprávnění jednotlivých orgánů, protokol, námitky, rozhodnutí o odvodu a navazující vymáhání. Neslučuj kontrolní zjištění s pravomocným platebním titulem. Prověř možnost opravy, dobrovolného vrácení, prominutí a jejich účinky; výzva k vrácení nemusí mít stejnou povahu jako rozhodnutí.
+
+U porušení rozpočtové kázně, finanční opravy, odvodu, penále a trestního rizika identifikuj samostatné předpoklady. Výši neodvozuj automaticky od celé dotace; ověř proporcionalitu, rozhodné podmínky a relevantní praxi. Správní řád a daňový proces nejsou zaměnitelné, proto každému prostředku přiřaď správný režim. Samotné porušení podmínek nepovažuj bez dalších znaků za dotační podvod.
+
+### Výstup
+
+Dodej požadované námitky, návrh, žalobu, smluvní dodatek, vyjádření ke kontrole nebo dotační memorandum s konkrétními formulacemi. U každé vady uveď fakt, dokument, pravidlo, následek a nejsilnější protiargument. Připoj úplný časový a nákladový přehled včetně kauce, poplatků, odměny, případného odvodu a ekonomické varianty nápravy. U zadavatele či poskytovatele zachovej zákonnost a transparentnost; zájem klienta neodůvodňuje účelové obcházení soutěže.

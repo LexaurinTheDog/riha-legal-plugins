@@ -1,7 +1,7 @@
 ---
 uuid: fae0824e-fc7a-47b3-a8db-fda0bbe4aff2
 name: spotrebitelske-pravo
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,88 +25,107 @@ i18n:
       - "E-shop odmieta vrátiť peniaze za tovar vrátený 13. deň s tým, že bol rozbalený. Má spotrebiteľ nárok?"
       - "Klient podpísal na prezentačnej akcii zmluvu o úvere na 150 000 Kč bez posúdenia príjmov. Ako z toho von?"
       - "Zreviduj obchodné podmienky e-shopu z pohľadu spotrebiteľského práva a ČOI."
-description: Use when the user's matter involves a consumer (spotřebitel) against a trader under Czech or EU law, or a trader's consumer compliance - spotřebitelská smlouva (§ 1810+ OZ), e-shop, distanční smlouva, smlouva mimo obchodní prostory, předsmluvní informace, obchodní podmínky, zakázaná ujednání, odstoupení do 14 dnů, vrácení zboží, prodej zboží spotřebiteli (§ 2158+ OZ), vady, reklamace, 30 dnů, záruka, digitální obsah, zákon o ochraně spotřebitele (634/1992 Sb.), nekalé obchodní praktiky, klamavé slevy, recenze, ČOI, spotřebitelský úvěr (257/2016 Sb.), úvěruschopnost, RPSN, předčasné splacení, finanční arbitr, mimosoudní řešení sporů, ADR, hromadné řízení (179/2024 Sb.), rozhodčí doložka, prorogace, zájezd, letecká kompenzace, energie, telekomunikace, spotřebitel v exekuci či insolvenci. Standalone skill - bundles CODEXIS methodology with consumer-practice method; no need to load the general codexis skill.
+description: 'Use for Czech consumer rights or trader compliance: consumer status and mixed purpose, distance/off-premises contracts, pre-contract information, withdrawal, returns, defects and guarantees, abusive terms, unfair practices, prices and reviews, consumer credit, ADR and financial arbitrator, collective litigation, travel, transport, energy, telecoms, digital content and cross-border jurisdiction. Research legal sources only through native CODEXIS in the application.'
 ---
 
 # Spotřebitelské právo ČR
 
-Samostatný oborový skill pro vztahy spotřebitel - podnikatel z obou stran. První otázka: **je to spotřebitel a jakým kanálem smlouva vznikla** - od toho se odvíjí informační povinnosti, právo odstoupit, režim vad i to, co soud musí zkoumat z úřední povinnosti.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/89/2012/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf1829'`, `cdx-cli get cdx://cz_law/634/1992/versions`, `cdx-cli get cdx://cz_law/257/2016/versions`, `cdx-cli search JD --query "spotřebitel odstoupení od smlouvy 14 dnů poučení" --court "Nejvyšší soud" --limit 5`, `cdx-cli search EU --query "směrnice 2011/83 práva spotřebitelů" --limit 5`.
-- Spotřebitelské právo OZ i zákon o ochraně spotřebitele byly zásadně novelizovány k 6. 1. 2023 (transpozice směrnic 2019/770, 2019/771, 2019/2161) - **lhůty, domněnky, informační povinnosti a čísla paragrafů ověř v aktuálním znění k datu uzavření smlouvy**; nikdy z paměti. Smlouvy před novelou se posuzují podle tehdejšího znění.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| OZ - spotřebitelské smlouvy | 89/2012 Sb. | `cz_law/89/2012` | Spotřebitel (§ 419), obecná ochrana (§ 1810-§ 1819 - zakázaná ujednání § 1814, § 1815), distanční a mimo prostory (§ 1820-§ 1840 - informace, odstoupení § 1829-§ 1837), finanční služby (§ 1841+), timeshare (§ 1852+), prodej zboží spotřebiteli (§ 2158-§ 2174b), digitální obsah (§ 2389a+), zájezd (§ 2521+), promlčení (§ 629+) |
-| Zákon o ochraně spotřebitele | 634/1992 Sb. | `cz_law/634/1992` | Nekalé obchodní praktiky (§ 4-§ 5b + přílohy), informační povinnosti a ceny (§ 9-§ 13, slevy § 12a), reklamace (§ 19), ADR (§ 20d+), dozor a sankce (§ 23+) |
-| Zákon o spotřebitelském úvěru | 257/2016 Sb. | `cz_law/257/2016` | Předsmluvní informace, posouzení úvěruschopnosti (§ 86-§ 87), odstoupení (§ 118), předčasné splacení (§ 117), sankce za prodlení (§ 122), dozor ČNB/ČOI |
-| Zákon o finančním arbitrovi | 229/2002 Sb. | `cz_law/229/2002` | Bezplatné řízení, vykonatelný nález, úvěry a platební služby |
-| Zákon o hromadném občanském řízení soudním | 179/2024 Sb. | `cz_law/179/2024` | Hromadné žaloby spotřebitelů (spolky, opt-in) |
-| Zákon o rozhodčím řízení | 216/1994 Sb. | `cz_law/216/1994` | Nepřípustnost rozhodčích doložek ve spotřebitelských smlouvách (ověř § 2) |
-| Zákon o službách informační společnosti / o elektronických komunikacích | 480/2004 / 127/2005 Sb. | `cz_law/480/2004`, `cz_law/127/2005` | Obchodní sdělení, cookies, smlouvy o službách elektronických komunikací (§ 63) |
-| Energetický zákon | 458/2000 Sb. | `cz_law/458/2000` | Zákazník v domácnosti, změna dodavatele, ERÚ |
-| Zákon o některých podmínkách podnikání v cestovním ruchu | 159/1999 Sb. | `cz_law/159/1999` | Zájezd, pojištění proti úpadku CK |
-| Směrnice a nařízení EU | 2011/83, 2019/771, 2019/770, 2005/29, 93/13, (ES) 261/2004, (EU) 1215/2012 | zdroj `EU` | Eurokonformní výklad, letecká kompenzace, fórum spotřebitele |
-| o. s. ř. | 99/1963 Sb. | `cz_law/99/1963` | Příslušnost, prorogace (§ 89a - jen mezi podnikateli), předžalobní výzva (§ 142a), náklady (§ 14b AT) |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` **k datu uzavření smlouvy** (pozor na 6. 1. 2023) → `/toc` → `/text?part=`; směrnice ze zdroje `EU` pro eurokonformní výklad.
-2. Judikatura: **SDEU** (`ES`) je v spotřebitelském právu primární - zkoumání nepřiměřených ujednání z úřední povinnosti, transparentnost, sankce za nesplnění informační povinnosti; **NS** senáty 33 Cdo / 23 Cdo (spotřebitelské smlouvy, úvěry, rozhodčí doložky), **ÚS** (ochrana slabší strany), **NSS** (ČOI pokuty, nekalé praktiky). Ověř, zda rozhodnutí nevychází ze znění před novelou 2023.
-3. Komentář (`COMMENT`) k pojmům (spotřebitel a smíšený účel, průměrný spotřebitel, podstatná nerovnováha, přiměřená doba); stanoviska ČOI a Komise jsou administrativní výklad.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Strany a kanál.** Spotřebitel = fyzická osoba mimo podnikání (§ 419; smíšený účel - převažující účel, judikatura); podnikatel (§ 420 - i ten, kdo tak vystupuje). Kanál: v provozovně × distančně (e-shop, telefon) × mimo obchodní prostory (prezentační akce, podomní prodej) × finanční služba na dálku. Kanál určuje informační povinnosti (§ 1811, § 1820, § 1824) a právo odstoupit.
-2. **Předsmluvní informace a jejich sankce.** Nesplnění informační povinnosti o právu odstoupit **prodlužuje lhůtu k odstoupení** (§ 1829 odst. 2 - ověř délku), neúčtované náklady nelze požadovat (§ 1821), tlačítko „objednávka zavazující k platbě" (§ 1826a), potvrzení smlouvy v textové podobě (§ 1827), poplatky za platbu a telefon (§ 1817, § 1818).
-3. **Odstoupení do 14 dnů (§ 1829-§ 1837).** Běh od převzetí zboží (u služeb od uzavření), stačí odeslat v poslední den, formulář nepovinný; vrácení peněz do 14 dnů (podnikatel může počkat na vrácení zboží), náklady vrácení nese spotřebitel jen po poučení; odpovědnost za snížení hodnoty jen nad rámec vyzkoušení (§ 1833); **výjimky § 1837** (zboží na míru, hygienické v zapečetěném obalu, digitální obsah po souhlasu s dodáním, ubytování a doprava na termín, alkohol, noviny…) - vykládat restriktivně.
-4. **Vady a reklamace (§ 2158-§ 2174b OZ, § 19 ZOS).** Odpovědnost 2 roky (u použitého lze zkrátit na 1 rok), **domněnka vady při projevení do 1 roku od převzetí** (ověř), jakost při převzetí (§ 2161 - objektivní a subjektivní požadavky, aktualizace digitálních prvků), nároky v pořadí: oprava/výměna → sleva/odstoupení při neodstranění, opakování nebo podstatné vadě (§ 2169-§ 2171), náklady reklamace (§ 1924), reklamace u prodávajícího nebo v provozovně, písemné potvrzení, **vyřízení do 30 dnů včetně odstranění - marné uplynutí zakládá právo odstoupit nebo na slevu** (§ 19 ZOS - ověř), záruka za jakost (§ 2113 - dobrovolná, nad rámec), náhradní díly a servis.
-5. **Zakázaná ujednání a nekalé praktiky.** Nepřiměřená ujednání (§ 1813 - významná nerovnováha; § 1814 demonstrativní seznam) - nepřihlíží se (§ 1815), soud zkoumá **z úřední povinnosti** (SDEU), transparentnost; rozhodčí doložka nepřípustná, prorogace neúčinná (§ 89a o. s. ř.); nekalé obchodní praktiky (§ 4-§ 5b ZOS - klamavé, agresivní, černá listina; klamavé slevy - nejnižší cena za 30 dnů § 12a; falešné recenze; dark patterns), následek: možnost odstoupit (§ 5d ZOS - ověř), pokuta ČOI, nekalá soutěž.
-6. **Spotřebitelský úvěr (257/2016 Sb.).** Předsmluvní informace (formulář), **posouzení úvěruschopnosti - bez řádného posouzení je smlouva neplatná (námitka spotřebitele, promlčení) a úročí se jen diskontní sazbou** (§ 86-§ 87 - ověř), RPSN, odstoupení 14 dnů (§ 118), předčasné splacení s omezenou náhradou nákladů (§ 117), limity sankcí za prodlení (§ 122), zajištění (§ 113 - zákaz směnky, nepřiměřené zajištění), zprostředkovatelé, oprávnění ČNB; obrana u finančního arbitra (bezplatně, vykonatelný nález).
-7. **Mimosoudní řešení a spory.** ADR u ČOI (§ 20d+ ZOS - 90 dnů, informace na webu podnikatele), finanční arbitr (úvěry, platby, pojištění), ČTÚ (telekomunikace), ERÚ (energie); evropská platforma ODR ukončena (ověř); soud: obecný soud spotřebitele, u přeshraničních smluv fórum spotřebitele (nařízení 1215/2012 čl. 17-19), EPR, předžalobní výzva, náklady u formulářových žalob (§ 14b AT); **hromadné řízení** (179/2024 Sb. - spolek, opt-in, přihlášení nároků); promlčení 3 roky (§ 629).
-8. **Zvláštní sektory.** Zájezd (§ 2521+ OZ - změna ceny, odstoupení, pomoc, pojištění CK proti úpadku), letecká doprava (nařízení 261/2004 - kompenzace při zpoždění a zrušení, mimořádné okolnosti, ČOI/ÚCL), energie (změna dodavatele, výpověď, ERÚ), telekomunikace (§ 63 zák. 127/2005 Sb. - závazek max. 24 měsíců, výpověď, automatická prolongace), timeshare, finanční služby na dálku.
-9. **Compliance obchodníka.** Obchodní podmínky (inkorporace § 1751, jazyk, změny), informace o zboží a ceně vč. slev, proces objednávky, poučení o odstoupení a formulář, reklamační řád, ADR informace, cookies a obchodní sdělení, recenze, GDPR, sankce ČOI (§ 24 ZOS - ověř výše), audit před spuštěním e-shopu.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Lhůta k odstoupení počítaná od uzavření smlouvy místo od převzetí zboží; přehlédnuté prodloužení při chybějícím poučení.
-- Odmítnutí vrácení peněz kvůli rozbalení nebo vyzkoušení - přípustné jen u výjimek § 1837 nebo jako náhrada snížení hodnoty nad rámec vyzkoušení.
-- Reklamace „vyřízena" po 30 dnech nebo bez písemného potvrzení - spotřebitel může odstoupit.
-- Domněnka vady a 2letá odpovědnost zaměněna se „zárukou 24 měsíců" ze staré úpravy; použití znění před 6. 1. 2023 na novou smlouvu.
-- Rozhodčí doložka nebo prorogace uplatněná proti spotřebiteli; nepřiměřené ujednání přehlédnuté, ač soud musí z úřední povinnosti.
-- Úvěr bez posouzení úvěruschopnosti vymáhaný v plné výši - námitka neplatnosti a úročení diskontní sazbou.
-- Nekalé praktiky řešené jen stížností ČOI bez uplatnění soukromoprávních nároků (a naopak).
-- Smíšený účel nákupu (OSVČ) automaticky brán jako nespotřebitelský.
-- Odkaz na evropskou platformu ODR v obchodních podmínkách po jejím ukončení.
-- „Sleva" počítaná z ceny, která 30 dnů před slevou neplatila (§ 12a ZOS).
-- Zájezd × samostatné služby; letecká kompenzace promlčená podle nesprávného práva.
-- Doplňování dat převzetí, částek a čísel objednávek z paměti - vždy z dokladů nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (co spotřebitel / podnikatel může, do kdy; co poslat a komu).
-2. **Kvalifikace** (spotřebitel? kanál? typ smlouvy? datum uzavření a rozhodné znění).
-3. **Právní rámec** - OZ / ZOS / 257/2016 / směrnice v aktuálním znění, s odkazy.
-4. **Nároky nebo postup** - tabulka: nárok/krok | právní základ | adresát | lhůta | důkaz.
-5. **Rizika a alternativy** (ADR, arbitr, hromadné řízení, náklady, dozorový orgán).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace vč. SDEU.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf/článek jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NS - 33 Cdo 1234/2024 - …`, `SDEU - C-260/18 - 03.10.2019`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („ode dne převzetí zboží“, „bez zbytečného odkladu, nejpozději do 14 dnů“, „nepřihlíží se“, „průměrný spotřebitel“).
-- Jeden časový řez; znění účinné v den uzavření smlouvy, u praktik v den jednání.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Lhůty, domněnky, sazby a limity nikdy z paměti - vždy z aktuálního znění s odkazem a datem účinnosti.
-- Mimo CODEXIS jen oficiální zdroje (coi.cz, finarbitr.cz, cnb.cz, ctu.gov.cz, eru.cz, eur-lex) když CODEXIS neodpovídá.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Klient, smlouva a obchodní kanál
+
+Urči, zda chráníš spotřebitele, obchodníka nebo jiného účastníka. Ověř skutečný účel nákupu; uvedení identifikačního čísla ani smíšený účel samy neřeší kvalifikaci. Zjisti kanál uzavření, nabídku, objednávku, potvrzení, převzetí, poučení, vady, reklamace, odstoupení a platby. Datum smlouvy není automaticky rozhodným datem každé procesní či sankční otázky.
+
+V CODEXIS načti rozhodné znění občanských, spotřebitelských a sektorových pravidel, jejich přechody a relevantní unijní úpravu. Nikdy nevycházej z historických délek lhůt, předpokladů „záruky“ či připravených sankčních zkratek.
+
+### Mapa rešerše
+
+- Jaké postavení mají strany a jaký je režim smlouvy v provozovně, na dálku, mimo obchodní prostory nebo u finančních služeb? Ověř informační povinnosti, povinné potvrzení, trvalý nosič, telefonickou kontraktaci a závaznost objednávky. U online tržiště odliš provozovatele od skutečného prodejce.
+- Pro každou chybějící informaci zkoumej vlastní následek. Vytvoř oddělené řádky pro poučení o odstoupení, náklady vrácení, odpovědnost za snížení hodnoty, dodatečné poplatky a vrácení ceny. Porušení jedné povinnosti automaticky nepřenášej na ostatní; ověř vliv pozdějšího poučení.
+- Odstoupení bez důvodu: jaká je délka a počátek lhůty pro zboží, dílčí zásilky, služby nebo digitální plnění? Co musí být odesláno či doručeno a jak se to prokazuje? Ověř povinnost vrácení, možnost zadržet refundaci, způsob platby, náklady přepravy a zacházení se zbožím. Výjimky u zakázkové výroby, hygienického obalu, digitálního plnění, ubytování či termínové služby posuď podle všech podmínek, ne názvu produktu.
+- Vady: jaké subjektivní a objektivní vlastnosti, aktualizace a soulad byly sjednány či vyžadovány? Odděl dobu uplatnění, domněnku existence vady, včasné oznámení, dobrovolnou záruku a promlčení. Ověř pořadí opravy, výměny, slevy a odstoupení, význam opakování a podstatnosti, použitou věc i náklady reklamace. Prověř, co je skutečným vyřízením reklamace, doklady, komunikaci a následek marného uplynutí rozhodné lhůty.
+- Zneužívající ujednání: ověř transparentnost, nerovnováhu, kogentní ochranu, režim nepřihlížení a kontrolu soudem z úřední povinnosti. Prorogaci a arbitráž posuzuj samostatně podle druhu a data smlouvy; nepředpokládej univerzální domácí soud jen z označení spotřebitel.
+- Nekalé praktiky: rozliš klamání, opomenutí, agresivní jednání a konkrétní zakázanou praktiku. Prověř slevy, referenční cenu, recenze, personalizaci a manipulační návrh rozhraní. Soukromoprávní nárok, podnět dozoru, sankce a nekalá soutěž nejsou totožné prostředky.
+- Úvěr: ověř rozsah zákona, poskytovatele, zprostředkovatele, úvěruschopnost a skutečně zjištěné údaje. Načti zvlášť podmínky a následky vad informací, nákladových údajů, posouzení úvěruschopnosti, zajištění a sankcí; nepropojuj je do jedné předem určené neplatnosti či úrokové sazby. Posuď odstoupení, předčasné splacení, prodlení a pravomoc finančního arbitra.
+- Proces: který subjekt ADR, regulátor, arbitr či soud může poskytnout požadované plnění? Ověř podmínky, legitimaci, náklady, lhůty a účinky řízení, kolektivní ochranu a vztah k individuálnímu nároku. Dostupnost či ukončení staré platformy dolož, nenabízej ji z historické šablony. U přeshraniční věci ověř rozhodné právo a fórum odděleně.
+- Zvláštní sektory: zájezd odliš od jednotlivých služeb, prověř změny ceny, pomoc a insolvenční ochranu; u letecké dopravy kompenzaci, mimořádné okolnosti a rozhodné promlčení. U energií a telekomunikací řeš změnu dodavatele, dobu závazku, prolongaci, výpověď a regulátora. U timeshare, finančních služeb na dálku a digitálního obsahu zkoumej vlastní informační a ukončovací režim.
+- Compliance obchodníka: projdi obchodní podmínky, produktové informace, cenu, objednávkovou cestu, poučení, formulář, reklamace, ADR, cookies, obchodní sdělení a ochranu údajů. Právně přípustné omezení odpovědnosti nesmí popřít kogentní spotřebitelskou ochranu.
+
+### Judikatura a dokončení
+
+V CODEXIS vytěž přiléhavé rozhodnutí SDEU, domácích soudů a případně ústavní ochranu slabší strany. Ověř celý nosný text, zda soud přebírá nebo odmítá argument účastníka, časovou úpravu a skutkové odlišnosti. Přesná spisová značka bez správného právního závěru nestačí.
+
+Lhůty spočítej od doložené události s ověřenými pravidly posledního dne; odstoupení bez důvodu a práva z vady vedou samostatné časové osy. Dodej požadovanou výzvu, podání nebo konkrétní náhradní smluvní články za klienta. U peněžních nároků odděl jistinu, vrácení ceny, náklady, snížení hodnoty a příslušenství, pro petit zvol správný vztah mezi nároky. Závěr obsahuje nejsilnější protiargument, důkazní mezeru, ekonomickou variantu řešení a rozpočet správného řízení.

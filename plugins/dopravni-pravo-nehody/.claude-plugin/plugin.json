@@ -1,7 +1,7 @@
 {
   "uuid": "d0e414ae-a466-489b-86d4-f40db9319c9e",
   "name": "dopravni-pravo-nehody",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech traffic and road accident practice skill - accident liability and compensation, motor insurance claims, traffic offences and the points system, driving licence suspension, traffic crimes, carriers and passengers, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

@@ -1,7 +1,7 @@
 {
   "uuid": "25c2ac16-603b-4cab-a2ea-a5c633334c18",
   "name": "cizinecke-a-azylove-pravo",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech immigration and asylum practice skill - visas, long-term and permanent residence, employee and blue cards, EU citizens and family members, expulsion and detention, international protection, temporary protection, citizenship and employment of foreigners, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

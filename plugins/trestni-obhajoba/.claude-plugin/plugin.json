@@ -1,7 +1,7 @@
 {
   "uuid": "d1587978-cd5a-46fe-bd7c-74f427cacb3c",
   "name": "trestni-obhajoba",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech criminal procedure practice skill - defence counsel and victim representation across all stages, custody, asset seizure, remedies and deadlines under trestní řád and trestní zákoník, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

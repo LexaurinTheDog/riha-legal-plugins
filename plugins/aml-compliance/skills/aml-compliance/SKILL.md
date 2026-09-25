@@ -1,7 +1,7 @@
 ---
 uuid: 5a185893-07b1-47f4-afdd-4a65fb787ab0
 name: aml-compliance
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,89 +25,108 @@ i18n:
       - "Advokát preberá do úschovy kúpnu cenu 12 mil. Kč od zahraničnej spoločnosti s nejasnou štruktúrou. Aké AML povinnosti má a kedy môže/musí obchod odmietnuť?"
       - "Realitná kancelária dostala od FAÚ výzvu na predloženie dokumentov. Čo musí mať v poriadku a aké hrozia pokuty?"
       - "Priprav checklist kontroly klienta pre s.r.o. s konečným užívateľom výhod v evidencii a konateľom PEP."
-description: Use when the user's matter involves anti-money-laundering or sanctions duties in the Czech Republic - AML, praní špinavých peněz, financování terorismu, zákon 253/2008 Sb., povinná osoba, advokát jako povinná osoba, realitní kancelář, účetní, daňový poradce, virtuální aktiva, identifikace klienta, kontrola klienta, zesílená kontrola, skutečný majitel, evidence skutečných majitelů (37/2021 Sb.), politicky exponovaná osoba, PEP, sankce, mezinárodní sankce (69/2006 Sb.), sankční seznam EU, screening, hodnocení rizik, systém vnitřních zásad, kontaktní osoba, školení, oznámení podezřelého obchodu, Finanční analytický úřad, FAÚ, mlčenlivost advokáta, Česká advokátní komora, kontrola ČAK, hotovostní limit 270 000 Kč, zákon o omezení plateb v hotovosti, úschova, escrow, nemovitostní transakce, uchovávání záznamů, přestupky a pokuty, AML nařízení EU 2024/1624, AMLA. Standalone skill - bundles CODEXIS methodology with AML-compliance method; no need to load the general codexis skill.
+description: 'Použij pro české AML a sankční povinnosti: povinné osoby včetně advokátů, notářů, realitních zprostředkovatelů, účetních a finančních institucí; identifikace a kontrola klienta, skutečný majitel, PEP, rizika, úschovy, hotovost, virtuální aktiva, podezřelé obchody, FAÚ a ČAK, mlčenlivost, vnitřní zásady, školení, uchovávání, kontroly a sankce, evropský AML rámec a AMLA. Právní rešerše výhradně nativním CODEXIS ve vm.codexis.ai.'
 ---
 
 # AML compliance ČR
 
-Samostatný oborový skill pro povinnosti proti legalizaci výnosů z trestné činnosti a financování terorismu a pro sankční compliance. Základní reflex: **nejprve zjisti, zda a od kdy je klient (nebo sám advokát) povinnou osobou pro daný obchod** - povinnosti se spouštějí typem činnosti, ne velikostí subjektu; u advokáta a notáře jen pro vyjmenované úkony (úschovy, nemovitosti, správa majetku, zakládání společností). Druhý reflex: **identifikace a kontrola klienta jsou dva různé úkony s různými prahy a hloubkou**; nesplnitelná kontrola znamená povinnost obchod odmítnout, ne „provést s rezervou". Třetí: **sankční povinnosti platí pro každého**, nejen pro povinné osoby.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/253/2008/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf9'`, `cdx-cli get cdx://cz_law/37/2021/versions`, `cdx-cli get cdx://cz_law/69/2006/versions`, `cdx-cli search EU --query "nařízení 2024/1624 předcházení využívání finančního systému" --limit 5`, `cdx-cli search JD --query "povinná osoba identifikace klienta pokuta FAÚ" --court "Nejvyšší správní soud" --limit 5`.
-- AML zákon je novelizován téměř každý rok a **AML balíček EU (nařízení 2024/1624 - přímo použitelné od 10. 7. 2027, směrnice 2024/1640, AMLA)** přesouvá pravidla z národního zákona do nařízení; **prahy (hotovost, příležitostný obchod), lhůty, výši pokut a seznam povinných osob ověř v aktuálním znění k datu obchodu**; nikdy z paměti. Sankční seznamy se mění denně - screening vždy k datu úkonu na oficiálních zdrojích.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| AML zákon | 253/2008 Sb. | `cz_law/253/2008` | Povinné osoby (§ 2), výjimky (§ 2 odst. 2, § 27 advokát/notář), identifikace (§ 7-§ 8, zprostředkovaná § 10, převzatá § 11), kontrola klienta (§ 9, zesílená § 9a, zjednodušená § 13), PEP (§ 4 odst. 5, § 9a), neuskutečnění obchodu (§ 15), uchovávání (§ 16), oznámení podezřelého obchodu (§ 18, lhůta; odklad § 20), mlčenlivost (§ 38-§ 40), systém vnitřních zásad a hodnocení rizik (§ 21-§ 21a), kontaktní osoba (§ 22), školení (§ 23), FAÚ a kontrola (§ 29+, ČAK u advokátů § 37), přestupky (§ 43-§ 52) |
-| Zákon o evidenci skutečných majitelů | 37/2021 Sb. | `cz_law/37/2021` | Definice skutečného majitele (§ 2-§ 6), automatický průpis (§ 37+), návrh na zápis, nesrovnalost a její oznámení (§ 42+ - povinná osoba musí oznámit), sankce (nemožnost výplaty podílu na zisku, zákaz hlasování § 53-§ 54, pokuty) |
-| Zákon o provádění mezinárodních sankcí | 69/2006 Sb. | `cz_law/69/2006` | Povinnosti každého: oznamovací, zákaz plnění, zmrazení; vnitrostátní sankční seznam (§ 3a - „Magnitského" novela), přestupky |
-| Zákon o omezení plateb v hotovosti | 254/2004 Sb. | `cz_law/254/2004` | Limit 270 000 Kč / den pro hotovostní platbu (ověř), výjimky, sankce |
-| Zákon o advokacii + usnesení ČAK | 85/1996 Sb. | `cz_law/85/1996` | Mlčenlivost (§ 21) × AML výjimky, kontrola ČAK, advokátní úschova (usnesení ČAK o úschovách - povinnost evidence v elektronické knize úschov, oznámení ČAK), kárná odpovědnost |
-| Trestní zákoník | 40/2009 Sb. | `cz_law/40/2009` | Legalizace výnosů (§ 216-§ 217 - včetně nedbalostní), financování terorismu (§ 312d), zatajení; trestní odpovědnost PO (418/2011 Sb.) |
-| Zákon o platebním styku / o bankách | 370/2017 / 21/1992 Sb. | `cz_law/370/2017`, `cz_law/21/1992` | Platební instituce jako povinné osoby, bankovní tajemství a součinnost |
-| Zákon o realitním zprostředkování | 39/2020 Sb. | `cz_law/39/2020` | Realitní zprostředkovatel - povinná osoba, úschova jen přes advokáta/notáře/banku (§ 4) |
-| EU AML balíček | (EU) 2024/1624, směrnice (EU) 2024/1640, (EU) 2024/1620 (AMLA), nařízení (EU) 2023/1113 (travel rule) | zdroj `EU` | Jednotná pravidla od 2027, limit hotovosti 10 000 EUR, krypto, AMLA; přechodné použití |
-| Sankční nařízení EU | (EU) 269/2014, 833/2014, 2580/2001, 881/2002 a další | zdroj `EU` | Seznamy osob, sektorové sankce, zákaz obcházení, oznamovací povinnosti |
-| GDPR / zákon o zpracování osobních údajů | (EU) 2016/679 / 110/2019 Sb. | zdroj `EU`, `cz_law/110/2019` | Právní základ zpracování pro AML (právní povinnost), doba uchování, kopie dokladů |
-| Daňový řád / zákon o mezinárodní spolupráci (DAC) | 280/2009 / 164/2013 Sb. | `cz_law/280/2009`, `cz_law/164/2013` | Součinnost, CRS/DAC6 oznamování, přístup FÚ k AML údajům (DAC5) |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` **k datu obchodu** → `/toc` → `/text?part=`; u novel AML zákona přechodná ustanovení (dokončení kontrol u stávajících klientů).
-2. Judikatura: **NSS** (pokuty FAÚ - přiměřenost, vymezení povinné osoby, kontrola klienta, systém vnitřních zásad; nesrovnalosti v ESM), **ÚS** (mlčenlivost advokáta vs. AML - nález k oznamování, prohlídky advokátních kanceláří), **SDEU** (`ES`) - veřejný přístup k rejstříku skutečných majitelů (C-37/20 a C-601/20 zrušil veřejný přístup - dopad na české ESM ověř), povinnosti advokátů (C-305/05), **ESLP** (Michaud proti Francii). Ověř datum a znění zákona, ze kterého rozhodnutí vychází.
-3. Komentář (`COMMENT`) k AML zákonu; **metodické pokyny FAÚ** (výklad pojmů, PEP, hodnocení rizik, podezřelý obchod, virtuální aktiva), **usnesení a stanoviska ČAK** (AML pro advokáty, úschovy), Národní hodnocení rizik (NRA), FATF doporučení, EBA guidelines - mimo CODEXIS oficiální zdroje s praktickou váhou.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Kdo je povinná osoba a pro co.** Prověř § 2 AML zákona k datu: úvěrové a finanční instituce, platební instituce, směnárny, poskytovatelé služeb s virtuálními aktivy, **realitní zprostředkovatelé**, **auditoři, daňoví poradci, účetní**, **advokáti a notáři jen při** úschově peněz/cenných papírů, jednání za klienta při nákupu/prodeji nemovitosti nebo podniku, správě majetku/účtů, zakládání a správě společností a svěřenských fondů (§ 2 odst. 1 písm. g), § 27), **poskytovatelé služeb pro PO a svěřenské fondy**, obchodníci s uměním, dražebníci, **osoby přijímající hotovost nad limit** (ověř - dnes 10 000 EUR v EU balíčku), provozovatelé hazardu, zastavárny, exekutoři při úschově. Advokát v běžném zastupování a poradenství NENÍ povinnou osobou - ale mlčenlivost neplatí u aktivního napomáhání legalizaci.
-2. **Identifikace klienta (§ 7-§ 8).** Kdy: obchod nad 1 000 EUR, vždy u podezřelého obchodu, obchodního vztahu, úschovy, PEP, nemovitostí, hotovosti nad limit (ověř prahy). Jak: **fyzicky za přítomnosti** (FO: jméno, RČ/datum narození, místo narození, pohlaví, bydliště, státní občanství, druh a číslo dokladu, vydavatel, platnost - z průkazu totožnosti; PO: název, sídlo, IČO, identifikace jednající FO + ověření oprávnění; zastoupení - plná moc s ověřeným podpisem), **zprostředkovaně** (§ 10 - notář, obecní úřad, jiná povinná osoba - listina o identifikaci), **převzatá** (§ 11 - od úvěrové instituce, advokáta apod. s dokumentací), **dálkově** (§ 8a - bankovní identita, ověřená kopie dokladu + platba z účtu na jméno + další ověření; ověř podmínky), kopie dokladů (§ 8 odst. 9 - lze pořídit bez souhlasu pro AML). Zaznamenat, kdo, kdy, jak; uchovat 10 let (§ 16).
-3. **Kontrola klienta (§ 9).** Kdy: obchod nad 15 000 EUR, vždy u obchodního vztahu, PEP, nemovitosti, úschovy, podezřelého obchodu, hotovosti nad limit, vysoce rizikové země (ověř § 9 odst. 1). Co: (a) účel a povaha obchodu/vztahu, (b) **skutečný majitel** (ověření z ESM + vlastní šetření struktury - ESM není jediný zdroj; u nesrovnalosti oznámení podle § 42 zák. 37/2021 Sb.), (c) vlastnická a řídicí struktura (trust, offshore, nominee), (d) průběžné sledování obchodního vztahu včetně **zdroje peněžních prostředků** a u vyšší rizikovosti **zdroje majetku**, (e) PEP status a sankce, (f) aktualizace údajů. **Zesílená** (§ 9a - PEP, třetí země s vysokým rizikem, korespondenční vztahy, vysoce rizikový profil: souhlas statutárního orgánu / vedení, původ majetku, zesílené sledování), **zjednodušená** (§ 13 - nízké riziko: orgány veřejné moci, kótované společnosti, banky z EU - stále nutná identifikace). Výstup: **rizikový profil klienta** (zeměpisný, produktový, klientský, distribuční faktor) navázaný na hodnocení rizik povinné osoby (§ 21a) a NRA.
-4. **Neuskutečnění, odmítnutí, oznámení.** Povinnost **odmítnout obchod** (§ 15), když se klient odmítne podrobit identifikaci/kontrole, neposkytne součinnost, identifikace/kontrola nelze provést, nebo má povinná osoba pochybnost o pravdivosti údajů; u PEP bez zjištění původu majetku; u zesílené kontroly bez souhlasu. **Podezřelý obchod** (§ 6 - demonstrativní znaky: nestandardní struktura, hotovost, sankcionované země, neodpovídá profilu, virtuální aktiva bez původu, náhlé změny, zdánlivá bezúčelnost; vždy podezřelý u sankcí a osob z FAÚ výzvy): **oznámení FAÚ bez zbytečného odkladu, nejpozději do 5 kalendářních dnů** od zjištění (§ 18 - ověř; elektronicky přes formulář FAÚ, obsah § 18 odst. 2), **odklad splnění příkazu klienta** až 24 hodin (§ 20 - pokud hrozí zmaření; FAÚ může prodloužit na 72 hodin a dále policie), **zákaz informovat klienta** (§ 38 - tipping off; výjimka: advokát může klienta odradit od protiprávního jednání - ověř § 27), mlčenlivost i po skončení. U advokáta oznámení **výhradně prostřednictvím ČAK** (§ 27 odst. 3 - ověř mechanismus a lhůty), ne přímo FAÚ; výjimka z oznamování u informací získaných při zastupování v řízení nebo poskytování právního poradenství k procesnímu postavení (§ 27 odst. 1 - ověř). Dokumentovat úvahu i tam, kde se neoznámí.
-5. **Systém vnitřních zásad a organizace (§ 21-§ 23).** Písemný **systém vnitřních zásad** (u advokátů dle vzoru ČAK; obsah § 21 odst. 5: rizika, postupy identifikace a kontroly, znaky podezřelých obchodů, postup oznámení, odklad, uchovávání, školení, kontrolní mechanismy), **hodnocení rizik** (§ 21a - písemné, aktualizované, zohledňuje NRA a metodiku FAÚ), **kontaktní osoba** (§ 22 - oznámit FAÚ do 60 dnů - ověř; u advokáta lze sám), **školení zaměstnanců** nejméně jednou za 12 měsíců + při nástupu, doložitelně (§ 23), nezávislý audit u větších subjektů, **uchovávání** 10 let od ukončení vztahu / obchodu (§ 16 - identifikační údaje, kopie, kontroly, oznámení), GDPR základ a informace pro klienta, whistleblowing (zákon 171/2023 Sb.), skupinové politiky.
-6. **Sankční compliance (pro každého).** Zákon 69/2006 Sb. a přímo použitelná nařízení EU: **screening** klientů, skutečných majitelů, protistran a plateb proti sankčním seznamům EU (Consolidated list), OFAC (relevantní při USD/US nexus), UK, **vnitrostátnímu seznamu ČR** (§ 3a); povinnost **oznámit FAÚ** zjištění sankcionované osoby / majetku **bez zbytečného odkladu** (§ 10 - ověř), **zmrazit** a **neplnit** (včetně nepřímého plnění a obcházení přes prostředníky - vlastnictví 50 %+ / kontrola), sektorové sankce (zákaz poskytovat právní služby ruské vládě a společnostem - čl. 5n nařízení 833/2014 - výjimky pro soudní řízení a compliance; ověř aktuální balíček), výjimky a **povolení FAÚ** (§ 9 - humanitární, právní služby, základní potřeby), nesplnění = přestupek s pokutou v mil. Kč a trestný čin (§ 410 TZ). Dokumentovat každý screening (datum, seznamy, výsledek, falešné shody).
-7. **Kontroly a sankce.** Kontrola FAÚ (§ 35 - kontrolní řád 255/2012 Sb.; předložení SVZ, hodnocení rizik, záznamů o klientech, školení), u advokátů **kontrola ČAK** (§ 37), u bank ČNB; přestupky (§ 43-§ 52: neprovedení identifikace/kontroly, neoznámení, porušení mlčenlivosti, chybějící SVZ/školení - pokuty až desítky mil. Kč, u opakování zákaz činnosti/odnětí oprávnění - ověř sazby), **obrana**: liberace (vynaložení veškerého úsilí § 21 přestupkového zákona), přiměřenost, nesprávné vymezení povinné osoby, včasná náprava; správní žaloba (s. ř. s.). ESM sankce (37/2021 Sb.): nezapsaný skutečný majitel - zákaz výplaty podílu na zisku a hlasování, pokuta, nesrovnalost z podnětu povinné osoby. Kárná odpovědnost advokáta (ČAK). Trestní rovina: legalizace i z nedbalosti (§ 217 TZ), neoznámení sankcí.
-8. **Typové situace v praxi advokáta a RK.** (a) **Úschova kupní ceny**: vždy identifikace + kontrola obou stran, zdroj prostředků (výpis, úvěrová smlouva, prodej předchozí nemovitosti), platba z účtu na jméno klienta (ne třetí osoba bez vysvětlení), zápis do elektronické knihy úschov ČAK, žádná hotovost nad limit, u cizinců/offshore zesílená kontrola; (b) **prodej nemovitosti** přes RK: RK i advokát každý za sebe; (c) **zakládání s.r.o./svěřenského fondu pro klienta** - poskytovatel služeb pro PO, zápis skutečného majitele; (d) **správa majetku / účtů klienta** - obchodní vztah, průběžné sledování; (e) **hotovost** - limit 270 000 Kč za den (ověř) + AML práh; (f) **virtuální aktiva** - VASP registrace, travel rule, původ; (g) **PEP klient** (i rodinní příslušníci a blízcí spolupracovníci, tuzemští PEP od 2021, 12 měsíců po skončení funkce) - souhlas vedení, původ majetku; (h) **klient odmítá doklady** - obchod neuskutečnit, zvážit oznámení.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Advokát považuje celou činnost za AML-vyňatou (mlčenlivost) - u úschov, nemovitostí a zakládání společností je povinnou osobou; naopak oznamuje FAÚ přímo místo přes ČAK.
-- Identifikace „z kopie občanky poslané e-mailem" bez zákonného dálkového postupu - neprovedená identifikace.
-- Skutečný majitel převzat jen z ESM bez vlastního ověření struktury; nesrovnalost neoznámena.
-- Kontrola klienta zúžena na identifikaci - chybí účel obchodu, zdroj prostředků a průběžné sledování.
-- PEP screening jen u zahraničních osob - tuzemští PEP jsou zahrnuti; rodinní příslušníci a blízcí spolupracovníci opomenuti.
-- Sankční screening jen při navázání vztahu, ne při každé platbě a změně seznamů; 50% pravidlo vlastnictví ignorováno.
-- Podezřelý obchod „vyřešen" odmítnutím bez oznámení; nebo oznámen po lhůtě; nebo klient informován (tipping off).
-- Hotovost přijatá nad limit 270 000 Kč (nebo AML práh) „ve splátkách" v jednom dni - obcházení.
-- Systém vnitřních zásad stažený jako vzor bez vlastního hodnocení rizik a bez doložených školení - první nález při kontrole.
-- Uchovávání dokladů kratší než 10 let nebo bez záznamu o způsobu identifikace; naopak neoprávněné zpracování údajů mimo AML účel.
-- Právní služby ruské společnosti bez posouzení čl. 5n a výjimek - porušení sankcí.
-- Doplňování prahů, lhůt, sazeb pokut a čísel paragrafů z paměti - vždy z aktuálního znění nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší povinnost** (je/není povinná osoba pro tento obchod; co provést před obchodem; lhůta oznámení).
-2. **Kvalifikace** - typ obchodu, klient (FO/PO/trust, PEP, země), spouštěče (prahy, hotovost, sankce), rizikový profil.
-3. **Právní rámec** - AML zákon / ESM / sankce / ČAK v aktuálním znění, s odkazy; EU balíček, pokud relevantní.
-4. **Checklist kroků** - tabulka: krok | právní základ | doklad/záznam | kdo | lhůta.
-5. **Rozhodnutí o obchodu** (provést × zesílená kontrola × odmítnout × oznámit; odklad).
-6. **Rizika a sankce** (pokuty, kárná, trestní) a **judikatura** - jen ověřená v CODEXIS, kompaktní citace.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf/článek jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NSS - 1 As 123/2024 - …`, `SDEU - C-37/20 - 22.11.2022`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („bez zbytečného odkladu, nejpozději do 5 kalendářních dnů“, „za fyzické přítomnosti“, „neuskuteční obchod“, „skutečný majitel = každá fyzická osoba, která v konečném důsledku vlastní nebo kontroluje“).
-- Jeden časový řez; znění AML zákona a sankčních seznamů k datu obchodu; u EU balíčku výslovně uvést datum použitelnosti.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions` k datu obchodu.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Prahy, lhůty, sazby pokut a seznam povinných osob nikdy z paměti - vždy z aktuálního znění s odkazem.
-- Sankční screening a ESM výhradně z oficiálních zdrojů k datu úkonu (sanctionsmap.eu, EU Consolidated list, financnianalytickyurad.cz, esm.justice.cz, cak.cz); mimo CODEXIS jen tyto.
-- Nikdy neradit, jak obejít identifikaci, rozdělit hotovost pod limit, obejít sankce nebo informovat klienta o oznámení FAÚ.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Oborový postup: AML a sankce
+
+### Role, obchod a rozsah povinností
+Z podkladů určuj klienta, zastupovanou stranu, skutečný obchod, čas plánovaného nebo uskutečněného úkonu a původ informací. Odděl právní poradu, zjišťování právního postavení a zastupování v řízení od úschovy, nemovitostní transakce, správy majetku nebo založení společnosti či svěřenského fondu. V nativním CODEXIS ověř, zda konkrétní činnost činí danou osobu povinnou, jaké jsou výjimky a časová pravidla. Neodvozuj povinnost ani výjimku pouze z profesního označení. Zohledni banky, platební instituce, směnárny, poskytovatele služeb s kryptoaktivy, realitní kanceláře, auditory, poradce, účetní, obchodníky s uměním, dražebníky, hazard a další skutečně relevantní činnosti.
+
+### Identifikace a kontrola klienta
+Samostatně ověř spouštěče identifikace a kontroly: vztah, příležitostný obchod, související platby, podezření, hotovost a druh služby. U každého spouštěče zjisti rozhodný práh, výjimku, okamžik a potřebné doklady; částky nedoplňuj z instrukcí. Prověř přípustné osobní, zprostředkované, převzaté a dálkové postupy, oprávnění jednající osoby, platnost identifikačního prostředku, kopírování dokladů a auditní záznam. Fotografie dokladu sama neprokazuje splnění konkrétního zákonného postupu.
+
+Pro kontrolu vytvoř mapu účelu obchodu, vlastnické a řídicí struktury, skutečného majitele, zdroje prostředků a případně majetku. Zjisti, jak se ověřuje struktura u trustu, nepřímého vlastnictví a zastupujících osob, jak se řeší nesrovnalost evidence a jaké jsou následky chybějícího zápisu pro korporátní práva. Podklady k faktické struktuře vyžádej od uživatele; existenci či správnost zápisu nevymýšlej. Právní pravidla a dostupnou metodiku hledej pouze v CODEXIS a rozliš jejich právní sílu.
+
+### Rizika, PEP a třetí osoby
+Vytvoř individuální profil zeměpisného, klientského, produktového a distribučního rizika. Ověř předpoklady zjednodušené a zesílené kontroly, schvalování vedením a průběžné aktualizace. U politicky exponovaných osob posuď také rodinné a blízké spolupracující osoby; u bývalé PEP zvlášť zákonnou dobu i pokračující specifické riziko. Samotné uplynutí času nenahrazuje zjištění rizik. Platbu třetí osobou prověř podle jejího vztahu k obchodu, zdroje a účelu; sama není důkazem trestné činnosti.
+
+### Rozhodnutí o obchodu a mlčenlivost
+Veď oddělené větve: uskutečnění či neuskutečnění obchodu, oznámení podezřelého obchodu, odklad příkazu a sankční zákaz plnění. Ke každé načti vlastní podmínky a výjimky. Ověř adresáta, cestu oznámení, naléhavost a běh lhůty; u advokáta prověř chráněné informace a případnou roli ČAK. Lhůtu orgánu nezaměňuj s dobou, po kterou může čekat oznamovatel. U odkladu zjisti spouštěč, přijetí oznámení, prodloužení a výjimky. Odmítnutí obchodu samo neuzavírá oznamovací větev. Odděl zákonné odrazování klienta od nepřípustného prozrazení oznámení nebo šetření.
+
+### Sankční a organizační vrstva
+Ověř osobní a územní působnost sankčních pravidel, přímé i nepřímé vlastnictví a kontrolu, sektorové zákazy, obcházení, zmrazení, oznámení, licence a výjimky pro konkrétní právní služby. Případné zahraniční vazby posuzuj jen z nativně dostupných pramenů. Není-li k rozhodnému dni dostupný úplný sankční podklad, nenahrazuj jej externím screeningem a nevydávej potvrzení bezrizikovosti.
+
+Podle typu klienta prověř systém vnitřních zásad, hodnocení rizik, kontaktní osobu, školení, nezávislou kontrolu, skupinové politiky, whistleblowing, dobu uchovávání a GDPR. Zahrň úschovní evidenci, platební režim, nemovitosti, správu účtů a kryptoaktiva včetně pravidel předávání údajů. Evropský AML rámec a národní přechod posuzuj po jednotlivých povinnostech. Prověř i daňovou součinnost a přeshraniční oznamování, pokud souvisí se zadáním.
+
+### Kontroly, obrana a výstup
+U kontroly FAÚ, ČAK nebo ČNB ověř pravomoc, rozsah součinnosti, sankční skutkovou podstatu, zavinění či liberační podmínky, přiměřenost, nápravu, opravný prostředek a soudní přezkum. Odděl správní, kárnou a trestní odpovědnost. Vyhledej související rozhodnutí o profesní mlčenlivosti, skutečném majiteli a kontrole klienta; nepřebírej hotová ratio z názvu případu.
+
+Dodej závěr pro konkrétní obchod, rizikový profil a tabulku krok–právní základ–doklad–odpovědná osoba–ověřená lhůta. Je-li zadána směrnice, oznámení nebo smluvní klauzule, napiš její použitelné znění s otevřenými údaji označenými k doplnění. Nikdy nenavrhuj obcházení identifikace, dělení hotovosti za účelem obcházení nebo fingování důkazů. Připravené oznámení neoznačuj jako podané.

@@ -1,7 +1,7 @@
 {
   "uuid": "52e38692-8399-42a8-bc3f-e3dede0f2c78",
   "name": "rodinne-pravo",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech family law practice skill - divorce, child custody and contact, maintenance, matrimonial property (SJM), parentage, domestic violence and cross-border cases under the Civil Code and ZŘS, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

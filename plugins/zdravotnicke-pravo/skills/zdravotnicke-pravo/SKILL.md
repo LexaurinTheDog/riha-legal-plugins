@@ -1,7 +1,7 @@
 ---
 uuid: 015058f2-7c5f-4934-91d7-c119db1e640c
 name: zdravotnicke-pravo
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,90 +25,126 @@ i18n:
       - "Po operácii zostali klientke trvalé následky a nikto ju nepoučil o rizikách. Aké nároky má, proti komu a aká beží premlčacia lehota?"
       - "Poisťovňa zamietla úhradu liečby podľa § 16. Ako sa odvolať a s akou argumentáciou?"
       - "Nemocnica odmieta vydať kópiu zdravotnej dokumentácie zosnulého otca. Kto má na ňu právo a v akej lehote?"
-description: Use when the user's matter involves Czech health care, patients or providers - zákon o zdravotních službách (372/2011 Sb.), zákon o veřejném zdravotním pojištění (48/1997 Sb.), pacient, práva pacienta, informovaný souhlas, negativní revers, dříve vyslovené přání, nezletilý pacient, zdravotnická dokumentace, nahlížení, kopie dokumentace, mlčenlivost, postup lege artis, non lege artis, pochybení lékaře, újma na zdraví, bolestné, ztížení společenského uplatnění, nemajetková újma pozůstalých, ztráta šance, znalecký posudek, stížnost na poskytovatele, krajský úřad, Česká lékařská komora, disciplinární řízení, úhrada péče, § 16 mimořádná úhrada, smlouva s pojišťovnou, oprávnění k poskytování zdravotních služeb, pracovnělékařské služby, lékařský posudek, trestní odpovědnost lékaře. Standalone skill - bundles CODEXIS methodology with health-law method; no need to load the general codexis skill.
+description: 'Use for Czech patient and healthcare-provider matters: consent, medical records, professional standard and liability, injury compensation and settlements, complaints, public health insurance, reimbursement, licensing, medicines and medical devices, occupational assessments and public-health measures. Research legal sources only through native CODEXIS in the application.'
 ---
 
-# Zdravotnické právo ČR
+# Zdravotnické právo
 
-Samostatný oborový skill pro vztahy pacient - poskytovatel - pojišťovna - stát. Nejčastější chyba je záměna cest: **stížnost, disciplinární řízení, trestní oznámení a žaloba o náhradu újmy jsou čtyři nezávislé cesty s různými lhůtami**, a žádná z nich není podmínkou ostatních. Promlčení se počítá od vědomosti o újmě a škůdci, ne od zákroku.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/372/2011/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf34'`, `cdx-cli get cdx://cz_law/48/1997/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf2958'`, `cdx-cli search JD --query "informovaný souhlas absence poučení odpovědnost poskytovatele" --court "Nejvyšší soud" --limit 5`.
-- Lhůty, sazby, bodová hodnocení a podmínky úhrad **ověř v aktuálním znění**; Metodika Nejvyššího soudu k § 2958 OZ je doporučující pomůcka, ne právní předpis - uváděj ji jako orientaci. Nikdy z paměti.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| Zákon o zdravotních službách | 372/2011 Sb. | `cz_law/372/2011` | Práva pacienta (§ 28+), informace a souhlas (§ 31-§ 36), péče bez souhlasu (§ 38), povinnosti poskytovatele (§ 45+), odmítnutí pacienta (§ 48), mlčenlivost (§ 51), dokumentace (§ 53-§ 69), stížnosti (§ 93-§ 97), oprávnění (§ 11+), přestupky (§ 114+) |
-| Zákon o specifických zdravotních službách | 373/2011 Sb. | `cz_law/373/2011` | Pracovnělékařské služby a posudky (§ 41+, přezkum § 46), sterilizace, asistovaná reprodukce, genetika |
-| Zákon o veřejném zdravotním pojištění | 48/1997 Sb. | `cz_law/48/1997` | Práva pojištěnce (§ 11), hrazené služby (§ 13+), mimořádná úhrada (§ 16), smlouvy (§ 17), revizní činnost (§ 42), regres (§ 55) |
-| OZ | 89/2012 Sb. | `cz_law/89/2012` | Zásahy do integrity (§ 91-§ 103), smlouva o péči o zdraví (§ 2636-§ 2651), náhrada újmy (§ 2894+, § 2910, § 2913), újma na zdraví (§ 2958-§ 2968), promlčení (§ 620, § 636) |
-| Úmluva o lidských právech a biomedicíně | 96/2001 Sb. m. s. | `cz_law/96/2001` | Souhlas (čl. 5+), informace (čl. 10), nadřazenost nad zákonem |
-| Zákon o ochraně veřejného zdraví | 258/2000 Sb. | `cz_law/258/2000` | Očkování, epidemická opatření, KHS |
-| Zákon o léčivech / o zdravotnických prostředcích | 378/2007 / 375/2022 Sb. | `cz_law/378/2007`, `cz_law/375/2022` | SÚKL, předepisování, reklama, vigilance |
-| Zákony o způsobilosti zdravotnických pracovníků | 95/2004, 96/2004 Sb. | `cz_law/95/2004`, `cz_law/96/2004` | Kvalifikace, specializace, odborný dohled |
-| Zákon o komorách | 220/1991 Sb. | `cz_law/220/1991` | ČLK, ČSK, ČLnK - disciplinární pravomoc |
-| Vyhlášky o dokumentaci, personálním a věcném vybavení | 98/2012, 99/2012, 92/2012 Sb. | `cz_law/98/2012`, `cz_law/99/2012`, `cz_law/92/2012` | Obsah a uchovávání dokumentace, minimální požadavky |
-| Trestní zákoník | 40/2009 Sb. | `cz_law/40/2009` | Usmrcení a ublížení z nedbalosti (§ 143, § 147-§ 148), neposkytnutí pomoci (§ 150), neoprávněné nakládání s údaji (§ 180) |
-| GDPR + zákon 110/2019 Sb. | (EU) 2016/679 | zdroj `EU`, `cz_law/110/2019` | Zvláštní kategorie údajů (čl. 9), incidenty, práva subjektu |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` k datu zákroku / rozhodnutí → `/toc` → `/text?part=`.
-2. Judikatura: **NS** senát 25 Cdo (újma na zdraví, lege artis, informovaný souhlas, ztráta šance, Metodika), **ÚS** (práva pacienta, § 16, očkování, autonomie), **NSS** (§ 16 úhrady, oprávnění poskytovatelů, KHS, posudky), **ESLP** (`ES` - čl. 8 Úmluvy, biomedicína). Ověř datum a zda rozhodnutí nevychází ze zrušené právní úpravy (zákon 20/1966 Sb.).
-3. Komentář (`COMMENT`) k pojmům (náležitá odborná úroveň, přiměřené poučení, osoba blízká, neodkladná péče); Metodika NS a stanoviska ČLK jako orientace, ne pramen.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Role a cesta.** Pacient / pozůstalí × poskytovatel × zdravotnický pracovník × pojišťovna × zaměstnavatel × orgán (KÚ, KHS, SÚKL, ČLK). Věc: náhrada újmy × práva pacienta a dokumentace × úhrada péče × stížnost / disciplína × přestupek / trestní odpovědnost × provoz a smlouvy × posudková péče. Cesty se nevylučují - navrhni pořadí a promlčení pro každou.
-2. **Důkazy hned.** Kopie zdravotnické dokumentace (§ 65-§ 66 - právo pacienta, osob určených pacientem a osob blízkých u zemřelého; lhůta poskytovatele pro pořízení kopie - ověř), záznam poučení a souhlasu, operační protokol, výsledky, svědci; u úmrtí pitevní protokol; datum vědomosti o újmě zaznamenat pro promlčení.
-3. **Odpovědnost za újmu na zdraví.** Titul: smluvní (§ 2913 ve spojení se smlouvou o péči o zdraví § 2636+) × deliktní (§ 2910); postup **lege artis** (§ 4 odst. 5 zák. 372/2011 Sb. - náležitá odborná úroveň podle pravidel vědy a uznávaných postupů, s ohledem na individualitu a konkrétní podmínky); **absence informovaného souhlasu** (§ 31, § 34 - poučení o povaze, účelu, rizicích, alternativách; písemná forma kde zákon nebo poskytovatel stanoví) = protiprávní zásah do integrity i při lege artis postupu; příčinná souvislost (znalecký posudek z oboru zdravotnictví, teorie ztráty šance - ověř aktuální judikaturu NS), zavinění (domněnka nedbalosti § 2911), exkulpace, spoluzavinění pacienta (§ 2918). Odpovídá poskytovatel (za zaměstnance § 2914), pojištění odpovědnosti poskytovatele (§ 45 odst. 2).
-4. **Nároky a jejich výše.** Bolestné a ztížení společenského uplatnění (§ 2958 - plné odčinění, Metodika NS jako pomůcka: bodové hodnocení bolesti, ztížení podle MKF), duševní útrapy osob blízkých (§ 2959), náklady léčení a péče (§ 2960), ztráta na výdělku a důchodu (§ 2962-§ 2964), výživa pozůstalým (§ 2966), náklady pohřbu (§ 2961), nemajetková újma za neoprávněný zásah (§ 2956-§ 2957); renta; úroky z prodlení od výzvy. **Promlčení**: subjektivní od vědomosti o újmě a škůdci, objektivní 10 let od události, u úmyslu 15 (§ 620, § 636 - ověř; § 636 odst. 3 u újmy na zdraví bez objektivní lhůty - ověř).
-5. **Procesní cesta.** Předžalobní výzva (§ 142a o. s. ř.) a jednání s pojistitelem poskytovatele, mediace, žaloba u okresního soudu, soudní poplatek (osvobození u újmy na zdraví - ověř § 11 ZSOP), znalec (§ 127 o. s. ř., seznam znalců, obor zdravotnictví - správné odvětví), předběžné opatření na výživné/rentu; souběžně stížnost a trestní oznámení jako důkazní páky (trestní spis se znaleckým posudkem).
-6. **Stížnost a disciplína.** Stížnost poskytovateli (§ 93 - lhůta pro vyřízení 30 dnů - ověř) → krajskému úřadu (§ 94 - nezávislý odborník / komise) → správní žaloba jen výjimečně; stížnost komoře (ČLK, ČSK - disciplinární řízení podle zákona 220/1991 Sb., lhůty pro zahájení - ověř); přestupky poskytovatele (§ 114+ zák. 372/2011 Sb.); trestní odpovědnost lékaře (§ 143, § 147-§ 148 TZ - nedbalost, subsidiarita trestní represe).
-7. **Práva pacienta a dokumentace.** Právo na informace a druhý názor (§ 31), odmítnutí péče a negativní revers (§ 34 odst. 3), dříve vyslovené přání (§ 36 - forma, platnost), nezletilí (§ 35 - souhlas zákonného zástupce, názor dítěte, jeden × oba rodiče - ověř), pacienti s omezenou svéprávností, hospitalizace bez souhlasu (§ 38, soudní přezkum § 75+ ZŘS - detenční řízení), určení osob s právem na informace (§ 33), mlčenlivost a výjimky (§ 51), nahlížení a kopie (§ 65-§ 66), uchovávání a skartace (vyhláška 98/2012 Sb.), GDPR čl. 9.
-8. **Úhrady a pojišťovna.** Hrazené služby (§ 13+ zák. 48/1997 Sb.), **§ 16 mimořádná úhrada** (jediná možnost z hlediska zdravotního stavu, výjimečnost; správní řízení, lhůty pro rozhodnutí, odvolání, žaloba - ověř aktuální procesní úpravu a judikaturu NSS/ÚS), léčiva a prostředky (SÚKL, úhradová vyhláška), regulační poplatky a doplatky, regres pojišťovny (§ 55 - proti tomu, kdo újmu zavinil), smlouvy poskytovatelů (§ 17 - výběrové řízení, rámcová smlouva, úhradová vyhláška), revizní činnost a vratky.
-9. **Provoz poskytovatele.** Oprávnění (§ 11+ - žádost KÚ, odborný zástupce, personální a věcné vybavení), změny a převod praxe (přechod dokumentace § 57), pracovnělékařské služby a posudky (§ 41+ zák. 373/2011 Sb. - přezkum posudku 10 pracovních dnů - ověř), kontrola KÚ/KHS/SÚKL, reklama na léčiva, mlčenlivost personálu, kamery a GDPR, smlouvy s lékaři (výkon funkce × pracovní poměr), odpovědnostní pojištění.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Promlčení počítané od zákroku místo od vědomosti o újmě a škůdci (a naopak objektivní lhůta u pozdě projevené újmy - ověř § 636 odst. 3).
-- Žaloba jen na non lege artis postup, ač chybí doložený informovaný souhlas - samostatný a často snadněji prokazatelný důvod.
-- Stížnost nebo disciplinární řízení bráno jako podmínka žaloby - není; naopak jejich výsledek nezavazuje civilní soud.
-- Metodika NS aplikovaná jako tabulka s nárokem - jen pomůcka; soud může vybočit oběma směry.
-- Kopie dokumentace požadována osobou, kterou pacient neurčil, nebo bez doložení postavení osoby blízké u zemřelého.
-- Znalec z nesprávného odvětví nebo bez specializace - posudek napadnutelný.
-- § 16 žádost bez lékařské zprávy o „jediné možnosti" a bez vyčerpání hrazených alternativ; zmeškání lhůty k odvolání.
-- Nezletilý pacient a souhlas jen jednoho rodiče u závažného zákroku - ověř § 35 a judikaturu.
-- Dříve vyslovené přání bez zákonné formy nebo ignorované bez zápisu důvodu.
-- Hospitalizace bez souhlasu neoznámená soudu ve lhůtě 24 hodin (ověř § 40 zák. 372/2011 Sb.).
-- Pracovnělékařský posudek napadený u soudu místo přezkumu u poskytovatele a KÚ.
-- Doplňování diagnóz, dat zákroků, jmen lékařů a bodů z paměti - vždy z dokumentace nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (které cesty, v jakém pořadí, do kdy; důkazy zajistit hned).
-2. **Role a kvalifikace věci** (odpovědnost / práva / úhrada / disciplína / provoz).
-3. **Právní rámec** - 372/2011, 48/1997, OZ v aktuálním znění, s odkazy.
-4. **Nároky nebo postup** - tabulka: nárok/krok | právní základ | adresát | lhůta | důkaz.
-5. **Rizika a alternativy** (mimosoudní dohoda s pojistitelem, mediace, náklady znalce, délka řízení).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace; Metodika NS jako orientace.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf/článek jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NS - 25 Cdo 1234/2024 - …`, `ÚS - I. ÚS 123/25 - …`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („náležitá odborná úroveň“, „s vysokou pravděpodobností“, „jediná možnost z hlediska zdravotního stavu“, „ode dne, kdy se dozvěděl“).
-- Jeden časový řez; u zákroku znění účinné v den zákroku.
-- Zdravotní údaje uváděj jen v nezbytném rozsahu; lékařské závěry nikdy nenahrazuj vlastním úsudkem - odkazuj na znalce.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Lhůty, body, sazby a podmínky úhrad nikdy z paměti - vždy z aktuálního znění s odkazem.
-- Mimo CODEXIS jen oficiální zdroje (mzcr.gov.cz, sukl.cz, uzis.cz, vzp.cz a další pojišťovny, lkcr.cz, nsoud.cz - Metodika) když CODEXIS neodpovídá.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Oborový postup: zdravotnické právo
+
+### Klient, péče a podklady
+
+Urči roli klienta: pacient, blízká osoba, poskytovatel, zdravotník, zaměstnavatel nebo pojišťovna. Vymez požadovaný výsledek, konkrétní zdravotní službu, rozhodná data a okamžitá procesní rizika. Právní hodnocení není vlastní lékařská diagnóza; klinické otázky formuluj pro odborníka odpovídající specializace.
+
+Z dodaných podkladů sestav časovou osu péče, poučení, souhlasů, výkonů, výsledků, komplikací, následné léčby a komunikace. Odděl zdravotnickou dokumentaci, pacientovu vzpomínku, názor jiného lékaře a znalecký závěr. Vyžádej chybějící zprávy, operační protokol, obrazové nálezy, výsledky nebo souhlas jako podklady do aplikace. Zachovej původ, integritu a citlivost údajů; chybějící záznam nevyplňuj domnělým obsahem.
+
+### Autonomie a oprávnění k péči
+
+V CODEXIS ověř požadavky na informaci, její srozumitelnost, alternativy, rizika, rozsah souhlasu a potřebnou formu. Samostatně řeš odmítnutí, odvolání souhlasu, dříve vyslovené přání, nezletilého, omezenou svéprávnost, zástupce a rozpor mezi jejich vůlí. Podpis formuláře nemusí vyřešit otázku skutečného poučení.
+
+U péče bez souhlasu a nedobrovolné hospitalizace prověř konkrétní zákonný titul, nezbytnost, přiměřenost, oznamování soudu a opravné prostředky. Počítání lhůt založ na skutečných událostech a rozhodném znění. U přístupu k dokumentaci ověř oprávněnou osobu, rozsah, formu, ochranu třetích osob a případná omezení; právo na informaci nezaměňuj s neomezeným zveřejněním zdravotních údajů.
+
+### Odborný postup, důkaz a odpovědnost
+
+Rozliš postup v souladu s odbornými pravidly, individuální okolnosti a organizační pochybení poskytovatele. Výsledek léčby sám nedokazuje chybu. Definuj, co měl konkrétní odborník v dané situaci zjistit, doporučit, provést nebo zaznamenat, a jaký důkaz tuto otázku řeší.
+
+Samostatně posuď odbornou chybu, zásah do autonomie a újmu spojenou s nedostatečným poučením. Kontrafaktuální úvahu, zda by pacient výkon odmítl, nepoužívej mechanicky jako dodatečnou podmínku každého nároku z odborného pochybení. Ověř, k jakému konkrétnímu nároku a příčinné souvislosti se vztahuje. Zároveň zabraň dvojímu nahrazení stejného následku pod různými názvy.
+
+Urči odpovědný subjekt, vztah poskytovatele a zaměstnance či externisty, smluvní a deliktní titul, zavinění tam, kde je rozhodné, kauzalitu a obranu. U ztráty šance, důkazní nouze a chybějící dokumentace ověř aktuální nosné závěry úplných rozhodnutí. Nevytvářej automatické obrácení důkazního břemene pokaždé, když část dokumentace chybí. Popiš konkrétní vysvětlovací či důkazní povinnost a její skutkové podmínky.
+
+### Druhy újmy a vypořádání
+
+U každého nároku dolož osobu oprávněného, titul, vznik, výši a důkazy. Rozliš bolest, dlouhodobé omezení, další nemajetkovou újmu, újmu blízkých, péči, léčebné náklady, ztrátu výdělku, důchodové dopady, výživu a náklady spojené s úmrtím. Metodiku nebo odborné bodování nezaměňuj s automatickou zákonnou sazbou; ověř použitelnost na konkrétní věc, potřebu znalce a individualizaci.
+
+Promlčení posuzuj pro jednotlivé nároky podle vědomosti, vzniku následku a případných zvláštností nezletilého nebo pokračujících plnění. Nepřiřazuj všem nárokům bez ověření jediné datum. Výpočty rent, výdělků a budoucích potřeb předlož s doloženými vstupy, obdobími a variantami.
+
+Při narovnání přesně určuj vypořádávané nároky, skutečně sjednanou částku, splatnost a okamžik zániku nebo změny původního nároku. Co nastane při nezaplacení? Zachovej výslovně sjednané výhrady pro nepředvídatelné následky nebo nároky mimo dohodu. Odliš nepřípustné předběžné vzdání se práv od přípustnosti dohody o již vzniklém sporu. Nominální rozdíl mezi nabídkou a doloženými nároky není automaticky skutečnou čistou ztrátou; samostatně posuď daňové zacházení jednotlivých složek.
+
+### Procesní a regulatorní cesty
+
+Rozliš stížnost poskytovateli, postup správního orgánu, odborné posouzení, profesní disciplinární řízení, civilní žalobu a trestní oznámení. Výsledek jedné cesty není automatickou podmínkou nebo závazným výsledkem jiné. Nevyužívej nepodložené trestní či disciplinární hrozby jako vyjednávací nátlak.
+
+U civilního řízení ověř příslušnost, nárokové členění, případné osvobození, náklady znalce a zastoupení. Postavení poskytovatele jako podnikatele samo neurčuje možnost všech smluvních procesních doložek. U pojištění odliš odpovědnost poskytovatele, rozsah krytí, oznamovací povinnosti a postavení pojišťovny.
+
+U veřejného zdravotního pojištění zkoumej nárok na úhradu, výjimečné hrazení, dostupnou alternativu, klinické důvody, rozhodovací pravomoc a opravný prostředek. U smluvních úhrad, kontrol, vratek a regresů ověř rozhodné smlouvy a veřejnoprávní pravidla zvlášť. Podle zadání řeš registraci a oprávnění poskytovatele, personální a technické podmínky, převod praxe a dokumentace, léčiva, zdravotnické prostředky, pracovnělékařské posudky a jejich přezkum.
+
+U specifických služeb, reprodukce, sterilizace, genetiky a protiepidemických opatření identifikuj zvláštní podmínky a kolizi práv. Neodvozuj jejich přípustnost pouze z obecného souhlasu pacienta.
+
+### Výstup
+
+Dodej požadovanou stížnost, žádost, žalobu, vyjádření, narovnání nebo smluvní doložku. Připoj důkazní plán, otázky znalci, výpočet jednotlivých nároků, petit, náklady, protiargumenty a jasné hranice právního oproti medicínskému posouzení.

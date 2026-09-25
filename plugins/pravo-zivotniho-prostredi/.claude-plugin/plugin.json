@@ -1,7 +1,7 @@
 {
   "uuid": "262e5b75-e1a6-49b8-8fe7-a62495e569ef",
   "name": "pravo-zivotniho-prostredi",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech environmental law practice skill - EIA and integrated permitting, water law and discharge permits, air protection, waste and packaging, nature and landscape protection, forests and agricultural land, noise, environmental liability and remediation, inspections and penalties by ČIŽP, public participation and NGO standing, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

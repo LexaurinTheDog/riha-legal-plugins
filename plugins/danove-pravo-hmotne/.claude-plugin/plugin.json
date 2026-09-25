@@ -1,7 +1,7 @@
 {
   "uuid": "78300aa7-a794-4000-a079-cd282d82b81f",
   "name": "danove-pravo-hmotne",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech substantive tax law practice skill - personal and corporate income tax, VAT including deduction, reverse charge and chain fraud, real-estate transfer and property tax, tax residence and double-tax treaties, transfer pricing, abuse of law and substance, tax aspects of transactions and restructurings, employee vs. contractor, cryptoassets and digital economy, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

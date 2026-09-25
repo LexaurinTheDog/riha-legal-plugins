@@ -1,7 +1,7 @@
 ---
 uuid: 1a3eb1c5-cdd8-4dbf-8eaf-f75e9f969525
 name: mezinarodni-pravo-soukrome
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,94 +25,114 @@ i18n:
       - "Nemecký odberateľ nezaplatil faktúry českej firme; v zmluve nie je nič o súde ani práve. Kde žalovať a podľa akého práva?"
       - "Máme právoplatný rozsudok českého súdu proti dlžníkovi s majetkom v Rakúsku a vo Veľkej Británii. Ako ho vykonať?"
       - "Klient sa rozviedol na Ukrajine a chce sa v ČR znovu oženiť. Čo treba na uznanie rozvodu?"
-description: Use when the user's matter has a foreign element involving Czech courts, parties or assets - mezinárodní právo soukromé, cizí prvek, zákon o mezinárodním právu soukromém (91/2012 Sb.), pravomoc soudů, Brusel I bis (1215/2012), Lugano, prorogace, volba soudu, litispendence, rozhodné právo, volba práva, Řím I (593/2008), Řím II (864/2007), imperativní normy, veřejný pořádek, CISG (Vídeňská úmluva o mezinárodní koupi zboží), doručování do ciziny (2020/1784, Haagská úmluva 1965), dokazování v cizině, uznání a výkon cizího rozhodnutí, evropský exekuční titul, evropský platební rozkaz, drobné nároky, evropský příkaz k obstavení účtů, uznání cizího rozhodčího nálezu, Newyorská úmluva, uznání cizího rozvodu, apostila, superlegalizace, soudní tlumočník a překlad, zahraniční společnost, Brexit a Spojené království, Ukrajina, sankce EU, přeshraniční dědictví, únos dítěte. Standalone skill - bundles CODEXIS methodology with cross-border method; no need to load the general codexis skill.
+description: 'Použij pro cizí prvek: pravomoc a příslušnost, rozhodné právo, volbu soudu a práva, souběžná řízení, CISG, doručování a dokazování v cizině, uznání a výkon rozsudků i nálezů, evropské procesní nástroje, apostilu, překlady, sankce a přeshraniční rodinné, dědické či obchodní věci. Právní prameny výhradně nativním CODEXIS; oborové meritum spoj s odpovídajícím skillem.'
 ---
 
-# Mezinárodní právo soukromé ČR
+# Mezinárodní právo soukromé
 
-Samostatný oborový skill pro věci s cizím prvkem. Pořadí otázek je pevné a nesmí se přehodit: **1) pravomoc a příslušnost (kde) → 2) rozhodné právo (podle čeho) → 3) doručování a dokazování (jak vést řízení) → 4) uznání a výkon (jak vymoci) → 5) listiny (jak prokázat)**. Pramen se vybírá v hierarchii **nařízení EU → mezinárodní smlouva → ZMPS**; vnitrostátní zákon se použije jen tam, kde nadřazený pramen mlčí.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/91/2012/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf15'`, `cdx-cli search EU --query "nařízení 1215/2012 příslušnost uznávání výkon" --limit 5`, `cdx-cli search EU --query "nařízení 593/2008 Řím I rozhodné právo smluvní" --limit 5`, `cdx-cli search JD --query "uznání cizího rozhodnutí vzájemnost veřejný pořádek" --court "Nejvyšší soud" --limit 5`.
-- Unijní nařízení čti ze zdroje `EU` v české verzi, mezinárodní smlouvy ze zdroje `CR` (sdělení MZV); judikaturu SDEU ze zdroje `ES`. Stav ratifikací (Haagské úmluvy, Lugano, bilaterální smlouvy, Spojené království po Brexitu) a sankční seznamy **se mění - ověř k datu úkonu na oficiálních zdrojích**; nikdy z paměti.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| ZMPS - zákon o mezinárodním právu soukromém | 91/2012 Sb. | `cz_law/91/2012` | Subsidiární úprava: pravomoc (§ 6+), uznání a výkon cizích rozhodnutí (§ 14-§ 18), osobní stav a uznání rozvodů (§ 51+), věcná práva (§ 69+), rodina (§ 47+), dědictví (§ 74+), závazky (§ 84+), rozhodčí řízení (§ 117+), zpětný odkaz (§ 21), výhrada veřejného pořádku (§ 4) |
-| Brusel I bis | (EU) 1215/2012 | zdroj `EU` | Příslušnost (čl. 4 bydliště žalovaného, čl. 7 zvláštní, čl. 17-23 spotřebitel a zaměstnanec, čl. 24 výlučná, čl. 25 prorogace, čl. 26 podřízení), litispendence (čl. 29+), uznání a výkon bez prohlášení vykonatelnosti (čl. 36+, čl. 39+, osvědčení čl. 53, odepření čl. 45-46) |
-| Luganská úmluva 2007 | sdělení MZV | zdroj `CR` | Švýcarsko, Norsko, Island |
-| Řím I / Řím II | (ES) 593/2008 / 864/2007 | zdroj `EU` | Smluvní závazky (volba čl. 3, hierarchie čl. 4, spotřebitel čl. 6, zaměstnanec čl. 8, imperativní normy čl. 9, forma čl. 11, promlčení čl. 12); mimosmluvní (čl. 4 místo škody, čl. 5-9 zvláštní, volba čl. 14) |
-| Evropské procesní nástroje | (ES) 1896/2006, 861/2007, 805/2004, (EU) 655/2014, 2020/1784, 2020/1783 | zdroj `EU` | Evropský platební rozkaz, drobné nároky, evropský exekuční titul, obstavení účtů, doručování, dokazování |
-| Rodinná a dědická nařízení | (EU) 2019/1111, 4/2009, 650/2012, 2016/1103-1104 | zdroj `EU` | Rodičovská odpovědnost a únosy, výživné, dědictví, majetkové režimy manželů |
-| Insolvenční nařízení | (EU) 2015/848 | zdroj `EU` | Přeshraniční insolvence (viz insolvenční skill) |
-| Haagské úmluvy | apostila 1961, doručování 1965, dokazování 1970, únosy 1980, prorogace 2005, uznávání rozsudků 2019 | zdroj `CR` | Třetí státy a Spojené království; stav smluvních stran ověř |
-| Newyorská úmluva 1958 / zákon o rozhodčím řízení | vyhl. 74/1959 Sb. / 216/1994 Sb. | `cz_law/74/1959`, `cz_law/216/1994` | Uznání a výkon cizích rozhodčích nálezů (§ 38-§ 40 ZRŘ) |
-| CISG - Vídeňská úmluva | sdělení 160/1991 Sb. | `cz_law/160/1991` | Mezinárodní koupě zboží mezi podnikateli (automatická aplikace, opt-out) |
-| CMR | vyhl. 11/1975 Sb. | `cz_law/11/1975` | Mezinárodní silniční přeprava |
-| Bilaterální smlouvy o právní pomoci | např. Ukrajina 123/2002 Sb. m. s., Vietnam, Rusko (stav ověř) | zdroj `CR` | Pravomoc, uznání, doručování mimo EU |
-| Nařízení o veřejných listinách | (EU) 2016/1191 | zdroj `EU` | Osvobození od apostily uvnitř EU pro vybrané listiny (matriční, bezúhonnost) |
-| Zákon o soudních tlumočnících a překladatelích | 354/2019 Sb. | `cz_law/354/2019` | Úřední překlady a tlumočení |
-| o. s. ř. / ZŘS | 99/1963 / 292/2013 Sb. | `cz_law/99/1963`, `cz_law/292/2013` | Řízení s cizím prvkem, uznání rozhodnutí o osobním stavu (NS), výkon rozhodnutí |
-| Sankční nařízení EU | (EU) 833/2014, 269/2014 a další | zdroj `EU` | Zákazy plnění, zmrazení majetku, screening protistran |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Nejprve urči pramen podle hierarchie (nařízení → smlouva → ZMPS) a **datum** (zahájení řízení, uzavření smlouvy, vydání rozhodnutí - přechodná ustanovení nařízení a Brexit); pak `/versions` → `/toc` → `/text?part=` u ZMPS a zdroj `EU` u nařízení.
-2. Judikatura: **SDEU** (`ES`) je pro výklad nařízení závazná - autonomní pojmy (bydliště, místo plnění, místo škody, spotřebitel, prorogace ve VOP, litispendence); **NS** (uznání cizích rozhodnutí, rozvody, rozhodčí nálezy, vzájemnost), **ÚS** (veřejný pořádek, spravedlivý proces při doručování). Ověř datum a to, zda rozhodnutí nevychází z předchůdce nařízení (Brusel I 44/2001, Řím před 2009).
-3. Komentář (`COMMENT`) k ZMPS a literatura (`LT`) k nařízením; stav ratifikací a prohlášení k Haagským úmluvám z hcch.net, Evropský justiční atlas / e-justice pro přijímající orgány a formuláře.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Cizí prvek a datum.** Kde má bydliště/sídlo žalovaný, kde se plnilo nebo vznikla škoda, kde je majetek, státní příslušnost, obvyklý pobyt (u rodiny a dědictví), datum uzavření smlouvy a zahájení řízení. Zjisti, zda protistrana není na sankčním seznamu (zákaz plnění, zmrazení).
-2. **Pravomoc a příslušnost.** V EU **Brusel I bis**: obecná (čl. 4 - bydliště žalovaného v členském státě), zvláštní (čl. 7 - místo plnění závazku podle druhu smlouvy; místo, kde škoda nastala nebo může nastat), ochranné režimy (spotřebitel čl. 17-19, zaměstnanec čl. 20-23, pojištění - prorogace jen omezeně), **výlučná** (čl. 24 - nemovitosti, společnosti, rejstříky, výkon), prorogace (čl. 25 - písemně nebo v obchodních zvyklostech, ve VOP jen při prokazatelném souhlasu - judikatura SDEU), podřízení se (čl. 26), **litispendence** (čl. 29 - dříve zahájené řízení má přednost i při prorogaci třetího soudu, výjimka čl. 31 odst. 2), související řízení. Mimo EU: Lugano (CH, NO, IS), Haag 2005 (výlučná prorogace), bilaterální smlouvy, jinak **ZMPS § 6** (pravomoc, je-li dána místní příslušnost podle o. s. ř.). Rodina, dědictví, výživné, insolvence - zvláštní nařízení (Brusel II ter, 650/2012, 4/2009, 2015/848). Spojené království: Brusel I bis se od 2021 nepoužije - Haag 2005 (výlučné doložky), Haag 2019 (uznání rozsudků od data účinnosti pro UK - ověř), jinak národní právo.
-3. **Rozhodné právo.** Smlouvy - **Řím I**: volba práva (čl. 3, i konkludentní; nelze obejít kogentní ochranu spotřebitele čl. 6 a zaměstnance čl. 8), bez volby hierarchie čl. 4 (charakteristické plnění, obvyklé bydliště poskytovatele, úniková doložka), imperativní normy fóra (čl. 9 - sankce, devizové, ochrana), forma (čl. 11), rozsah (čl. 12 - včetně promlčení a výkladu), **CISG** se u koupě zboží mezi podnikateli z různých smluvních států aplikuje automaticky - vyloučit lze jen výslovně. Mimosmluvní - **Řím II** (čl. 4 místo vzniku škody, společné bydliště, úzká vazba; výrobek čl. 5, nekalá soutěž čl. 6, životní prostředí čl. 7, duševní vlastnictví čl. 8, volba čl. 14 jen ex post nebo mezi podnikateli). Nepokryté oblasti - ZMPS (způsobilost § 29, věcná práva § 69-§ 73, manželství § 48+, dědictví mimo nařízení, právnické osoby § 30 - uznání zahraniční společnosti), zpětný odkaz (§ 21 - jen kde ZMPS připouští), výhrada veřejného pořádku (§ 4).
-4. **Doručování a dokazování do ciziny.** V EU nařízení 2020/1784 (odesílající a přijímající subjekty, formuláře, jazyk a právo odmítnout, doručení poštou s dodejkou, elektronické doručování za podmínek) a 2020/1783 (dožádání důkazů, videokonference); mimo EU Haagské úmluvy 1965 a 1970 nebo bilaterální smlouvy přes Ministerstvo spravedlnosti; překlady (soudní tlumočník), fikce doručení a náhradní doručení jen podle použitelného nástroje; nedoručení do ciziny podle pravidel = důvod odepření uznání (čl. 45 odst. 1 písm. b) Brusel I bis).
-5. **Uznání a výkon.** V EU **bez prohlášení vykonatelnosti** (čl. 36, čl. 39 Brusel I bis - osvědčení podle čl. 53 od soudu původu + překlad, výkon přímo exekutorem; povinný může navrhnout odepření podle čl. 45-46 u soudu; přizpůsobení opatření čl. 54); evropský exekuční titul (805/2004 - nesporné nároky), evropský platební rozkaz (1896/2006 - odpor 30 dnů), drobné nároky (861/2007 - do 5 000 EUR), evropský příkaz k obstavení účtů (655/2014 - ex parte, jistota); rozhodnutí o osobním stavu z EU se uznávají bez řízení (Brusel II ter). Mimo EU: **ZMPS § 14-§ 16** (uznání cizího rozhodnutí - podmínky: vzájemnost, pravomoc cizího soudu, řádné doručení a možnost účasti, nepřekážka res iudicata, veřejný pořádek; u majetkových věcí bez zvláštního výroku, u osobního stavu **zvláštní řízení o uznání u Nejvyššího soudu** (§ 51+ - rozvody, určení rodičovství; výjimky pro státy s bilaterální smlouvou a rozhodnutí ve věcech občanů daného státu - ověř); **rozhodčí nálezy** - Newyorská úmluva (§ 38-§ 40 ZRŘ; důvody odepření čl. V - neplatná doložka, vada řízení, veřejný pořádek; výkon jako tuzemský nález).
-6. **Listiny.** Cizí veřejné listiny: **apostila** (Haag 1961 - vydává MZV/MSp státu původu; v ČR ověřuje MZV a MSp) × **superlegalizace** (státy mimo úmluvu - konzulární ověření) × osvobození (bilaterální smlouvy o právní pomoci, nařízení 2016/1191 uvnitř EU pro matriční a další vybrané listiny s vícejazyčným formulářem); **úřední překlad** soudním tlumočníkem (354/2019 Sb.); výpisy z cizích rejstříků (aktuálnost, ekvivalent OR), plné moci ze zahraničí (forma podle místa vystavení nebo ZMPS § 42 - ověř), notářské zápisy a jejich ekvivalence.
-7. **Drafting doložek s cizím prvkem.** Volba práva (výslovná, celá smlouva, včetně mimosmluvních nároků a promlčení; CISG opt-in/out; imperativní normy a sankce), volba soudu (výlučná × nevýlučná; písemná forma čl. 25; pro třetí státy Haag 2005; u spotřebitelů a zaměstnanců jen v mezích nařízení) × rozhodčí doložka (instituce - Rozhodčí soud při HK ČR a AK ČR, VIAC, ICC, LCIA; místo, jazyk, počet rozhodců; NY úmluva pro výkon), jazyk smlouvy a rozhodná verze, měna a kurz, Incoterms, doručovací adresy a e-mail, GDPR přenosy mimo EU, sankční a exportní doložky, escrow a zajištění vykonatelné v cílovém státě.
-8. **Zvláštní agendy (odkaz na oborové skilly).** Rodinné věci (Brusel II ter, únosy - Haag 1980, výživné 4/2009 s ústředním orgánem ÚMPOD), dědictví (650/2012, evropské dědické osvědčení), insolvence (2015/848), pracovní právo (vysílání 96/71/ES, Řím I čl. 8), přeshraniční přeměny společností, mezinárodní přeprava (CMR, Montrealská úmluva), evropský platební rozkaz při vymáhání, cizinecké právo.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Prorogace na cizí soud nebo volba cizího práva ve spotřebitelské či pracovní smlouvě - neúčinná proti slabší straně v rozsahu ochranných norem.
-- Příslušnost posuzovaná podle ZMPS nebo o. s. ř. tam, kde platí Brusel I bis (a naopak u třetích států).
-- Volba práva brána jako volba soudu (a naopak) - jsou to dvě samostatné doložky.
-- CISG přehlédnuta u mezinárodní koupě mezi podnikateli - platí automaticky, i když smlouva volí české právo (české právo CISG zahrnuje).
-- Torpédová žaloba: protistrana zahájila řízení jinde dřív - litispendence, český soud přeruší; u výlučné prorogace platí výjimka.
-- Doručení do ciziny poštou nebo e-mailem mimo nařízení/úmluvu - vada řízení a odepření uznání.
-- Odpor proti evropskému platebnímu rozkazu po 30 dnech - rozkaz vykonatelný v celé EU.
-- Rozvod ze třetího státu bez uznání Nejvyšším soudem - v ČR trvá manželství (bigamie, dědictví).
-- Apostila požadována u státu mimo Haagskou úmluvu (nutná superlegalizace) nebo naopak zbytečně uvnitř EU u listin podle 2016/1191.
-- Spojené království posuzované podle Brusel I bis po roce 2020 - použij Haag 2005 / Haag 2019 (stav ověř) nebo národní právo a exequatur.
-- Rozhodčí doložka odkazující na neexistující nebo nesprávně označenou instituci - patologická doložka.
-- Promlčení posuzované podle českého práva jako lex fori - řídí se rozhodným právem smlouvy (Řím I čl. 12).
-- Plnění protistraně ze sankčního seznamu - trestní a správní odpovědnost bez ohledu na smlouvu.
-- Doplňování názvů cizích společností, rejstříkových čísel, dat a částek z paměti - vždy z výpisů, listin nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší krok** (kde žalovat / jak vykonat / co ověřit; lhůty).
-2. **Cizí prvek, datum a hierarchie pramenů** (nařízení → smlouva → ZMPS).
-3. **Pravomoc a příslušnost** s článkem/paragrafem a odkazem.
-4. **Rozhodné právo** s článkem/paragrafem, imperativní normy a veřejný pořádek.
-5. **Procesní cesta** - tabulka: krok | nástroj (nařízení/úmluva/ZMPS) | orgán | lhůta | formulář/listina.
-6. **Rizika a alternativy** (litispendence, výkon v cílovém státě, náklady, arbitráž).
-7. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace vč. SDEU; **podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Článek/paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `SDEU - C-352/13 - 21.05.2015`, `NS - 30 Cdo 1234/2024 - …`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („bydliště na území členského státu“, „místo, kde škoda vznikla“, „výslovně vyloučit“, „vzájemnost je zaručena“).
-- Jeden časový řez; u smluv datum uzavření, u řízení datum zahájení, u uznání datum rozhodnutí; u Spojeného království výslovně uveď, který režim platí a proč.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Nejprve hierarchie pramenů, teprve pak paragraf; nařízení ze zdroje `EU`, ZMPS přes `/versions` → `/toc` → `/text?part=`.
-- `docId` jen z API.
-- Stav smluvních stran úmluv, sankční seznamy, přijímající orgány a formuláře nikdy z paměti - vždy z hcch.net, e-justice.europa.eu, eur-lex, sanctionsmap.eu, justice.cz k datu úkonu.
-- Nikdy neradit obcházení sankcí ani doručování způsobem, který nástroj nepřipouští.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Cizí prvek a oddělené otázky
+
+Z dodaných podkladů sestav země a vazby: sídla či bydliště stran, obvyklý pobyt, státní příslušnost, místo plnění, vzniku škody a majetku, právní forma stran a jejich spotřebitelské, pracovní či pojistné postavení. Zapiš uzavření smlouvy, škodní událost, zahájení každého řízení, vydání a doručení rozhodnutí. Pojmy bydliště a obvyklého pobytu nepovažuj automaticky za totožné. Zjisti klientův cíl a místo prakticky dosažitelného výkonu. České fórum ani český advokát samy neurčují české hmotné právo.
+
+Odděl pravomoc a příslušnost, rozhodné právo, hmotněprávní režim, věcné účinky, proces doručování a dokazování, uznání a výkon a formu listin. Každá otázka může mít jiný pramen a rozhodný okamžik. Nejprve vyhledej pravidla věcné, osobní, územní a časové působnosti i vzájemné přednosti pramenů; nepoužívej mechanické pořadí bez prověření vztahových klauzulí.
+
+## Prameny a dostupnost
+
+Nativním CODEXIS rešeršuj podle otázky Brusel I bis, Luganskou úmluvu, Řím I a Řím II, zákon o mezinárodním právu soukromém, CISG, evropské procesní nástroje, rodinná a dědická nařízení, insolvenční a majetkové režimy manželů, Haagské úmluvy, Newyorskou úmluvu, přepravní úmluvy a bilaterální právní pomoc. Zjisti konkrétní smluvní státy, výhrady, prohlášení a přechodná ustanovení pro rozhodné období v dostupném nativním obsahu. Pro Spojené království neodvozuj výsledek pouze z označení Brexit. Chybí-li potřebná informace nebo text cizího práva, přesně označ mezeru; nepřejdi k externím atlasům, databázím či webům.
+
+## Pravomoc a rozhodné právo
+
+U fóra prověř obecnou, zvláštní a výlučnou příslušnost, ochranu slabší strany, sjednanou prorogaci, souhlas s doložkou ve všeobecných podmínkách a účinky procesní účasti bez námitky. Který soud je skutečně určen, pro jaké nároky a s jakou výlučností? U souběžných řízení zmapuj jejich předmět, účastníky, okamžiky zahájení a případná přednostní pravidla doložky. Nezaměňuj související řízení za totožnou věc.
+
+U smlouvy prověř platnost a rozsah volby práva, náhradní určení bez volby, charakteristické plnění, užší vazbu, imperativní normy, ochranu zaměstnance či spotřebitele a výhradu veřejného pořádku. U mimosmluvních nároků zkoumej zvlášť místo škody a zvláštní pravidla výrobku, soutěže, životního prostředí a duševního vlastnictví. Zjisti, které právo řídí formu, výklad, promlčení, způsobilost, zastoupení a věcné účinky. Zpětný odkaz použij pouze po ověření jeho přípustnosti.
+
+U smíšené smlouvy identifikuj skutečná plnění a rozsah CISG, její výjimky a případné vyloučení podle textu i doložených okolností. Nepředpokládej ani to, že volba práva smluvního státu CISG vylučuje, ani že je vždy možný pouze výslovný opt-out. Právní kvalifikace nesmí vzniknout pouze z názvu doložky.
+
+## Vedení řízení, listiny a výkon
+
+Pro doručování zjisti použitelný nástroj, přípustný způsob, přijímající orgán, formulář, jazyk a právo odmítnout. Odděl předání písemnosti, doložené doručení a právní účinky. U dokazování ověř dožádání, přímý důkaz, videokonferenci, překlady a procesní práva. Vnitrostátní fikci ani e-mailovou adresu nepřenášej automaticky do cizího režimu.
+
+U uznání rozliš běžné civilní rozhodnutí, osobní stav, rodinnou věc a rozhodčí nález. Vyhledej potřebu samostatného výroku či prohlášení vykonatelnosti, osvědčení, originálů, překladu a doručení. Zhodnoť důvody odepření, veřejný pořádek, možnost účasti, neslučitelná rozhodnutí a vzájemnost, pokud ji daný režim vyžaduje. Porovnej evropský platební rozkaz, drobné nároky, exekuční titul a obstavení účtů podle ověřených podmínek, limitů, odporu a jistoty. U rozvodu ze třetího státu neoznamuj automaticky trvání manželství bez prověření uznání a výjimek.
+
+U listin ověř apostilu, superlegalizaci či osvobození, oprávněný orgán, překlad, ekvivalenci veřejné listiny, plnou moc a zahraniční výpis. Úřední ověření podpisu není automatickým potvrzením všech hmotněprávních podmínek. Údaje cizí společnosti ponech podle dodaných listin s vyznačením aktuálnosti.
+
+## Smlouvy a výstup
+
+Připrav oddělené a navazující doložky práva, fóra či arbitráže, rozhodného jazyka, měny a kurzu, dodacích podmínek, doručování, zajištění a vypořádání. Prověř sankční a exportní překážky, ochranu údajů při přeshraničním předávání a vymahatelnost zajištění v cílovém státě; neslibuj úplný screening bez dat. Omezení odpovědnosti a ekonomicko-daňovou výhodnost posuzuj podle použitelného práva a doložených vstupů.
+
+U rodiny, únosu dítěte, výživného, dědictví, insolvence, vysílání zaměstnanců, přeměn, přepravy a cizineckých souvislostí připoj oborové otázky, ale zachovej tuto kolizní mapu. Dodej tabulku otázka–pramen–rozhodný okamžik–fórum–právo–důkaz, harmonogram úkonů a požadovaný návrh či smlouvu. Při souběžném zahraničním řízení uveď bezodkladné ochranné kroky a potřebu místní pomoci jako doporučení, nikoli externí rešeršní cestu; neověřenou zahraniční lhůtu nepodávej jako jistou.

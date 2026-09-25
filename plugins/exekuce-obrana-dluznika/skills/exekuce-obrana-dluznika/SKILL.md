@@ -1,7 +1,7 @@
 ---
 uuid: 52b7f277-741b-453a-8643-8781e5c870ee
 name: exekuce-obrana-dluznika
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,88 +25,120 @@ i18n:
       - "Klientovi prišlo upovedomenie o začatí exekúcie pre dlh z roku 2012 podľa rozhodcovského nálezu. Čo skontrolovať a aké návrhy podať?"
       - "Exekútor zablokoval účet, na ktorý chodí mzda a prídavky na deti. Ako rýchlo uvoľniť prostriedky?"
       - "Exekútor spísal v byte veci, ktoré patria priateľke povinného. Ako ich dostať zo súpisu?"
-description: Use when the user defends a debtor (povinný), a debtor's spouse or a third party against Czech enforcement, or advises a debtor with multiple debts - exekuce, exekutor, exekuční řád (120/2001 Sb.), výkon rozhodnutí (§ 251+ o. s. ř.), vyrozumění o zahájení exekuce, exekuční příkaz, exekuční titul, rozhodčí nález, promlčení vykonatelného práva, návrh na zastavení exekuce, návrh na odklad, nemajetnost, srážky ze mzdy, nezabavitelná částka, přikázání pohledávky z účtu, chráněný účet, mobiliární exekuce, soupis movitých věcí, vyškrtnutí věci ze soupisu, vylučovací žaloba, obydlí povinného, exekuce na SJM, manžel povinného, náklady exekuce, odměna exekutora, příkaz k úhradě nákladů, splátkový kalendář s exekutorem, centrální evidence exekucí, stížnost na exekutora, daňová exekuce, správní exekuce, oddlužení jako řešení, milostivé léto. Standalone skill - bundles CODEXIS methodology with debtor-defence method; no need to load the general codexis skill.
+description: 'Obrana povinného, manžela a třetích osob v soudní exekuci a v souvisejícím výkonu rozhodnutí: titul, doručení, zastavení, odklad, vyloučení majetku, chráněné příjmy a náklady. Rozlišuje daňovou a správní exekuci, insolvenční souběh a odpovědnost za nesprávný postup. Primární vymáhání z pozice věřitele řeší příslušný věřitelský skill.'
 ---
 
-# Exekuce - obrana povinného ČR
+# Exekuce a obrana dlužníka
 
-Samostatný oborový skill pro obranu dlužníka a třetích osob v exekuci a výkonu rozhodnutí. Pořadí je pevné: **fáze a běžící lhůta → audit titulu → co nesmí být postiženo → návrhy (zastavení / odklad / vyškrtnutí) → náklady → dlouhodobé řešení (dohoda, oddlužení)**. Vymáhání z pohledu věřitele řeší jiný skill.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/120/2001/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf55'`, `cdx-cli get cdx://cz_law/99/1963/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf268'`, `cdx-cli get cdx://cz_law/595/2006/versions`, `cdx-cli search JD --query "zastavení exekuce rozhodčí nález spotřebitel neplatná doložka" --court "Nejvyšší soud" --limit 5`.
-- Exekuční řád i o. s. ř. byly opakovaně novelizovány (2021 - chráněný účet, bezvýsledné exekuce, sloučení; 2022 - obydlí a milostivé léto; další změny průběžně). **Lhůty, částky (nezabavitelné minimum, násobky životního minima, limity pro prodej obydlí), sazby odměny a čísla odstavců ověř v aktuálním znění k datu úkonu**; nikdy z paměti. Nezabavitelnou částku počítej výhradně podle aktuálního nařízení vlády a aktuálního životního minima a normativních nákladů.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| EŘ - exekuční řád | 120/2001 Sb. | `cz_law/120/2001` | Exekuční návrh a pověření (§ 37-§ 43a), vyrozumění a dobrovolné plnění (§ 44, § 46), exekuční příkazy (§ 47+), odklad (§ 54), zastavení (§ 55 vč. bezvýsledné exekuce), způsoby provedení (§ 58+), soupis a vyškrtnutí věci (§ 66-§ 68), SJM (§ 42), náklady (§ 87-§ 90), kárná odpovědnost |
-| o. s. ř. - výkon rozhodnutí | 99/1963 Sb. | `cz_law/99/1963` | Subsidiárně (§ 52 EŘ): zastavení (§ 268-§ 269), SJM a manžel (§ 262a-§ 262b), vylučovací žaloba (§ 267), srážky ze mzdy (§ 276-§ 302), přikázání pohledávky a chráněný účet (§ 303-§ 311), věci nepodléhající výkonu (§ 321-§ 322), prodej nemovitostí a dražba (§ 335-§ 337h), vyklizení (§ 340+) |
-| NV o nezabavitelných částkách | 595/2006 Sb. | `cz_law/595/2006` | Výpočet nezabavitelné částky a hranice plně zabavitelného zbytku |
-| Vyhláška o odměně exekutora | 330/2001 Sb. | `cz_law/330/2001` | Odměna, náhrada hotových výdajů, snížení při dobrovolném plnění |
-| Vyhláška o centrální evidenci exekucí | 329/2008 Sb. | `cz_law/329/2008` | Zápis a výmaz, dálkový přístup |
-| OZ | 89/2012 Sb. | `cz_law/89/2012` | Promlčení vykonatelného práva (§ 640), započítávání plateb (§ 1932-§ 1933), SJM a dluhy (§ 731-§ 732), odpovědnost nezletilých za dluhy (§ 899a) |
-| Insolvenční zákon | 182/2006 Sb. | `cz_law/182/2006` | Účinky zahájení na exekuci (§ 109), oddlužení (§ 389+) |
-| Daňový řád / správní řád | 280/2009 / 500/2004 Sb. | `cz_law/280/2009`, `cz_law/500/2004` | Daňová exekuce (§ 175+ DŘ - odvolání proti exekučnímu příkazu, zastavení § 181), správní exekuce (§ 103+ SŘ) |
-| Zákon o rozhodčím řízení | 216/1994 Sb. | `cz_law/216/1994` | Rozhodčí nálezy jako titul, neplatné spotřebitelské doložky, zrušení nálezu (§ 31) |
-| Zákony „milostivé léto" | 286/2021, 214/2022 Sb. a navazující | `cz_law/286/2021`, `cz_law/214/2022` | Historické akce oddlužení příslušenství - ověř, zda probíhá nová |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` **k datu zahájení exekuce a k datu úkonu** → `/toc` → `/text?part=`.
-2. Judikatura: **NS** senát 20 Cdo (exekuce a výkon rozhodnutí - zastavení pro neplatnou rozhodčí doložku, promlčení, SJM, náklady), **ÚS** (proporcionalita nákladů, ochrana obydlí, spotřebitel v exekuci), **NSS** (daňová exekuce). Ověř datum a novelu.
-3. Komentář (`COMMENT`) k pojmům (důvod zastavení „jiný důvod“ § 268 odst. 1 písm. h), nemajetnost, obvyklé vybavení domácnosti); metodiky Exekutorské komory jsou orientace.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow obrany
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Fáze a lhůty.** Vyrozumění o zahájení (§ 44 EŘ) → **30 dnů k dobrovolnému splnění se sníženými náklady** (§ 46 odst. 6 - ověř) a zároveň k podání návrhu na zastavení; exekuční příkazy (mzda, účet, movité věci, nemovitost, řidičský průkaz u výživného) → dražba → skončení. Zjisti datum doručení každé listiny, spisovou značku, exekutora a oprávněného; stáhni výpis z centrální evidence exekucí (všechny exekuce, pořadí).
-2. **Audit titulu.** Vykonatelnost (právní moc, doložka), řádné doručení titulu povinnému (fikce, rozsudek pro zmeškání, platební rozkaz doručený na neaktuální adresu → odvolání / návrh na prominutí zmeškání § 58 o. s. ř. + návrh na odklad exekuce), **promlčení vykonatelného práva** (§ 640 OZ - 10 let od právní moci, u starších titulů podle OZ 1964; jen na námitku), rozhodčí nález (spotřebitelská doložka neplatná → zastavení podle § 268 odst. 1 písm. h) o. s. ř. i bez zrušení nálezu - judikatura NS), notářský zápis, správní/daňový titul, exekuce pro pohledávku vzniklou v nezletilosti (§ 899a OZ, zastavení), zánik pohledávky splněním/započtením (§ 268 odst. 1 písm. g)), oprávněný bez aktivní legitimace (postoupení bez doložení).
-3. **Návrhy.** **Návrh na zastavení** (§ 55 EŘ - povinný do 15 dnů ode dne, kdy se dozvěděl o důvodu; exekutor vyhoví nebo do 15 dnů postoupí soudu; důvody § 268 o. s. ř. a § 55 EŘ), **návrh na odklad** (§ 54 EŘ - přechodně nepříznivé postavení bez vlastní viny, nebo očekávané zastavení), návrh na zastavení bezvýsledné exekuce (§ 55 odst. 7+ - po 6 letech bez výtěžku, záloha oprávněného - ověř), námitky proti příkazu k úhradě nákladů (§ 88 odst. 3 EŘ - 8 dnů), návrh na vyškrtnutí věci ze soupisu (§ 68 EŘ - do 30 dnů od soupisu, třetí osoba) a vylučovací žaloba (§ 267 o. s. ř.), návrh manžela na zastavení pro majetek mimo SJM nebo dluh nespadající do SJM (§ 262b o. s. ř., § 42 EŘ), odvolání proti rozhodnutí exekutora/soudu 15 dnů.
-4. **Co nesmí být postiženo.** Srážky ze mzdy - nezabavitelná částka (NV 595/2006 Sb. + § 278-§ 279 o. s. ř.: základní částka, na vyživované osoby, hranice plně zabavitelného zbytku - vypočti podle aktuálních hodnot), přednostní pohledávky (§ 279 odst. 2), více plátců mzdy (soud určí), dávky a příjmy vyloučené (§ 317 o. s. ř. - ověř výčet: dávky pomoci v hmotné nouzi, příspěvek na bydlení, dávky pěstounské péče…); účet - **chráněný účet** (§ 304c-§ 304e - zřízení bankou na žádost, chráněný příjem z exekučně chráněných zdrojů) a výplata dvojnásobku životního minima (§ 304b), zákaz postižení prostředků z dávek na účtu (prokázat původ); movité věci - § 322 o. s. ř. (obvyklé vybavení domácnosti, zdravotní pomůcky, snubní prsten, zvířata, hotovost do zákonného násobku životního minima, nástroje k výkonu povolání do limitu - ověř); nemovitost - **ochrana obydlí povinného** u nižších pohledávek (§ 66 EŘ - ověř limit a podmínky) a zásada přiměřenosti způsobu exekuce (§ 58 odst. 3 EŘ).
-5. **Náklady exekuce.** Odměna exekutora (vyhl. 330/2001 Sb. - procento z vymoženého, minimum, snížení při splnění do 30 dnů od vyrozumění), náhrada výdajů, náklady oprávněného; příkaz k úhradě nákladů a námitky (8 dnů); přezkum proporcionality (ÚS); při zastavení pro nemajetnost náklady nese oprávněný zpravidla; u zastavení z důvodu na straně oprávněného (neplatný titul) náklady oprávněný.
-6. **Dohoda a dlouhodobé řešení.** Splátkový kalendář s exekutorem (nezastavuje exekuci, ale odloží dražbu), dohoda s oprávněným o prominutí příslušenství, sloučení exekucí (§ 37 odst. 4 EŘ), milostivé léto (jen v době platné akce - ověř), **oddlužení** (§ 389+ IZ - zahájení insolvenčního řízení blokuje provedení exekuce § 109 odst. 1 písm. c) IZ; podání jen advokátem/notářem/akreditovanou osobou) - odkaž na insolvenční skill; předlužení versus dočasná platební neschopnost.
-7. **Dozor a stížnosti.** Stížnost na exekutora Exekutorské komoře / Ministerstvu spravedlnosti (kárná odpovědnost), podnět k dohledu exekučního soudu, náhrada škody za nesprávný úřední postup exekutora (§ 32 EŘ, zákon 82/1998 Sb. - ověř).
-8. **Daňová a správní exekuce.** Jiný režim: exekuční příkaz správce daně (§ 178 DŘ) - odvolání 15 dnů bez odkladného účinku, námitka (§ 159 DŘ), zastavení (§ 181 DŘ), posečkání (§ 156 DŘ) a splátky, prominutí příslušenství (§ 259+ DŘ); správní exekuce (§ 103+ SŘ).
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Zmeškání 30 dnů od vyrozumění - ztráta snížených nákladů a dražší exekuce.
-- Návrh na zastavení podaný po 15 dnech od dozvědění - exekutor ho může odmítnout; zbývá jen zastavení z úřední povinnosti.
-- Rozsudek pro zmeškání nebo platební rozkaz doručený fikcí na starou adresu - řešit v nalézacím řízení (odvolání, prominutí zmeškání) souběžně s odkladem, ne jen v exekuci.
-- Promlčení titulu neuplatněné námitkou - soud ho nezkoumá sám.
-- Rozhodčí nález brán jako nedotknutelný - u spotřebitelských doložek zastavení exekuce.
-- Nezabavitelná částka spočtená ze zastaralých hodnot nebo bez vyživovaných osob; více exekucí u více plátců bez určení soudem.
-- Chráněný účet nezřízen - dávky a zbytek mzdy zablokovány; prostředky z dávek na běžném účtu bez prokázání původu.
-- Soupis věcí třetí osoby bez včasného návrhu na vyškrtnutí (30 dnů) - zbývá jen vylučovací žaloba a věci mohou být prodány.
-- Manžel povinného nereaguje na exekuci na SJM nebo na jeho výlučný majetek - ztráta obrany podle § 262b.
-- Splátkový kalendář s exekutorem považován za zastavení - dražba jen odložena, náklady rostou.
-- Oddlužení navrhované bez kontroly poctivého záměru a bez akreditované osoby / advokáta.
-- Milostivé léto uváděné jako dostupné bez ověření, zda aktuálně probíhá.
-- Daňová exekuce bráněna návrhy podle exekučního řádu - jiné lhůty a prostředky.
-- Doplňování spisových značek, částek a dat doručení z paměti - vždy z listin, CEE nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (jaký návrh, komu, do kdy; co zaplatit / nezaplatit).
-2. **Fáze, titul a jeho vady.**
-3. **Právní rámec** - EŘ / o. s. ř. / NV v aktuálním znění, s odkazy; výpočet nezabavitelné částky s uvedením použitých hodnot a jejich zdroje.
-4. **Návrhy a postup** - tabulka: úkon | právní základ | adresát | lhůta | očekávaný účinek.
-5. **Rizika a alternativy** (dohoda, splátky, oddlužení, náklady).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NS - 20 Cdo 1234/2024 - …`, `ÚS - II. ÚS 123/25 - …`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („do 15 dnů ode dne, kdy se dozvěděl“, „do 30 dnů od doručení vyrozumění“, „nemohl-li bez své viny“).
-- Jeden časový řez; u částek uveď datum účinnosti použitých hodnot.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Nezabavitelné částky, násobky životního minima, limity a sazby nikdy z paměti - vždy z aktuálního nařízení vlády a zákona s odkazem a datem.
-- Mimo CODEXIS jen oficiální zdroje (ekcr.cz, justice.cz, CEE, mpsv.cz pro životní minimum) když CODEXIS neodpovídá; nikdy neradit zatajování majetku ani maření exekuce (§ 337 TZ).
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Zadání, fáze a podklady
+
+Zjisti, zda chráníš povinného, jeho manžela, vlastníka postižené věci nebo jinou osobu, jaký výsledek klient potřebuje a co bezprostředně ohrožuje jeho bydlení, příjem či provoz. Rozliš soudní exekuci, soudní výkon rozhodnutí a daňové či správní vymáhání. U nepeněžitého plnění, zejména vyklizení, samostatně ověř způsob výkonu, ochranu dotčených osob a podmínky odkladu. Z dokumentů vytvoř mapu všech souběžných řízení, titulů, exekučních příkazů, postiženého majetku, skutečných úhrad a plánovaných úkonů. Údaje o jiných řízeních ani stav evidence nedoplňuj domněnkou.
+
+Sestav časovou osu vzniku a splatnosti dluhu, nalézacího řízení, doručování, právní moci, vykonatelnosti, zahájení vymáhání a každé platby. Odděl doručení povinnému, zástupci a případnou fikci. Která právní úprava a přechodná ustanovení dopadají na každý krok? Jaké rozdílné lhůty jsou spojeny s dobrovolným splněním, návrhem na zastavení, námitkami proti nákladům a dražbou? Obecné poučení neber jako důkaz správného doručení.
+
+## Titul a rozsah vymáhaného práva
+
+Ověř v nativním CODEXIS podmínky formální a materiální vykonatelnosti právě tohoto titulu. Co vyžaduje určitost účastníků, plnění, času a podmínky plnění? Existuje podklad pro přechod práva či povinnosti? Jaký význam mají vadné doručení platebního rozkazu, rozsudek pro zmeškání, rozhodčí doložka ve spotřebitelském vztahu, notářský zápis nebo veřejnoprávní titul? Je nutný samostatný opravný prostředek v původním řízení a jak se vztahuje k exekuční obraně?
+
+Prověř promlčení podle rozhodných časových pravidel, zaplacení, započtení, prominutí, dohodu, zánik zajištění, nepřípustné příslušenství a zvláštní ochranu zranitelného či nezletilého dlužníka. Úhradu před podáním exekučního návrhu, po zahájení řízení a výtěžek vymožený exekutorem posuzuj odděleně. Blokace účtu není bez dokladu úhradou věřiteli. Každou částku přiřaď ke dni, příjemci a právně ověřenému pořadí započtení; nepřeváděj sporné tvrzení věřitele na prokázaný zůstatek.
+
+## Procesní obrana a naléhavé kroky
+
+Pro každý důvod zastavení zjisti oprávněnou osobu, adresáta, obsah, důkazní břemeno, lhůtu, účinky a opravný prostředek. Odliš úplné a částečné zastavení i zvláštní obranu manžela. Lhůta, kterou exekutor poskytuje ostatním k vyjádření, není automaticky lhůtou pro jeho rozhodnutí nebo předložení věci soudu: vyhledej každou z těchto povinností samostatně.
+
+Kdy lze žádat odklad pro dočasnou nepříznivou situaci, očekávané zastavení nebo jiný konkrétní důvod? Co musí klient tvrdit a doložit o nezavinění, přechodnosti, újmě a poměru k zájmům oprávněného? Prověř důvody bezvýslednosti řízení, podmínky ochrany před prodejem obydlí a souběh s insolvencí. Splátková dohoda sama o sobě nedokládá skončení exekuce ani jistý odklad dražby.
+
+U majetku třetí osoby porovnej návrh na vyškrtnutí ze soupisu, vylučovací žalobu a další dostupné prostředky. Zjisti návazné lhůty, správného žalovaného, ochranu před zpeněžením a důkaz vlastnictví. U společného jmění odděl dobu vzniku závazku, jeho účel, souhlas či nesouhlas manžela, změny majetkového režimu a jejich účinky vůči věřiteli.
+
+## Ochrana příjmů, majetku a základního provozu
+
+Podle rozhodného období vyhledej pravidla srážek ze mzdy, přednostních pohledávek, vyživovaných osob, souběhu plátců, dalších příjmů a nezabavitelných plnění. Vypočti jednotlivé kroky z doložených příjmů, nikoli z historické tabulky. Zvlášť ověř ochranu sociálních dávek a příjmů po připsání na účet, podmínky chráněného účtu a případného jednorázového uvolnění prostředků; tyto instituty nezaměňuj.
+
+Které věci jsou pro konkrétní osobu vyloučeny z postihu pro zdravotní, rodinný, osobní nebo pracovní účel? Co vyžaduje ochrana běžného vybavení domácnosti, zdravotních pomůcek, osobních předmětů, zvířat a podnikatelských nástrojů? Jak se uplatní přiměřenost zvoleného způsobu exekuce, hodnota majetku, alternativní uspokojení a práva spoluvlastníků?
+
+## Náklady, veřejnoprávní vymáhání a odpovědnost
+
+Odděl náklady oprávněného, náklady exekutora, soudní poplatky a vlastní smluvní odměnu klienta. Ověř rozhodnou tarifní úpravu, základ odměny, skutečně vymožené plnění, případné snížení při dobrovolném splnění, hotové výdaje, DPH a rozhodování o nákladech při zastavení. Kdo zavinil zahájení či pokračování a má to pro tento typ nákladů význam? Zastavení automaticky neznamená jednu předem danou nákladovou variantu.
+
+U daňové a správní exekuce vyhledej jejich vlastní námitkové, odkladné, zastavovací a přezkumné prostředky včetně posečkání; nepřenášej mechanicky soudní exekuční postup ani předpoklad přípustného odvolání. Stížnost či dohled nenahrazují procesní obranu. Prověř podmínky odpovědnosti exekutora nebo státu, vznik škody, příčinnou souvislost a předběžné uplatnění.
+
+## Výstup pro rozhodnutí
+
+Dodej nejbližší bezpečný krok, varianty zastavení a odkladu, konkrétní podání s důkazy a vykonatelným petitem. U částečného zastavení přesně označ titul, jistinu, jednotlivé příslušenství a odlišné nákladové položky, včetně toho, které části návrh nezasahuje. Zachovej protistraně nejsilnější argumenty a doložené odpovědi.
+
+Při práci s judikaturou rozliš závěr jednotlivých instancí, přezkumný výsledek a případné zrušení; nepřičítej nižšímu soudu názor přezkumného soudu ani nevymýšlej čísla odstavců. Posuď také dohodu, prominutí příslušenství, konsolidaci a oddlužení včetně oprávnění sepisovatele. Historické dluhové amnestie nabídni jen po ověření jejich aktuální použitelnosti. Uzavři plánem důkazů, lhůt, plateb, nákladů a neověřených bodů; připravený návrh není podáním ani rozhodnutím o zastavení.

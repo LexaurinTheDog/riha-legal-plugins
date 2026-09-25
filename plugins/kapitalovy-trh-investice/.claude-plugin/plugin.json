@@ -1,7 +1,7 @@
 {
   "uuid": "39034f0a-fefa-46f7-add3-101ff8b5d803",
   "name": "kapitalovy-trh-investice",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech capital-markets and investment-services practice skill - investment firms and intermediaries under MiFID II, suitability and appropriateness, investor claims against brokers, public offers and prospectus exemptions, bonds and bondholder meetings, investment funds and AIFMD regimes, crowdfunding, crypto-assets under MiCA, market abuse and insider dealing, issuer disclosure and major holdings, takeover bids and squeeze-outs, CNB supervision and sanctions, financial arbitrator, taxation of investment income, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

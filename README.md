@@ -20,7 +20,7 @@ Ikona pluginu je v jeho kořeni jako `icon.svg` a barva odpovídá oborové skup
 
 Každý skill je samostatný pracovní postup pro jeden obor: ví, které předpisy otevřít, jakou judikaturu hledat, čím začít odpověď a kde se v oboru nejčastěji chybuje. Metodika práce s právní databází je zabudovaná uvnitř, obecný rešeršní skill se nenačítá.
 
-Všech padesát má stejných sedm částí ve stejném pořadí — základní reflexy, operating assumptions, klíčové předpisy, rešeršní strategie, workflow, časté pasti, struktura odpovědi a hard rules. Napříč skilly platí pravidlo, že lhůty, sazby a prahové hodnoty se neuvádějí z paměti, ale ověřují v aktuálním znění; jinak zůstává placeholder `[DOPLNIT]`.
+Skilly jsou psané pro aplikaci CODEXIS® AI (vm.codexis.ai) a jako právní zdroj používají výhradně nativní CODEXIS - žádné externí vyhledávání ani náhradní databáze. Všech padesát sdílí společný pracovní postup (verze 1.1.0): mapa právních otázek a nejdřív zvláštní režim, znění předpisu rozhodné k datu události včetně přechodných ustanovení, judikatura navázaná přímo na rozhodný paragraf a teprve potom fulltext, načtení celého rozhodnutí a oddělení nosných důvodů od tvrzení účastníků či rekapitulace nižšího soudu. Oborová část pak určuje, co v daném oboru ověřit. Lhůty, sazby a prahové hodnoty se neuvádějí z paměti; nedostupný pramen se výslovně označí. Společné texty jsou v adresáři `shared/`.
 
 #### Civilní právo (11)
 

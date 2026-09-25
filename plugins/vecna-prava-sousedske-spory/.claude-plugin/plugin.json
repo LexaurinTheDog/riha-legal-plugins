@@ -1,7 +1,7 @@
 {
   "uuid": "d603603f-c237-4b72-a62b-683a75d0db8a",
   "name": "vecna-prava-sousedske-spory",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech property-rights disputes practice skill - ownership and possession actions, co-ownership and its dissolution, boundaries and neighbour immissions, easements and rights of way, necessary access, building on another's land, superficies principle and transitional rules, acquisitive prescription, land registry corrections and disputes, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

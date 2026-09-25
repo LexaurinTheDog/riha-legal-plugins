@@ -1,7 +1,7 @@
 ---
 uuid: 8816d448-3893-4cdd-84e7-de45a5eafe98
 name: trestni-obhajoba
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,82 +25,122 @@ i18n:
       - "Klientovi bolo dnes doručené uznesenie o začatí trestného stíhania pre podvod. Čo má obhajca urobiť v prvých dňoch?"
       - "Polícia zaistila peniaze na účte klienta podľa § 79a. Ako sa brániť a aké lehoty bežia?"
       - "Priprav osnovu odvolania proti odsudzujúcemu rozsudku - procesné vady a nesprávne hodnotenie dôkazov."
-description: Use when the user's matter is Czech criminal law or procedure in any role - obhájce, obviněný, obžalovaný, podezřelý, odsouzený, poškozený, zmocněnec, svědek, právnická osoba - or when a question touches trestní řád (141/1961 Sb.), trestní zákoník (40/2009 Sb.), zákon o trestní odpovědnosti právnických osob (418/2011 Sb.), trestní oznámení, prověřování, zahájení trestního stíhání, obvinění, výslech, vazba, zajištění majetku / peněžních prostředků (§ 79a+), domovní prohlídka, obžaloba, hlavní líčení, dohoda o vině a trestu, podmíněné zastavení, narovnání, trestní příkaz, odpor, stížnost, odvolání, dovolání, obnova řízení, ústavní stížnost, náhrada škody poškozenému (adhezní řízení), nutná obhajoba, trestné činy hospodářské, majetkové, daňové, dopravní, promlčení trestní odpovědnosti. Standalone skill - bundles CODEXIS methodology with defence-counsel method; no need to load the general codexis skill.
+description: Use for Czech criminal defence from suspicion and investigation through charging, custody, searches, asset seizure, trial, negotiated outcomes, remedies and execution; include victims, witnesses, juveniles, corporate defendants and compensation claims where connected. Research legal sources only through native CODEXIS in the application.
 ---
 
-# Trestní právo a obhajoba ČR
+# Trestní obhajoba
 
-Samostatný oborový skill pro trestní řízení. V trestním právu rozhodují dny: **nejprve fáze řízení a běžící lhůta, potom postavení klienta, teprve pak hmotné právo a strategie.**
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/141/1961/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf79a'`, `cdx-cli get cdx://cz_law/40/2009/versions`, `cdx-cli search JD --query "zajištění peněžních prostředků 79a stížnost" --court "Nejvyšší soud" --limit 5`.
-- Trestní řád byl mnohokrát novelizován a **paragrafy o zajištění (§ 79a-§ 79h) byly přečíslovány novelou 55/2017 Sb.** - starší judikatura a komentáře cituje staré číslování. Hranice škody (§ 138 TZ) se měnily. **Každé číslo ověř v aktuálním znění**, nikdy z paměti.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| TŘ - trestní řád | 141/1961 Sb. | `cz_law/141/1961` | Celé řízení, vazba (§ 67+), zajištění (§ 79a+), obhájce (§ 33-§ 41), poškozený (§ 43+), opravné prostředky (§ 141+, § 245+, § 265a+, § 277+) |
-| TZ - trestní zákoník | 40/2009 Sb. | `cz_law/40/2009` | Skutkové podstaty, zavinění, promlčení (§ 34), hranice škody (§ 138), tresty a zásady ukládání |
-| ZTOPO | 418/2011 Sb. | `cz_law/418/2011` | Trestní odpovědnost právnických osob, přičitatelnost (§ 8), vyvinění, tresty |
-| ZSVM | 218/2003 Sb. | `cz_law/218/2003` | Mladiství |
-| Zákon o obětech | 45/2013 Sb. | `cz_law/45/2013` | Práva obětí, peněžitá pomoc |
-| Zákon o výkonu zajištění majetku | 279/2003 Sb. | `cz_law/279/2003` | Správa zajištěného majetku |
-| Zákon o mezinárodní justiční spolupráci | 104/2013 Sb. | `cz_law/104/2013` | EZR, právní pomoc, uznávání |
-| Zákon o Ústavním soudu | 182/1993 Sb. | `cz_law/182/1993` | Ústavní stížnost (§ 72 - lhůta, vyčerpání prostředků) |
-| Advokátní tarif | 177/1996 Sb. | `cz_law/177/1996` | Odměna ustanoveného obhájce, náklady poškozeného |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` → `/toc` → `/text?part=`. U TŘ vždy zkontroluj `/versions` k datu úkonu - procesní úkony se posuzují podle znění účinného v době, kdy byly učiněny.
-2. Judikatura: NS (`--court "Nejvyšší soud"`, senáty Tdo, Tz; sjednocující stanoviska Tpjn), ÚS (nálezy k vazbě, zajištění, právu na obhajobu, spravedlivý proces), vrchní soudy (To). Vždy ověř, zda rozhodnutí vychází z aktuálního číslování.
-3. Komentář (`COMMENT`) pro znaky skutkových podstat a výklad procesních institutů; u zajištění majetku porovnej se zněním zákona - komentáře bývají zkratkovité (např. odkladný účinek stížnosti podle § 79f se týká jen některých rozhodnutí, § 79b připouští i „jiné určené místo“, nejen úschovu).
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow obhájce
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Fáze a lhůty.** Prověřování (§ 158) → zahájení trestního stíhání (§ 160, usnesení - **stížnost 3 dny** § 143) → vyšetřování → vazba (§ 68, rozhodování soudce; stížnost) → seznámení se spisem (§ 166) → obžaloba (§ 176) / návrh na schválení dohody (§ 175a) → předběžné projednání (§ 185) → hlavní líčení (§ 196+) → rozsudek (**odvolání 8 dnů** § 248) / trestní příkaz (**odpor 8 dnů** § 314g) → odvolací řízení → **dovolání 2 měsíce** (§ 265e, jen prostřednictvím obhájce, jen z důvodů § 265b) → ústavní stížnost (2 měsíce, § 72 zákona 182/1993 Sb.) → obnova (§ 277+). Každou lhůtu ověř a uveď, od čeho běží (oznámení × doručení opisu).
-2. **Postavení klienta.** Podezřelý / obviněný / obžalovaný / odsouzený / poškozený / svědek / zúčastněná osoba / právnická osoba (ZTOPO). Nutná obhajoba (§ 36) - kdy musí mít klient obhájce. Plná moc (§ 37), substituce, více obviněných = střet zájmů.
-3. **Kvalifikace skutku.** Skutek × právní kvalifikace; znaky skutkové podstaty (objekt, objektivní stránka, subjekt, subjektivní stránka - úmysl × nedbalost § 15-§ 16 TZ); výše škody podle hranic § 138 TZ (ověř aktuální částky); pokus, příprava, spolupachatelství, účastenství; souběh; promlčení (§ 34 TZ - délka podle horní hranice sazby, přerušení); subsidiarita trestní represe (§ 12 odst. 2 TZ); zánik trestnosti (účinná lítost § 33, zvláštní případy - daňové § 242 TZ).
-4. **Procesní audit.** Náležitosti usnesení o zahájení stíhání (§ 160 odst. 1 - popis skutku, zákonné znaky); zákonnost důkazů (§ 89 odst. 3, § 2 odst. 5, domovní prohlídka § 82-§ 85, odposlechy § 88, prostorové odposlechy § 158d); doručování obhájci (§ 62, § 64); právo nahlížet do spisu (§ 65); totožnost skutku (§ 220); vazební lhůty a důvody (§ 67, § 72-§ 72a); poučení. Každou vadu zapiš s § a důsledkem (nepoužitelnost důkazu × vada bez vlivu).
-5. **Zajištění majetku a peněz (§ 79a-§ 79h TŘ).** Kdo rozhodl (policejní orgán se souhlasem SZ × SZ × soud), lhůta a povaha stížnosti, žádost o zrušení nebo omezení (§ 79f - opakování po lhůtě), náhradní hodnota, výjimky pro nutné výdaje, složení peněz do úschovy nebo na jiné určené místo (§ 79b). Zajištění není trest - argumentuj přiměřeností a délkou.
-6. **Strategie.** Aktivní × pasivní obhajoba; návrhy na doplnění dokazování (§ 166, § 215); odklony (podmíněné zastavení § 307, narovnání § 309, trestní příkaz, dohoda o vině a trestu § 175a - výhody a nevratnost); spolupracující obviněný (§ 178a); polehčující okolnosti (§ 41 TZ), náhrada škody jako faktor; u PO compliance a vyvinění (§ 8 odst. 5 ZTOPO).
-7. **Poškozený.** Nárok na náhradu škody / nemajetkové újmy / bezdůvodného obohacení uplatnit **nejpozději před zahájením dokazování v hlavním líčení** (§ 43 odst. 3); zajištění nároku (§ 47); zmocněnec (§ 51); práva podle zákona o obětech; odkaz na občanskoprávní řízení (§ 229) a jeho důsledky.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Zmeškání třídenní lhůty ke stížnosti (počítá se od oznámení usnesení, ne od doručení obhájci - ověř § 137, § 143).
-- Odvolání bez odůvodnění nebo bez vymezení výroků (§ 249) - výzva a riziko odmítnutí.
-- Dovolání podané obviněným osobně nebo mimo důvody § 265b - odmítnutí.
-- Citace § 79a-§ 79h ve starém číslování (před novelou 55/2017 Sb.) převzatá z komentáře nebo judikatury.
-- Hranice škody § 138 TZ z paměti - částky se novelou změnily.
-- Nárok poškozeného uplatněný až po zahájení dokazování - soud o něm nerozhodne.
-- Záměna „skutek“ × „právní kvalifikace“ při argumentaci o totožnosti skutku.
-- Přehlédnutí nutné obhajoby nebo střetu zájmů při obhajobě více obviněných.
-- Předpoklad, že zajištění peněz je nezákonné jen kvůli délce - argumentovat přiměřeností s judikaturou ÚS.
-- Doplňování jmen, spisových značek a dat z paměti - vždy ze spisu nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Nejbližší lhůta a úkon** v první větě (co, do kdy, komu).
-2. **Fáze řízení a postavení klienta.**
-3. **Právní rámec** - TŘ/TZ/ZTOPO v aktuálním znění, s odkazy.
-4. **Procesní vady a argumenty** - seznam s § a důsledkem.
-5. **Strategie a alternativy** (odklon × hlavní líčení, dohoda, náhrada škody), rizika každé cesty.
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NS - 8 Tdo 123/2025 - …`, `ÚS - II. ÚS 123/25 - …`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („nejpozději před zahájením dokazování“, „ode dne oznámení“, „jen prostřednictvím obhájce“).
-- Jeden časový řez; u procesních úkonů znění účinné v době úkonu.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Mimo CODEXIS jen oficiální zdroje (justice.cz, NS, ÚS, PČR) když CODEXIS neodpovídá.
-- Nikdy neradit, jak mařit řízení nebo ovlivňovat svědky; obhajoba je procesní, ne obstrukční.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Oborový postup: trestní obhajoba
+
+### Role, fáze a bezprostřední riziko
+
+Nejprve urči, zda klient je podezřelý, obviněný, obžalovaný, odsouzený, poškozený, svědek nebo právnická osoba. Zaznamenej věk, zastoupení, omezení osobní svobody, zajištěný majetek a skutečný procesní stav podle dodaných listin. Samotná informace o prověřování není důkazem zahájeného stíhání. Ověř případ nutné obhajoby, oprávnění zástupce a konflikt zájmů mezi více klienty.
+
+Sestav chronologii skutku, úkonů a doručení klientovi i obhájci. U naléhavých opatření pracuj s doloženými hodinami a minutami; k zákonné době nepřidávej další kalendářní den. Rozliš včasné podání opravného prostředku a jeho odůvodnění, možnost doplnění i zvláštní požadavky konkrétního prostředku. Ověř přesný orgán, formu, počátek a konec lhůty.
+
+### Skutek a právní kvalifikace
+
+Ke každému skutku sestav matici zákonných znaků, tvrzení obžaloby, skutečně doložených důkazů a sporných nebo chybějících podmínek. Odděl jednání, následek, příčinnou souvislost a zavinění. Podle věci prověř pokus, přípravu, účastenství, pokračování, souběh, okolnosti vylučující protiprávnost, trestní odpovědnost a promlčení.
+
+V CODEXIS ověř znění k rozhodnému jednání i případné pozdější příznivější právo jako souvislý použitelný režim. Nemíchej výhodné části různých verzí bez právní opory. Ověř totožnost skutku, dostatečnou konkrétnost usnesení o zahájení stíhání a možnost odlišné kvalifikace. Civilní neplnění, správní pochybení nebo neúspěšné podnikání nepovažuj bez doložení znaků za trestný čin.
+
+### Důkazy a obhajoba
+
+U každého důkazu odděl získání, uchování, provedení a hodnocení. Prověř výslechy, rekognici, znalecké závěry, listiny, odposlechy, sledování, prohlídky a digitální data. Zjišťuj konkrétní zákonný podklad, oprávněný orgán, rozsah povolení, poučení a možnost účinného zpochybnění. Vadu jednoho úkonu nepřeváděj automaticky na nepoužitelnost všech dalších důkazů; ověř rozhodné pravidlo a judikaturu.
+
+U elektronických zařízení zvlášť zkoumej titul zajištění zařízení, oprávnění k prohlídce jeho obsahu, možné zákonné výjimky a ochranu důvěrné komunikace. Nepředpokládej, že každý přístup vždy vyžaduje nové povolení, ani že původní zajištění dovoluje neomezené čtení. U privilegovaného obsahu určuj konkrétní ochranný postup, adresáta námitek a přezkumný prostředek.
+
+Vyhodnoť přístup do spisu, právo na obhájce, překlad, kontradiktornost a možnost navrhnout důkazy. Sestav hlavní i eventuální obhajobu, očekávanou reakci státního zástupce a nejúčinnější způsob jejího vyvrácení. Rozliš doložený rozpor od pouhé alternativní hypotézy; nepřisuzuj klientovi nové skutkové doznání kvůli rétorické přesvědčivosti.
+
+### Svoboda a zajištění
+
+U zadržení a vazby přiřaď každé omezení ke konkrétnímu důvodu, důkazu, času a rozhodnutí. Ověř aktuálnost obavy, proporcionalitu, mírnější alternativy, přezkum trvání, opravný prostředek a proces předání soudu. Návrh na propuštění nebo náhradu vazby musí reagovat na skutečné důvody, ne pouze citovat obecné právo na svobodu.
+
+U majetku rozliš zajištění konkrétního výnosu či věci, náhradní hodnoty, nároku poškozeného a budoucí sankce. Ověř osobu vlastníka, rozsah dispozičního zákazu, pravomoc, odůvodnění a přípustné přezkoumání. Zkoumej délku, hodnotový poměr, provozní potřeby, práva třetích osob a možnost částečného uvolnění. U nakládání se zajištěnými penězi nebo jinou úschovou ověř zákonný způsob a určeného příjemce; nenavrhuj vlastní neověřený mechanismus.
+
+### Alternativy, zvláštní osoby a rozhodnutí
+
+U dohody o vině a trestu, prohlášení viny, spolupracujícího obviněného a odklonů ověř všechny předpoklady, důsledky pro dokazování a opravné prostředky. Srovnej reálný trestní, majetkový, profesní a reputační dopad. Přiznání, náhradu újmy nebo souhlas s postupem nepředpokládej bez klientova informovaného rozhodnutí.
+
+U právnické osoby posuzuj přičitatelnost, funkčnost compliance, samostatné zastoupení a střet s obhajobou konkrétních fyzických osob. U mladistvého zohledni zvláštní režim řízení a sankcí. U poškozeného rozliš majetkovou škodu, nemajetkovou újmu a bezdůvodné obohacení; dolož uplatnění, výši, lhůtu, zajištění a podmínky rozhodnutí v adhezním řízení nebo odkazu jinam.
+
+### Procesní výstup a kontrola
+
+Podle fáze připrav skutečnou stížnost, důkazní návrh, vyjádření, závěrečnou řeč, odvolání, dovolání, návrh obnovy nebo podání ve výkonu rozhodnutí. Každý prostředek musí mít vlastní přípustnost, důvody a odpovídající petit. Ústavní rovinu odliš od dalšího běžného skutkového odvolání.
+
+Připoj důkazní a časovou tabulku, silné i slabé stránky, klientova rozhodnutí a nákladový rozpočet. Rozliš smluvní odměnu, ustanovenou obhajobu, náklady státu a náhradu poškozenému. Žádný strategický krok nesmí spočívat v ničení důkazů, ovlivňování svědků nebo maření řízení. Připravený text není podaným prostředkem; jeho skutkové i právní mezery označ konkrétně.

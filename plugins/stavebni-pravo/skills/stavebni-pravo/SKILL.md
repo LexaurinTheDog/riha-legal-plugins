@@ -1,7 +1,7 @@
 ---
 uuid: 88553864-a872-42ab-bca4-26512542631b
 name: stavebni-pravo
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,89 +25,120 @@ i18n:
       - "Sused stavia bez povolenia 1,5 m od hranice a tieni nám záhradu. Čo môžeme urobiť na stavebnom úrade a na súde?"
       - "Stavebný úrad zamietol žiadosť o povolenie zámeru pre rozpor s územným plánom. Priprav osnovu odvolania a posúď šance."
       - "Zhotoviteľ odovzdal dom s vadami strechy a fakturuje doplatok. Ako postupovať podľa zmluvy o dielo?"
-description: Use when the user's matter involves Czech construction, planning or building disputes - stavební zákon (283/2021 Sb., dříve 183/2006 Sb.), stavební úřad, povolení záměru, stavební povolení, územní rozhodnutí, ohlášení, drobná / jednoduchá / vyhrazená stavba, územní plán, regulační plán, územní studie, plánovací smlouva, závazné stanovisko, dotčený orgán, jednotné environmentální stanovisko, EIA, účastník řízení, soused, spolek, kolaudace, změna v užívání, odstranění stavby, dodatečné povolení, černá stavba, přestupek stavebníka, stavební dozor, autorizovaný projektant, dokumentace, památková ochrana, vyvlastnění, věcné břemeno pro sítě, sousedské spory, imise, hluk, stínění, stromy u hranice, plot, oplocení, přístup k pozemku, neoprávněná stavba na cizím pozemku, právo stavby, smlouva o dílo na stavbu, vady stavby, převzetí díla, zádržné, vícepráce, developer, developerská smlouva. Standalone skill - bundles CODEXIS methodology with construction-practice method; no need to load the general codexis skill.
+description: 'Use for Czech construction, planning and building disputes: permitting, planning instruments, environmental opinions, neighbours, occupancy, removal and retrospective permission, construction contracts, defects and developer arrangements. Cover connected property protection without replacing transaction-only review. Research legal sources only through native CODEXIS in the application.'
 ---
 
-# Stavební právo ČR
+# Stavební právo
 
-Samostatný oborový skill pro povolování staveb a spory kolem nich. První otázka u každého řízení: **podle kterého stavebního zákona běží** - nový zákon 283/2021 Sb. se plně použije od 1. 7. 2024, řízení zahájená dříve se dokončují podle zákona 183/2006 Sb. (přechodná ustanovení). Druhá: **veřejnoprávní cesta (úřad) × soukromoprávní cesta (soud)** - obvykle obě souběžně.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/283/2021/versions`, `cdx-cli get 'cdx://doc/<versionId>/toc'`, `cdx-cli get cdx://cz_law/183/2006/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf1013'`, `cdx-cli search JD --query "neoprávněná stavba souhlas vlastníka pozemku" --court "Nejvyšší soud" --limit 5`.
-- Nový stavební zákon byl před účinností několikrát novelizován a prováděcí vyhlášky jsou nové - **paragrafy nového zákona vždy dohledávej přes `/toc`, nikdy z paměti**; u starého zákona ověř, zda se ještě použije. Lhůty, vzdálenosti, limity a sazby ověř v aktuálním znění.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| Nový stavební zákon | 283/2021 Sb. | `cz_law/283/2021` | Stavební správa, územní plánování, povolení záměru, zrychlené a rámcové povolení, kolaudace, odstranění, dodatečné povolení, přestupky, přechodná ustanovení |
-| Starý stavební zákon | 183/2006 Sb. | `cz_law/183/2006` | Řízení zahájená před 1. 7. 2024, dokončení, kolaudace dříve povolených staveb |
-| Prováděcí vyhlášky k novému SZ | vyhl. o požadavcích na výstavbu, o dokumentaci staveb (ověř čísla) | zdroj `CR` | Odstupy, technické požadavky, obsah dokumentace |
-| Správní řád | 500/2004 Sb. | `cz_law/500/2004` | Účastenství (§ 27), doručování, závazná stanoviska (§ 149), odvolání, opomenutý účastník (§ 84), přezkum |
-| Soudní řád správní | 150/2002 Sb. | `cz_law/150/2002` | Žaloba proti rozhodnutí, odkladný účinek, návrh na zrušení územního plánu (§ 101a) |
-| Zákon o jednotném environmentálním stanovisku | 148/2023 Sb. | `cz_law/148/2023` | JES nahrazující dílčí stanoviska |
-| EIA | 100/2001 Sb. | `cz_law/100/2001` | Posuzování vlivů, navazující řízení, dotčená veřejnost |
-| Vyvlastňovací zákon | 184/2006 Sb. | `cz_law/184/2006` | Vyvlastnění a náhrada |
-| Liniový zákon | 416/2009 Sb. | `cz_law/416/2009` | Dopravní, vodní, energetická infrastruktura |
-| Zákon o ochraně přírody / vodní / ZPF / památkový | 114/1992, 254/2001, 334/1992, 20/1987 Sb. | `cz_law/…` | Dotčené orgány a jejich závazná stanoviska |
-| OZ - sousedství a stavby | 89/2012 Sb. | `cz_law/89/2012` | Imise (§ 1013), zadržení výstavby (§ 1004), stromy a hranice (§ 1016-§ 1017), vstup na pozemek (§ 1021-§ 1023), stavba jako součást pozemku (§ 506, § 3054+), neoprávněná stavba (§ 1084-§ 1086), právo stavby (§ 1240+), smlouva o dílo - stavba (§ 2623-§ 2630) |
-| OZ 1964 | 40/1964 Sb. | `cz_law/40/1964` | Neoprávněná stavba zřízená před 2014 (§ 135c) |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Nejprve `/versions` obou stavebních zákonů k datu zahájení řízení, pak `/toc` nového zákona a teprve `/text?part=` - číslování nového zákona nehádej.
-2. Judikatura: **NSS** (`--court "Nejvyšší správní soud"`, senáty As) - účastenství sousedů, závazná stanoviska, dodatečné povolení, územní plány (rozšířený senát); **NS** senát 22 Cdo - imise, neoprávněná stavba, hranice; ÚS k ochraně vlastnictví. Ověř, zda rozhodnutí k zákonu 183/2006 Sb. přenositelně platí i pro nový zákon.
-3. Komentář (`COMMENT`) k pojmům (stavba, záměr, účastník, imise nad míru přiměřenou poměrům); metodiky MMR jsou administrativní výklad.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow stavebního praktika
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Režim.** Datum zahájení řízení / provedení stavby → starý × nový zákon; typ stavebního úřadu (obecní, krajský, jiný podle nového zákona - ověř příslušnost); u přestupků datum spáchání.
-2. **Klasifikace záměru.** Drobná stavba (bez povolení) × jednoduchá × vyhrazená × ostatní; změna dokončené stavby, změna v užívání, terénní úpravy, odstranění. Klasifikace určuje, zda a jaké povolení, jaká dokumentace a kdo ji zpracuje (autorizovaná osoba).
-3. **Soulad s územním plánováním.** Územní plán, regulační plán, územní studie, stavební uzávěra, plánovací smlouva s obcí; rozpor s ÚP nelze zhojit v řízení - řešit změnou ÚP nebo návrhem na zrušení jeho části (§ 101a s. ř. s., lhůty a aktivní legitimace ověř).
-4. **Dotčené orgány a stanoviska.** Závazná stanoviska (památková péče, ochrana přírody, vodoprávní, hygiena, hasiči), jednotné environmentální stanovisko, EIA; závazné stanovisko lze napadnout jen v odvolání proti rozhodnutí (§ 149 SŘ), ne samostatnou žalobou - ověř výjimky.
-5. **Účastníci.** Stavebník, vlastník pozemku/stavby, sousedé přímo dotčení, obec, spolky (EIA/ochrana přírody); opomenutý účastník - odvolání ve lhůtě od dozvědění (§ 84 SŘ, objektivní limit). Námitky uplatnit včas v řízení - koncentrace.
-6. **Řízení o povolení.** Žádost, dokumentace, lhůty úřadu (nový zákon stanoví lhůty a mechanismus při nečinnosti - ověř), rozhodnutí, odvolání 15 dnů, přezkum, správní žaloba 2 měsíce, odkladný účinek na návrh; elektronické podání přes portál stavebníka (ověř aktuální stav).
-7. **Černé stavby.** Řízení o odstranění × dodatečné povolení (jen při souladu s územním plánem a splnění požadavků - stavebník prokazuje), přestupky, pokuty, výkon rozhodnutí; užívání bez kolaudace = přestupek.
-8. **Sousedské spory u soudu.** Imise (§ 1013 - nad míru přiměřenou poměrům; přímé imise zakázány), zadržení výstavby (§ 1004 - jen před dokončením, jinak úřad), stromy a kořeny (§ 1016-§ 1017), přístup na pozemek (§ 1021-§ 1023), hranice (§ 1028), neoprávněná stavba (po 2014 § 1084-§ 1086; před 2014 § 135c OZ 1964 - souhlas vlastníka pozemku není nabývacím titulem, soud musí věc vypořádat, žalobu nelze zamítnout jen pro neochotu). Předběžné opatření, znalecký posudek (stínění, hluk - hygienické limity).
-9. **Smluvní vrstva.** Smlouva o dílo na stavbu (§ 2623-§ 2630 OZ): předání a převzetí s výhradami, vady - oznámení bez zbytečného odkladu, skryté vady stavby do 5 let (§ 2629), zádržné, vícepráce jen písemným dodatkem (§ 2622 rozpočet), harmonogram a smluvní pokuty, odstoupení, odpovědnost projektanta a dozoru (§ 2630 - solidarita subdodavatelů, projektanta a dozoru), FIDIC odchylky; developerské smlouvy (rezervace, budoucí kupní, katastr).
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Aplikace nového stavebního zákona na řízení zahájené před 1. 7. 2024 (nebo starého na nové).
-- Paragrafy nového zákona citované z paměti nebo z metodik - číslování se během legislativního procesu měnilo.
-- Soused, který nepodal námitky v řízení, je uplatňuje až v odvolání nebo žalobě - koncentrace.
-- Samostatná žaloba proti závaznému stanovisku místo odvolání proti rozhodnutí.
-- Žaloba na zadržení výstavby (§ 1004) po dokončení stavby - patří na úřad.
-- Neoprávněná stavba posuzovaná podle OZ 2012, ač byla zřízena před 2014 (a naopak).
-- Vlastník pozemku převzatý z tvrzení klienta místo z výpisu z katastru.
-- Vícepráce provedené bez písemného dodatku - zhotovitel bez nároku na cenu, objednatel bez záruky.
-- Převzetí stavby bez výhrad a bez soupisu vad - ztížené uplatnění zjevných vad.
-- Spoléhání na dodatečné povolení černé stavby v rozporu s územním plánem.
-- Užívání stavby před kolaudací „na zkoušku" - přestupek a problém s pojištěním.
-- Doplňování parcelních čísel, vzdáleností a dat z paměti - vždy z listin, katastru nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a lhůta** (která cesta - úřad / soud / obojí, co podat, do kdy).
-2. **Režim a klasifikace záměru.**
-3. **Právní rámec** - správný stavební zákon + OZ, s odkazy dohledanými přes `/toc`.
-4. **Postup krok za krokem** (podání, účastníci, stanoviska, opravné prostředky, důkazy).
-5. **Rizika a alternativy** (dodatečné povolení, dohoda se sousedem, změna ÚP, náklady a délka).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NSS - 1 As 123/2025 - …`, `NS - 22 Cdo 2886/2023 - …`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („nad míru přiměřenou poměrům“, „bez zbytečného odkladu“, „nejpozději do“).
-- Jeden časový řez; výslovně uveď, který stavební zákon se použil a proč.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf nového stavebního zákona nikdy z paměti - vždy `/toc` → `/text?part=`; změny → `/versions`.
-- `docId` jen z API.
-- Údaje o pozemcích a vlastnících výhradně z katastru nemovitostí; mimo CODEXIS jen oficiální zdroje (ČÚZK, MMR, nssoud.cz) když CODEXIS neodpovídá.
-- Vzdálenosti, limity, lhůty a sazby nikdy z paměti - vždy z aktuálního znění s odkazem.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Oborový postup: stavební právo
+
+### Zadání a časové režimy
+
+Urči, zda klient vystupuje jako stavebník, vlastník, soused, obec, projektant, zhotovitel nebo dotčený spolek. Vymez stavbu, pozemky, faktický stav provádění, očekávaný výsledek a právní titul ke stavbě či přístupu. Z dodaných dokumentů sestav chronologii žádostí, zahájení prací, oznámení, rozhodnutí, doručování a soudních kroků. Označ rozpory mezi projektovou dokumentací, skutečným provedením a povolením.
+
+V CODEXIS samostatně ověř přechodná pravidla pro správní řízení, příslušný úřad, hmotné požadavky a soudní přezkum. Pokračování správního řízení podle starší úpravy samo neřeší použitelný režim následné žaloby. Zjisti zvláštní lhůtu pro podání žaloby, odlišnou možnost doplnění nebo rozšíření žalobních bodů a případné výjimky pro přestupkové věci. Rozhodné události přiřaď jednotlivým pravidlům; neslučuj zahájení stavby, podání žádosti a vydání rozhodnutí do jediného data.
+
+### Území, záměr a povolení
+
+Jaký druh záměru odpovídá skutečným parametrům stavby a rozhodným přílohám zákona? Ověř kategorii, soubor staveb, změnu dokončené stavby, změnu užívání, dočasnost a požadovaný režim. Výjimka z povolení nemusí znamenat výjimku z územních, bezpečnostních nebo soukromoprávních požadavků. Chybějící rozměry či účel vyžádej; kategorii neodvozuj pouze od označení klientem.
+
+Zjisti význam územního a regulačního plánu, územní studie, stavební uzávěry a plánovací smlouvy. Je třeba změna plánovací dokumentace, výjimka, přezkum opatření obecné povahy nebo posouzení nesouladu projektu? Ověř aktivní legitimaci a vhodnou procesní cestu. U plánovací smlouvy odděl veřejnoprávní závazky od soukromého plnění, podmínky účinnosti, náklady infrastruktury a oprávnění obce.
+
+Které podklady vyžadují dotčené orgány ochrany přírody, vod, památek, veřejného zdraví nebo požární ochrany? Prověř jednotné environmentální stanovisko, posuzování vlivů a vztah souhlasů k samotnému povolení. U závazného stanoviska zjisti možnost jeho změny, přezkumu a uplatnění námitek v navazujícím řízení; nepředpokládej samostatnou žalovatelnost každého úkonu.
+
+### Proces a správní ochrana
+
+Pro každého účastníka určuj titul účastenství a rozsah námitek. Zvlášť řeš opomenutého vlastníka a účast spolku. Ověř způsob oznámení, doručení veřejnou vyhláškou, koncentraci námitek, požadavky na dokumentaci a odbornou způsobilost zpracovatelů. Rozliš vady žádosti, věcnou nepřípustnost a nedoložené souhlasy.
+
+Jaký prostředek odpovídá fázi: námitky, odvolání, ochrana proti nečinnosti, přezkum, žaloba nebo prozatímní ochrana? Ukaž skutečný adresát, napadený úkon, běh lhůty, důkazy a dosažitelný výsledek. Zajištění stavby, stavební kontrolu, kolaudaci, zákaz užívání, odstranění a dodatečné povolení posuzuj odděleně. U dodatečného povolení ověř podmínky, dokazování, překážky i vztah k již zahájenému odstranění. Sankci nezaměňuj s nápravou závadného stavu.
+
+### Civilní ochrana a sousedství
+
+Rozliš preventivní ochranu před stavbou, ochranu držby, zdržovací nárok, odstranění zásahu, ochranu proti imisím a vypořádání dokončené stavby. Dokončení stavby může změnit vhodný nárok, ale nesmí bez rešerše vést k závěru, že zanikla veškerá civilní ochrana. Souhlas vlastníka s úředním povolením není bez dalšího trvalým soukromoprávním titulem.
+
+Prověř hranice pozemků, přístup, vstup kvůli údržbě, oporu sousední stavby, kořeny a větve, vodu, stínění, hluk i zásah sítí. Povolení z veřejného práva neposuzuj jako univerzální vyloučení soukromého nároku. U stavby na cizím pozemku nebo přesahu ověř časový režim, dobrou víru, vlastnické vztahy, souhlas a konkrétní zákonné možnosti vypořádání. Příslušnost, poplatek a petit určuj podle skutečně navrženého nároku.
+
+### Smluvní a realizační vztahy
+
+U smlouvy o dílo porovnej rozsah, výkaz výměr, projekt, rozpočet, cenu, harmonogram, předání staveniště a schvalování změn. Jaké důsledky má nedodržený postup pro vícepráce a existuje jiný doložený titul nároku? Neuzavírej automaticky, že každá práce bez písemného dodatku je bezplatná. U smluvních podmínek typu FIDIC pracuj s dodanou verzí a úpravami, nikoli s domnělým univerzálním textem.
+
+Odděl předání a převzetí, výhrady, zjevné a skryté vady, zákonná práva a smluvní záruku. Ověř rozhodné oznámení vady, promlčení, součinnost, nápravu, slevu a odstoupení. Samostatně posuď odpovědnost zhotovitele, projektanta, dozoru a poddodavatele. Ve prospěch klienta navrhni přípustné retenční mechanismy, zajištění, limity odpovědnosti, pojištění a provázání sankcí bez nepřiměřených nebo kogentně zakázaných doložek. U developera propoj rezervaci, budoucí smlouvu, financování, vznik jednotek, povolení užívání a převod.
+
+### Výstup
+
+Dodej požadované podání, smlouvu nebo konkrétní náhradní ustanovení. Připoj mapu správních a civilních kroků, důkazní seznam, lhůty, náklady a hlavní protiargumenty. U petitu zkontroluj určitelnost stavby, parcel, povinné osoby a požadovaného jednání; technicky nerealizovatelný nebo veřejnoprávně nepřípustný výkon nezakrývej obecnou formulací.

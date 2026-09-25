@@ -1,7 +1,7 @@
 ---
 uuid: 14ac3e62-b159-48c8-8ae6-4919f615132d
 name: spravni-a-danove-rizeni
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,83 +25,114 @@ i18n:
       - "Finančný úrad dorubil DPH po kontrole a vyrubil penále. Aké procesné námietky máme a dokedy podať odvolanie?"
       - "Odvolací orgán potvrdil rozhodnutie stavebného úradu. Priprav osnovu správnej žaloby a posúď odkladný účinok."
       - "Úrad je rok nečinný v konaní o žiadosti. Aké prostriedky obrany máme a v akom poradí?"
-description: Use when the user challenges or responds to a Czech public authority or tax administrator - správní řízení, správní řád (500/2004 Sb.), daňový řád (280/2009 Sb.), soudní řád správní (150/2002 Sb.), rozhodnutí úřadu, výzva, usnesení, opatření obecné povahy, nečinnost, nezákonný zásah, odvolání, rozklad, přezkumné řízení, obnova řízení, správní žaloba, žaloba proti rozhodnutí, kasační stížnost, Nejvyšší správní soud, odkladný účinek, daňová kontrola, postup k odstranění pochybností, doměření daně, dodatečný platební výměr, penále, úrok z prodlení, pokuta za opožděné tvrzení, zajišťovací příkaz, daňová exekuce, lhůta pro stanovení daně (prekluze), prominutí, přestupek, stavební úřad, katastrální úřad, živnostenský úřad, úřad práce, celní správa, ÚOHS, ČNB, doručování úřadem, fikce doručení, poplatek, správní poplatek. Standalone skill - bundles CODEXIS methodology with the administrative-defence method; no need to load the general codexis skill. For substantive tax questions combine with the tax-law skill.
+description: 'Use to respond to or challenge Czech public authorities and tax administrators: administrative or tax procedure, decision, order, request, general measure, inaction or intervention, appeal, remonstrance, review, reopening, administrative court action, cassation, suspensive effect, tax audit, doubts, assessment, penalties, interest, securing orders, enforcement, time bars, remission, service and fees. Combine substantive taxation with the tax-law profile. Research legal sources only through native CODEXIS in the application.'
 ---
 
 # Správní a daňové řízení ČR
 
-Samostatný oborový skill pro procesní obranu proti úřadům a správci daně. Klíčová otázka není „má úřad pravdu“, ale **v jakém režimu, proti jakému aktu, jakým prostředkem a do kdy** - odpověď na ni určuje všechno ostatní.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/500/2004/versions`, `cdx-cli get cdx://cz_law/280/2009/versions`, `cdx-cli get cdx://cz_law/150/2002/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf148'`, `cdx-cli search JD --query "lhůta pro stanovení daně prekluze 148" --court "Nejvyšší správní soud" --limit 5`.
-- Lhůty, sazby sankcí a číslování odstavců **vždy ověř v aktuálním znění**; nikdy z paměti. Zvláštní zákon může obecnou lhůtu měnit - vždy zkontroluj i předpis, podle kterého úřad rozhodoval.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| SŘ - správní řád | 500/2004 Sb. | `cz_law/500/2004` | Obecné správní řízení: doručování (§ 19-§ 26), lhůty (§ 39-§ 41), podání (§ 37), vyjádření (§ 36), rozhodnutí (§ 67-§ 76), odvolání (§ 81-§ 93), přezkum (§ 94+), obnova (§ 100+), nečinnost (§ 80), stížnost (§ 175), OOP (§ 171+) |
-| DŘ - daňový řád | 280/2009 Sb. | `cz_law/280/2009` | Daňové řízení: lhůty (§ 32-§ 38), doručování (§ 39-§ 51), kontrola (§ 85-§ 88), POP (§ 89-§ 90), odvolání (§ 109-§ 116), obnova a přezkum (§ 117-§ 123), lhůta pro stanovení daně (§ 148), placení a exekuce (§ 149+, § 175+), sankce (§ 250-§ 254), prominutí (§ 259+) |
-| s. ř. s. - soudní řád správní | 150/2002 Sb. | `cz_law/150/2002` | Žaloba proti rozhodnutí (§ 65-§ 78), nečinnostní (§ 79), zásahová (§ 82), OOP (§ 101a), kasační stížnost (§ 102-§ 110), odkladný účinek (§ 73), předběžné opatření (§ 38) |
-| Zákon o odpovědnosti za přestupky | 250/2016 Sb. | `cz_law/250/2016` | Přestupkové řízení, promlčení (§ 29-§ 32), sankce, opravné prostředky |
-| Kontrolní řád | 255/2012 Sb. | `cz_law/255/2012` | Kontroly mimo daňové řízení, námitky proti protokolu |
-| Zákon o odpovědnosti státu za škodu | 82/1998 Sb. | `cz_law/82/1998` | Nezákonné rozhodnutí, nesprávný úřední postup, předběžné uplatnění |
-| Zákon o správních poplatcích | 634/2004 Sb. | `cz_law/634/2004` | Poplatky, výzva k zaplacení (režim DŘ) |
-| Zákon o Ústavním soudu | 182/1993 Sb. | `cz_law/182/1993` | Ústavní stížnost po vyčerpání prostředků (§ 72, § 75) |
-| Listina základních práv a svobod | 2/1993 Sb. | `cz_law/2/1993` | Čl. 36-čl. 38 spravedlivý proces, čl. 11 vlastnictví |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` → `/toc` → `/text?part=`. Nejprve zvláštní zákon (stavební, živnostenský, daňový hmotný…), pak obecný procesní předpis - zvláštní úprava má přednost (§ 1 odst. 2 SŘ, § 4 DŘ).
-2. Judikatura: **NSS** (`--court "Nejvyšší správní soud"`; rozšířený senát má nejvyšší váhu - hledej „rozšířený senát“), krajské soudy (správní senáty), ÚS. U daní senáty Afs, u ostatních As, Ads, Azs. Vždy ověř datum a to, zda rozhodnutí nebylo překonáno rozšířeným senátem nebo novelou.
-3. Komentář (`COMMENT`) pro výklad pojmů (rozhodnutí × jiný úkon, zásah, nečinnost); literatura (`LT`) jen doplňkově.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow procesní obrany
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Režim.** SŘ × DŘ × zvláštní zákon × s. ř. s. Poučení úřadu režim neurčuje - určuje ho zákon (např. výzva k zaplacení správního poplatku je rozhodnutím v režimu daňového řádu, byť ji vydá „správní“ úřad).
-2. **Povaha aktu.** Rozhodnutí (§ 67 SŘ / § 101 DŘ) × usnesení × výzva × sdělení/osvědčení × opatření obecné povahy × faktický zásah × nečinnost. Povaha určuje prostředek: odvolání/rozklad × námitky/stížnost × žaloba proti rozhodnutí × zásahová žaloba (subsidiární) × nečinnostní žaloba (po vyčerpání § 80 SŘ / § 38 DŘ) × návrh na zrušení OOP.
-3. **Lhůta.** Odvolání SŘ 15 dnů (§ 83), DŘ 30 dnů (§ 109 odst. 4), rozklad stejně; žaloba proti rozhodnutí 2 měsíce od doručení (§ 72 s. ř. s.), zásahová 2 měsíce subjektivní / 2 roky objektivní (§ 84), kasační stížnost 2 týdny (§ 106 odst. 2), ústavní stížnost 2 měsíce - **vše ověř v aktuálním znění**, zvláštní zákon může lhůtu měnit. Počátek běhu odvis od doručení - zkontroluj fikci doručení (§ 24 SŘ / § 47 DŘ), doručování zástupci, datovou schránku.
-4. **Procesní audit rozhodnutí.** Příslušnost (věcná, místní, funkční), podjatost (§ 14 SŘ / § 77 DŘ), účastenství a práva účastníka (§ 36 odst. 3 SŘ seznámení s podklady; § 88 DŘ projednání zprávy o kontrole), dokazování a hodnocení důkazů, odůvodnění (§ 68 odst. 3 SŘ / § 102 odst. 2-4 DŘ), výrok (určitost, právní základ), poučení, podpis a doručení. **Prekluze** (lhůta pro stanovení daně § 148 DŘ; zánik odpovědnosti za přestupek § 29 zákona 250/2016 Sb.) - soud ji zkoumá z úřední povinnosti, uplatni ji vždy.
-5. **Věcná argumentace.** Výklad zvláštního zákona + hierarchie pramenů (zákon → vyhláška → metodika/pokyn GFŘ, který váže správu, ne soud → judikatura NSS/ÚS/SDEU). U daní odděluj hmotné právo (co se zdaňuje) od procesu (jak se doměřuje) a sankce (penále § 251 × úrok z prodlení § 252 × pokuta § 250 - odlišné podmínky a možnost prominutí § 259a-§ 259c).
-6. **Odkladný účinek a předběžná ochrana.** Odvolání v SŘ má odkladný účinek ze zákona (§ 85), lze vyloučit; v DŘ odvolání odkladný účinek zpravidla nemá (§ 109 odst. 5). Žaloba ve správním soudnictví odkladný účinek nemá - navrhnout podle § 73 odst. 2 s. ř. s. s tvrzením nepoměrně větší újmy; předběžné opatření § 38.
-7. **Řetězec prostředků.** Žaloba proti rozhodnutí vyžaduje vyčerpání řádných opravných prostředků (§ 68 písm. a) s. ř. s.); kasační stížnost jen prostřednictvím advokáta (§ 105 odst. 2); ústavní stížnost po vyčerpání všech prostředků včetně kasační stížnosti. Náhrada škody podle zákona 82/1998 Sb. až po zrušení rozhodnutí pro nezákonnost; předběžně uplatnit u úřadu (§ 14).
-8. **Náklady a poplatky.** Soudní poplatek za žalobu a kasační stížnost (sazebník, ověř), náhrada nákladů podle úspěchu (§ 60 s. ř. s.), advokátní tarif; v odvolacím správním řízení se náklady zpravidla nepřiznávají.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Podání odvolání podle SŘ lhůty (15 dnů) tam, kde platí DŘ (30 dnů), nebo naopak; režim určuje zákon, ne hlavička rozhodnutí.
-- Žaloba podaná bez vyčerpání odvolání - odmítnutí pro nepřípustnost.
-- Zásahová žaloba místo žaloby proti rozhodnutí (nebo naopak) - subsidiarita a rozdílné lhůty.
-- Spolehnutí na odkladný účinek, který zákon nedává (daňové odvolání, správní žaloba).
-- Přehlédnutí prekluze - nejsilnější námitka, kterou lze uplatnit kdykoli.
-- Zacházení s pokynem GFŘ nebo metodikou ministerstva jako se zákonem.
-- Kasační stížnost sepsaná bez advokáta nebo mimo důvody § 103 s. ř. s.
-- Citování rozhodnutí NSS, které bylo překonáno rozšířeným senátem - ověř datum a navazující judikaturu.
-- Záměna penále, úroku z prodlení a pokuty za opožděné tvrzení - různé podmínky a různá cesta k prominutí.
-- Doplňování čísel jednacích, dat doručení a názvů úřadů z paměti - vždy z listiny nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a lhůta** v první větě (jaký prostředek, kam, do kdy).
-2. **Režim a povaha aktu** s odůvodněním.
-3. **Procesní vady** - seznam s § a důsledkem (nezákonnost × nicotnost × vada bez vlivu).
-4. **Věcné argumenty** s hierarchií pramenů a judikaturou NSS/ÚS.
-5. **Odkladný účinek / předběžná ochrana** - zda a jak žádat.
-6. **Další kroky a řetězec prostředků** včetně nákladů a poplatků.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NSS - 1 Afs 123/2025 - …`, `ÚS - Pl. ÚS 1/26 - …`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („ode dne doručení“, „nejpozději“, „po marném uplynutí“, „z úřední povinnosti“).
-- Jeden časový řez; u procesních úkonů znění účinné v době úkonu.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Mimo CODEXIS jen oficiální zdroje (nssoud.cz, usoud.cz, financnisprava.cz, justice.cz) když CODEXIS neodpovídá.
-- Lhůty a sazby nikdy z paměti - vždy z aktuálního znění s odkazem a datem účinnosti.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Povaha aktu před volbou prostředku
+
+Zapiš klienta, správní či daňový orgán, procesní postavení, požadovaný výsledek a přesný napadaný úkon. Z podkladů sestav časovou osu zahájení, výzev, dokazování, rozhodnutí, doručení a výkonu. Rozliš tvrzení klienta a úřadu od doložených událostí; neoznačuj plánovaný opravný prostředek za podaný.
+
+V CODEXIS ověř zvláštní oborovou úpravu a její vztah ke správnímu řádu, daňovému řádu a soudnímu řádu správnímu. Režim neurčuje hlavička úřadu ani jeho poučení. Samostatně zjisti rozhodné znění pro hmotnou povinnost, procesní úkon, sankci a přechod řízení.
+
+### Procesní mapa
+
+- Je napadeno rozhodnutí, usnesení, výzva, osvědčení, sdělení, kontrolní protokol, opatření obecné povahy, faktický zásah nebo nečinnost? Ověř právní účinky aktu, ne pouze název. Pro každou variantu určuj dostupné odvolání, rozklad, námitky, stížnost, přezkum, obnovu a soudní ochranu samostatně.
+- Jak se stanoví věcná, místní a funkční příslušnost? Kdo je účastníkem, kdo zastupuje a kdy vzniká podjatost? Zjisti přístup ke spisu, možnost vyjádřit se a navrhovat důkazy. Ověř pravidla dokazování, odůvodnění, určitost výroku, poučení a doručení. Každou vadu spoj s jejím dopadem: nikoli každá nepravidelnost zakládá nicotnost nebo zrušení.
+- Která událost spustila lhůtu? Vyhodnoť doručení zástupci, účinnost plné moci, fikci, datovou schránku, veřejnou vyhlášku a opomenutého účastníka podle konkrétního režimu. Délku, počátek, stavění, přerušení, prodloužení či prominutí načti z nativního právního zdroje. Právní moc a vykonatelnost nejsou totožné s doručením.
+- Pro správní žalobu rozliš rozhodnutí, zásah, nečinnost a zrušení opatření obecné povahy. Ověř legitimaci, subsidiaritu, vyčerpání prostředků, žalovaného, soud, koncentraci a rozsah petitu. Námitku proti podkladovému aktu připoj správnou cestou; nepředpokládej automaticky jeho samostatnou napadnutelnost.
+- U kasace zjisti přípustnost, případnou přijatelnost, zastoupení, zákonné důvody, čas a vztah k předchozím námitkám. Ústavní rovinu opři o konkrétní zásah, nikoli o obecný nesouhlas s hodnocením.
+
+### Daňová a sankční větev
+
+Odliš daňovou kontrolu, postup k odstranění pochybností, stanovení daně, placení, zajištění a exekuci. Pro každý úkon ověř zahájení, rozsah, opakování, součinnost, projednání výsledku a opravnou cestu. Promlčení placení a prekluze stanovení nejsou stejnou otázkou; sestav úplnou časovou osu relevantních událostí a jejich zákonných účinků.
+
+U DPH odděl skutečnost plnění, postavení dodavatele, formální doklady a účast na podvodu. Vyvrácení jednoho důvodu samo neodstraňuje druhý nezávislý důvod doměření. Ke každému závěru přiřaď důkazní břemeno a konkrétní skutkovou oporu. Právní domněnku nezaměňuj s prokázanou znalostí nebo úmyslem.
+
+Prověř, zda odvolací orgán přidal skutkové podklady či nové právní posouzení, k nimž měl klient dostat možnost reakce. Podnět přezkumu neslibuj jako řádný opravný prostředek. U obnovy odděl nový důkaz o staré skutečnosti od pozdější změny poměrů.
+
+Penále, úrok z prodlení, úrok související s posečkáním, pokuta za opožděné tvrzení a jiné sankce mají vlastní podmínky, základ, sazbu, časový režim a cestu prominutí. Načti je jednotlivě; správní metodiku nebo pokyn správce neoznač za zákon. U souběhu se správním trestáním nebo trestním řízením ověř zákaz dvojího postihu a procesní použití podkladů, nikoli automatickou blokaci jednoho řízení druhým.
+
+### Dočasná ochrana, náklady a výstup
+
+Zjisti, zda opravný prostředek skutečně má odkladný účinek, zda byl vyloučen a jak o ochranu žádat. Posečkání daně není totéž co odkladný účinek žaloby; porovnej rozsah, trvání, úroky a vliv na exekuci. K návrhu připoj konkrétní scénář újmy klienta, dopad na jiné osoby a veřejný zájem, doložené finanční údaje a přesně označený výkon.
+
+V CODEXIS zpracuj rozhodnutí přiléhavá povaze aktu, důkazním vadám a časovým otázkám; ověř navazující a případně překonávající judikaturu i rozšířený senát. Je-li požadována praxe konkrétního senátu, eviduj skutečně identifikované srovnávací věci.
+
+Dodej použitelné podání: režim, včasnost, přípustnost, procesní vady, věcné argumenty, důkazy, nejsilnější protiargument a přesný petit. Náklady rozepiš pro každý prostředek, zejména odděleně žalobu a návrh na odkladný účinek, zastoupení a případné další úkony; u každého ověř osvobození. Neoznačuj posečkání za bezúročné ani návrh za bezplatný bez zdroje. Navazující náhradu škody a nesprávný úřední postup posuď samostatně včetně předběžného uplatnění a podmínek nároku.

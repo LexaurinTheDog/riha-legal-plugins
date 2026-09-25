@@ -1,7 +1,7 @@
 {
   "uuid": "80ec02a0-b63b-40f1-b2f0-c6b8d60d92d4",
   "name": "vymahani-pohledavek",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech debt recovery practice skill - limitation check, pre-action notice, payment orders (EPR), litigation, costs and interest, enforcement (exekuce) and insolvency crossover on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

@@ -1,7 +1,7 @@
 {
   "uuid": "c9daa96c-d953-423d-b5fd-04323b2c0184",
   "name": "korporatni-pravo",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech corporate law practice skill - company formation, general meetings, share transfers, directors' duties and liability, shareholder agreements, profit distribution, registers and transformations under ZOK and the Civil Code, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

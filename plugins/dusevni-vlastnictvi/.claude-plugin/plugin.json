@@ -1,7 +1,7 @@
 {
   "uuid": "b9d6ed9b-0b66-41f3-a3b5-2e8773cd2987",
   "name": "dusevni-vlastnictvi",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech intellectual property practice skill - copyright and software, employee and commissioned works, licences, trade marks, patents, utility and industrial designs, domain names, trade secrets, enforcement and ÚPV proceedings, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

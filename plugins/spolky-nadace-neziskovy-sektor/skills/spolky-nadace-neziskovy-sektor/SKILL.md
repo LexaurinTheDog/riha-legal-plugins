@@ -1,7 +1,7 @@
 ---
 uuid: 787c59aa-e879-4541-9781-67649e743f04
 name: spolky-nadace-neziskovy-sektor
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,91 +25,107 @@ i18n:
       - "Členská schôdza spolku vylúčila klienta bez predchádzajúcej výzvy a bez možnosti sa vyjadriť. Ako sa brániť a dokedy?"
       - "Chceme založiť nadačný fond na podporu regionálnych talentov. Čo potrebujeme, koľko to stojí a aké budú priebežné povinnosti?"
       - "Spolok prijal dar 800 000 Kč od firmy a chce jej za to dať reklamu na webe. Aké sú daňové dopady pre obe strany?"
-description: Use when the user's matter involves a Czech non-profit legal person or civic activity - spolek, pobočný spolek, nadace, nadační fond, ústav, obecně prospěšná společnost, sociální družstvo, nezisková organizace, NNO, založení spolku, stanovy, spolkový rejstřík, nadační rejstřík, rejstřík ústavů, členství, členská schůze, statutární orgán, kontrolní komise, rozhodčí komise, vyloučení člena, neplatnost rozhodnutí orgánu spolku, přezkum soudem, nadační listina, nadační jistina, správní rada, nadační příspěvek, výroční zpráva, dar, darovací smlouva, veřejná sbírka, dotace pro NNO, veřejně prospěšný poplatník, hlavní a vedlejší činnost, členské příspěvky, jednoduché účetnictví, sbírka listin, evidence skutečných majitelů, likvidace spolku, fúze spolků, odpovědnost členů orgánů, status veřejné prospěšnosti. Standalone skill - bundles CODEXIS methodology with non-profit practice method; no need to load the general codexis skill.
+description: 'Use for Czech non-profit entities and civic activity: spolek a pobočný spolek, nadace, nadační fond, ústav, o.p.s., sociální družstvo, založení, stanovy, orgány, členství a vyloučení, soudní přezkum, rejstříky, dary a veřejné sbírky, dotace, veřejně prospěšný poplatník, daně, účetnictví, dobrovolníci, odpovědnost, přeměny a likvidace. Research legal sources only through native CODEXIS in the application.'
 ---
 
 # Spolky, nadace a neziskový sektor ČR
 
-Samostatný oborový skill pro neziskové právnické osoby. Základní reflex: **forma určuje pravidla** (spolek × nadace × nadační fond × ústav × sociální družstvo) a **rozhodnutí orgánu se napadá v krátké prekluzivní lhůtě** - většina sporů členů končí na zmeškaných třech měsících. Daňově je nezisková osoba zvýhodněna jen tehdy, když skutečně plní znaky veřejně prospěšného poplatníka a odděluje hlavní a vedlejší činnost.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/89/2012/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf258'`, `cdx-cli get cdx://cz_law/304/2013/versions`, `cdx-cli get cdx://cz_law/586/1992/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf17a'`, `cdx-cli search JD --query "vyloučení člena spolku přezkum soudem 242" --court "Nejvyšší soud" --limit 5`.
-- Výše nadační jistiny, prahy pro audit a účetnictví, daňové limity a rejstříkové poplatky **ověř v aktuálním znění**; nikdy z paměti. Status veřejné prospěšnosti (§ 146-§ 150 OZ) nebyl proveden zvláštním zákonem - nenabízej jeho zápis.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| OZ - právnické osoby a korporace | 89/2012 Sb. | `cz_law/89/2012` | Obecně (§ 118-§ 209: orgány, péče řádného hospodáře § 159, likvidace § 187+), veřejná prospěšnost (§ 146-§ 150), spolky (§ 214-§ 302), nadace (§ 306-§ 393), nadační fondy (§ 394-§ 401), ústavy (§ 402-§ 418), přechodná ustanovení (§ 3041-§ 3051) |
-| Zákon o veřejných rejstřících | 304/2013 Sb. | `cz_law/304/2013` | Spolkový a nadační rejstřík, rejstřík ústavů a o.p.s., zápis, sbírka listin (§ 66+), sankce (§ 104+) |
-| ZOK - sociální družstvo | 90/2012 Sb. | `cz_law/90/2012` | § 758-§ 773 |
-| Zákon o evidenci skutečných majitelů | 37/2021 Sb. | `cz_law/37/2021` | Automatický průpis u spolků a nadací (ověř), sankce |
-| ZDP | 586/1992 Sb. | `cz_law/586/1992` | Veřejně prospěšný poplatník (§ 17a), předmět daně (§ 18a), osvobození členských příspěvků a bezúplatných příjmů (§ 19, § 19b), snížení základu (§ 20 odst. 7), odpočet dárce (§ 15 odst. 1, § 20 odst. 8), přiznání (§ 38mb) |
-| ZDPH | 235/2004 Sb. | `cz_law/235/2004` | Osvobození (§ 57-§ 61), obrat a registrace, ekonomická činnost |
-| Zákon o účetnictví + vyhláška pro NNO | 563/1991 Sb. + 504/2002 Sb. | `cz_law/563/1991`, `cz_law/504/2002` | Jednoduché účetnictví (§ 1f), účetní závěrka, audit, výroční zpráva |
-| Zákon o veřejných sbírkách | 117/2001 Sb. | `cz_law/117/2001` | Oznámení krajskému úřadu, sbírkový účet, vyúčtování, sankce |
-| Rozpočtová pravidla | 218/2000 / 250/2000 Sb. | `cz_law/218/2000`, `cz_law/250/2000` | Dotace NNO, veřejnoprávní smlouva, porušení rozpočtové kázně |
-| Zákon o dobrovolnické službě | 198/2002 Sb. | `cz_law/198/2002` | Akreditace, pojištění, postavení dobrovolníků |
-| Zákon o sociálních službách | 108/2006 Sb. | `cz_law/108/2006` | Registrace poskytovatelů, financování |
-| Zákon o církvích | 3/2002 Sb. | `cz_law/3/2002` | Církevní právnické osoby, evidence MK |
-| TOPO / trestní zákoník | 418/2011 / 40/2009 Sb. | `cz_law/418/2011`, `cz_law/40/2009` | Trestní odpovědnost neziskových PO, dotační podvod (§ 212), zpronevěra (§ 206) |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` → `/toc` → `/text?part=`; u organizací vzniklých před 2014 přechodná ustanovení (§ 3041+ OZ - občanská sdružení jsou spolky, o.p.s. pokračují podle zrušeného zákona 248/1995 Sb.).
-2. Judikatura: **NS** senát 27 Cdo (spolky - vyloučení, neplatnost rozhodnutí, svolání, členství, nadace), **NSS** (daně NNO, dotace, veřejné sbírky), **ÚS** (spolková autonomie × ochrana člena). Ověř datum a znění.
-3. Komentář (`COMMENT`) k pojmům (hlavní × vedlejší činnost, důležitý zájem, malicherný zásah, veřejně prospěšný účel); metodiky MF a GFŘ k NNO jsou administrativní výklad.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Volba a kvalifikace formy.** Spolek (členská základna, samosprávný a dobrovolný, **hlavní činností nesmí být podnikání** § 217; vedlejší hospodářská činnost jen na podporu hlavní) × ústav (služby veřejnosti bez členů, zakladatel a ředitel) × nadace (trvalý účel, nadační jistina v zákonné minimální výši - ověř, správní rada, dozorčí rada nebo revizor) × nadační fond (bez jistiny, pružnější) × sociální družstvo × existující o.p.s. (novou nelze založit) × církevní PO × s.r.o. se sociálním cílem. U existující osoby ověř formu, stanovy/statut a stav zápisu v rejstříku a sbírce listin.
-2. **Založení a zápis.** Spolek: zakladatelé (nejméně 3 osoby) shodou na stanovách nebo ustavující schůze (§ 218-§ 225), náležitosti stanov (název s „spolek"/„z. s.", sídlo, účel, práva a povinnosti členů, statutární orgán), zápis do spolkového rejstříku (formulář, listiny, souhlas s umístěním sídla, ověřené podpisy; osvobození od poplatku - ověř), vznik zápisem (§ 226). Nadace: nadační listina notářským zápisem, jistina, orgány, zápis; nadační fond a ústav obdobně bez jistiny. Následně: IČO, datová schránka (povinná pro PO), účet, evidence skutečných majitelů (automatický průpis - ověř), účetnictví, registrace k daním, případně živnost pro vedlejší činnost.
-3. **Vnitřní správa spolku.** Nejvyšší orgán (členská schůze § 248-§ 257: svolání nejméně 30 dnů předem s pozvánkou a programem, usnášeníschopnost většina členů, rozhodování většinou přítomných, zápis do 30 dnů - ověř; shromáždění delegátů, dílčí schůze), statutární orgán (funkční období 5 let, není-li určeno jinak § 246; jednání a zápis změn; péče řádného hospodáře § 159), kontrolní a rozhodčí komise (§ 262-§ 267), seznam členů (§ 236 - GDPR, zveřejnění jen se souhlasem), členství (vznik, příspěvky, zánik, **vyloučení § 239-§ 242** - jen po výzvě k nápravě, s možností vyjádřit se, přezkum rozhodčí komisí, soud do 3 měsíců), pobočné spolky (§ 228-§ 231 - odvozená právní osobnost, ručení hlavního spolku za dluhy pobočného - ověř § 229).
-4. **Přezkum rozhodnutí orgánů (§ 258-§ 260 OZ).** Člen nebo ten, kdo má zájem hodný ochrany, navrhne soudu vyslovení neplatnosti rozhodnutí pro rozpor se zákonem nebo stanovami **do 3 měsíců od dozvědění, nejpozději do 1 roku**; soud neplatnost nevysloví, jde-li o malicherný zásah nebo bylo-li by to v rozporu se zájmem spolku hodným ochrany; přiměřené zadostiučinění při zásahu do práva člena (§ 261). U nadací a ústavů obdobně podle obecných ustanovení o právnických osobách (§ 245 - ověř). Statusové věci rozhoduje krajský soud (§ 85 ZŘS).
-5. **Nadace, nadační fond, ústav.** Nadace: nadační jistina a kapitál, zákaz zcizení jistiny mimo zákon, správní rada (nejméně 3 členové), dozorčí rada (povinná nad zákonnou hranicí kapitálu - ověř § 368) nebo revizor, **nadační příspěvky** (§ 353-§ 355 - podle statutu, zákaz příspěvku osobám tvořícím orgány a jim blízkým, vyúčtování účelu, vrácení při porušení), výroční zpráva do 6 měsíců a její zveřejnění ve sbírce listin (§ 358-§ 361), změna účelu (§ 321+), přidružený fond. Nadační fond: bez jistiny, možnost přeměny na nadaci. Ústav: zakladatelské právní jednání, ředitel, správní rada, výroční zpráva, audit při překročení obratu (§ 415 - ověř).
-6. **Financování.** Členské příspěvky (osvobozeny § 19 odst. 1 písm. a) ZDP - podle stanov), **dary** (darovací smlouva, účel; u příjemce osvobození § 19b odst. 2 písm. b) ZDP při použití na veřejně prospěšné účely - ověř; u dárce odpočet § 15 odst. 1 / § 20 odst. 8 ZDP v zákonných limitech), **sponzoring = reklama** (protiplnění, zdanitelný příjem, DPH), dotace (rozpočtová pravidla, veřejnoprávní smlouva, porušení rozpočtové kázně a odvod - viz skill veřejných zakázek a dotací), **veřejné sbírky** (zákon 117/2001 Sb. - oznámení krajskému úřadu předem, sbírkový účet, doba, vyúčtování, sankce za neoznámenou sbírku; crowdfunding a dárcovské SMS), vedlejší hospodářská činnost (živnost, DPH), nadační příspěvky od jiných nadací, evropské fondy, dobrovolnická služba (198/2002 Sb.).
-7. **Daně a účetnictví.** Veřejně prospěšný poplatník (§ 17a ZDP - hlavní činnost není podnikání; vyloučené osoby), předmět daně (§ 18a - ztrátová hlavní činnost není předmětem, vedlejší vždy), snížení základu daně (§ 20 odst. 7 - ověř výši), přiznání (§ 38mb - povinnost podat jen při zdanitelných příjmech - ověř), DPH (osvobozené plnění § 57-§ 61, obrat a registrace, ekonomická činnost), účetnictví: jednoduché (§ 1f zák. 563/1991 Sb. - spolky s příjmy do zákonného limitu, ne plátci DPH) × podvojné, výroční zpráva (nadace, ústav povinně; spolek podle stanov), **uložení účetní závěrky do sbírky listin** (§ 66 zák. 304/2013 Sb. - sankce až zrušení), audit u nadací/ústavů nad prahy, evidence skutečných majitelů.
-8. **Odpovědnost a trestní rovina.** Členové orgánů - péče řádného hospodáře (§ 159 OZ; ručení věřiteli při nenahrazení škody § 159 odst. 3), smlouva o výkonu funkce a odměna (u spolků bezplatný výkon, není-li stanoveno jinak - ověř § 246), pojištění odpovědnosti; trestní odpovědnost PO (418/2011 Sb. se vztahuje i na spolky a nadace), dotační podvod, zpronevěra darů, porušení povinnosti při správě cizího majetku; osobní odpovědnost při nezákonném zrušení.
-9. **Změny, přeměny a zánik.** Změna stanov (forma, zápis), fúze a rozdělení spolků (§ 274-§ 302 - projekt, zpráva, věřitelé), změna právní formy (spolek na ústav / sociální družstvo), zrušení dobrovolné × soudem (§ 268 - nezákonná činnost, nesplnění povinností, nečinnost; výzva soudu), likvidace (§ 269-§ 273 - likvidátor, výzva věřitelům, **likvidační zůstatek podle stanov, u veřejně prospěšného spolku jen obdobnému účelu - ověř**), výmaz; neaktivní spolky a rejstříkový soud.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Vyloučení člena bez výzvy k nápravě a bez možnosti se vyjádřit; napadení až po 3 měsících - právo zaniklo.
-- Členská schůze svolaná bez 30denní lhůty nebo mimo program - usnesení napadnutelná; per rollam bez opory ve stanovách.
-- Hlavní činnost spolku fakticky podnikání (pronájem, prodej) - ztráta postavení veřejně prospěšného poplatníka, riziko zrušení soudem.
-- Sponzoring vedený jako dar - dodanění u obou stran; dar použitý mimo veřejně prospěšný účel - ztráta osvobození.
-- Veřejná sbírka bez oznámení krajskému úřadu (i online) - přestupek a povinnost vydat výtěžek.
-- Nadační příspěvek členovi správní rady nebo osobě blízké - zakázán; nadace bez dozorčího orgánu nad zákonnou hranicí.
-- Účetní závěrka neuložená do sbírky listin roky po sobě - pokuta, u opakování zrušení spolku.
-- Datová schránka nezřízena/nesledována - fikce doručení rozhodnutí úřadů a soudů.
-- Stanovy z doby „občanského sdružení" bez přizpůsobení OZ (název, orgány, sídlo) - problémy v rejstříku a při jednání.
-- Pobočný spolek zadlužen - hlavní spolek ručí; naopak hlavní spolek zrušen → zanikají pobočné.
-- Dotace čerpaná bez splnění podmínek programu - odvod a penále (viz skill veřejných zakázek a dotací).
-- Status veřejné prospěšnosti nabízený jako zápis do rejstříku - zvláštní zákon neexistuje.
-- Doplňování názvů, IČO, dat schůzí a částek z paměti - vždy z rejstříku, stanov nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (co udělat, kam, do kdy; u přezkumu rozhodnutí 3 měsíce).
-2. **Forma osoby, orgán a použitelné dokumenty** (stanovy/statut - `[DOPLNIT ze sbírky listin]`).
-3. **Právní rámec** - OZ / rejstříkový zákon / ZDP / zvláštní zákony v aktuálním znění, s odkazy.
-4. **Postup nebo nároky** - tabulka: krok/nárok | právní základ (zákon × stanovy) | orgán | lhůta | riziko.
-5. **Daňový a účetní dopad** (VPP, dary × reklama, DPH, povinnosti ve sbírce listin).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NS - 27 Cdo 1234/2024 - …`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („do tří měsíců ode dne, kdy se o rozhodnutí dozvěděl“, „nejpozději do jednoho roku“, „nesmí být podnikání“, „malicherný zásah“).
-- Jeden časový řez; u rozhodnutí orgánu znění zákona a stanov účinné v den rozhodnutí.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Výše jistiny, prahy pro audit, daňové limity a poplatky nikdy z paměti - vždy z aktuálního znění s odkazem.
-- Údaje o osobách a organizacích výhradně z veřejného rejstříku (justice.cz), ESM a sbírky listin; mimo CODEXIS jen oficiální zdroje (financnisprava.cz, mvcr.gov.cz pro sbírky, mfcr.cz) když CODEXIS neodpovídá.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Forma, klient a zdroj pravidel
+
+Urči, zda jednáš za organizaci, zakladatele, člena, člena orgánu, dárce, příjemce podpory nebo věřitele. Zjisti právní formu, čas založení, rejstříkový stav a rozhodné stanovy, statut či nadační listinu. Odděl zákon, vnitřní předpis a individuální rozhodnutí; autonomie organizace není předpoklad neexistence soudní ochrany.
+
+V CODEXIS ověř rozdíly mezi spolkem, pobočným spolkem, nadací, nadačním fondem, ústavem, existující obecně prospěšnou společností, sociálním družstvem, církevní osobou a obchodní společností se sociálním cílem. Název nezisková organizace neprokazuje daňové osvobození ani konkrétní právo. Starší právní formu a pokračování organizace podrob přechodným pravidlům.
+
+### Otázky životního cyklu organizace
+
+- Založení a vznik: jaké osoby, právní jednání, účel, název, sídlo, orgány, vklady a forma jsou vyžadovány? Prověř ustavující schůzi, schválení stanov, nadační listinu, jistinu a oddělení založení od zápisu a vzniku. Vyžádej souhlasy a podklady k sídlu, podpisům a funkci; nevytvářej neexistující schůzi nebo potvrzení.
+- Vnitřní správa spolku: kdo svolává a rozhoduje, jak se určuje členství, program, doručení pozvánky, usnášeníschopnost a většina? Ověř stanovy i dispozitivnost zákona, delegáty, dílčí schůze, distanční hlasování, zápis a právo na informace. Prověř statutární, kontrolní a rozhodčí orgány, funkční období, způsob zastupování, střet zájmů a péči řádného hospodáře.
+- Členství: jak vzniká, mění se a zaniká, co zakládá příspěvkovou povinnost a jak je veden seznam členů? U vyloučení načti zvláštní pravidla výzvy, vyjádření, vnitřního opravného postupu a soudní ochrany; nevydávej jej za běžné rozhodnutí orgánu bez odlišení. U pobočného spolku ověř rozsah osobnosti, stanovami určenou vazbu a konkrétní pravidla ručení.
+- Soudní přezkum: kdo je legitimován, jaké rozhodnutí je napadáno, kdy se o něm dozvěděl a jaká ochrana už byla využita? Pro neplatnost, zdánlivost a jiné vady ověř vlastní důsledky a lhůty. Korektiv nevyslovení neplatnosti posuzuj podle všech kumulativních podmínek; ochranu třetích osob v dobré víře odděl. Neomezuj předběžnou ochranu majetku na doslovně uvedený prodej, může jít o jinou dispozici či výkon hlasovacích práv.
+- Nadace a fondy: jaký účel, majetkový režim a orgány se použijí? Ověř nakládání s jistinou, nadační příspěvky, příjemce spojené s orgány, schvalování, vyúčtování a vrácení, přidružený fond a změnu účelu. U ústavu ověř vztah zakladatele, ředitele a rady, poskytované služby a kontrolu hospodaření; nepřenášej mechanicky spolková pravidla.
+- Financování: jde o členský příspěvek, dar, reklamu, nadační příspěvek, dotaci, veřejnou sbírku či ekonomickou činnost? Rozhoduje obsah a protiplnění, ne pouze název smlouvy. U smíšených plnění odděl části a podmínky použití; vyčísli dopad pro obě strany. Ověř crowdfunding, bezhotovostní sbírku, dárcovské zprávy, oznámení, evidenci, vyúčtování a sankce podle rozhodného režimu.
+- Dotace a dobrovolnictví: ověř poskytovatele, titul, program a podmínky, nárokovost, veřejnoprávní smlouvu, změny účelu a rozpočtovou kázeň. Prověř akreditaci, dobrovolnickou smlouvu, náklady, pojištění, bezpečnost a postavení osob. U sociálních služeb doplň registraci, smluvní režim a financování.
+- Daně a účetnictví: splňuje osoba znaky veřejně prospěšného poplatníka a není ve výluce? Odděl hlavní a vedlejší činnost, příjmy mimo předmět, osvobozené a zdanitelné příjmy. Ověř účelové dary, odpočet dárce, reklamu, DPH, ekonomickou činnost, registraci a přiznání. Zjisti podmínky účetního režimu, auditu, výroční zprávy a ukládání listin. Nepředpokládej existenci zapisovatelného statusu pouze podle názvu institutu.
+- Odpovědnost: jaká povinnost byla porušena a komu vznikla újma? Posuď orgány, zaměstnance i právnickou osobu, odměnu za funkci, pojištění a možnou trestní přičitatelnost. Zpronevěru, dotační podvod nebo porušení správy cizího majetku neposuzuj jen z hospodářského neúspěchu.
+- Změny a zánik: ověř změnu stanov, právní formy, fúzi, rozdělení, ochranu členů a věřitelů, zrušení dobrovolné či soudní, likvidaci, použití zůstatku a výmaz. Přetrvávající závazky a dotační podmínky mohou změnit vhodnost zvolené varianty.
+
+### Povinný výstup
+
+V CODEXIS vyhledej přiléhavou judikaturu k autonomii, ochraně člena, výkladu stanov, příspěvkům, hospodaření a daním. Výstup spoj s konkrétními listinami organizace a odliš údaj účastníka od doloženého faktu. Dodej požadované stanovy, usnesení, smluvní články či návrh soudu, nejen návod k jejich sepsání.
+
+Závěr obsahuje postup, správný orgán, právní základ ze zákona a stanov, doložený počátek a konec lhůty, petit a důkazy. Náklady rejstříkového úkonu a sporného přezkumu počítej odděleně: osvobození v jednom typu řízení neprokazuje osvobození ve druhém. Uveď ekonomický a daňový dopad, souhlasy a otevřené dokumentační mezery.

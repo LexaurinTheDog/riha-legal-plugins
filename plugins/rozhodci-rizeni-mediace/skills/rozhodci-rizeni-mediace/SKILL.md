@@ -1,7 +1,7 @@
 ---
 uuid: 60fe1869-fc73-4ca2-aa57-b279e54c6746
 name: rozhodci-rizeni-mediace
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,88 +25,122 @@ i18n:
       - "Protistrana podala žalobu na súd, hoci zmluva má rozhodcovskú doložku. Ako a dokedy namietnuť nedostatok právomoci?"
       - "Klientovi bol doručený rozhodcovský nález vydaný ad hoc rozhodcom podľa doložky v zmluve o úvere z roku 2011. Možno nález zrušiť alebo zastaviť exekúciu?"
       - "Súd nariadil prvé stretnutie s mediátorom. Čo to znamená, čo hrozí pri neúčasti a ako sa líši mediačná dohoda od zmieru?"
-description: Use when the user's matter involves out-of-court dispute resolution in the Czech Republic - rozhodčí řízení, arbitráž, rozhodčí doložka, rozhodčí smlouva, zákon o rozhodčím řízení (216/1994 Sb.), platnost rozhodčí doložky, spotřebitelská rozhodčí doložka, zákaz ve spotřebitelských smlouvách, pracovněprávní spory, arbitrabilita, Rozhodčí soud při HK ČR a AK ČR, stálý rozhodčí soud, ad hoc rozhodce, jmenování rozhodce, podjatost rozhodce, námitka nedostatku pravomoci, rozhodčí nález, zrušení rozhodčího nálezu, žaloba na zrušení, tříměsíční lhůta, zastavení výkonu rozhodnutí, exekuce rozhodčího nálezu, uznání cizího rozhodčího nálezu, Newyorská úmluva, mezinárodní arbitráž, ICC, VIAC, mediace, zákon o mediaci (202/2012 Sb.), zapsaný mediátor, první setkání s mediátorem nařízené soudem, mediační dohoda, smír, ADR spotřebitelských sporů u ČOI, finanční arbitr. Standalone skill - bundles CODEXIS methodology with ADR-practice method; no need to load the general codexis skill.
+description: Použij pro arbitráž, rozhodčí smlouvy a arbitrabilitu, ustanovení a podjatost rozhodce, řízení a nálezy, zrušení a výkon, zahraniční arbitráž, mediaci a mediační dohody, soudní smír a spotřebitelské ADR či finančního arbitra. Spotřebitelský a pracovní režim vždy ověř podle rozhodného práva a času. Právní zdroje jen nativní CODEXIS v aplikaci.
 ---
 
-# Rozhodčí řízení a mediace ČR
+# Rozhodčí řízení a mediace
 
-Samostatný oborový skill pro mimosoudní řešení sporů. Dva reflexy: **rozhodčí doložka se nejdřív prověřuje na platnost a arbitrabilitu podle práva a data uzavření** (spotřebitel po 1. 12. 2016 = doložka zakázána; před tím přísné náležitosti § 3 odst. 3-6 ZRŘ; ad hoc rozhodce „ze seznamu soukromé společnosti" = neplatnost dle judikatury NS) a **námitky se uplatňují včas, jinak zanikají** (nedostatek pravomoci nejpozději při prvním úkonu ve věci; žaloba na zrušení do 3 měsíců od doručení nálezu). Mediace je dobrovolná i tam, kde soud nařídí první setkání - nařízeno je setkání, ne dohoda.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/216/1994/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf31'`, `cdx-cli get cdx://cz_law/202/2012/versions`, `cdx-cli search JD --query "rozhodčí doložka spotřebitel neplatnost ad hoc rozhodce seznam" --court "Nejvyšší soud" --limit 5`, `cdx-cli search JD --query "zastavení exekuce rozhodčí nález neplatná doložka 268" --court "Nejvyšší soud" --limit 5`.
-- ZRŘ byl zásadně novelizován (2012 - spotřebitelské doložky, 2016 - zákaz spotřebitelských doložek, přesun na finančního arbitra a ČOI); **vždy `/versions` k datu uzavření rozhodčí smlouvy a k datu zahájení řízení** - přechodná ustanovení určují, který režim platí. Řády stálých rozhodčích soudů (lhůty, poplatky, jmenování) ověř na jejich webu k datu zahájení; nikdy z paměti.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| Zákon o rozhodčím řízení a o výkonu rozhodčích nálezů | 216/1994 Sb. | `cz_law/216/1994` | Arbitrabilita (§ 1-§ 2), rozhodčí smlouva a forma (§ 3), rozhodci (§ 4-§ 12: způsobilost, jmenování soudem § 9, vyloučení § 11-§ 12), řízení (§ 13-§ 30: pravomoc § 15, doručování § 19a, zásady § 19, smír § 24), nález (§ 23-§ 28), zrušení nálezu soudem (§ 31-§ 35: důvody, lhůta 3 měsíce § 32, odklad vykonatelnosti, zastavení výkonu § 35), cizí nálezy (§ 38-§ 40), stálé rozhodčí soudy (§ 13) |
-| Newyorská úmluva o uznání a výkonu cizích rozhodčích nálezů | vyhl. 74/1959 Sb. | `cz_law/74/1959` | Uznání a výkon, důvody odepření (čl. V), forma doložky (čl. II) |
-| Evropská úmluva o mezinárodní obchodní arbitráži | vyhl. 176/1964 Sb. | `cz_law/176/1964` | Doplňuje NY úmluvu mezi smluvními státy |
-| Zákon o mediaci | 202/2012 Sb. | `cz_law/202/2012` | Zapsaný mediátor, smlouva o provedení mediace (§ 4), mlčenlivost (§ 9), mediační dohoda (§ 7), zahájení a ukončení (§ 4, § 6), stavení promlčení (§ 647 OZ), první setkání nařízené soudem (§ 100 odst. 2 o. s. ř.), zkoušky a seznam mediátorů (MSp), sankce |
-| Občanský soudní řád | 99/1963 Sb. | `cz_law/99/1963` | Námitka rozhodčí smlouvy a zastavení řízení (§ 106), smír a jeho schválení (§ 67-§ 69, § 99), první setkání s mediátorem (§ 100 odst. 2, náklady § 150), přerušení řízení (§ 110), výkon rozhodnutí (§ 274) |
-| Exekuční řád | 120/2001 Sb. | `cz_law/120/2001` | Rozhodčí nález jako exekuční titul (§ 40), zastavení exekuce pro neplatnou doložku (§ 55, § 268 odst. 1 písm. h) o. s. ř.), náklady při zastavení |
-| Občanský zákoník | 89/2012 Sb. | `cz_law/89/2012` | Spotřebitel (§ 419, § 1810+), zneužívající ujednání (§ 1813-§ 1815), promlčení a jeho stavení mediací a rozhodčím řízením (§ 647-§ 648), narovnání (§ 1903+) |
-| Zákon o ochraně spotřebitele | 634/1992 Sb. | `cz_law/634/1992` | Mimosoudní řešení spotřebitelských sporů (§ 20d-§ 20y - ČOI, finanční arbitr, ČTÚ, ERÚ, ČAK), informační povinnost podnikatele |
-| Zákon o finančním arbitrovi | 229/2002 Sb. | `cz_law/229/2002` | Působnost (úvěry, platby, pojištění, investice), řízení a nález, přezkum soudem |
-| Zákoník práce | 262/2006 Sb. | `cz_law/262/2006` | Pracovněprávní spory a arbitrabilita (ověř judikaturu), kolektivní spory a zprostředkovatel/rozhodce (zákon o kolektivním vyjednávání 2/1991 Sb.) |
-| ZMPS | 91/2012 Sb. | `cz_law/91/2012` | Rozhodčí řízení s cizím prvkem (§ 117-§ 122), rozhodné právo pro doložku |
-| Zákon o advokacii / etický kodex | 85/1996 Sb. | `cz_law/85/1996` | Advokát jako rozhodce a mediátor, střet zájmů, mlčenlivost |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` **k datu uzavření doložky i zahájení řízení** → `/toc` → `/text?part=`; přechodná ustanovení novel 19/2012 Sb. a 258/2016 Sb. (ověř čísla) rozhodují o režimu.
-2. Judikatura: **NS** senáty 23 Cdo / 33 Cdo (platnost doložek, ad hoc rozhodce určený „seznamem" soukromé společnosti, spotřebitelské doložky, zrušení nálezu, arbitrabilita), 20 Cdo (zastavení exekuce pro neplatnou doložku, nicotný nález, promlčení po zastavení), velký senát a stanoviska (R) k rozhodčím doložkám; **ÚS** (spravedlivý proces v rozhodčím řízení, nezávislost rozhodce); **SDEU** (`ES`) ke směrnici 93/13 (soud zkoumá zneužívající doložku z úřední povinnosti i ve fázi výkonu). Ověř datum a zda rozhodnutí nevychází ze znění ZRŘ před novelou.
-3. Komentář (`COMMENT`) k ZRŘ a zákonu o mediaci; řády Rozhodčího soudu při HK ČR a AK ČR, VIAC, ICC a UNCITRAL pravidla mimo CODEXIS z oficiálních webů.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Kvalifikace sporu a doložky.** Strany (podnikatel × spotřebitel × zaměstnanec × stát/obec), předmět (majetkový spor, o němž lze uzavřít smír - § 2 ZRŘ; vyloučeny incidenční spory v insolvenci, výkon rozhodnutí, statusové věci; obecné pochybnosti u pracovněprávních sporů - ověř judikaturu), datum a forma rozhodčí smlouvy (písemná; ve VOP jen při odkazu v hlavní smlouvě § 3 odst. 2; e-mail/DS ověř), určení rozhodce nebo stálého soudu (**stálý rozhodčí soud jen zřízený zákonem** § 13; „rozhodčí centra" a „seznamy rozhodců" soukromých společností = neplatná doložka podle judikatury NS a R), počet rozhodců, sídlo, jazyk, rozhodné právo, možnost přezkumu jinými rozhodci (§ 27).
-2. **Spotřebitelský a pracovní režim.** Doložka ve spotřebitelské smlouvě uzavřená **po 1. 12. 2016 - zakázána** (§ 2 odst. 1 ZRŘ ve znění novely - ověř); uzavřená mezi 1. 4. 2012 a 30. 11. 2016 - jen na samostatné listině s povinnými informacemi (§ 3 odst. 3-6), rozhodce ze seznamu MSp, přezkum nálezu i pro rozpor s hmotným právem (§ 31 písm. g)); před 1. 4. 2012 - judikatura NS a ÚS o zneužívajících doložkách (nerovnováha, netransparentní určení rozhodce, ad hoc rozhodce od věřitele). Spotřebitel: dnes ADR u ČOI / finančního arbitra / ČTÚ / ERÚ / ČAK (§ 20d+ ZOS) a podnikatel musí spotřebitele o ADR informovat. Zaměstnanec: individuální pracovní spory - rozhodčí doložka sporná, kolektivní spory dle zák. 2/1991 Sb.
-3. **Obrana proti řízení / u soudu.** Žaloba podaná u soudu přes doložku: žalovaný namítne rozhodčí smlouvu **nejpozději při prvním úkonu ve věci samé** (§ 106 odst. 1 o. s. ř.), jinak pravomoc soudu zůstává; soud zastaví, ledaže doložka je neplatná, zanikla nebo věc nelze rozhodovat v rozhodčím řízení. Před rozhodci: námitka nedostatku pravomoci **nejpozději při prvním úkonu ve věci** (§ 15 odst. 2 ZRŘ) - s výjimkou nearbitrability a neplatnosti pro spotřebitele (§ 33 - ověř); námitka podjatosti rozhodce (§ 12) bez zbytečného odkladu po zjištění; návrh soudu na vyloučení rozhodce nebo jmenování (§ 9, § 12 odst. 2). Nečinnost = riziko nálezu pro zmeškání podle řádu.
-4. **Vedení rozhodčího řízení.** Zahájení doručením žaloby stálému soudu / rozhodci (§ 14 - stavení promlčení jako u soudu), poplatek podle sazebníku, ustavení tribunálu (jmenování, náhradní jmenování soudem § 9), rovnost stran a možnost uplatnit práva (§ 18 - jediná kogentní procesní zásada), postup dle dohody stran / řádu / uvážení rozhodců (§ 19), ústní jednání × písemné řízení, dokazování (rozhodci nemohou nutit svědky - dožádání soudu § 20), předběžné opatření jen soud (§ 22), rozhodování podle práva nebo ex aequo et bono jen na výslovný pokyn (§ 25 odst. 3), **rozhodčí nález** (písemný, podepsaný většinou, odůvodnění, nestanoví-li strany jinak § 25; doručení § 23 - okamžik právní moci a vykonatelnosti), smír formou nálezu (§ 24), náklady (řád), úschova nálezu u soudu (§ 29 - 20 let). Mezinárodní: sídlo řízení určuje lex arbitri; ICC/VIAC pravidla; nouzový rozhodce.
-5. **Zrušení nálezu soudem (§ 31-§ 35 ZRŘ).** Žaloba k okresnímu / krajskému soudu podle příslušnosti (§ 41, § 43 - ověř) **do 3 měsíců od doručení nálezu** (§ 32 odst. 1); důvody taxativně: nearbitrabilita (a), neplatná doložka nebo její zrušení / nevztahuje se na věc (b), rozhodce nepovolaný nebo nezpůsobilý (c), nález nepřijat většinou (d), straně odepřena možnost věc projednat (e), odsouzení k plnění nežádanému nebo nemožnému (f), spotřebitel - rozpor s hmotným právem a ochrannými normami (g), důvody obnovy (h); důvody b) a c) jen pokud strana namítla včas v rozhodčím řízení (§ 33). Soud může odložit vykonatelnost (§ 32 odst. 2). Po zrušení pro a)/b) rozhoduje soud; pro ostatní nové rozhodčí řízení (§ 34). Nález nelze zrušit pro věcnou nesprávnost (mimo spotřebitele) - to je nejčastější omyl.
-6. **Výkon a exekuce.** Tuzemský nález = exekuční titul (§ 40 písm. c) EŘ) bez doložky vykonatelnosti soudu (potvrzení o vykonatelnosti od rozhodce/soudu); povinný může navrhnout **zastavení exekuce** pro neplatnou doložku / nedostatek pravomoci (§ 268 odst. 1 písm. h) o. s. ř. - judikatura NS: exekuční soud zkoumá pravomoc rozhodce i po lhůtě pro žalobu na zrušení, u spotřebitele z úřední povinnosti) a **§ 35 ZRŘ** (návrh na zastavení výkonu z důvodů § 31 písm. a)-c) a f)-h) i bez žaloby na zrušení - lhůta 30 dnů pro podání žaloby na zrušení po zastavení - ověř); náklady exekuce při zastavení jdou zpravidla za oprávněným; promlčení po zastavení (judikatura NS - běh promlčecí doby během rozhodčího řízení s neplatnou doložkou). Cizí nález: uznání a výkon podle NY úmluvy (čl. IV listiny, čl. V důvody odepření - nedostatek platné doložky, vada řízení, překročení, veřejný pořádek), v ČR bez zvláštního výroku o uznání, jako součást exekuce/výkonu (§ 38-§ 40 ZRŘ - ověř).
-7. **Mediace.** Zapsaný mediátor (seznam MSp, advokát-mediátor přes ČAK) × nezapsaný (bez účinků zákona - promlčení se nestaví, mlčenlivost bez zákonné opory); **smlouva o provedení mediace** (§ 4: písemná, identifikace, předmět, odměna, doba) zahajuje mediaci a **staví promlčení a prekluzi** (§ 647 OZ); mlčenlivost mediátora (§ 9 - i vůči soudu, trestní výjimky); **mediační dohoda** (§ 7 - podpisy stran, mediátor jen potvrzuje datum a podpisy, **není exekučním titulem** - vykonatelnost přes smír schválený soudem § 99 o. s. ř., notářský zápis se svolením k vykonatelnosti, nebo rozhodčí nález o smíru); ukončení (§ 6); **první setkání nařízené soudem** (§ 100 odst. 2 o. s. ř. - až 3 hodiny, přerušení řízení do 3 měsíců, neúčast = možný důvod nepřiznání nákladů § 150, hradí se dle vyhlášky 277/2012 Sb.); mediace v rodinných věcech (§ 474 ZŘS - soud může uložit setkání s mediátorem u dětí), přeshraniční mediace (směrnice 2008/52/ES). Advokát v mediaci: příprava klienta, BATNA, drafting dohody, kontrola zpeněžitelnosti.
-8. **Drafting doložek.** Volba stálého soudu (Rozhodčí soud při HK ČR a AK ČR - doporučená formulace z jeho řádu; pro mezinárodní obchod VIAC/ICC/LCIA), počet rozhodců (1 do určité hodnoty, 3 nad), sídlo a jazyk, rozhodné právo hmotné i doložky, pravidla (řád v aktuálním znění), zrychlené řízení, vyloučení přezkumu jinými rozhodci, mlčenlivost, eskalační schéma (jednání → mediace → arbitráž s lhůtami, aby nebylo překážkou přístupu k soudu), oddělitelnost doložky, podpisy a forma; **nikdy** pro spotřebitele; u obcí/veřejných zadavatelů schválení orgánem a registr smluv; u insolvence počítat s tím, že incidenční spory doložka nepokryje.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Doložka odkazující na „rozhodce ze seznamu vedeného společností XY" nebo „rozhodčí centrum" - neplatná; nález nicotný; exekuci lze zastavit i po letech.
-- Spotřebitelská doložka po 1. 12. 2016 - zakázána; před tím bez samostatné listiny a informací - neplatná.
-- Námitka nedostatku pravomoci vznesená až po prvním úkonu ve věci - zanikla (výjimka spotřebitel a nearbitrabilita).
-- Žaloba na zrušení nálezu opřená o věcnou nesprávnost - zamítnuta; lhůta 3 měsíce zmeškána, protože běžela od doručení, ne od právní moci.
-- Mediační dohoda předložená k exekuci - není titulem; nutný schválený smír nebo notářský zápis.
-- Mediace s nezapsaným mediátorem - promlčení se nestaví, mlčenlivost bez zákonné ochrany.
-- Neúčast na soudem nařízeném prvním setkání bez omluvy - nepřiznání nákladů (§ 150).
-- Rozhodčí nález nedoručený řádně (doručování dle řádu / § 19a) - nenabyl právní moci, exekuce zastavena.
-- Předběžné opatření požadované po rozhodcích - jen soud (§ 22).
-- Zahraniční nález bez ověřené doložky a překladu podle čl. IV NY úmluvy; námitka veřejného pořádku užitá jako přezkum merita.
-- Rozhodčí doložka v pracovní smlouvě nebo ve smlouvě obce bez schválení orgánem.
-- Doplňování názvů rozhodčích institucí, čísel řádů, sazeb poplatků a dat doručení z paměti - vždy z řádu, spisu nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (co podat, kam, do kdy - první úkon ve věci / 3 měsíce / 30 dnů; výpočet).
-2. **Kvalifikace doložky** - datum, strany, forma, určení rozhodce, režim (podnikatelský × spotřebitelský × pracovní × mezinárodní).
-3. **Právní rámec** - ZRŘ k datu / o. s. ř. / zákon o mediaci / NY úmluva v aktuálním znění, s odkazy.
-4. **Postup a nároky** - tabulka: krok | právní základ | fórum (soud × rozhodci × mediátor × exekuční soud) | lhůta | riziko.
-5. **Alternativy a strategie** (namítat × nechat běžet × smír × ADR u ČOI/finančního arbitra).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NS - 23 Cdo 1234/2024 - …`, `NS - 20 Cdo 1234/2024 - …`, `SDEU - C-40/08 - 06.10.2009`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („nejpozději při prvním úkonu ve věci samé“, „do tří měsíců od doručení rozhodčího nálezu“, „stálý rozhodčí soud zřízený zákonem“, „majetkový spor, o němž lze uzavřít smír“).
-- Jeden časový řez; u doložky znění ZRŘ k datu jejího uzavření, u řízení k datu zahájení, u zrušení k datu doručení nálezu.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions` k rozhodnému datu.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Lhůty, poplatky a náležitosti nikdy z paměti - vždy z aktuálního znění ZRŘ / řádu s odkazem; přechodná ustanovení novel vždy zkontrolovat.
-- Údaje o rozhodcích, institucích a mediátorech výhradně ze seznamů MSp, ČAK a webů stálých soudů; mimo CODEXIS jen oficiální zdroje (justice.cz, soud.cz, coi.cz, finarbitr.cz) když CODEXIS neodpovídá.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Cíl, doložka a časová osa
+
+Zjisti strany a jejich postavení, předmět sporu, klientův cíl, stav vyjednávání, soudního nebo rozhodčího řízení a případného výkonu. Z dodaných dokumentů načti celou smlouvu, doložku, začleněné podmínky, rozhodný řád, jmenování rozhodců, podání a doručenky nálezu. Rozliš datum doložky, zahájení řízení, prvního úkonu ve věci, znalosti námitky a doručení nálezu. Neznámý řád nebo smluvní změnu nenahrazuj dnešním vzorem instituce.
+
+Odděl platnost doložky, arbitrabilitu konkrétního nároku, pravomoc rozhodce, zákonnost postupu a existenci vykonatelného titulu. Doručení nálezu samo nezhojí nedostatek pravomoci. Ochranné podání proti nálezu samo nepředstavuj jako uznání dluhu. Při současném řízení před soudem vyhledej zvláštní okamžik a účinky námitky doložky; neztotožňuj jej automaticky s námitkou před rozhodcem.
+
+## Výhradní nativní rešerše
+
+V CODEXIS vyhledej zákon o rozhodčím řízení a výkonu nálezů, občanský soudní a exekuční řád, zákon o mediaci, občanský zákoník, ochranu spotřebitele, finančního arbitra a mezinárodní právo soukromé. Podle věci přidej Newyorskou a Evropskou úmluvu, přeshraniční mediaci, pracovní a kolektivní vyjednávání, veřejné subjekty a advokátní povinnosti. Rozhodné řády a sazebníky získávej pouze v rámci nativního obsahu; nejsou-li tam dostupné, označ omezení. Neotvírej web rozhodčí instituce ani externí seznam mediátorů.
+
+Pro každou otázku urč použitelné znění a přechod; starší spotřebitelská doložka a nyní sjednávaná smlouva nemusí mít stejný režim. Historický zvláštní přezkum nepřenášej do dnešního výčtu. Při zahraniční arbitráži rozliš hmotné právo smlouvy, právo doložky, sídlo určující procesní rámec a místo výkonu; každé má samostatný test.
+
+## Platnost a ustavení rozhodování
+
+Je spor podle rozhodného práva arbitrabilní, majetkový a případně způsobilý ke smíru? Prověř statusové, insolvenční, výkonové, spotřebitelské a pracovní výjimky. U doložky zjisti formu, souhlas, odkaz na podmínky, rozsah, oddělitelnost a ochranu slabší strany. Soukromou fyzickou osobu určující rozhodce neoznačuj automaticky za zakázaný stálý rozhodčí soud. Rozliš zákonnou instituci, dohodnutý jmenovací mechanismus a netransparentní soukromé centrum; rozhoduje skutečný mechanismus a historická úprava, ne jen název.
+
+Zkoumej způsobilost, nezávislost a podjatost, způsob jmenování a náhradního ustanovení, počet rozhodců a součinnost soudu. Námitku nedostatku pravomoci, podjatosti a rozsahu nároku každou přiřaď jejímu právnímu okamžiku a výjimkám. U spotřebitelského precedentu porovnej smlouvu a tehdejší režim, místo aby byl univerzálním zákazem jakéhokoli jmenování soukromou osobou.
+
+## Řízení a nález
+
+Prověř skutečné zahájení, poplatek, ustavení tribunálu, rovnost stran, možnost uplatnit práva, předávání podání, dokazování, slyšení a případné písemné řízení. Nečinnost strany není důkazem uznání všech tvrzení. U předběžné ochrany a nouzového rozhodce ověř pravomoc podle sídla, práva a řádu; tuzemské pravidlo nepřenášej automaticky do každé zahraniční arbitráže. U svědků a dožádání zkoumej hranice donucení a pomoc soudu.
+
+Ověř, podle čeho mohou rozhodci rozhodovat a zda je doložena případná volba rozhodování podle spravedlnosti. U nálezu zjisti náležitosti, podpisy, většinu, odůvodnění a možné výjimky, doručení, účinky, opravu a smluvený přezkum. Smír v podobě nálezu odliš od soukromé dohody. Výrok musí být určitý a vykonatelný; náklady odvoď ze skutečně použitelného řádu a doložených částek.
+
+## Zrušení, exekuce a cizí nález
+
+Pro návrh na zrušení vyhledej úplný rozhodný seznam důvodů a přiřaď konkrétní vadu. Odděl nearbitrabilitu, vadu doložky, rozhodce, většiny, možnosti věc projednat, nepřípustného plnění a obnovy, pokud je příslušná úprava rozlišuje. Věcný nesouhlas neprezentuj jako obecné odvolání proti meritu. Zjisti příslušnost, lhůtu, význam včasných námitek, odklad a postup po zrušení.
+
+Odděleně mapuj obecnou námitku nedostatku titulu v exekuci, zvláštní postup zákona o arbitráži a ochranný návrh na zrušení. Ověř podmínky přerušení, zastavení, uloženého dalšího podání a pokračování; tato slova nejsou zaměnitelná. Náklady zastavení a promlčení během řízení s vadnou doložkou vyřeš podle konkrétní judikatury.
+
+U cizího nálezu načti působnost úmluvy, formu doložky, potřebné listiny, překlad, způsob uznání a výkonu a důvody odepření. Veřejný pořádek není automatická možnost přezkoumat celý spor. Při neúplném nativním pokrytí cizího práva označ konkrétní překážku, nikoli domnělou jistotu výkonu.
+
+## Mediace, ADR a smluvní výstup
+
+U mediace rozliš zapsaného mediátora, jinou facilitaci a soudem nařízené první setkání. Ověř smlouvu, začátek a konec, odměnu, mlčenlivost, střet zájmů a účinek na promlčení či prekluzi včetně případné samostatné dohody o mimosoudním jednání. Nepředpokládej bez pramene, že každé neformální jednání nemá žádné časové účinky. Nařízené setkání není vynucenou dohodou.
+
+Připrav klienta pomocí alternativy při nedohodě, důkazní síly, ceny a bezpečnosti. Mediační dohodu skutečně sepiš, urč plnění, termíny, zajištění, vypořádání, náklady a možnost získat vykonatelný titul po ověření podmínek. Podpis mediátora automaticky nenahrazuje soudní schválení nebo svolení k vykonatelnosti. U spotřebitelského ADR zjisti skutečně příslušný subjekt a rozsah pravomoci; finanční arbitr není obecný rozhodce všech obchodních sporů.
+
+Při drafting zadání napiš úplnou doložku nebo revizi: přesná instituce či jmenování, sídlo, jazyk, právo, pravidla, přezkum, mlčenlivost a eskalační kroky s proveditelnými lhůtami. Neomezuj přístup k ochraně neurčitou nekonečnou mediací. U veřejného subjektu prověř schválení a publikaci. Výstup zahrnuje konkrétní procesní návrh, lhůtovou osu, rozpočet jednotlivých cest a ověřené protiargumenty; nepředstírá odsouhlasenou dohodu ani podané opravné prostředky.

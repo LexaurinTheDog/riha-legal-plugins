@@ -1,7 +1,7 @@
 {
   "uuid": "be8eb2b6-ece2-41e2-93ea-979d18ef1484",
   "name": "ochrana-osobnosti-gdpr",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech personality rights, defamation, media and data protection practice skill - claims against unlawful publications, right of reply, non-material damages, GDPR rights and compliance, ÚOOÚ proceedings, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

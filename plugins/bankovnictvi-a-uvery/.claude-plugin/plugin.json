@@ -1,7 +1,7 @@
 {
   "uuid": "6c97fbe9-6329-4fc0-bb95-c6868e179554",
   "name": "bankovnictvi-a-uvery",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech banking and credit law practice skill - loan and credit agreements, consumer credit act and creditworthiness assessment, early repayment and default, mortgages and security packages, guarantees and accessory security, payment services and unauthorised transactions, bank secrecy and account freezes, financial arbiter, ČNB supervision and licensing, non-bank lenders, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

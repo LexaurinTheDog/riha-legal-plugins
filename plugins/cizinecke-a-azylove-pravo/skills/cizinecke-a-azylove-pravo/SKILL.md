@@ -1,7 +1,7 @@
 ---
 uuid: 0b290d1c-3e5c-4ec8-80ad-01d4bf6e40ba
 name: cizinecke-a-azylove-pravo
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,88 +25,112 @@ i18n:
       - "Zamestnankyni z Ukrajiny končí o tri týždne zamestnanecká karta a chce zmeniť zamestnávateľa. Čo a v akom poradí podať?"
       - "Klientovi bolo uložené správne vyhostenie so zákazom vstupu na 2 roky. Aké lehoty bežia a ako sa brániť?"
       - "Firma chce zamestnať programátora z Indie. Aké oprávnenie potrebuje a ako dlho to trvá?"
-description: Use when the user's matter involves foreigners in the Czech Republic - zákon o pobytu cizinců (326/1999 Sb.), zákon o azylu (325/1999 Sb.), vízum, krátkodobé, dlouhodobé vízum, dlouhodobý pobyt, přechodný pobyt, trvalý pobyt, zaměstnanecká karta, modrá karta, karta vnitropodnikově převedeného zaměstnance, sloučení rodiny, studium, podnikání cizince, občan EU, rodinný příslušník občana EU, fikce pobytu, překlenovací štítek, Komise pro rozhodování ve věcech pobytu cizinců, OAMP, zastupitelský úřad, správní vyhoštění, zákaz vstupu, zajištění cizince, návrat, Dublin, mezinárodní ochrana, azyl, doplňková ochrana, dočasná ochrana, Ukrajina, Lex Ukrajina, státní občanství (186/2013 Sb.), zaměstnávání cizinců (435/2004 Sb.), povolení k zaměstnání, nelegální práce, agenturní zaměstnávání cizinců, schengenský prostor, cestovní doklad, ohlašovací povinnost. Standalone skill - bundles CODEXIS methodology with immigration-practice method; no need to load the general codexis skill.
+description: Použij pro vstup a pobyt cizinců, víza, pobytové a zaměstnanecké karty, občany EU a rodinné příslušníky, zaměstnávání cizinců, mezinárodní a dočasnou ochranu, Dublin, vyhoštění, zajištění, návrat, státní občanství a opravné prostředky. Právní zdroje výhradně nativním CODEXIS.
 ---
 
 # Cizinecké a azylové právo ČR
 
-Samostatný oborový skill pro pobyt, zaměstnávání a ochranu cizinců. Dvě věci před vším ostatním: **status osoby** (občan EU / rodinný příslušník / třetizemec / žadatel o ochranu / držitel dočasné ochrany) a **den, kdy končí stávající oprávnění** - cizinecké lhůty jsou krátké, žaloby mají dny, ne měsíce, a žádost podaná o den později ztrácí fikci pobytu.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/326/1999/versions`, `cdx-cli get 'cdx://doc/<versionId>/toc'`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf42g'`, `cdx-cli get cdx://cz_law/325/1999/versions`, `cdx-cli search JD --query "správní vyhoštění přiměřenost zásah do soukromého a rodinného života" --court "Nejvyšší správní soud" --limit 5`.
-- Zákon o pobytu cizinců je jeden z nejčastěji novelizovaných předpisů (dočasná ochrana, digitalizace, migrační a azylový pakt EU použitelný od roku 2026, případná rekodifikace). **Každý §, lhůtu, poplatek a podmínku ověř přes `/versions` k datu podání**; číslování paragrafů s písmeny (§ 42g, § 169t) dohledávej přes `/toc`. Aktuální formuláře, poplatky a objednávkové systémy čerpej z mvcr.gov.cz a mzv.gov.cz.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| Zákon o pobytu cizinců | 326/1999 Sb. | `cz_law/326/1999` | Víza, dlouhodobý pobyt a karty (§ 42+), trvalý pobyt (§ 65+), občané EU a rodinní příslušníci (§ 87a+), vyhoštění (§ 118+), zajištění (§ 124+), řízení a lhůty (§ 168-§ 172), přestupky |
-| Zákon o azylu | 325/1999 Sb. | `cz_law/325/1999` | Azyl (§ 12), doplňková ochrana (§ 14a), řízení, nepřípustnost a zjevná nedůvodnost, lhůty pro žalobu (§ 32), kasační stížnost (§ 104a s. ř. s.) |
-| Zákon o dočasné ochraně cizinců | 221/2003 Sb. + zákony „Lex Ukrajina" (65/2022 Sb. a novely) | `cz_law/221/2003`, `cz_law/65/2022` | Dočasná ochrana, prodlužování, přechod na jiný pobyt |
-| Zákon o státním občanství | 186/2013 Sb. | `cz_law/186/2013` | Udělení (§ 14 - pobyt, jazyk, bezúhonnost, příjmy), prohlášení, pozbytí |
-| Zákon o zaměstnanosti | 435/2004 Sb. | `cz_law/435/2004` | Povolení k zaměstnání, volný přístup na trh práce (§ 98), informační povinnost zaměstnavatele, nelegální práce a sankce, agentury |
-| Správní řád / s. ř. s. | 500/2004 / 150/2002 Sb. | `cz_law/500/2004`, `cz_law/150/2002` | Subsidiárně; žaloby a kasační stížnosti, odkladný účinek |
-| Schengenský hraniční kodex / vízový kodex | (EU) 2016/399 / (ES) 810/2009 | zdroj `EU` | Vstup, krátkodobá víza, 90/180 |
-| Směrnice o volném pohybu / o dlouhodobě pobývajících rezidentech / návratová | 2004/38/ES, 2003/109/ES, 2008/115/ES | zdroj `EU` | Občané EU, rezidenti, návrat a zajištění |
-| Nařízení Dublin III + migrační a azylový pakt | (EU) 604/2013, balík 2024 | zdroj `EU` | Příslušný stát, přemístění, nový azylový rámec (ověř použitelnost) |
-| Zákon o správních poplatcích | 634/2004 Sb. | `cz_law/634/2004` | Poplatky za žádosti (položky - ověř) |
-| Trestní zákoník | 40/2009 Sb. | `cz_law/40/2009` | Trest vyhoštění (§ 80), maření výkonu (§ 337), napomáhání k nedovolenému pobytu (§ 341) |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. `/versions` k datu podání → `/toc` (paragrafy s písmeny!) → `/text?part=`; unijní předpisy ze zdroje `EU`.
-2. Judikatura: **NSS** (`--court "Nejvyšší správní soud"`, senáty Azs - azyl i pobyt) - přiměřenost vyhoštění (čl. 8 Úmluvy), účelové sňatky, fikce pobytu, zajištění, nepřijatelnost kasační stížnosti; **ÚS** a **ESLP** (`ES` - čl. 3, čl. 5, čl. 8 Úmluvy), **SDEU** (`ES` - směrnice o volném pohybu, návratová, Dublin). Ověř, zda rozhodnutí nevychází z předchozího znění.
-3. Komentář (`COMMENT`) k pojmům (rodinný příslušník, přiměřenost, pronásledování, vážná újma); metodiky a informace MV jsou administrativní výklad - u lhůt a formulářů však praktický zdroj.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Status a cíl.** Občan EU × rodinný příslušník občana EU (vč. českého občana - ověř režim) × třetizemec s pobytem × žadatel o mezinárodní ochranu × držitel dočasné ochrany × bez oprávnění. Cíl: vstup, pobyt, zaměstnání, podnikání, sloučení rodiny, studium, trvalý pobyt, občanství, obrana proti vyhoštění/zajištění.
-2. **Časová osa.** Den konce oprávnění, **žádost o prodloužení / změnu podat před uplynutím** (fikce oprávněného pobytu do rozhodnutí; překlenovací štítek; cestování v době fikce omezené), lhůty ministerstva pro rozhodnutí (§ 169t - ověř), nečinnost (§ 80 SŘ, žaloba § 79 s. ř. s.), doba zpracování na zastupitelském úřadu, objednání termínu.
-3. **Pobytová oprávnění.** Krátkodobé vízum (90/180) × dlouhodobé vízum (účel) × dlouhodobý pobyt: zaměstnanecká karta (§ 42g - duální, vázaná na pracovní místo, změna zaměstnavatele oznámením v zákonné lhůtě - ověř), modrá karta (§ 42i - vysoká kvalifikace, mzdový práh), ICT karta, sloučení rodiny (§ 42a), studium, vědecký výzkum, podnikání; přechodný pobyt občana EU a rodinného příslušníka (§ 87a+, § 87b); trvalý pobyt po 5 letech nepřetržitého pobytu (§ 68 - přerušení, nepřítomnost, zkouška z jazyka - ověř) / po 2 letech u rodinných příslušníků; dlouhodobě pobývající rezident EU. Náležitosti: cestovní doklad, doklad o ubytování, prostředky, bezúhonnost, pojištění (komplexní zdravotní), poplatky.
-4. **Zaměstnávání cizinců.** Volný přístup na trh práce (§ 98 zák. 435/2004 Sb. - trvalý pobyt, dočasná ochrana, studenti, sloučení…) × povolení k zaměstnání × zaměstnanecká/modrá karta; informační povinnost zaměstnavatele vůči ÚP, evidence; **nelegální práce** (výkon bez oprávnění k pobytu nebo k práci) - pokuty zaměstnavateli (ověř výši), úhrada nákladů vyhoštění, vyloučení z dotací; agenturní zaměstnávání cizinců (omezení - ověř); vysílání pracovníků (směrnice 96/71/ES).
-5. **Řízení a opravné prostředky.** OAMP MV / zastupitelský úřad / Komise pro rozhodování ve věcech pobytu cizinců (odvolání 15 dnů); **žaloba ve zkrácených lhůtách** (§ 172 - 30 dnů; proti vyhoštění 10 dnů; ověř), vyloučení soudního přezkumu u některých rozhodnutí (§ 171 - krátkodobá víza), odkladný účinek ze zákona × na návrh, kasační stížnost (2 týdny, advokát), nepřijatelnost u azylu (§ 104a s. ř. s.); ústavní stížnost; ESLP (rule 39).
-6. **Vyhoštění, zajištění, návrat.** Správní vyhoštění (§ 118-§ 120a - důvody, doba zákazu vstupu, přiměřenost dopadů do soukromého a rodinného života § 174a, závazné stanovisko k možnosti vycestování), dobrovolný návrat, **zajištění** (§ 124+ - důvody, maximální doba, soudní přezkum žalobou v krátké lhůtě, mírnější opatření § 123b, zvláštní ochrana zranitelných), Dublin přemístění, trest vyhoštění (§ 80 TZ), evidence nežádoucích osob, SIS.
-7. **Mezinárodní ochrana.** Žádost a pohovor u OAMP, azyl (§ 12 - pronásledování) × doplňková ochrana (§ 14a - vážná újma) × humanitární azyl (§ 14), nepřípustnost / zjevná nedůvodnost (§ 10a, § 16), **žaloba ve lhůtě 15 dnů, u zjevně nedůvodných kratší** (§ 32 - ověř), pobyt po dobu řízení, práce po 6 měsících (ověř), zranitelné osoby, děti bez doprovodu, dočasná ochrana (Ukrajina) - prodlužování, zaměstnání volné, přechod na dlouhodobý pobyt zvláštního typu (ověř aktuální „Lex Ukrajina").
-8. **Státní občanství.** Udělení (§ 14 zák. 186/2013 Sb. - trvalý pobyt 5/3 roky, nepřítomnost, bezúhonnost, jazyk B1 a reálie, příjmy, plnění povinností; bez nároku), prohlášení (§ 31+ - děti, druhá generace), nabytí narozením, pozbytí; správní uvážení a přezkum.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Žádost o prodloužení nebo změnu podaná po uplynutí platnosti (i o den) - ztráta fikce, pobyt bez oprávnění, přestupek, riziko vyhoštění.
-- Odvolání ke Komisi po 15 dnech, žaloba po 30 dnech (nebo po 10 dnech u vyhoštění) - počítáno „jako ve správním soudnictví" 2 měsíce je pozdě.
-- Změna zaměstnavatele u zaměstnanecké karty bez včasného oznámení ministerstvu - práce bez oprávnění = nelegální práce obou stran.
-- Pobytové oprávnění považováno za oprávnění k práci - u některých pobytů je nutné samostatné povolení nebo volný přístup podle § 98.
-- Cestování mimo ČR v době fikce pobytu bez překlenovacího štítku / s prošlým vízem - nemožnost návratu.
-- Trvalý pobyt počítaný bez zohlednění přerušení a nepřítomnosti; občanství žádané bez splnění příjmů a jazykové zkoušky.
-- Dočasná ochrana zaměněna za azyl - jiný režim, jiné lhůty, jiný přechod na trvalý pobyt.
-- Azylová žaloba podaná ve „standardní" lhůtě - lhůty 15 / 7 dnů (ověř), kasační stížnost bez advokáta nepřípustná.
-- Zajištění napadené až po propuštění nebo bez využití mírnějších opatření.
-- Sňatek nebo otcovství bez skutečného rodinného života - posuzováno jako účelové, zamítnutí a vyhoštění.
-- Neověřené překlady, chybějící apostila / superlegalizace u zahraničních listin - žádost nepřijata.
-- Doplňování čísel jednacích, dat konce platnosti a údajů z dokladů z paměti - vždy z listin nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (co podat, kam, do kdy; co se stane při zmeškání).
-2. **Status osoby a cíl.**
-3. **Právní rámec** - zákon o pobytu cizinců / azylu / zaměstnanosti v aktuálním znění k datu podání, s odkazy.
-4. **Postup krok za krokem** (formulář, náležitosti, poplatek, místo podání, lhůta rozhodnutí, fikce).
-5. **Rizika a alternativy** (jiný pobytový titul, dobrovolný návrat, přiměřenost, ochrana rodinného života).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace vč. NSS, ÚS, ESLP, SDEU.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf/článek jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NSS - 1 Azs 123/2025 - …`, `ESLP - …`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („před uplynutím platnosti“, „do 30 dnů ode dne doručení“, „nepřetržitě“, „přiměřený z hlediska zásahu do soukromého a rodinného života“).
-- Jeden časový řez; znění účinné k datu podání žádosti / vydání rozhodnutí.
-- Osobní údaje a údaje o zdravotním stavu či pronásledování uváděj jen v nezbytném rozsahu.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; paragrafy s písmeny dohledávej přes `/toc`; změny → `/versions`.
-- `docId` jen z API.
-- Lhůty, poplatky, mzdové prahy, doby pobytu a maximální doby zajištění nikdy z paměti - vždy z aktuálního znění s odkazem.
-- Mimo CODEXIS jen oficiální zdroje (mvcr.gov.cz, mzv.gov.cz, mpsv.cz, uradprace.cz, nssoud.cz, unhcr) když CODEXIS neodpovídá; nikdy neradit obcházení kontrol, účelová jednání ani nepravdivá tvrzení v žádostech.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Oborový postup: pobyt, práce a ochrana cizinců
+
+### Status a bezpečné pořadí kroků
+Z podkladů určuj občanství, aktuální a požadovaný status, rodinné vazby a roli klienta: cizinec, rodinný příslušník, zaměstnavatel nebo jiný účastník. Rozliš občana EU, rodinného příslušníka občana EU či českého občana, třetizemce, žadatele o mezinárodní ochranu, držitele dočasné ochrany a osobu bez doloženého oprávnění. Získaný pobytový titul sám neprokazuje oprávnění k práci. Zachovej osobní údaje, zdravotní stav a popis pronásledování jen v nezbytném rozsahu.
+
+Sestav osu vydání a platnosti dokladů, vstupů a výstupů, žádostí, prodloužení, změn účelu, rozhodnutí a doručení. Nejdříve zjisti nejbližší rizikový okamžik. V nativním CODEXIS načti rozhodné pobytové, azylové, zaměstnanecké, procesní a unijní předpisy; zvlášť ověř účinnost a přechod nových migračních pravidel. Datum podání nepovažuj bez přechodného testu za univerzální volbu práva pro celou věc.
+
+### Pobytové možnosti
+Pro požadovaný cíl porovnej krátkodobý vstup, dlouhodobé vízum, dlouhodobý a trvalý pobyt, zaměstnaneckou, modrou a vnitropodnikovou kartu, sloučení rodiny, studium, výzkum a podnikání. U občanů EU a rodinných příslušníků ověř zvláštní režim. Zjisti, kde a v jaké formě lze žádost podat, zda je přípustná změna na území, které náležitosti a legalizace či překlady jsou nutné a jaké výjimky se uplatní.
+
+Prověř požadavky na cestovní doklad, ubytování, prostředky, pojištění, kvalifikaci, bezúhonnost a poplatky. U trvalého pobytu a rezidenta EU zjisti započitatelné doby, přerušení, nepřítomnost a jazykové podmínky. Žádnou dobu nebo mzdový práh nedoplňuj z paměti. Ověř následky vad a pozdního podání, možnost omluvy či doplnění, fikci oprávnění a podmínky návratu ze zahraničí. Překlenovací doklad a samotnou existenci fikce neposuzuj jako totožné.
+
+### Práce a povinnosti zaměstnavatele
+Zkoumej volný přístup na trh práce, samostatné povolení a vazbu pobytové karty na konkrétní práci. U změny zaměstnavatele ověř oznámení, předchozí souhlas, rozhodné datum a možné výjimky. Zahrň evidenci, informační povinnosti zaměstnavatele, agenturní zaměstnávání, vysílání pracovníků a přeshraniční služby. Riziko nelegální práce posuzuj po jednotlivých znacích a osobách; odděl sankci, náklady návratu, dotační následky a soukromoprávní nároky. Pouhý popis zaměstnání nenahrazuje důkaz smlouvy a skutečného výkonu.
+
+### Řízení, soud a náklady
+U každého úkonu ověř kompetenci zastupitelského úřadu, ministerstva, policie, Komise nebo jiného orgánu. Zkoumej opravný prostředek, přípustnost soudního přezkumu, jeho výjimky, nečinnost, odkladný účinek ze zákona i na návrh, kasační a ústavní ochranu. Příslušnost odvozuj z úplného zvláštního ustanovení včetně posledních vět a výjimek; nezaměňuj ji s místem obvyklého pobytu. U vyhoštění prověř návaznost obecné soudněsprávní úpravy.
+
+Pro každý prostředek zvlášť ověř osobní a věcné osvobození od soudních poplatků. Samotné cizí občanství ani podobnost s azylovou věcí nezakládá univerzální osvobození. Odliš správní poplatek žádosti, soudní poplatek, náklady zastoupení a případné ustanovení zástupce. Lhůty počítej od doložené právní události, s pravidly doručování, běhu a zachování; nepřenášej obecnou délku mezi různými rozhodnutími.
+
+### Vyhoštění, zajištění a ochrana
+Rozliš správní a trestní vyhoštění, návrat, zákaz vstupu, evidenci nežádoucích osob, zajištění a přemístění mezi státy. Prověř aktuální hrozbu, individuální proporcionalitu, délku zákazu, rodinný a soukromý život, zdravotní situaci, non-refoulement a zájem dítěte. Existence dítěte sama nenahrazuje konkrétní test. U zajištění zkoumej zákonný důvod, dosažitelný účel, mírnější opatření, dobu, průběžný přezkum a zranitelnost.
+
+Odděl azyl, doplňkovou a humanitární ochranu, dočasnou ochranu, nepřípustnost a zjevnou nedůvodnost. U pohovoru a důkazů zachovej rozdíl mezi tvrzením žadatele a zjištěným faktem; informace o zemi původu nedoplňuj externě. Zkoumej práci a pobyt během řízení, dítě bez doprovodu, prodlužování dočasné ochrany a přechod k jinému titulu. U přeshraniční ochrany ověř příslušný stát a použitelnost přechodných pravidel.
+
+### Občanství, argumenty a výstupy
+U nabytí občanství rozliš narození, udělení, prohlášení a pozbytí; ověř pobyt, jazyk, příjmy, bezúhonnost, plnění povinností, výjimky a meze správního uvážení. Judikaturu NSS, ÚS, SDEU a ESLP čerpej jen z CODEXIS, vždy s úplným textem a skutkovým srovnáním. Je-li zadána praxe senátu, dodej skutečně senátní výběr.
+
+Výstup musí obsahovat zvolenou cestu a alternativu, checklist listin, adresáta, konkrétní návrh a náklady. Petit zaměř na skutečné rozhodnutí či zásah a odděl předběžnou ochranu od merita. Chybějící formulář nebo skutkový podklad označ; nepředstírej podání a nenavrhuj účelové sňatky, nepravdivá tvrzení nebo obcházení kontrol.

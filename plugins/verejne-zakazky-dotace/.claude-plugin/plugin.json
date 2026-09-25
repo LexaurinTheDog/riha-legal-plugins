@@ -1,7 +1,7 @@
 {
   "uuid": "4430e619-e56c-40c8-9837-0379e55b19cd",
   "name": "verejne-zakazky-dotace",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech public procurement and subsidies practice skill - procurement regimes and procedures under ZZVZ, objections and ÚOHS review, contract changes, subsidy conditions, irregularities, budget discipline breaches and audits of public bodies, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

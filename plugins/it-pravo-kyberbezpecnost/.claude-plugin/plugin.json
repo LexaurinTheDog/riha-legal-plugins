@@ -1,7 +1,7 @@
 {
   "uuid": "c286fa94-da7c-487e-874b-e16a852a8d1d",
   "name": "it-pravo-kyberbezpecnost",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Czech IT law and cybersecurity practice skill - software development and licensing contracts, SaaS and cloud, IT outsourcing and SLA, open source, NIS2 and the new Cybersecurity Act, regulated entities and incident reporting, DORA, security breach liability, e-commerce platforms and DSA, electronic signatures and eIDAS, data localisation, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

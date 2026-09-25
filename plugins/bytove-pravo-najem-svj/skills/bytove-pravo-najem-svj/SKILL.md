@@ -1,7 +1,7 @@
 ---
 uuid: 7dcc8498-c468-472f-b815-09073e97daa9
 name: bytove-pravo-najem-svj
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,90 +25,112 @@ i18n:
       - "Nájomca neplatí tri mesiace a v byte bývajú aj osoby, ktoré nenahlásil. Ako dať platnú výpoveď a ako rýchlo ho vysťahovať?"
       - "Zhromaždenie SVJ schválilo úver na zateplenie a klient bol prehlasovaný. Môže sa brániť a dokedy?"
       - "Prenajímateľ vrátil zábezpeku zníženú o 'opotrebenie' bez dokladov. Aké má nájomca nároky?"
-description: Use when the user's matter involves Czech housing, leases or condominium governance - nájem bytu, nájem domu, nájemní smlouva, pronajímatel, nájemce, nájemné, zvyšování nájemného, jistota, kauce, služby spojené s užíváním bytu, vyúčtování služeb (67/2013 Sb.), drobné opravy, podnájem, členové domácnosti, přechod nájmu, výpověď z nájmu, výpověď bez výpovědní doby, přezkum výpovědi, vyklizení, automatické obnovení nájmu, prostor sloužící podnikání, náhrada za převzetí zákaznické základny, pacht, ubytování, Airbnb, krátkodobý pronájem, společenství vlastníků jednotek (SVJ), shromáždění, přehlasovaný vlastník, prohlášení vlastníka, příspěvky na správu, potvrzení o dluzích, nucený prodej jednotky, bytové družstvo, družstevní byt, převod družstevního podílu, vyloučení z družstva, bytové spoluvlastnictví (§ 1158+ OZ), nájem (§ 2201-§ 2331 OZ). Standalone skill - bundles CODEXIS methodology with housing-law method; no need to load the general codexis skill.
+description: Použij pro nájem bytu či domu, podnikatelských prostor, podnájem, pacht, ubytování a krátkodobé pronájmy; nájemné, jistotu, služby, opravy, výpovědi, přezkum a vyklizení; SVJ, prohlášení vlastníka, shromáždění, příspěvky, převody jednotek a bytová družstva. Právní rešerše pouze nativním CODEXIS.
 ---
 
-# Bytové právo - nájem a SVJ ČR
+# Bytové právo – nájem a SVJ ČR
 
-Samostatný oborový skill pro nájemní vztahy a správu domů. Dvě věci před vším ostatním: **kvalifikace vztahu** (nájem bytu s kogentní ochranou × prostor sloužící podnikání × obecný nájem × pacht × ubytování × družstevní nájem) a **formální náležitosti výpovědi** - většina výpovědí z nájmu bytu padá na chybějícím poučení, formě nebo zmeškané dvouměsíční lhůtě k přezkumu.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/89/2012/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf2288'`, `cdx-cli get cdx://cz_law/67/2013/versions`, `cdx-cli get cdx://cz_law/90/2012/versions`, `cdx-cli search JD --query "výpověď z nájmu bytu poučení námitky přezkum 2290" --court "Nejvyšší soud" --limit 5`.
-- Nájemní a bytové právo OZ bylo novelizováno (2020 - předkupní právo, SVJ, smluvní pokuta u nájmu bytu; další změny průběžně) a limity (drobné opravy, jistota, zvyšování) závisí na nařízeních a datech. **Každý §, lhůtu, limit a násobek ověř v aktuálním znění k datu uzavření smlouvy nebo úkonu**; nikdy z paměti.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| OZ - nájem | 89/2012 Sb. | `cz_law/89/2012` | Obecný nájem (§ 2201-§ 2234), nájem bytu a domu (§ 2235-§ 2301: forma § 2237, nájemné § 2246-§ 2250, jistota § 2254, práva a povinnosti § 2255-§ 2270, domácnost a podnájem § 2272-§ 2278, přechod nájmu § 2279+, obnovení § 2285, skončení § 2286-§ 2296), prostor sloužící podnikání (§ 2302-§ 2315), ubytování (§ 2326+), pacht (§ 2332+) |
-| OZ - bytové spoluvlastnictví | 89/2012 Sb. | `cz_law/89/2012` | Jednotka a prohlášení (§ 1158-§ 1173), práva a povinnosti vlastníka (§ 1175-§ 1188), SVJ (§ 1189-§ 1216: shromáždění § 1206-§ 1209, per rollam § 1210+, příspěvky § 1180-§ 1181), nucený prodej (§ 1184), převod (§ 1186 potvrzení o dluzích) |
-| NV o úpravě některých záležitostí bytového spoluvlastnictví | 366/2013 Sb. | `cz_law/366/2013` | Společné části, podíly, rozúčtování |
-| Zákon o službách | 67/2013 Sb. | `cz_law/67/2013` | Zálohy, rozúčtování, vyúčtování (§ 7 - lhůta), námitky (§ 8), doplatky a přeplatky, pokuta za prodlení (§ 13) |
-| NV o drobných opravách | 308/2015 Sb. | `cz_law/308/2015` | Vymezení drobných oprav a běžné údržby, limity částek |
-| ZOK - bytové družstvo | 90/2012 Sb. | `cz_law/90/2012` | Družstevní byt a nájem (§ 727-§ 757), převod podílu (§ 736), vyloučení (§ 734), vypořádací podíl (§ 748) |
-| Zákon o vlastnictví bytů (starý) | 72/1994 Sb. | `cz_law/72/1994` | Jednotky vymezené před 2014 (dvojí režim) |
-| Katastrální zákon | 256/2013 Sb. | `cz_law/256/2013` | Zápis prohlášení, jednotek, SVJ |
-| o. s. ř. / ZŘS | 99/1963 / 292/2013 Sb. | `cz_law/99/1963`, `cz_law/292/2013` | Přezkum výpovědi, žaloba na vyklizení a výkon vyklizením (§ 340+), statusové věci SVJ a družstev |
-| Zákon o hospodaření energií / živnostenský zákon | 406/2000 / 455/1991 Sb. | `cz_law/406/2000`, `cz_law/455/1991` | PENB při pronájmu, ubytovací služby jako živnost |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` **k datu uzavření smlouvy / úkonu** (pozor na novelu 2020 a přechodná ustanovení § 3074 OZ pro nájmy z doby před 2014) → `/toc` → `/text?part=`.
-2. Judikatura: **NS** senát 26 Cdo (nájem bytu a prostor, SVJ, družstva) - výpovědní důvody, poučení a přezkum, krátkodobé pronájmy nájemcem, jistota a její úročení, přehlasovaný vlastník, potvrzení o dluzích; **ÚS** k ochraně nájemce a vlastníka. Ověř datum a znění.
-3. Komentář (`COMMENT`) k pojmům (hrubé × zvlášť závažné porušení, obvyklé nájemné, důležitý důvod u § 1209, drobné opravy); vzory (`VS`) nájemních smluv a výpovědí sladit s aktuálním zněním - staré vzory citují neplatná čísla a smluvní pokuty.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Kvalifikace vztahu.** Nájem bytu/domu k bydlení (kogentní ochrana § 2235 - k ujednáním zkracujícím práva nájemce se nepřihlíží) × prostor sloužící podnikání (§ 2302+) × obecný nájem (chata, garáž) × pacht (výnos) × ubytování (§ 2326 - krátkodobé, Airbnb) × družstevní nájem (ZOK + stanovy) × podnájem × výprosa/výpůjčka. Datum uzavření a rozhodné znění; nájmy před 2014 (§ 3074 OZ).
-2. **Smlouva a její nastavení.** Písemná forma (§ 2237 - nedostatek nelze namítat proti nájemci), předmět a stav (§ 2242 protokol), nájemné a služby (§ 2246-§ 2247; není-li sjednáno - obvyklé), zvyšování (§ 2248 dohoda / § 2249 zákonný postup - limit a interval ověř / soud), **jistota** (§ 2254 - nejvýše trojnásobek měsíčního nájemného, úrok, vrácení při skončení se započtením), smluvní pokuta (po novele 2020 přípustná v limitu jistoty - ověř § 2239), drobné opravy a údržba (§ 2257, NV 308/2015 Sb.), zvířata (§ 2258), úpravy bytu (§ 2263), členové domácnosti (§ 2272 - právo přijímat, oznamovací povinnost, limit počtu), podnájem (§ 2274-§ 2275 - bez souhlasu jen když nájemce v bytě sám trvale bydlí), PENB.
-3. **Skončení nájmu bytu.** Dohoda; uplynutí doby + **automatické obnovení** (§ 2285 - nevyzve-li pronajímatel do 3 měsíců, obnovuje se na stejnou dobu, nejvýše 2 roky - ověř); výpověď nájemce (bez důvodu u doby neurčité, 3 měsíce; u doby určité jen při změně okolností § 2287); **výpověď pronajímatele** (§ 2288 - taxativní důvody: hrubé porušení, odsouzení za úmyslný TČ, vyklizení domu ve veřejném zájmu, jiný obdobně závažný důvod; u doby neurčité navíc potřeba bytu pro sebe/příbuzné), **písemně, s výpovědním důvodem a poučením o právu podat námitky a návrh na přezkum do 2 měsíců** (§ 2286 odst. 2, § 2290) - jinak neplatná; **výpověď bez výpovědní doby** (§ 2291 - zvlášť závažné porušení: neplacení nájemného a nákladů za 3 měsíce, poškozování, neoprávněné užívání; předchozí výzva k nápravě s přiměřenou lhůtou); přechod nájmu při smrti (§ 2279-§ 2284 - členové domácnosti, 2 roky); skončení ex lege (zánik bytu).
-4. **Vyklizení a vypořádání.** Odevzdání bytu (§ 2292-§ 2293 - stav podle protokolu, běžné opotřebení), po skončení nájmu **jen ujednané nájemné do vyklizení** (§ 2295), náhrada škody, vrácení jistoty se započtením, žaloba na vyklizení (okresní soud, bytová náhrada už není), výkon rozhodnutí vyklizením (§ 340+ o. s. ř. - exekutor, uskladnění věcí), nedovolené svépomocné vystěhování (odpovědnost, § 14 OZ jen výjimečně).
-5. **Služby (67/2013 Sb.).** Rozsah služeb a zálohy, rozúčtování (podle podlahové plochy, osob, měřidel), **vyúčtování do 4 měsíců po skončení zúčtovacího období** (§ 7), doložení nákladů (§ 8 - nahlédnutí do podkladů, námitky do 30 dnů, vyřízení do 30 dnů - ověř), splatnost přeplatku/nedoplatku (4 měsíce po doručení vyúčtování), pokuta za prodlení (§ 13 - 50 Kč/den, snížení - ověř), řádné vyúčtování jako podmínka splatnosti nedoplatku.
-6. **Prostor sloužící podnikání (§ 2302-§ 2315).** Účel a jeho změna, převod nájmu s podnikem (§ 2307), výpověď u doby určité (§ 2308 nájemce, § 2309 pronajímatel - důvody), u doby neurčité (§ 2312 - 6 měsíců), **námitky proti výpovědi do 1 měsíce** (§ 2314 - jinak právo na přezkum zaniká), náhrada za převzetí zákaznické základny (§ 2315), obchodní podmínky, stavební úpravy a odpisy, podnájem.
-7. **SVJ a bytové spoluvlastnictví.** Prohlášení vlastníka a jeho změna (§ 1169 - souhlas dotčených), vznik SVJ a zápis do rejstříku, stanovy (§ 1200), orgány (výbor / předseda, kontrolní komise), **shromáždění** (svolání § 1207 - 30 dnů předem s pozvánkou a podklady; usnášeníschopnost nadpoloviční většina hlasů § 1206; rozhoduje většina hlasů přítomných, ledaže zákon nebo stanovy vyšší), per rollam (§ 1210-§ 1214), **přehlasovaný vlastník** (§ 1209 - návrh soudu do 3 měsíců od dozvědění, důležitý důvod), příspěvky a zálohy (§ 1180-§ 1181, vyúčtování), dluhy vlastníka (žaloba, přednostní uspokojení části pohledávky SVJ v dražbě jednotky - ověř § 337c o. s. ř.), **nucený prodej jednotky** (§ 1184 - soud na návrh SVJ při závažném porušení a po výzvě), převod jednotky (§ 1186 - potvrzení o dluzích, přechod dluhů na nabyvatele), stavební úpravy a společné části (NV 366/2013), krátkodobé pronájmy a domovní řád, pojištění, GDPR a kamery, rejstřík SVJ a sbírka listin.
-8. **Bytové družstvo.** Nájem družstevního bytu (ZOK § 741+, stanovy - nájemné = účelně vynaložené náklady), **převod družstevního podílu bez souhlasu** (§ 736 - účinnost doručením smlouvy družstvu; daňový a poplatkový režim × jednotka), vyloučení člena (§ 734 - výstraha, rozhodnutí, námitky, soud), vypořádací podíl (§ 748), převod jednotky do vlastnictví (§ 1188 OZ - bezúplatně po splacení anuity), anuita a úvěry, shromáždění delegátů.
-9. **Krátkodobé pronájmy (Airbnb).** Ubytování (§ 2326) × nájem; pronájem třetím osobám nájemcem = porušení nájmu a výpovědní důvod (judikatura NS), souhlas vlastníka, SVJ stanovy a domovní řád, živnost (ubytovací služby), daně a poplatky obce, evidence hostů (cizinecká policie), obecní regulace a evidenční systémy (ověř aktuální úpravu).
-10. **Spory.** Přezkum výpovědi (2 měsíce - prekluze), žaloba na vyklizení, žaloba na zaplacení nájemného a služeb, žaloba přehlasovaného vlastníka (3 měsíce), určení neplatnosti usnesení shromáždění, předběžné opatření, exekuce vyklizením; okresní soud, u SVJ/družstev statusové věci krajský soud (§ 85 ZŘS).
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Výpověď bez písemného poučení o námitkách a přezkumu, bez uvedení důvodu nebo bez písemné formy - neplatná; nájemce zmeškal 2 měsíce k přezkumu - výpověď platí i s vadami.
-- Výpověď bez výpovědní doby bez předchozí výzvy k nápravě nebo za pouhé „hrubé" (ne „zvlášť závažné") porušení.
-- Nájem na dobu určitou skončil, nájemce dál bydlí a pronajímatel do 3 měsíců nevyzval - nájem se obnovil.
-- Jistota nad trojnásobek nájemného; jistota nevrácená bez vyúčtování; úrok z jistoty.
-- Zvyšování nájemného nad zákonný limit nebo častěji než zákon dovoluje.
-- Vyúčtování služeb po lhůtě nebo bez doložení - nedoplatek není splatný, hrozí pokuta; námitky zmeškány.
-- Po skončení nájmu účtováno „nájemné" navýšené o sankce - § 2295 dovoluje jen ujednané nájemné.
-- Podnájem nebo Airbnb nájemcem bez souhlasu brán jako bez následků - výpovědní důvod.
-- Prostor sloužící podnikání: námitky proti výpovědi po 1 měsíci - právo na přezkum zaniklo.
-- Přehlasovaný vlastník žaluje po 3 měsících nebo bez důležitého důvodu.
-- Převod jednotky bez potvrzení o dluzích - nabyvatel přebírá dluhy na správě domu.
-- Shromáždění svolané bez 30denní lhůty nebo bez podkladů - napadnutelnost usnesení; per rollam bez formy vyžadované stanovami.
-- Starý vzor nájemní smlouvy se smluvní pokutou nad limit nebo se zákazem chovu zvířat - nepřihlíží se.
-- Doplňování čísel jednotek, podílů, dat a částek z paměti - vždy z LV, smlouvy nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (co udělat, do kdy; u výpovědi přesné náležitosti).
-2. **Kvalifikace vztahu a rozhodné znění.**
-3. **Právní rámec** - OZ / 67/2013 / ZOK v aktuálním znění, s odkazy.
-4. **Postup nebo nároky** - tabulka: krok/nárok | právní základ | forma a lhůta | důkaz.
-5. **Rizika a alternativy** (dohoda o skončení, splátky, mediace, náklady a délka vyklizení).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NS - 26 Cdo 2128/2023 - …`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („do dvou měsíců ode dne, kdy mu byla výpověď doručena“, „zvlášť závažným způsobem“, „nejvýše trojnásobek“, „do 3 měsíců od uplynutí doby“).
-- Jeden časový řez; u výpovědi znění účinné v den doručení.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Limity (jistota, zvyšování, drobné opravy, pokuty za vyúčtování) a lhůty nikdy z paměti - vždy z aktuálního znění s odkazem.
-- Údaje o jednotkách a vlastnících výhradně z katastru a rejstříku SVJ; mimo CODEXIS jen oficiální zdroje (justice.cz, ČÚZK, mmr.gov.cz) když CODEXIS neodpovídá.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Oborový postup: nájemní vztahy a správa domu
+
+### Kvalifikace, identita a čas
+Nejprve určuj roli klienta a skutečný účel užívání. Rozliš nájem bytu nebo domu k bydlení, podnikatelský prostor, obecný nájem, družstevní nájem, podnájem, pacht, ubytování, výpůjčku a výprosu. Název smlouvy nestačí. Identitu bytu, jednotky, domu, podílů a stran přebírej z dodaných listin; nedoplňuj ji údaji jiné nemovitosti. Zjisti vznik vztahu, dodatky a rozhodné události. V CODEXIS ověř přechod starých nájmů a režim jednotek vymezených podle předchozí úpravy; nespojuj je automaticky do jednoho časového řezu.
+
+### Smlouva za klientovu stranu
+Ověř formu a následky její vady, předmět, stav a předání, sjednaný nebo náhradní způsob určení nájemného, služby a zálohy. Samostatně prověř dohodnuté a zákonné zvyšování nájemného, limity a postup soudu. Zkoumej přípustnost a vzájemnou vazbu jistoty, smluvní pokuty, úročení, započtení a vrácení. Rozděl běžnou údržbu, drobné opravy a větší vady podle rozhodných prováděcích předpisů, nikoli podle zapamatovaných částek.
+
+Prověř zvířata, stavební úpravy, součinnost, domácnost, oznamování změn, podnájem a energetické doklady. Při redlinu chraň konkrétní stranu v mezích ověřené kogentní ochrany; napiš celé články, nikoli jen rizikové poznámky. U podnikatelských prostor zohledni investice a odpisy, převod nájmu se závodem, změnu účelu, provoz a zákaznickou základnu. U pachtu odděl užívání od požívání výnosů.
+
+### Výpověď a jiné skončení
+U každého způsobu skončení ověř právní titul, podmínky, náležitosti, oprávněnou osobu a následky. Rozliš dohodu, dobu určitou a její možné obnovení, výpověď jednotlivých stran, změnu okolností, zánik předmětu a přechod nájmu při smrti. U výpovědi eviduj zvlášť vyhotovení, podpis, odeslání, dojití, běh výpovědní doby a zjištění vady. Známé odeslání nenahrazuje neznámé dojití.
+
+Ověř skutečný obsah poučení, vymezení skutku a zákonného důvodu. U okamžitého ukončení zvlášť načti podmínky předchozí výzvy, možnost nápravy a důkaz doručení; na jiný režim je nepřenášej mechanicky. Každé vadě přiřaď její konkrétní právní následek a rozsah soudního přezkumu. Uplynutí lhůty k přezkumu nepovažuj bez výzkumu za zhojení všech vad; rozliš neplatnost a jednání, ke kterému se nepřihlíží. U podnikatelského nájmu samostatně prověř námitky proti výpovědi a jejich vazbu na soudní ochranu.
+
+### Vyklizení, dluhy a služby
+Zkontroluj odevzdání, stav podle protokolu, běžné opotřebení, náhradu za užívání po skončení, nájemné, služby a škodu jako odlišné položky. Prověř přípustnost započtení jistoty a zákaz nepřípustné svépomoci. Návrh na vyklizení musí přesně identifikovat objekt a osoby; petit přezkumu musí určit konkrétní výpověď. Ověř pravomoc, příslušnost, předběžnou ochranu, náklady a následný výkon včetně nakládání s věcmi.
+
+U služeb ověř rozsah, zálohy, rozúčtovací metodu, měřidla, vyúčtování, zpřístupnění podkladů, námitky, splatnost a sankce. Ke každému úkonu zjisti vlastní lhůtu a spouštěč. Nedostatek vyúčtování nepřeváděj automaticky na univerzální výsledek; dolož, jak ovlivňuje právě uplatněný nárok.
+
+### SVJ a družstvo
+Prověř prohlášení vlastníka, společné části, změny podílů, vznik a zápis SVJ, stanovy a působnost orgánů. U shromáždění a per rollam zkoumej svolání, obsah pozvánky, podklady, formu, usnášeníschopnost a potřebnou většinu podle zákona i stanov. Neuváděj jednu pevnou svolávací dobu pro každý dům. U přehlasovaného vlastníka ověř legitimaci, důvod, čas počátku lhůty a možný návrh soudu. Zahrň příspěvky na správu, vymáhání dluhů, nucený prodej, potvrzení o dluzích při převodu, stavební úpravy, pojištění a ochranu údajů či kamery.
+
+U bytového družstva odliš členské právo, nájem, převod podílu, účinky vůči družstvu, anuitu a financování. Prověř vyloučení, výstrahu, námitky, soudní přezkum, vypořádací podíl, delegáty a podmínky převodu jednotky do vlastnictví. Daňový a poplatkový režim podílu nezaměňuj s jednotkou.
+
+### Krátkodobé užívání a dokončení
+U krátkodobého pronájmu a Airbnb ověř smluvní kvalifikaci, souhlas, oprávnění SVJ, živnostenskou a obecní regulaci, hostovskou evidenci, daně a poplatky. Z toho, že jde o krátký pobyt, nevyvozuj bez analýzy všechny právní následky.
+
+Dodej nejbližší úkon a ověřenou lhůtu, kvalifikaci, mapu nároků a důkazů, použitelné smluvní nebo procesní znění a alternativy dohody či splátek. Pokud je požadována praxe konkrétního senátu, vyhledej v CODEXIS jeho srovnatelná rozhodnutí a odděl od obecné judikatury soudu. Každou neověřenou identitu či datum označ k doplnění.

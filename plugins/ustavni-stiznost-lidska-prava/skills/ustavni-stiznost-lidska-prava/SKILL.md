@@ -1,7 +1,7 @@
 ---
 uuid: d43ced1e-7f34-4e5c-a810-17bcda834398
 name: ustavni-stiznost-lidska-prava
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,87 +25,120 @@ i18n:
       - "Najvyšší súd odmietol dovolanie klienta pre neprípustnosť. Plynie lehota na ústavnú sťažnosť a proti čomu ju podať?"
       - "Priprav štruktúru ústavnej sťažnosti proti rozsudku, ktorý nereagoval na kľúčovú námietku - aké právo namietať a akú judikatúru ÚS?"
       - "Ústavný súd sťažnosť odmietol ako zjavne neopodstatnenú. Dokedy a ako podať sťažnosť na ESĽP a čo musí obsahovať formulár?"
-description: Use when the user's matter involves fundamental rights or review by the Czech Constitutional Court or Strasbourg - ústavní stížnost, Ústavní soud, zákon o Ústavním soudu (182/1993 Sb.), Listina základních práv a svobod, lhůta dvou měsíců, vyčerpání opravných prostředků, přípustnost, zjevná neopodstatněnost, nález, usnesení, odklad vykonatelnosti, návrh na zrušení zákona, právo na spravedlivý proces, právo na soudní ochranu, překvapivé rozhodnutí, nepřezkoumatelnost, opomenutý důkaz, extrémní rozpor, libovůle, právo na zákonného soudce, právo vlastnit majetek, ochrana soukromí, svoboda projevu, test proporcionality, test racionality, Evropský soud pro lidská práva, ESLP, stížnost do Štrasburku, Úmluva o ochraně lidských práv, čtyřměsíční lhůta, spravedlivé zadostiučinění, Listina základních práv EU, předběžná otázka SDEU, ústavní stížnost obce. Standalone skill - bundles CODEXIS methodology with constitutional-litigation method; no need to load the general codexis skill.
+description: Use for Czech constitutional complaints, fundamental rights, admissibility, remedies, interim protection, constitutional review, Strasbourg proceedings and related EU Charter issues. Distinguish constitutional review from ordinary appeal. Research legal sources only through native CODEXIS in the application, including foreign and European materials.
 ---
 
-# Ústavní stížnost a lidská práva ČR
+# Ústavní stížnost a lidská práva
 
-Samostatný oborový skill pro ústavněprávní rovinu sporu. Základní reflex: **ústavní stížnost není další odvolání** - Ústavní soud nepřezkoumává podústavní správnost, ale jen zásah do základního práva; stížnost musí říct **které právo, jakým aktem, proč ústavně relevantně**. Druhý reflex: **lhůta dvou měsíců běží od doručení posledního rozhodnutí o posledním procesním prostředku** - a co je „poslední prostředek", je nejčastější důvod odmítnutí.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/182/1993/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf72'`, `cdx-cli get cdx://cz_law/2/1993/versions`, `cdx-cli search JD --query "ústavní stížnost přípustnost vyčerpání dovolání 75" --court "Ústavní soud" --limit 5`, `cdx-cli search ES --query "spravedlivý proces článek 6 Česká republika" --limit 5`.
-- Judikaturu ÚS hledej primárně ve zdroji `JD` s filtrem na Ústavní soud, ESLP ve zdroji `ES`; u nálezů rozlišuj **nález (závazný čl. 89 odst. 2 Ústavy) × usnesení (odmítnutí, bez precedenční síly)** a **plénum × senát**. Lhůty, poplatky a náležitosti **ověř v aktuálním znění zákona o ÚS a jednacího řádu ESLP**; nikdy z paměti.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| Ústava ČR | 1/1993 Sb. | `cz_law/1/1993` | Pravomoci ÚS (čl. 87), závaznost (čl. 89 odst. 2), mezinárodní smlouvy (čl. 10, čl. 10a), samospráva (čl. 100+) |
-| Listina základních práv a svobod | 2/1993 Sb. | `cz_law/2/1993` | Katalog práv: rovnost (čl. 1, čl. 3), omezení práv (čl. 4), vlastnictví (čl. 11), soukromí (čl. 10, čl. 13), projev (čl. 17), podnikání (čl. 26), soudní ochrana (čl. 36), zákonný soudce (čl. 38), obhajoba (čl. 40) |
-| Zákon o Ústavním soudu | 182/1993 Sb. | `cz_law/182/1993` | Ústavní stížnost (§ 72-§ 84: oprávnění, lhůta § 72 odst. 3-5, náležitosti § 34, přípustnost § 75, odmítnutí § 43, odklad § 79, nález § 82), návrh na zrušení zákona (§ 64+, akcesorický § 74), kompetenční spory (§ 120+), povinné zastoupení advokátem (§ 30), obnova řízení (§ 119) |
-| Úmluva o ochraně lidských práv a základních svobod | sdělení 209/1992 Sb. | `cz_law/209/1992` | Čl. 3, 5, 6, 8, 10, 13, čl. 1 Protokolu 1; podmínky přijatelnosti (čl. 35 - lhůta 4 měsíce od konečného rozhodnutí, vyčerpání, významná újma), spravedlivé zadostiučinění (čl. 41) |
-| Listina základních práv EU / SFEU | Úř. věst. C 202 / SFEU | zdroj `EU` | Čl. 47 Listiny EU, působnost čl. 51 (jen při provádění unijního práva), předběžná otázka čl. 267 SFEU |
-| o. s. ř. / tr. ř. / s. ř. s. | 99/1963 / 141/1961 / 150/2002 Sb. | `cz_law/99/1963`, `cz_law/141/1961`, `cz_law/150/2002` | Poslední procesní prostředky (dovolání § 236+ o. s. ř., § 265a+ tr. ř., kasační stížnost § 102+ s. ř. s.), obnova řízení po nálezu / rozsudku ESLP (§ 228 o. s. ř., § 119 ZÚS, § 277 tr. ř.) |
-| Zákon o odpovědnosti za škodu při výkonu veřejné moci | 82/1998 Sb. | `cz_law/82/1998` | Nezákonné rozhodnutí a nesprávný úřední postup po zrušujícím nálezu, nepřiměřená délka řízení (§ 13, § 31a), předběžné projednání (§ 14) |
-| Zákon o soudech a soudcích | 6/2002 Sb. | `cz_law/6/2002` | Návrh na určení lhůty (§ 174a) jako prostředek proti průtahům - nutno vyčerpat před ÚS i ESLP |
-| Antidiskriminační zákon | 198/2009 Sb. | `cz_law/198/2009` | Rovné zacházení, sdílené důkazní břemeno (§ 133a o. s. ř.) |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` → `/toc` → `/text?part=`; u lhůty a přípustnosti vždy aktuální § 72 a § 75 ZÚS (novely měnily počítání lhůty při odmítnutém dovolání).
-2. Judikatura: **ÚS** - u každé námitky dohledej nález (ne jen usnesení) k danému právu: soudní ochrana a odůvodnění (překvapivost, opomenutý důkaz, extrémní rozpor mezi důkazy a závěry, přepjatý formalismus, libovůle), zákonný soudce, kontradiktornost, náklady řízení jako zásah, vlastnictví a legitimní očekávání, proporcionalita; **stanoviska pléna** (Pl. ÚS-st.) k přípustnosti a lhůtám; **ESLP** (`ES`) proti ČR i obecné leading cases k čl. 6 a čl. 8; **SDEU** k Listině EU. Ověř datum a zda nález nebyl překonán plénem (§ 23 ZÚS).
-3. Komentář (`COMMENT`) a literatura (`LT`) k ZÚS a Listině; NALUS a databáze HUDOC jsou mimo CODEXIS oficiální zdroje pro plné texty a stav řízení.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Kvalifikace zásahu.** Co je napadeno: rozhodnutí soudu/orgánu (§ 72 odst. 1 písm. a) ZÚS) × jiný zásah orgánu veřejné moci (nečinnost, faktický úkon, průtahy) × zákon nebo jeho ustanovení (jen akcesoricky s ústavní stížností § 74, samostatně jen privilegovaní navrhovatelé). Kdo stěžovatel (FO, PO, obec - § 72 odst. 1 písm. b) proti nezákonnému zásahu státu do samosprávy; stát a jeho orgány zpravidla ne). Které **základní právo** (Listina, Ústava, Úmluva, Listina EU v působnosti čl. 51) a jaký ústavně relevantní důvod - ne pouhá nesprávnost, ale kvalifikovaná vada (viz judikaturní typologie výše).
-2. **Přípustnost a vyčerpání (§ 75 ZÚS).** Před ÚS musí být vyčerpány všechny procesní prostředky, které zákon k ochraně práva poskytuje, včetně **mimořádných** (dovolání, kasační stížnost; ne obnova řízení, ne stížnost pro porušení zákona, ne podnět k přezkumu) - a **odvolání i dovolání musí být řádně a přípustně podané** (dovolání odmítnuté pro vady nebo pro nevymezení přípustnosti = nevyčerpání → odmítnutí stížnosti). Proti průtahům nejprve návrh na určení lhůty (§ 174a ZSS). Výjimky § 75 odst. 2 (podstatný přesah vlastních zájmů, průtahy v řízení o opravném prostředku) jsou vykládány restriktivně. Stížnost směřuje proti **všem** rozhodnutím v řetězci (dovolací + odvolací + prvostupňové), ne jen proti poslednímu.
-3. **Lhůta (§ 72 odst. 3-5 ZÚS).** **Dva měsíce od doručení rozhodnutí o posledním procesním prostředku**; při dovolání odmítnutém jako nepřípustné z důvodů závisejících na uvážení NS lze napadnout i předchozí rozhodnutí ve lhůtě běžící od doručení rozhodnutí o dovolání (§ 72 odst. 4 - ověř znění); u jiného zásahu od dne, kdy se stěžovatel dozvěděl, nejpozději do 1 roku (ověř). Lhůta je **procesní, nelze ji prominout**; podání u ÚS (datová schránka, e-podání s uznávaným podpisem, pošta - den podání). Počítej podle § 72 a obecných pravidel; před podáním vždy sepsat řetězec: rozhodnutí → datum doručení advokátovi (fikce) → konec lhůty.
-4. **Náležitosti podání (§ 34, § 72 ZÚS).** Povinné zastoupení advokátem (§ 30 - speciální plná moc pro řízení před ÚS, advokát nemůže být sám stěžovatelem bez zastoupení - ověř judikaturu), označení napadených rozhodnutí a orgánů, tvrzení, které právo a jak bylo porušeno, **petit** (zrušení rozhodnutí; u zásahu zákaz pokračování a příkaz obnovit stav; návrh na odklad vykonatelnosti § 79 odst. 2; akcesorický návrh na zrušení zákona § 74; náhrada nákladů § 62 odst. 4 jen výjimečně), přílohy (kopie napadených rozhodnutí, plná moc), bez soudního poplatku. Struktura: I. rekapitulace řízení a lhůta, II. napadená rozhodnutí, III. přípustnost a vyčerpání, IV. ústavněprávní argumentace po jednotlivých právech (skutkový základ → norma → judikatura ÚS/ESLP → subsumpce), V. petit.
-5. **Argumentační jádro.** U procesních práv (čl. 36 odst. 1, čl. 38 odst. 2 Listiny, čl. 6 Úmluvy): nedostatek odůvodnění a nevypořádání námitek, překvapivé rozhodnutí bez poučení (§ 118a o. s. ř.), opomenuté důkazy, extrémní rozpor skutkových zjištění, svévolný výklad, odepření přístupu k soudu přepjatým formalismem, nesprávné obsazení soudu, nerovnost zbraní, nepřiměřená délka. U hmotných práv: **test proporcionality** (legitimní cíl, vhodnost, potřebnost, přiměřenost v užším smyslu) u střetu práv (soukromí × projev, vlastnictví × veřejný zájem), **test racionality** u sociálních práv (čl. 41 odst. 1 Listiny), zákaz diskriminace (čl. 3 odst. 1), legitimní očekávání (čl. 1 Protokolu 1). Vždy: proč jde o ústavní, ne podústavní rovinu - a proč se nejedná o „čtvrtou instanci".
-6. **Průběh řízení u ÚS.** Přidělení soudci zpravodaji (rozvrh práce), možnost odmítnutí bez jednání (§ 43 - opožděná, nepřípustná, neoprávněný navrhovatel, zjevně neopodstatněná, neodstraněné vady po výzvě), vyjádření účastníků a vedlejších účastníků (protistrana z původního řízení), replika, zpravidla bez ústního jednání (§ 44), **nález** (vyhovující - zrušení; zamítavý) × **usnesení** (odmítnutí). Odklad vykonatelnosti (§ 79) jen výjimečně - navrhnout s konkrétními důvody (nevratná újma). Po vyhovujícím nálezu: obecný soud vázán právním názorem (čl. 89 odst. 2), pokračuje v řízení; náhrada škody podle 82/1998 Sb. (nezákonné rozhodnutí = zrušené pro nezákonnost, předběžné projednání u ministerstva 6 měsíců, promlčení).
-7. **ESLP.** Po vyčerpání (ústavní stížnost je poslední prostředek; odmítnutí pro zjevnou neopodstatněnost se počítá jako vyčerpání, odmítnutí pro nepřípustnost/opožděnost ne): **stížnost do 4 měsíců od doručení rozhodnutí ÚS** (čl. 35 odst. 1 Úmluvy - ověř, dříve 6 měsíců), výhradně na formuláři Soudu s přílohami, podaná poštou (datum odeslání), v úředním nebo národním jazyce; podmínky: významná újma, oběť porušení, ne totožná věc. Fáze: jednosoudcová filtrace (bez odůvodnění), komunikace vládě, smírné urovnání a jednostranné prohlášení, rozsudek; **spravedlivé zadostiučinění** čl. 41 (nároky vyčíslit ve stanovené lhůtě po komunikaci, jinak nepřiznáno); po rozsudku ESLP obnova řízení před ÚS (§ 119 ZÚS) nebo obecnými soudy (tr. ř.). Zástupce vlády ČR před ESLP je Ministerstvo spravedlnosti.
-8. **Unijní rovina.** Listina EU se použije jen v působnosti unijního práva (čl. 51); u spotřebitele, DPH, azylu, GDPR, hospodářské soutěže apod. namítat čl. 47 Listiny EU a navrhnout **předběžnou otázku** (čl. 267 SFEU - soud poslední instance má povinnost s výjimkami CILFIT; nepoložení bez odůvodnění = porušení práva na zákonného soudce dle judikatury ÚS) - v ústavní stížnosti výslovně vytknout. Přednost unijního práva a povinnost eurokonformního výkladu.
-9. **Prevence v nalézacím řízení.** Ústavní argumentaci uplatnit už u obecných soudů (zásada subsidiarity - ÚS odmítá námitky poprvé vznesené až před ním); v dovolání správně vymezit přípustnost (§ 237, § 241a odst. 2 o. s. ř.) včetně otázky ústavní konformity; v trestním řízení dovolací důvody § 265b tr. ř. + ústavní rozměr; uchovávat důkazy o doručení pro počítání lhůt.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Dovolání odmítnuté pro vady nebo nevymezení přípustnosti = nevyčerpání prostředků → ústavní stížnost odmítnuta jako nepřípustná (a lhůta proti odvolacímu rozhodnutí mezitím uplynula).
-- Stížnost jen proti rozhodnutí NS bez napadení rozhodnutí nižších soudů - ÚS nemůže zrušit, co nebylo napadeno.
-- Lhůta počítaná od právní moci nebo od doručení klientovi místo od doručení zástupci; podání poslední den e-mailem bez uznávaného podpisu.
-- Stížnost jako „čtvrtá instance": polemika se skutkovými zjištěními a výkladem podústavního práva bez ústavního rozměru → zjevná neopodstatněnost.
-- Ústavní námitka poprvé až u ÚS (subsidiarita) nebo nová skutková tvrzení.
-- Průtahy napadeny bez předchozího návrhu na určení lhůty (§ 174a ZSS) - nepřípustnost; u skončeného řízení jen náhrada podle 82/1998 Sb.
-- Zastoupení obecnou plnou mocí nebo advokát-stěžovatel bez vlastního zástupce.
-- Stížnost k ESLP po lhůtě čtyř měsíců, mimo formulář, bez kopií rozhodnutí, nebo po odmítnutí ÚS pro opožděnost (nevyčerpání).
-- Listina EU namítána mimo působnost unijního práva.
-- Odklad vykonatelnosti navrhován bez konkrétní nevratné újmy - nepřiznán.
-- Spoléhání na usnesení ÚS jako „judikaturu" - závazný je nález; překonaná rozhodnutí bez kontroly plenárních stanovisek.
-- Doplňování čísel jednacích, dat doručení a spisových značek z paměti - vždy ze spisu, doručenek nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a lhůta** (proti čemu, které právo, do kdy - výpočet z data doručení; co hrozí při nepodání).
-2. **Přípustnost** - řetězec prostředků a jejich vyčerpání, rizika odmítnutí.
-3. **Ústavněprávní argumentace** - tabulka: základní právo (čl.) | vada rozhodnutí | judikatura ÚS/ESLP | důkaz ve spise.
-4. **Petit a návrhy** (zrušení, odklad, akcesorický návrh, náklady).
-5. **Další kroky** (ESLP, obnova, náhrada škody, předběžná otázka).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace s rozlišením nález/usnesení.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Článek/paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `ÚS - I. ÚS 1234/24 - …`, `ÚS - Pl. ÚS 12/25 - …`, `ESLP - stížnost č. 12345/20 - …`) z metadat, nikdy vymyšlené; u ÚS uveď, zda jde o nález, nebo usnesení.
-- Zachovej kvalifikátory („do dvou měsíců od doručení rozhodnutí o posledním procesním prostředku“, „všechny procesní prostředky, které zákon poskytuje“, „zjevně neopodstatněná“, „podstatně přesahuje vlastní zájmy“).
-- Jeden časový řez; znění ZÚS a Úmluvy účinné v den doručení napadeného rozhodnutí.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Lhůty a podmínky přijatelnosti nikdy z paměti - vždy z aktuálního znění § 72, § 75 ZÚS a čl. 35 Úmluvy s odkazem; výpočet lhůty vždy ukázat.
-- Nález × usnesení vždy rozlišit; usnesení nikdy nevydávat za závaznou judikaturu.
-- Mimo CODEXIS jen oficiální zdroje (nalus.usoud.cz, hudoc.echr.coe.int, curia.europa.eu, justice.cz) když CODEXIS neodpovídá.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Oborový postup: ústavní stížnost a lidská práva
+
+### Cíl, legitimace a napadený zásah
+
+Identifikuj klienta, povahu zásahu a přesný požadovaný výsledek. Je stěžovatelem fyzická osoba, právnická osoba nebo územní samospráva a jaké konkrétní právo jí v daném postavení náleží? Ověř procesní legitimaci, povinné zastoupení, plnou moc a případný střet zájmů. Odliš rozhodnutí, jiný zásah, nečinnost a otázku ústavnosti předpisu; každému odpovídají jiné podmínky a petit.
+
+Ústavní argument nesmí pouze opakovat, že obecný soud nesprávně hodnotil důkazy nebo vyložil zákon. Vymez tvrzený ústavní deficit, jeho závažnost, vazbu na konkrétní pasáž rozhodnutí a dopad na klienta. Současně nepodceňuj zákonnou otázku, pokud právě její extrémní řešení nebo chybějící odůvodnění zakládá zásah do práva.
+
+### Vyčerpání prostředků a čas
+
+Z dodaného spisu sestav úplný řetězec rozhodnutí, opravných prostředků, způsobu jejich vyřízení a doloženého doručení. Rozliš prostředek přípustný, skutečně podaný, projednaný, odmítnutý pro vady a odmítnutý z důvodů ponechaných na uvážení. Tato rozlišení mohou měnit vyčerpání i počátek lhůty; nepovažuj poslední časově vydanou listinu automaticky za rozhodnutí o posledním relevantním prostředku.
+
+V CODEXIS ověř, které prostředky musí být v dané situaci vyčerpány, jaké jsou výjimky a jaký význam má návrh obnovy nebo dozorový podnět. U jiného zásahu odděl jeho počátek, zjištění a trvání. U průtahů řeš dostupnou ochranu proti pokračující nečinnosti a samostatně nápravu již skončeného řízení. Před podáním propočti lhůtu z doložené události včetně pravidel doručení a konce; interní bezpečný termín odliš od zákonného.
+
+### Věcná analýza práv
+
+Podle skutků posuď spravedlivý proces, rovnost zbraní, kontradiktornost, právo být slyšen, překvapivé rozhodnutí, opomenuté důkazy, zákonného soudce, přiměřenou délku, odůvodnění a nepřiměřený formalismus. U každé námitky ukaž, kde byla uplatněna, jak na ni orgán reagoval a jak by její řádné posouzení mohlo ovlivnit výsledek.
+
+Dále prověř relevantní ochranu vlastnictví a legitimního očekávání, soukromí a osobní autonomie, rodinného života, projevu, rovnosti, náboženství, sociálních práv nebo územní samosprávy. Zvol test odpovídající konkrétnímu právu a intenzitě zásahu. Proporcionalitu, zákaz diskriminace a test racionality nepoužívej jako zaměnitelné formuláře. Vypořádej legitimní cíl, skutkovou oporu zásahu a nejsilnější argument veřejné moci nebo protistrany.
+
+Judikaturu vyhodnoť z celých textů, včetně odlišných stanovisek, návaznosti a pozdějšího vývoje. Rozliš nález, usnesení, rozhodnutí pléna, senátu a stanovisko; jejich význam neurčuj mechanicky jen názvem formy. Je-li zadána předchozí praxe konkrétního senátu, identifikuj právě tento senát a skutečně srovnatelné věci. Obecný přehled Ústavního soudu nenahrazuje požadovanou senátní analýzu.
+
+### Petit a prozatímní ochrana
+
+Urči, která rozhodnutí je nutné napadnout pro dosažení cíle a která do petitu nepatří. Rozsah odůvodni podle procesní návaznosti a tvrzeného zásahu, nikoli mechanickým výčtem všech listin. Identifikuj orgán, spis, datum a části výroku. Návrh na vyslovení porušení, zrušení rozhodnutí, zákaz pokračování nebo obnovení stavu musí odpovídat pravomoci soudu a povaze zásahu.
+
+U akcesorického návrhu na zrušení předpisu dolož konkrétní aplikované ustanovení, vazbu na věc a tvrzený rozpor. U odkladu vykonatelnosti odděleně ověř obě relevantní podmínky: vztah k důležitému veřejnému zájmu a porovnání újmy při výkonu s újmou při odkladu. Dodrž směr srovnání a vysvětli konkrétní důkazy pro každou podmínku. Již dokončený výkon nesmí být popsán jako budoucí nebezpečí, které odklad ještě odvrátí.
+
+### Evropská ochrana
+
+U Evropského soudu pro lidská práva samostatně ověř postavení oběti, vyčerpání účinných prostředků, rozhodné konečné rozhodnutí, lhůtu, význam stejné věci projednávané jinde a ostatní podmínky přijatelnosti. Zjisti skutečné požadavky na formulář, podpisy, přílohy, jazyk a podání z pramenů dostupných nativně v CODEXIS. Není-li potřebná verze nebo formulář dostupný, přesně označ mezeru a nepoužívej externí náhradu ani paměťové ujištění.
+
+Rozliš konstatování porušení, spravedlivé zadostiučinění, případnou obnovu a výkon rozsudku. Nárok na zadostiučinění formuluj ve správné fázi a s doloženým výpočtem. U unijních práv nejprve ověř působnost Listiny základních práv Evropské unie v dané věci. Nepoložení předběžné otázky neoznačuj automaticky za porušení práva; prověř povinnost, výjimky a odůvodnění soudu.
+
+### Výstup a rozhodnutí klienta
+
+Dodej skutečnou stížnost nebo jiný požadovaný text, nikoli jen úvahu o ústavnosti. Připoj tabulku přípustnosti, chronologii, seznam příloh, petity a konkrétní ústavní argumenty s oporou ve faktech. Náklady ověř pro daný postup: poplatek či osvobození, smluvní zastoupení, případná pomoc a podmínky výjimečné náhrady nejsou totožné otázky. Vysvětli realistický dosažitelný výsledek, procesní riziko a klientova nevratná rozhodnutí.

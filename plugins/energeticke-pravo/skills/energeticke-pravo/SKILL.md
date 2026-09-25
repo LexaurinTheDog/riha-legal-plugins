@@ -1,7 +1,7 @@
 ---
 uuid: 4e1b642c-1332-469b-8d06-72075b71159d
 name: energeticke-pravo
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,90 +25,115 @@ i18n:
       - "Dodávateľ elektriny jednostranne zvýšil cenu a klient chce odísť bez sankcie. Aké sú lehoty a ako správne vypovedať zmluvu?"
       - "Obec chce postaviť FVE na strechách škôl a zdieľať elektrinu medzi budovami. Aký režim (energetické spoločenstvo, zdieľanie) a aké povolenia?"
       - "Distribútor odmietol pripojiť výrobňu 500 kW pre nedostatok kapacity. Možno sa brániť a u koho?"
-description: Use when the user's matter involves energy supply, generation or regulation in the Czech Republic - energetika, energetický zákon (458/2000 Sb.), Energetický regulační úřad, ERÚ, licence na výrobu a obchod, dodavatel elektřiny, dodavatel plynu, změna dodavatele, výpověď smlouvy o dodávce, jednostranná změna ceny, dodavatel poslední instance, distributor, připojení k distribuční soustavě, smlouva o připojení, nedostatek kapacity, obnovitelné zdroje, fotovoltaika, FVE, větrná elektrárna, podpora OZE (165/2012 Sb.), zelený bonus, výkupní cena, komunitní energetika, energetické společenství, sdílení elektřiny, EDC, aktivní zákazník, teplárenství, odpojení od CZT, energetický audit a PENB (406/2000 Sb.), cenová rozhodnutí ERÚ, spor s dodavatelem u ERÚ, přestupky SEI, RED III, EU energetická legislativa. Standalone skill - bundles CODEXIS methodology with energy-practice method; no need to load the general codexis skill.
+description: Použij pro dodávky elektřiny, plynu a tepla, zákazníky a dodavatele, ukončení a změny smluv, připojení, licence a výrobny, FVE a OZE, podporu, komunitní energetiku a sdílení, akumulaci, teplárenství, PENB, cenovou regulaci, ERÚ a SEI, energetické transakce a spory. Právní zdroje jen nativním CODEXIS.
 ---
 
 # Energetické právo ČR
 
-Samostatný oborový skill pro energetiku. Základní reflex: energetika je **odvětví s trojím právním režimem** - soukromoprávní smlouva (OZ + energetický zákon jako lex specialis) × veřejnoprávní regulace (licence, cenová rozhodnutí a vyhlášky ERÚ, dohled SEI) × unijní právo (směrnice o trhu s elektřinou, RED III, nařízení) - a odpověď musí říct, ve které rovině klient stojí. Druhý reflex: **energetický zákon se novelizuje několikrát ročně** (LEX OZE I–III, komunitní energetika, dynamické tarify, akumulace); nikdy nevycházet z čísla paragrafu z paměti, vždy `/versions` k datu.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/458/2000/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf11a'`, `cdx-cli get cdx://cz_law/165/2012/versions`, `cdx-cli search JD --query "jednostranná změna ceny dodavatel elektřiny výpověď zákazník" --court "Nejvyšší soud" --limit 5`, `cdx-cli search JD --query "připojení k distribuční soustavě odmítnutí kapacita ERÚ" --court "Nejvyšší správní soud" --limit 5`.
-- Cenová rozhodnutí ERÚ, vyhlášky (o pravidlech trhu, o připojení, o měření), limity výkonu pro výrobny bez licence, lhůty pro změnu dodavatele a výši podpory **ověř v aktuálním znění k datu**; nikdy z paměti. Sekundární předpisy hledej ve zdroji `CR` podle čísla vyhlášky, cenová rozhodnutí na eru.gov.cz.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| Energetický zákon | 458/2000 Sb. | `cz_law/458/2000` | Licence (§ 3-§ 10; výrobna bez licence do limitu § 3 odst. 3 - ověř), ERÚ (§ 17+; spory § 17 odst. 7), práva a povinnosti zákazníka (§ 11a - jednostranná změna, výpověď, odstoupení; § 28), dodavatel poslední instance (§ 12a), elektroenergetika (§ 22-§ 54: výrobce § 23, distributor § 25, připojení § 28, obchodník § 30, aktivní zákazník, sdílení a EDC § 28a+, akumulace, agregace), plynárenství (§ 55+), teplárenství (§ 76+: odpojení § 77), SEI a přestupky (§ 90+), neoprávněný odběr (§ 51) |
-| Zákon o podporovaných zdrojích energie | 165/2012 Sb. | `cz_law/165/2012` | Formy podpory (výkupní cena, zelený bonus, aukce), podmínky a doba, OTE, kontrola přiměřenosti podpory (§ 30+), odvod z elektřiny ze slunečního záření (§ 14+), záruky původu, komunitní energetika (energetická společenství § 2 - ověř umístění) |
-| Zákon o hospodaření energií | 406/2000 Sb. | `cz_law/406/2000` | PENB, energetický audit a posudek, povinnosti při prodeji/pronájmu budov, energetický specialista, sankce SEI |
-| Vyhlášky ERÚ a MPO | 408/2015, 16/2016, 359/2020, 490/2021, 404/2016 Sb. a další | `cz_law/408/2015` atd. (ověř čísla) | Pravidla trhu s elektřinou, připojení k soustavě, měření, dispečerské řízení, pravidla trhu s plynem, vyúčtování |
-| Cenová rozhodnutí ERÚ | roční | mimo CODEXIS (eru.gov.cz) | Regulované ceny distribuce, přenosu, POZE, systémové služby; podpora OZE |
-| Zákon o cenách | 526/1990 Sb. | `cz_law/526/1990` | Věcné usměrňování cen tepla, cenová kontrola |
-| Stavební zákon + EIA | 283/2021 / 100/2001 Sb. | `cz_law/283/2021`, `cz_law/100/2001` | Povolení výroben, FVE na střechách bez povolení do limitu (ověř), EIA pro větrné a velké FVE, územní plánování |
-| Zákon o urychlení výstavby + LEX OZE | 416/2009 Sb. a novely | `cz_law/416/2009` | Zrychlené povolování OZE, převažující veřejný zájem, go-to zóny (RED III) |
-| Zákon o ochraně spotřebitele + OZ | 634/1992 / 89/2012 Sb. | `cz_law/634/1992`, `cz_law/89/2012` | Podomní prodej energií, energetičtí šmejdi, odstoupení, zneužívající ujednání, smlouva uzavřená mimo obchodní prostory |
-| EU: směrnice (EU) 2019/944, nařízení (EU) 2019/943, RED III (EU) 2023/2413, EED (EU) 2023/1791, nařízení o velkoobchodním trhu REMIT | Úř. věst. | zdroj `EU` | Práva zákazníků, energetická společenství, aktivní zákazníci, cíle OZE, povolování, energetická účinnost |
-| Zákon o opatřeních k přechodu ČR k nízkouhlíkové energetice | 367/2021 Sb. | `cz_law/367/2021` | Jaderné zdroje, smlouvy o výkupu |
-| Krizová opatření (cenové stropy, mimořádné tržní situace) | NV 298/2022 Sb. a další (ověř platnost) | `cz_law/298/2022` | Cenové stropy 2023, odvody z nadměrných příjmů - historicky, pro spory z toho období |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` **k datu smlouvy / události** → `/toc` → `/text?part=`; novely energetického zákona přečíslovávají § (LEX OZE) - vždy zkontrolovat, že § existuje v daném znění.
-2. Judikatura: **NSS** (licence, spory u ERÚ, přezkum rozhodnutí ERÚ a SEI, solární odvod, podpora OZE - odnětí, sankce, připojení), **NS** (smlouvy o dodávce, neoprávněný odběr, náhrada škody z přerušení dodávek, teplo - odpojení a cena, smluvní pokuty za předčasné ukončení, podomní prodej), **ÚS** (solární odvod - Pl. ÚS 17/11, retroaktivita, legitimní očekávání), **SDEU** (`ES`) k unbundlingu, státní podpoře a právům zákazníků. Ověř datum a znění zákona.
-3. Komentář (`COMMENT`) k energetickému zákonu; výkladová stanoviska ERÚ, metodiky OTE a SEI, Pravidla provozování distribuční soustavy (PPDS) - mimo CODEXIS oficiální zdroje s vysokou praktickou váhou.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Kvalifikace.** Kdo je klient: zákazník (domácnost × podnikatel × obec), výrobce (licencovaný × bez licence), obchodník, distributor, provozovatel lokální soustavy, energetické společenství, developer OZE, dodavatel tepla; komodita (elektřina, plyn, teplo); smluvní typ (sdružené služby × oddělená dodávka a distribuce); datum smlouvy a události; regulační rok.
-2. **Smlouvy o dodávce a ochrana zákazníka.** Náležitosti smlouvy (§ 11a EZ - ověř), **jednostranná změna ceny nebo podmínek**: povinnost oznámit nejméně 30 dnů předem a právo zákazníka **odstoupit/vypovědět bez sankce do 10 dnů před účinností** (ověř § 11a odst. 3-5 - lhůty se novelizovaly), fixace × spotový produkt, změna dodavatele (proces OTE, lhůty, smluvní pokuta za předčasné ukončení jen v mezích zákona - ověř, výpověď smlouvy na dobu neurčitou 3 měsíce), smlouva uzavřená distančně / mimo obchodní prostory (odstoupení 14 dnů, podomní prodej - obce mohou zakázat), zprostředkovatelé („energetičtí šmejdi" - registrace u ERÚ, zákaz plných mocí bez lhůt - ověř), dodavatel poslední instance (DPI - 6 měsíců, povinnost přejít), vyúčtování a zálohy (vyhláška o vyúčtování), reklamace, přerušení a obnovení dodávky (neoprávněný odběr § 51 - náhrada dle vyhlášky, výše bez měření), přeplatky, zákaznická linka. Spory zákazník × dodavatel: **ERÚ rozhoduje spory o plnění smluv a uzavření smlouvy (§ 17 odst. 7)**, alternativně soud; pro spotřebitele ADR u ERÚ.
-3. **Připojení k soustavě.** Žádost o připojení podle vyhlášky o připojení (ověř č.), posouzení distributora, **smlouva o připojení** (rezervovaný příkon/výkon, podíl na nákladech, lhůty), odmítnutí pro nedostatek kapacity - povinnost odůvodnit, alternativy (omezení výkonu, přetoky 0, akumulace), **spor o uzavření smlouvy o připojení rozhoduje ERÚ** (§ 17 odst. 7 písm. a) - ověř), mikrozdroje zjednodušený režim, dynamický tarif a chytré měření, změna rezervovaného příkonu, přeložky (§ 47 - hradí ten, kdo ji vyvolal), věcná břemena a vstupy na pozemky (§ 24-§ 25 - oprávnění provozovatele soustavy, náhrada).
-4. **Výroba a licence.** Licence ERÚ (§ 4-§ 10: podmínky, odborná způsobilost, majetkoprávní vztah k výrobně, změna, zrušení), **výrobna bez licence** do stanoveného výkonu pro vlastní spotřebu (limit ověř - zvýšen LEX OZE I na 50 kW), registrace u OTE, měření, přetoky do sítě (výkup obchodníkem, smlouva), fakturace a DPH/daň z příjmů z přetoků, provozní řád, revize, požární bezpečnost, pojištění; velké výrobny: územní řízení a stavební povolení (FVE na budovách do limitu bez povolení - ověř § stavebního zákona), EIA (větrné parky), ochranná pásma, zemědělská půda (vynětí ze ZPF, agrivoltaika), památková ochrana, hlukové limity, přístup k pozemkům (pacht, věcná břemena), připojení, LEX OZE II - převažující veřejný zájem, go-to zóny.
-5. **Podpora OZE.** Nárok na podporu (zákon 165/2012 Sb. - forma, výše dle cenového rozhodnutí ERÚ pro rok uvedení do provozu, doba 15/20 let), podmínky (měření, registrace OTE, roční výkaz, kombinace s investiční dotací - **překompenzace** a kontrola přiměřenosti podpory § 30+ s možností snížení), změna vlastníka výrobny (přechod podpory), odnětí podpory, **solární odvod** (u zdrojů 2009-2010, ústavnost potvrzena, individuální rdousící efekt jen výjimečně), aukce, záruky původu, nový režim pro modernizace; dotace (Modernizační fond, NZÚ, OP TAK) - podmínky a udržitelnost; spory: NSS k odnětí, SEI kontroly.
-6. **Komunitní energetika a sdílení.** Energetické společenství / společenství pro obnovitelné zdroje (právní formy - spolek, družstvo, s.r.o.; registrace u ERÚ; členové - FO, obce, malé podniky; zákaz, aby hlavní činností byl zisk - ověř), **sdílení elektřiny** přes EDC (Elektroenergetické datové centrum) - skupiny sdílení, alokační klíč, limity počtu odběrných míst a distribučních území (ověř § 28a+ EZ / LEX OZE II), aktivní zákazník, bytové domy (společná výrobna, rozúčtování SVJ), obce (FVE na budovách + sdílení mezi příspěvkovými organizacemi; veřejné zakázky na výrobnu, koncese na provoz, veřejná podpora), smlouvy o sdílení, fakturace, distribuční poplatky u sdílené elektřiny.
-7. **Teplárenství a budovy.** Dodávka tepla (§ 76+ EZ - smlouva, měření, věcně usměrňovaná cena dle zákona o cenách a cenových rozhodnutí ERÚ, kalkulace, kontrola), **odpojení od CZT** (§ 77 odst. 5 - podmínky, souhlas, náklady; územní energetická koncepce), rozúčtování nákladů na teplo v domech (vyhláška 269/2015 Sb., zákon 67/2013 Sb.), PENB při prodeji a pronájmu (406/2000 Sb. - povinnost, výjimky, sankce; viz skill nemovitostí), energetický audit velkých podniků, ESCO/EPC smlouvy, tepelná čerpadla a hluk, kotlíkové dotace.
-8. **Regulace, dohled, spory.** ERÚ: cenová rozhodnutí (přezkum jen omezeně - obecné povahy), licenční řízení (správní řád), **rozhodování sporů** (§ 17 odst. 7 - o uzavření smlouvy o připojení, o plnění smluv, o splnění povinností; lhůty; přezkum soudem - civilní část V o. s. ř. u sporů o plnění, správní žaloba u licencí/pokut), přestupky (§ 90+ - dodavatelé, výrobci; pokuty v desítkách mil. Kč), SEI (kontrola, pokuty za PENB a audity, podpora OZE), ÚOHS (veřejná podpora, hospodářská soutěž na trhu s energií), REMIT (manipulace s trhem), OTE (registrace, odchylka). Krizové období 2022-2023: cenové stropy, odvod z nadměrných příjmů, úsporný tarif - jen pro dobíhající spory.
-9. **Transakce a smlouvy v energetice.** Koupě/prodej výrobny (due diligence: licence, podpora, připojení, pozemky, dotace, přechod smluv), PPA (power purchase agreement - fyzická × virtuální, cena, profil, záruky původu, akontace, změna regulace), smlouva o výkupu přetoků, O&M smlouvy, EPC/ESCO, smlouvy o pachtu pozemku pro FVE (doba, výpověď, obnovení pozemku, věcné břemeno, předkupní právo), financování (zástava výrobny a pohledávek z podpory, step-in), pojištění, dotace a udržitelnost.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Výpověď smlouvy o dodávce podaná pozdě (po 10denní lhůtě před účinností změny) - fixace dál trvá, smluvní pokuta.
-- Smluvní pokuta za předčasné ukončení nad zákonný limit nebo u smlouvy uzavřené podomně bez řádného poučení - napadnutelná, ale klient musí namítat.
-- Spor o připojení hnán k soudu - pravomoc má ERÚ (§ 17 odst. 7); a naopak spor o náhradu škody k ERÚ.
-- Výrobna nad limit bez licence - neoprávněné podnikání, přestupek, ztráta podpory.
-- FVE postavená bez povolení na budově, kde limit neplatí (památka, změna vzhledu) - odstranění.
-- Kombinace dotace + provozní podpora bez přepočtu - překompenzace a vrácení.
-- Sdílení elektřiny bez registrace v EDC nebo nad limit odběrných míst - nefunguje, distribuční poplatky v plné výši.
-- Energetické společenství založené jako podnikatelská s.r.o. - nesplní podmínky registrace.
-- Odpojení od CZT bez souhlasu a bez úhrady - spor s teplárnou, nutnost splnit podmínky § 77.
-- PENB chybějící při prodeji - pokuta SEI, riziko slevy z ceny.
-- Pacht pozemku pro FVE na 10 let s automatickým prodloužením bez souhlasu vlastníka - neplatné části, nedostatek zajištění pro banku.
-- Cenové rozhodnutí ERÚ přepsané z paměti nebo předchozího roku - vždy aktuální rok.
-- Doplňování čísel vyhlášek, limitů výkonu, sazeb podpory a dat z paměti - vždy z aktuálního znění nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (co udělat, u koho - dodavatel/distributor/ERÚ/SEI/soud, do kdy).
-2. **Kvalifikace** - role, komodita, smluvní typ, datum, regulační rok, použitelné znění EZ.
-3. **Právní rámec** - energetický zákon / POZE / vyhlášky / cenové rozhodnutí / EU v aktuálním znění, s odkazy.
-4. **Postup a nároky** - tabulka: krok/nárok | právní základ | orgán/protistrana | lhůta | riziko.
-5. **Regulační a dotační dopady** (licence, podpora, překompenzace, veřejná podpora).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace vč. NSS a ÚS.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NSS - 1 As 123/2024 - …`, `ÚS - Pl. ÚS 17/11 - 15.05.2012`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („nejméně 30 dnů před účinností“, „nejpozději desátý den před účinností“, „pro vlastní spotřebu“, „převažující veřejný zájem“).
-- Jeden časový řez; znění EZ a cenové rozhodnutí účinné k datu smlouvy / události / regulačního roku.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions` k rozhodnému datu (EZ se mění několikrát ročně).
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Limity výkonu, lhůty, sazby podpory, ceny a čísla vyhlášek nikdy z paměti - vždy z aktuálního znění s odkazem.
-- Údaje o licencích, výrobnách a dodavatelích výhradně z registrů ERÚ a OTE; mimo CODEXIS jen oficiální zdroje (eru.gov.cz, ote-cr.cz, mpo.gov.cz, cr-sei.cz) když CODEXIS neodpovídá.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Oborový postup: energetika
+
+### Komodita, role a časové vrstvy
+Urči zákazníka domácnost, podnikatele či obec, výrobce, obchodníka, distributora, provozovatele lokální soustavy, společenství, developera nebo dodavatele tepla. Odděl elektřinu, plyn a teplo, vlastní spotřebu, přetok, akumulaci a agregaci. Ze smluv zjisti sdruženou službu nebo oddělenou dodávku a distribuci, typ produktu, rozhodná oznámení a regulační rok. V CODEXIS prověř energetický zákon, občanské a spotřebitelské právo, prováděcí předpisy, cenová rozhodnutí a unijní vrstvu. Nenačtené roční ceny nedoplňuj z jiné sezony ani externě.
+
+### Dodávka, cena a ukončení
+Zkoumej smluvní náležitosti, fixní a dynamickou cenu, změnu podmínek, povinnost oznámení, předání ceníku, zálohy, měření a vyúčtování. U zprostředkovatele ověř oprávnění, rozsah plné moci a smluvní ochranu. Prověř distanční a mimo provozovnu uzavřený vztah, obecní omezení, předčasné ukončení, dobu neurčitou, prolongaci a dodavatele poslední instance. U reklamace a přerušení či obnovení dodávky zjisti vlastní podmínky a termíny.
+
+Nejprve odděl zákonné bezsankční ukončení od porušení smlouvy. Teprve v druhé větvi zkoumej platnost pokuty, zákonný strop a případnou moderaci. Ověř konkrétní spouštěč a délku práva ukončit při změně ceny; historické lhůty nejsou instrukcí pro nový případ. Prokázanou nulovou škodu, neznámou škodu a doloženou škodu drž jako rozdílné kategorie také v závěru a klientské výzvě. Neznámou škodu nepřepisuj na absenci škody. Před navržením ukončení popiš kontinuitu nové dodávky a možné riziko přerušení.
+
+### Připojení a majetkový rámec
+Prověř žádost, potřebné podklady, posouzení kapacity, smlouvu, rezervovaný příkon či výkon, podíl na nákladech, měření a termíny. U odmítnutí zjisti povinnost odůvodnění, dostupné alternativy omezení výkonu, akumulace či provozu bez přetoků a příslušný prostředek ochrany. Odděl mikrozdroj, změnu parametrů a novou výrobnu; limity výkonu nikdy nepředpokládej. Zahrň přeložky, vstup na pozemek, ochranná pásma, věcná práva, náhrady a spory o uzavření smlouvy.
+
+### Výroba, podpora a povolování
+Ověř potřebu licence a výjimky, odbornou způsobilost, vztah k výrobně, změnu držitele, registraci, revize, bezpečnost a pojištění. Soukromou FVE nepovažuj automaticky za osvobozenou od všech povolení. Prověř stavební, územní a environmentální vrstvu, EIA, zemědělskou půdu a agrivoltaiku, památky, hluk, požární podmínky, přístup k pozemku a zrychlené povolovací mechanismy.
+
+U podpory zjisti formu, vznik nároku, rok uvedení do provozu, délku, měření, výkazy, cenové rozhodnutí, změnu vlastníka, modernizaci a záruky původu. Odděl provozní podporu, investiční dotaci a překompenzaci. Zkoumej odnětí, snížení, kontrolu přiměřenosti, solární odvod, veřejnou podporu a legitimní očekávání podle konkrétního zdroje a období. Dotaci nepovažuj za přislíbenou nebo vyplacenou bez podkladu. Historické krizové stropy, odvody či tarif posuzuj jen v jejich časové působnosti.
+
+### Sdílení, teplo a budovy
+U energetického společenství ověř přípustnou formu, členy, účel, kontrolu, registraci a pravidla výstupu. U sdílení prověř datové centrum, skupinu, alokaci, odběrná místa, územní omezení, měření, poplatky a smlouvy. U SVJ nebo obce navazuj na souhlasy, rozúčtování, veřejné zakázky, koncesi a veřejnou podporu. Právní přípustnost sdílení není důkaz jeho technického spuštění.
+
+U tepla zkoumej smlouvu, měření, kalkulaci a věcné usměrňování ceny. Odpojení od centrálního zásobování posuzuj podle konkrétních zákonných podmínek, potřebných souhlasů a nákladů. Zahrň rozúčtování v domě, PENB, audit a posudek, energetického specialistu, energetickou koncepci, ESCO/EPC, tepelná čerpadla a související hluk či dotace.
+
+### Pravomoc a nároky
+Každý požadavek kvalifikuj samostatně: splnění smluvní povinnosti, existence, trvání či zánik vztahu, negativní určení jednotlivého dluhu, připojení, škoda nebo veřejnoprávní licence a sankce. Z úplného textu ověř rozsah pravomoci ERÚ; negativní určení pokuty nezaměňuj s určením zániku smluvního vztahu. Soudní přezkum a procesní předpis odvoď od povahy rozhodnutí, nikoli názvu orgánu.
+
+U dohledu ERÚ a SEI prověř kontrolu, povinnosti, skutkovou podstatu, sankci, nápravu, opravný prostředek a lhůty. Podle věci zahrň ÚOHS, REMIT, manipulaci s trhem, OTE a odpovědnost za odchylku. U neoprávněného odběru ověř skutečný základ a způsob výpočtu náhrady, ne pouze paušální tvrzení dodavatele.
+
+### Transakce a výstupy
+U koupě výrobny, PPA, výkupu přetoků, údržby, EPC, pachtu a financování vytvoř mapu licence, podpory, pozemků, připojení, dotací a převoditelnosti smluv. Vymez cenu, profil dodávky, regulační změnu, záruky původu, odpovědnost, step-in, zástavy a obnovu pozemku. Ekonomické a daňové varianty opři o uvedené vstupy.
+
+Dodej konkrétní návrh nebo smluvní znění, tabulku nárok–pramen–adresát–lhůta–důkaz, náklady řízení odděleně od energetického vyúčtování a plán nepřerušeného provozu. Všechny právní a judikatorní opory získávej výhradně nativním CODEXIS.

@@ -1,7 +1,7 @@
 ---
 uuid: 51c7259c-9474-4e02-9fe2-60f87af0d188
 name: sportovni-pravo
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,90 +25,105 @@ i18n:
       - "Klub chce s hráčom uzavrieť profesionálnu zmluvu ako so SZČO. Aké sú riziká a čo musí zmluva obsahovať?"
       - "Disciplinárna komisia zväzu zastavila klientovi činnosť na rok. Možno rozhodnutie napadnúť na súde a dokedy?"
       - "Nadácia ponúka klubu príspevok na vybavenie výmenou za logo na dresoch. Je to dar alebo reklama a ako sa zdaní?"
-description: Use when the user's matter involves sport in the Czech Republic - sportovec, profesionální sportovec, hráčská smlouva, smlouva o výkonu sportovní činnosti, OSVČ nebo zaměstnanec, klub, sportovní svaz, FAČR, ČOV, stanovy a řády svazu, disciplinární řízení, zastavení činnosti, přezkum rozhodnutí spolku, přestup, hostování, výchovné, FIFA, UEFA, agent, zprostředkovatel, rozhodčí komise, sportovní arbitráž, CAS, sportovní úraz, odpovědnost za újmu při sportu, pravidla sportu, pořádání sportovní akce, pořadatelská služba, diváci, vstupenky, přenosová a marketingová práva, sponzoring, reklama, dar klubu, nadační příspěvek, dotace NSA, zákon o podpoře sportu (115/2001 Sb.), sportovní infrastruktura, veřejná podpora, antidoping, WADA, mládež a nezletilí sportovci, trenér, e-sport, hazard a sázky ve sportu. Standalone skill - bundles CODEXIS methodology with sports-practice method; no need to load the general codexis skill.
+description: 'Use for Czech sport: athletes, clubs, associations, agents, professional-player agreements, employment versus self-employment, transfers and loans, training compensation, federation discipline and review, arbitration and CAS, injuries, event safety, broadcasting and marketing, sponsorship, donations, public sports funding, antidoping, minors, coaches and e-sport. Coordinate employment, tax, association and contract analysis. Research legal sources only through native CODEXIS in the application.'
 ---
 
 # Sportovní právo ČR
 
-Samostatný oborový skill pro právo ve sportu. Sport nemá vlastní kodex - je to **průnik spolkového, smluvního, pracovního, daňového a odpovědnostního práva se svazovými řády**, které členy zavazují jako smlouva. Rozhoduje proto vždy: kdo je klient, jaký má vztah ke svazu a která lhůta (svazová, arbitrážní, soudní) běží.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/115/2001/versions`, `cdx-cli get cdx://cz_law/89/2012/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf258'`, `cdx-cli search JD --query "sportovec OSVČ závislá práce profesionální smlouva" --court "Nejvyšší správní soud" --limit 5`, `cdx-cli search JD --query "odpovědnost za úraz při sportu porušení pravidel" --court "Nejvyšší soud" --limit 5`.
-- Svazové řády (FAČR, ČSLH, ČOV…), pravidla FIFA/UEFA/IIHF, Kodex WADA a pravidla CAS **nejsou v CODEXIS** - čerpej je z oficiálních webů svazů a organizací k datu úkonu a cituj s verzí. Lhůty svazové arbitráže a CAS jsou krátké a mění se - ověř v aktuálním řádu. Zákon o podpoře sportu a dotační podmínky NSA se mění každoročně.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| Zákon o podpoře sportu | 115/2001 Sb. | `cz_law/115/2001` | Národní sportovní agentura, rejstřík sportu, dotace, povinnosti pořadatelů, bezpečnost na akcích |
-| OZ - spolky a smlouvy | 89/2012 Sb. | `cz_law/89/2012` | Spolky (§ 214-§ 302: členství, orgány, vyloučení § 239-§ 242, přezkum rozhodnutí soudem § 258-§ 260, rozhodčí komise § 265-§ 267), nadace a příspěvky (§ 353+), inominátní smlouvy (§ 1746 odst. 2), podoba a soukromí (§ 84-§ 90), náhrada újmy (§ 2894+, prevence § 2900, § 2910), nezletilí (§ 31-§ 36) |
-| Zákoník práce / zákon o zaměstnanosti | 262/2006 / 435/2004 Sb. | `cz_law/262/2006`, `cz_law/435/2004` | Závislá práce (§ 2-§ 3 ZP), nelegální práce, DPP/DPČ u trenérů, cizinci-sportovci |
-| Zákon o rozhodčím řízení | 216/1994 Sb. | `cz_law/216/1994` | Rozhodčí doložky, svazová a mezinárodní arbitráž, uznání nálezů |
-| ZDP / ZDPH | 586/1992 / 235/2004 Sb. | `cz_law/586/1992`, `cz_law/235/2004` | Sportovec § 6 × § 7 ZDP, veřejně prospěšný poplatník (§ 17a), dary (§ 19b, § 20 odst. 8), sponzoring jako reklama, osvobození sportovních služeb (§ 61 ZDPH) |
-| Zákon o hazardních hrách / o regulaci reklamy | 186/2016 / 40/1995 Sb. | `cz_law/186/2016`, `cz_law/40/1995` | Sázkové partnerství, reklama na hazard a alkohol, ochrana mládeže |
-| Zákon o vysílání | 231/2001 Sb. | `cz_law/231/2001` | Události zásadního významu, přístup k vysílání |
-| Rozpočtová pravidla | 218/2000 / 250/2000 Sb. | `cz_law/218/2000`, `cz_law/250/2000` | Dotace NSA a obcí, porušení rozpočtové kázně |
-| Zákon o obcích | 128/2000 Sb. | `cz_law/128/2000` | Podpora sportu obcí, schvalování zastupitelstvem, sportoviště |
-| Trestní zákoník / zákon o přestupcích | 40/2009 / 250/2016 Sb. | `cz_law/40/2009`, `cz_law/250/2016` | Ublížení na zdraví při sportu, zákaz vstupu na sportovní akce (§ 76 TZ), diváckě násilí, doping (§ 288 TZ) |
-| Vyhláška o zdravotní způsobilosti k tělesné výchově a sportu | 391/2013 Sb. | `cz_law/391/2013` | Sportovní prohlídky, výkonnostní a vrcholový sport |
-| Unijní právo | čl. 45, 56, 101-102 SFEU; SDEU Bosman, Super League, ISU | zdroj `EU`, `ES` | Volný pohyb sportovců, soutěžní právo a svazová pravidla, kolektivní prodej práv |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` → `/toc` → `/text?part=`; unijní judikatura ze zdroje `ES`.
-2. Judikatura: **NS** (25 Cdo - odpovědnost při sportu, lyžování, pořadatel; 23 Cdo / 28 Cdo - smlouvy a spolky; 27 Cdo - přezkum rozhodnutí spolků), **NSS** (sportovec jako OSVČ × zaměstnanec, dotace, daně), **ÚS** (autonomie spolků × soudní ochrana člena), **SDEU** (`ES` - Bosman C-415/93, ISU C-124/21 P, Super League C-333/21, Royal Antwerp C-680/21). Ověř datum a novely.
-3. Svazové řády, pravidla FIFA/UEFA, kodex WADA, řád CAS - z oficiálních zdrojů s uvedením verze; komentář (`COMMENT`) k § 258-§ 260 OZ a k § 2900+ OZ.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Role a vztah ke svazu.** Sportovec (profesionál / amatér / mládež) × klub (spolek, s.r.o., a.s.) × svaz × agent × sponzor / dárce × pořadatel × divák × obec. Členství ve spolku a registrace u svazu = podřízení stanovám a řádům (smluvní základ); zjisti, které řády a v jaké verzi se použijí a jaké lhůty v nich běží.
-2. **Vztah sportovec - klub.** Zaměstnanec (ZP - kogentní ochrana, skončení, odstupné, pojistné) × OSVČ (smlouva o výkonu sportovní činnosti - inominát § 1746 odst. 2; judikatura NSS připouští u profesionálů za konkrétních podmínek, riziko překvalifikace na závislou práci a nelegální práci) × amatér (registrace, bez odměny). Obsah smlouvy: doba a prodloužení, odměna a bonusy, přestupní a výstupní klauzule, práva k podobě a marketingu (§ 84-§ 85 OZ), zdravotní péče a pojištění, disciplinární sankce klubu, mlčenlivost, konkurenční omezení, rozhodčí doložka, ukončení a odstupné; u cizinců pobyt a povolení k práci; u nezletilých souhlas zákonného zástupce a limity FIFA pro délku smluv (ověř).
-3. **Svazové právo a přezkum.** Stanovy a řády (disciplinární, přestupní, licenční, registrační), disciplinární řízení (právo být slyšen, přezkum uvnitř svazu, lhůty), **soudní přezkum rozhodnutí spolku** (§ 258-§ 260 OZ - návrh člena do 3 měsíců od dozvědění, nejpozději do 1 roku; jen rozpor se zákonem nebo stanovami, ne přezkum sportovního uvážení; soud nevysloví neplatnost při malicherném zásahu), vyloučení člena (§ 239-§ 242 - výzva, přezkum orgánem, soud 3 měsíce), rozhodčí komise spolku (§ 265-§ 267 - přezkum soudem podle zákona o rozhodčím řízení), svazová arbitráž (Sbor rozhodců FAČR, ČOV) a **CAS Lausanne** (odvolací lhůta 21 dnů od doručení rozhodnutí - ověř v řádu CAS), střet zájmů a vlastnictví více klubů (UEFA pravidla × český svaz), licenční řízení.
-4. **Přestupy a agenti.** Přestupní řád svazu (registrace, výchovné a solidarita, hostování, ochranná období), FIFA RSTP (mezinárodní přestupy, nezletilí čl. 19, training compensation), agenti a zprostředkovatelé (řád svazu, pravidla FIFA - ověř aktuální platnost), smlouvy o přestupu mezi kluby (§ 1746 odst. 2 OZ, DPH), volný pohyb (Bosman).
-5. **Odpovědnost za újmu při sportu.** Účastníci: dodržení pravidel sportu a míra přijatého rizika - odpovědnost zpravidla jen při porušení pravidel nad rámec běžné hry (judikatura NS, u lyžování pravidla FIS jako standard); pořadatel a provozovatel sportoviště (§ 2900, § 2910, § 2924? - ověř; bezpečnost, dozor, vybavení), trenér a dozor nad mládeží, zdravotní prohlídky (vyhl. 391/2013 Sb.), pojištění; trestní rovina (§ 146-§ 148 TZ jen při hrubém porušení pravidel); nároky § 2958+ OZ (Metodika NS jako orientace).
-6. **Pořádání akcí.** Povinnosti pořadatele (§ 7a+ zák. 115/2001 Sb. - pořadatelská služba, spolupráce s policií - ověř), zábor a uzavírky (obec, silniční správní úřad), hluk (KHS), autorská práva k hudbě (OSA, INTERGRAM), vstupenky (spotřebitel, přeprodej, storno), divácké násilí (zákaz vstupu § 76 TZ, přestupky), přenosová práva (smluvní; události zásadního významu § 33 zák. 231/2001 Sb.; kolektivní prodej - soutěžní právo), GDPR (kamery, akreditace), pojištění.
-7. **Financování a daně.** **Sponzoring = reklama** (protiplnění; zdanitelný příjem klubu, DPH, daňový náklad sponzora) × **dar** (§ 2055 OZ; osvobození u veřejně prospěšného poplatníka § 19b ZDP - spolek ano, obchodní společnost ne; odpočet dárce § 15 / § 20 odst. 8 ZDP) × **nadační příspěvek** (§ 353+ OZ - účel, vyúčtování, zákaz příspěvku členům orgánů) - u smíšených smluv (logo za příspěvek) hrozí překvalifikace na reklamu; dotace NSA (výzvy, rejstřík sportu, PRK a odvod - viz skill veřejných zakázek a dotací), podpora obcí (§ 85 zák. 128/2000 Sb. schvalování, veřejnoprávní smlouva § 10a zák. 250/2000 Sb.), veřejná podpora EU (GBER čl. 55 sportovní infrastruktura - ověř), sázkové partnerství (zák. 186/2016 Sb., reklama na hazard), DPH u sportovních služeb (§ 61 ZDPH u neziskových), sportovec § 6 × § 7 ZDP, hlavní × vedlejší činnost spolku (§ 217 OZ, § 18a ZDP).
-8. **Antidoping.** Kodex WADA a pravidla Antidopingového výboru ČR (kontroly, zákaz, sankce, přezkum u svazové arbitráže a CAS), trestní odpovědnost (§ 288 TZ - výroba a jiné nakládání s látkami s dopingovým účinkem), pracovněprávní a smluvní následky.
-9. **Mládež a ochrana.** Souhlas zákonného zástupce (§ 31-§ 36 OZ), smlouvy s nezletilými (přiměřenost, limity svazů), přestupy nezletilých, bezúhonnost trenérů, ochrana před zneužíváním (zák. 359/1999 Sb., interní pravidla), školní sport, sportovní gymnázia.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Rozhodnutí svazu napadané u soudu po 3 měsících nebo s argumentací „špatné sportovní posouzení" - soud zkoumá jen zákonnost a soulad se stanovami a v zákonné lhůtě.
-- Odvolání k CAS po uplynutí lhůty podle řádu CAS - nepřípustné, bez ohledu na soudní lhůty.
-- Profesionál jako OSVČ s pevnou pracovní dobou, pokyny a výhradností - riziko závislé práce, doměrků a nelegální práce klubu.
-- Sponzorská smlouva nazvaná „dar" nebo „nadační příspěvek" - daňová překvalifikace na reklamu; dar obchodní společnosti není osvobozen.
-- Nadační příspěvek podmíněný logem na dresu bez řešení, kdo o použití rozhoduje a jak se vyúčtuje.
-- Dotace NSA čerpaná bez souladu s rejstříkem sportu a podmínkami výzvy - odvod za porušení rozpočtové kázně.
-- Smlouva s nezletilým na dobu přesahující limity svazu nebo bez souhlasu zákonného zástupce.
-- Úraz při zápase žalovaný jako běžná náhrada újmy bez prokázání porušení pravidel nad rámec hry.
-- Pořadatel bez pořadatelské služby a bez pojištění - odpovědnost i za diváky a třetí osoby.
-- Přenosová práva prodaná kolektivně bez posouzení soutěžního práva; vysílání „události zásadního významu" omezené v rozporu se zákonem.
-- Vlastnictví více klubů v téže soutěži posuzované jen podle českých řádů - UEFA pravidla pro evropské poháry.
-- Doplňování názvů klubů, IČO, výše odměn a dat z paměti - vždy z rejstříků, smluv nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (svazová / arbitrážní / soudní; co podat a kam).
-2. **Role, vztah ke svazu a použitelné řády** (s verzí).
-3. **Právní rámec** - OZ / ZP / ZDP / 115/2001 + řády svazu, s odkazy.
-4. **Postup nebo nároky** - tabulka: krok/nárok | právní základ (zákon × řád) | orgán | lhůta | riziko.
-5. **Rizika a alternativy** (smír, dohoda se svazem, daňový dopad, veřejná podpora).
-6. **Judikatura** - jen ověřená v CODEXIS / oficiálních zdrojích, kompaktní citace vč. SDEU a CAS.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NS - 25 Cdo 1234/2024 - …`, `NSS - 2 Afs 123/2025 - …`, `SDEU - C-333/21 - 21.12.2023`) z metadat, nikdy vymyšlené; rozhodnutí CAS s číslem věci.
-- Svazové řády cituj s názvem, článkem a verzí (datum účinnosti).
-- Zachovej kvalifikátory („do tří měsíců ode dne, kdy se dozvěděl“, „nejpozději do jednoho roku“, „nad rámec pravidel hry“).
-- Jeden časový řez; u disciplinárních věcí znění řádu účinné v den provinění.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions`.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Lhůty svazů, CAS a dotační podmínky nikdy z paměti - vždy z aktuálního řádu / výzvy s odkazem a verzí.
-- Mimo CODEXIS jen oficiální zdroje (facr.cz, olympijskatym.cz, agenturasport.cz, tas-cas.org, fifa.com, uefa.com, antidoping.cz) když CODEXIS neodpovídá; nikdy neradit obcházení antidopingových nebo bezpečnostních pravidel.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Role a souběh sportovních režimů
+
+Urči klienta: sportovec, klub, svaz, agent, trenér, pořadatel, divák, sponzor, dárce nebo veřejný podporovatel. Zjisti právní formu, členství, registraci, soutěž, přeshraniční vazby a smluvní řetězec. Odděl profesionalitu či amatérství od právního režimu činnosti; sportovní označení samo neřeší práci, daň ani pojištění.
+
+Právní prameny a judikaturu ověřuj pouze nativně v CODEXIS. U stanov, soutěžních, přestupních, licenčních a disciplinárních řádů, antidopingových pravidel a arbitráže zjisti, zda jejich úplná rozhodná verze je tímto způsobem dostupná. Nedostupnost nezakrývej obecnou znalostí FIFA, UEFA, WADA nebo CAS. Listina dodaná klientem je podklad s vlastní proveniencí, nikoli důkaz nativního ověření její aktuálnosti. Kritický závěr bez potřebného pravidla ponech podmíněný a přesně označ mezeru.
+
+### Povinné oborové otázky
+
+- Vztah sportovec–klub: odpovídá skutečné provádění činnosti pracovnímu, civilnímu nebo jinému režimu? Zjisti pokyny, čas, místo, samostatnost, riziko, odměnu a výhradnost. V CODEXIS vyhledej skutkově přiléhavé soudní závěry a jejich meze. Nejistotu promítni do skutečných alternativ smluvních článků, nikoli do civilní etikety zakrývající závislou práci.
+- Hráčská a trenérská smlouva: jak vymezit výkon, dobu, prodloužení, odměnu, bonus, náklady, zdravotní péči, pojištění a zranění? Ověř disciplinární oprávnění klubu, ukončení, konkurenční omezení, mlčenlivost, marketing a práva k podobě. U cizince řeš pobyt, pracovní oprávnění, zdanění a pojištění podle místa činnosti; u nezletilého zastoupení, vyspělost a zvláštní ochranu.
+- Neplacení: odděl splatnost, podstatnost porušení, dodatečnou lhůtu a účinky odstoupení u pokračujícího plnění. Pracovněprávní skončení neposuzuj jako civilní odstoupení. Zadané platby, dluhy a oznámení přenes beze změny také do konečného checklistu.
+- Svazová správa: který akt, orgán a verze řádu jsou rozhodné? Ověř právo být slyšen, dokazování, podjatost, vnitřní opravné prostředky, legitimaci a rozsah soudního přezkumu. Vyloučení člena, běžné rozhodnutí orgánu, rozhodčí komise a arbitráž nemusí mít stejnou cestu ochrany. Odděl sportovní uvážení od zákonnosti a proporcionality. Zjisti samostatné lhůty svazové, arbitrážní a soudní.
+- Přestup, hostování a zastoupení: kdo převádí jaká práva a co je podmínkou registrace či způsobilosti ke startu? Prověř výchovné, solidaritu, platby mezi kluby, agentovu roli, střet zájmů, oprávnění, exkluzivitu a ukončení. Smluvní účinnost není totožná se sportovní registrací. U mládeže a přeshraničního pohybu ověř zvláštní omezení a případné unijní soutěžní souvislosti.
+- Odpovědnost při sportu: odděl újmu sportovce, škodu klubu, odpovědnost jiného účastníka, trenéra, provozovatele a pořadatele. Zjisti porušení pravidel, povahu sportu, přijaté riziko, kauzalitu, zdravotní způsobilost, dohled a bezpečnost vybavení. V pracovním režimu ověř vlastní limity a výjimky náhrady i pracovní úraz; nepodmiňuj jej mechanicky civilním zaviněním klubu.
+- Každý cap nebo waiver posuď směrově za klienta a podle konkrétního režimu, včetně kogentních výjimek. Nesnižuj současně klientovy vlastní nároky bez pokynu. Vyčísli známý ekonomický rozdíl; neznámé daňové a pojistné vstupy ponech otevřené.
+- Pořádání akcí: prověř pořadatelskou službu, divácké násilí, bezpečnost, obecní povolení, zábor a dopravu, hluk, hudební práva, pojištění, vstupenky a storno. U přenosových práv ověř rozsah licence, významné události, kolektivní prodej a soutěžní omezení. U kamer, akreditace a marketingu posuď osobní údaje.
+- Financování: jde obsahově o reklamu, dar, nadační příspěvek, členský příspěvek nebo dotaci? Ověř protiplnění, schvalování, účel, vyúčtování, vrácení, veřejně prospěšný režim, hlavní a vedlejší činnost, DPH a odpočty. U podpory sportovní infrastruktury a NSA rozliš rozhodnutí, program, evidenci a veřejnou podporu; zápis do rejstříku sportu sám nepotvrzuje nárok. Reklamu hazardu a alkoholu posuď se zvláštní ochranou mládeže.
+- Antidoping a ochrana dětí: ověř dostupnou rozhodnou úpravu kontroly, zakázaného jednání, výjimek, sankcí a přezkumu, smluvní a pracovní dopady i trestní rovinu. U mládeže řeš bezpečí, dohled, oznámení a ochranu před zneužíváním. Nenavrhuj obcházení kontrol, registrace nebo bezpečnostních pravidel.
+
+### Výstup pro klienta
+
+Dodej matici nárok či krok, právní základ a jeho povaha, orgán, lhůta, důkaz, riziko a další potřebný zdroj. Ke sporu připoj vykonatelný petit a položkové náklady; ke smlouvě úplné použitelné články a vědomý rozhodovací bod mezi režimy. Zohledni smír, sportovní dopad přerušení činnosti, finance a reputaci. Nevyřešená dostupnost svazového či arbitrážního pravidla nesmí být označena za úplnou rešerši.

@@ -1,7 +1,7 @@
 ---
 uuid: d81b733a-368e-414d-9a58-7a527d2f8245
 name: it-pravo-kyberbezpecnost
-version: 1.0.0
+version: 1.1.0
 jurisdictions: [CZ]
 i18n:
   cs:
@@ -25,94 +25,126 @@ i18n:
       - "Dodávateľ softvéru nedodal systém včas a klient chce odstúpiť a získať späť zálohy. Čo hovorí zmluva o dielo v IT a ako riešiť zdrojové kódy a licenciu?"
       - "Klient je stredná výrobná firma so 60 zamestnancami. Spadá pod nový zákon o kybernetickej bezpečnosti a čo musí dokedy urobiť?"
       - "Po ransomware útoku unikli dáta zákazníkov. Aké oznamovacie povinnosti (NÚKIB, ÚOOÚ, zákazníci) a lehoty plynú a ako obmedziť zodpovednosť?"
-description: Use when the user's matter involves information technology contracts or cybersecurity regulation in the Czech Republic - IT právo, smlouva o vývoji software, smlouva o dílo v IT, licenční smlouva k software, SaaS, cloudová smlouva, IT outsourcing, SLA, zdrojové kódy, open source licence, autorské právo k software, kybernetická bezpečnost, NIS2, zákon o kybernetické bezpečnosti (264/2025 Sb.), NÚKIB, regulovaná služba, režim vyšších a nižších povinností, hlášení kybernetického bezpečnostního incidentu, DORA, Cyber Resilience Act, odpovědnost za bezpečnostní incident, ransomware, únik dat, oznámení porušení zabezpečení, eIDAS, elektronický podpis, datové schránky, DSA, online platformy, odpovědnost poskytovatele, cookies, e-shop, IT ve veřejných zakázkách, umělá inteligence ve smlouvách. Standalone skill - bundles CODEXIS methodology with IT-practice method; no need to load the general codexis skill.
+description: Smlouvy o software, implementaci, licencích, SaaS, cloudu a outsourcingu, práva k výsledkům, data, SLA, exit a odpovědnost. Kybernetická regulace a incidenty, elektronické právní jednání, regulace digitálních služeb a AI, včetně zvláštností veřejného a finančního sektoru.
 ---
 
-# IT právo a kyberbezpečnost ČR
+# IT právo a kyberbezpečnost
 
-Samostatný oborový skill pro smlouvy v informačních technologiích a regulaci kybernetické bezpečnosti. Základní reflex u smluv: **IT projekt selhává na akceptaci, změnovém řízení a licenci ke zdrojovým kódům** - odpověď musí vždy říct, co smlouva říká o milnících, akceptačních testech, vadách, změnách rozsahu a k čemu přesně objednatel získává práva. Základní reflex u regulace: **od účinnosti nového zákona o kybernetické bezpečnosti (transpozice NIS2) se povinnosti spouštějí registrací regulované služby** - nejdřív určit, zda a v jakém režimu klient spadá, a od kdy běží lhůty. Software je autorské dílo; práva vznikají autorovi/zaměstnavateli, ne tomu, kdo zaplatil.
+## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
 
-## Operating Assumptions
+Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-- Pro CODEXIS výhradně `cdx-cli`; nainstalováno a přihlášeno, bez preflightu.
-- Kanonické tvary: `cdx-cli get cdx://cz_law/264/2025/versions`, `cdx-cli get cdx://cz_law/121/2000/versions`, `cdx-cli get 'cdx://doc/<versionId>/text?part=paragraf58'`, `cdx-cli search EU --query "směrnice 2022/2555 NIS2 opatření k zajištění vysoké společné úrovně kybernetické bezpečnosti" --limit 5`, `cdx-cli search JD --query "smlouva o dílo software akceptace vady odstoupení" --court "Nejvyšší soud" --limit 5`.
-- Nový zákon o kybernetické bezpečnosti (č. 264/2025 Sb. - **číslo a datum účinnosti ověř**; nahrazuje 181/2014 Sb.) a jeho prováděcí vyhlášky (regulované služby, bezpečnostní opatření, hlášení incidentů) jsou nové - **prahy, kategorie služeb, lhůty registrace a hlášení ověř v aktuálním znění a na nukib.gov.cz**; nikdy z paměti. Přímo použitelná nařízení (DORA, CRA, DSA, eIDAS 2.0, AI Act) čti ze zdroje `EU` a ověř data použitelnosti.
+Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
 
-## Klíčové předpisy
+Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
 
-| Předpis | Číslo | CODEXIS base | K čemu |
-|---|---|---|---|
-| Zákon o kybernetické bezpečnosti (nový, NIS2) | 264/2025 Sb. (ověř) | `cz_law/264/2025` | Regulované služby a poskytovatelé, registrace, režim vyšších × nižších povinností, bezpečnostní opatření, hlášení incidentů, mechanismus prověřování dodavatelů (bezpečnost dodavatelského řetězce), odpovědnost vrcholného vedení, NÚKIB - dohled, přestupky; starý zákon 181/2014 Sb. pro dobíhající povinnosti |
-| Prováděcí vyhlášky NÚKIB | (čísla ověř) | `cz_law/...` | Kritéria regulovaných služeb, bezpečnostní opatření pro oba režimy, náležitosti hlášení, kritická infrastruktura |
-| Směrnice NIS2 / DORA / CRA / CER | (EU) 2022/2555, (EU) 2022/2554, (EU) 2024/2847, (EU) 2022/2557 | zdroj `EU` | Rámec NIS2, digitální provozní odolnost finančního sektoru (DORA - přímo použitelné, ICT rizika, smlouvy s ICT poskytovateli, hlášení), bezpečnost produktů s digitálními prvky (CRA), odolnost kritických subjektů |
-| Autorský zákon | 121/2000 Sb. | `cz_law/121/2000` | Software jako dílo (§ 2 odst. 2, § 65-§ 66 - výjimky, rozmnožování, dekompilace), zaměstnanecké dílo (§ 58 - vykonává zaměstnavatel; software vytvořený na objednávku se považuje za zaměstnanecké § 58 odst. 7), licence (§ 2358+ OZ), databáze (§ 88+), TDM výjimky |
-| Občanský zákoník | 89/2012 Sb. | `cz_law/89/2012` | Smlouva o dílo (§ 2586-§ 2635: cena, změny, převzetí a vady § 2604+, odstoupení), licenční smlouva (§ 2358-§ 2389: výhradní/nevýhradní, podlicence, odměna, forma u výhradní), smlouva o poskytování služeb / příkaz, odpovědnost za újmu (§ 2894+), limitace náhrady (§ 2898 - nelze vyloučit úmysl a hrubou nedbalost), obchodní podmínky (§ 1751-§ 1753), adhezní smlouvy, spotřebitel a digitální obsah (§ 2389a+ - směrnice 2019/770) |
-| Zákon o službách informační společnosti | 480/2004 Sb. | `cz_law/480/2004` | Odpovědnost poskytovatelů hostingu, obchodní sdělení (spam), doplněno DSA |
-| DSA / DMA / P2B | (EU) 2022/2065, (EU) 2022/1925, (EU) 2019/1150 | zdroj `EU` | Povinnosti online zprostředkovatelů, platformy, notice-and-action, transparentnost, DSC v ČR (ČTÚ - ověř) |
-| eIDAS + adaptační zákon | (EU) 910/2014 ve znění (EU) 2024/1183 / 297/2016 Sb. | zdroj `EU`, `cz_law/297/2016` | Elektronický podpis (prostý, zaručený, kvalifikovaný), pečeť, časové razítko, kvalifikovaní poskytovatelé, evropská peněženka digitální identity; podepisování vůči veřejné moci (§ 5-§ 6 zák. 297/2016) |
-| Zákon o elektronických úkonech a datových schránkách | 300/2008 Sb. | `cz_law/300/2008` | Doručování, fikce, autorizovaná konverze |
-| Zákon o právu na digitální služby / eGovernment | 12/2020 / 365/2000 Sb. | `cz_law/12/2020`, `cz_law/365/2000` | Digitální služby veřejné správy, ISVS, atestace, cloud computing ve veřejné správě (katalog cloud computingu) |
-| GDPR / zákon 110/2019 Sb. | (EU) 2016/679 | zdroj `EU`, `cz_law/110/2019` | Zpracovatelská smlouva (čl. 28), bezpečnost (čl. 32), oznámení porušení (čl. 33-34 - 72 hodin), přenosy mimo EU, DPIA; viz skill GDPR |
-| AI Act | (EU) 2024/1689 | zdroj `EU` | Zakázané praktiky, vysoce rizikové systémy, transparentnost, GPAI; fázovaná použitelnost (ověř data) |
-| Zákon o zadávání veřejných zakázek | 134/2016 Sb. | `cz_law/134/2016` | IT zakázky, vendor lock-in, JŘBU, technické podmínky, změny závazku (viz skill VZ) |
-| Trestní zákoník | 40/2009 Sb. | `cz_law/40/2009` | Neoprávněný přístup (§ 230), opatření a přechovávání přístupového zařízení (§ 231), poškození dat (§ 232), porušení autorského práva (§ 270) |
+Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
 
-## Rešeršní strategie
+## Pracovní postup se zdrojovou oporou
 
-1. Paragraf známý → `/versions` **k datu smlouvy / incidentu** → `/toc` → `/text?part=`; u nařízení EU zdroj `EU` a datum použitelnosti.
-2. Judikatura: **NS** (smlouva o dílo v IT - akceptace, vady, prodlení, odstoupení a vrácení plnění; licence a rozsah užití; zaměstnanecké dílo; smluvní pokuty; limitace náhrady), **NSS** (pokuty NÚKIB/ÚOOÚ, přezkum rozhodnutí, veřejné zakázky IT - ÚOHS), **ÚS** (elektronické podání a podpis - doručení, autenticita), **SDEU** (`ES`) - software a vyčerpání práv (UsedSoft C-128/11), dekompilace (Top System C-13/20), databáze, odpovědnost platforem (YouTube/Cyando C-682/18), GDPR bezpečnost. Ověř datum a znění.
-3. Komentář (`COMMENT`) k autorskému zákonu a OZ (dílo, licence); **metodiky a podpůrné materiály NÚKIB** (regulované služby, bezpečnostní opatření, hlášení), stanoviska ÚOOÚ, doporučení ČAK k eIDAS - mimo CODEXIS oficiální zdroje s praktickou váhou.
+### 1. Zadání, fakta a mapa otázek
 
-## Workflow
+Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-1. **Kvalifikace.** Typ vztahu: vývoj na zakázku (dílo) × licence k hotovému SW × SaaS/cloud (služba) × outsourcing/podpora (rámcová + SLA) × implementace ERP (kombinace) × HW/IoT × platforma. Strany (podnikatel, spotřebitel, veřejný zadavatel, finanční subjekt pod DORA, regulovaný subjekt pod ZKB), datum smlouvy, rozhodné právo a soud, verze OP/SLA k datu.
-2. **Smlouva o vývoji a implementaci.** Předmět: specifikace (analýza, funkční × technická; agilní - backlog a sprinty vs. fixní rozsah), **milníky a akceptace** (kritéria, testy, lhůta na vytknutí vad, fikce akceptace, kategorie vad A/B/C, opakované testy), cena (fixní × T&M × cap; platby po milnících, zádržné), změnové řízení (change request - písemně, dopad na cenu a termín), **prodlení a odstoupení** (smluvní pokuta, podstatné porušení, částečné odstoupení, vypořádání rozpracovaného díla a záloh, povinnost součinnosti objednatele), vady a záruka (§ 2615+ OZ - oznámení bez zbytečného odkladu, nároky, záruční doba × maintenance), **práva k výsledkům** (licence výhradní/nevýhradní, územní a časová neomezenost, právo měnit a upravovat, podlicence, zdrojové kódy a dokumentace - předání, escrow, podmínky uvolnění; standardní komponenty a open source dodavatele - výčet a licence; zaměstnanecké dílo § 58 AZ - autor zaměstnanec × subdodavatel OSVČ → nutná licence od subdodavatele!), **limitace odpovědnosti** (cap na cenu, vyloučení ušlého zisku - v mezích § 2898 OZ; nelze pro úmysl/hrubou nedbalost, újmu na zdraví; spotřebitel), mlčenlivost a NDA, GDPR zpracovatelská smlouva (čl. 28), exit a migrace, ukončení, vendor lock-in.
-3. **SaaS, cloud, outsourcing.** Služba, ne dílo: **SLA** (dostupnost v %, výpočet, výluky, plánovaná odstávka, kredity jako výlučná sankce?, RTO/RPO, podpora - reakční doby), bezpečnost (certifikace ISO 27001, SOC 2, penetrační testy, šifrování, právo auditu), **lokalizace dat a subdodavatelé** (EU/EHP, přenosy mimo EU - SCC, DPF; seznam subprocesorů), vlastnictví dat a **exit plán** (export ve strukturovaném formátu, doba, součinnost, výmaz), změny služby a cen (jednostranná změna OP - § 1752 OZ), ukončení a doba trvání (autoprolongace, výpovědní doba), odpovědnost a limitace, dostupnost zdrojových kódů (escrow u kritických systémů), veřejná správa - katalog cloud computingu a atestace (zák. 365/2000 Sb. - ověř), **DORA** u finančních subjektů (povinné náležitosti smluv s ICT poskytovateli čl. 30, registr smluv, testování, koncentrace), **NIS2/ZKB - bezpečnost dodavatelského řetězce** (smluvní požadavky na dodavatele, mechanismus prověřování rizikových dodavatelů u strategicky významné infrastruktury).
-4. **Licence a open source.** Licenční smlouva (§ 2358+ OZ: rozsah, výhradnost - písemná forma, odměna, podlicence, převod; EULA/click-wrap platnost), vyčerpání práva u trvalé licence (UsedSoft - prodej „použitých" licencí), zákaz dekompilace mimo § 66 AZ, audit licencí (compliance u velkých vendorů), **open source** (GPL/AGPL copyleft × permissivní MIT/Apache; povinnosti při distribuci a SaaS (AGPL); kontaminace proprietárního kódu; SBOM - CRA), zaměstnanecké dílo a odměna autora (§ 58 odst. 6), díla vytvořená AI (bez autora - ověř aktuální výklad), databáze (zvláštní právo pořizovatele § 88+), API a jejich ochrana, ochranné známky a doména (viz skill IP).
-5. **NIS2 / zákon o kybernetické bezpečnosti.** (a) **Určení regulované služby**: odvětví (energetika, doprava, bankovnictví, zdravotnictví, digitální infrastruktura, veřejná správa, výroba, potraviny, odpady, chemie, poštovní služby, výzkum atd.) + velikost (střední podnik 50+ zaměstnanců / obrat 10 mil. EUR - ověř; některé služby bez ohledu na velikost) → **režim vyšších × nižších povinností**; (b) **registrace u NÚKIB** do zákonné lhůty od splnění kritérií (ověř - typicky 60 dnů) přes portál; (c) **bezpečnostní opatření** podle vyhlášky pro daný režim (organizační: řízení rizik, politiky, role - manažer KB, architekt, auditor; technická: řízení přístupu, logování, šifrování, zálohování, BCM, bezpečnost dodavatelů) s implementační lhůtou (ověř - 1 rok od registrace); (d) **hlášení incidentů** (významný incident - včasné varování 24 h, hlášení 72 h, závěrečná zpráva 1 měsíc - ověř podle vyhlášky a režimu) přes portál NÚKIB; (e) **odpovědnost vrcholného vedení** (schválení opatření, školení, osobní odpovědnost), (f) **mechanismus prověřování rizikovosti dodavatelů** (strategicky významná infrastruktura - zákaz/omezení dodavatele rozhodnutím NÚKIB, dopad na existující smlouvy), (g) dohled, kontrola a **pokuty** (až 10 mil. EUR / 2 % obratu u vyšších - ověř), nápravná opatření, zveřejnění. Dokumentace: analýza rizik, prohlášení o aplikovatelnosti, plány, záznamy, smlouvy s dodavateli.
-6. **Bezpečnostní incident - reakce.** Souběžné povinnosti a lhůty: **NÚKIB** (regulované subjekty - 24/72 h), **ÚOOÚ** (čl. 33 GDPR - 72 h od zjištění, když riziko pro práva subjektů; subjekty údajů čl. 34 - bez zbytečného odkladu při vysokém riziku), **ČNB** (DORA - finanční subjekty), **Policie ČR** (trestní oznámení - § 230-§ 232 TZ; ransomware), **smluvní partneři** (SLA, zpracovatelské smlouvy - zpracovatel hlásí správci bez zbytečného odkladu), pojišťovna (kybernetické pojištění - lhůty, souhlas s výdaji, zákaz platby výkupného bez souhlasu), burza/auditor; zajištění důkazů (forenzní kopie, řetězec důkazů, logy), komunikace (privilegovaná komunikace s advokátem, PR), **výkupné** (sankční screening příjemce - zákaz platby sankcionované osobě; daňová a trestní rovina; doporučení NÚKIB neplatit), regres vůči dodavateli (limitace, hrubá nedbalost), nároky poškozených (§ 2894+ OZ, čl. 82 GDPR - nemajetková újma), hromadné žaloby (zákon 179/2024 Sb.).
-7. **Elektronické podpisy, identita, doručování.** Úrovně podpisu dle eIDAS (prostý - platný i ve smlouvách s písemnou formou § 562 OZ, ale důkazně slabší; zaručený; **kvalifikovaný = vlastnoruční podpis**); vůči veřejné moci jen kvalifikovaný/uznávaný (§ 6 zák. 297/2016 Sb.), pečeť PO, časové razítko (dlouhodobá platnost - LTV), ověřování platnosti (CRL/OCSP), podepisování přes DocuSign/Adobe (prostý × kvalifikovaný, důkazní hodnota - auditní stopa), **datové schránky** (fikce doručení 10 dnů, konverze § 22+ zák. 300/2008 Sb., podpis se u DS nevyžaduje - § 18 odst. 2), bankovní identita a NIA, evropská peněženka digitální identity (eIDAS 2.0 - data ověř), archivace elektronických dokumentů (důvěryhodné úložiště, § 69a AZ o archivnictví).
-8. **Platformy, e-commerce, obsah.** DSA (poskytovatelé hostingu - notice-and-action, kontaktní místo, transparentnost; online platformy - reklama, doporučovací systémy, ochrana nezletilých; VLOP), odpovědnost za cizí obsah (§ 5 zák. 480/2004 Sb. + DSA čl. 6), obchodní sdělení (§ 7 - opt-in, soukromí a cookies - § 89 zák. 127/2005 Sb. - opt-in od 2022), P2B pro business uživatele, DMA gatekeepeři, smlouvy s influencery, geoblocking, spotřebitel a digitální obsah (§ 2389a+ OZ - aktualizace, shoda), e-shop povinnosti (viz skill spotřebitelského práva), Cyber Resilience Act pro výrobce produktů s digitálními prvky (CE, hlášení zranitelností - data ověř).
-9. **AI ve smlouvách a compliance.** AI Act - klasifikace systému (zakázané, vysoce rizikové - příloha III, transparentnost, GPAI), role (poskytovatel × zavádějící subjekt), povinnosti a data použitelnosti (ověř), smlouvy o dodávce AI řešení (trénovací data a licence, výstupy a práva, halucinace a odpovědnost, zákaz použití dat pro trénink, audit), GDPR (právní základ, automatizované rozhodování čl. 22), autorské právo a TDM výjimky (§ 39c AZ - ověř), zaměstnanci a AI nástroje (interní politika, důvěrnost), veřejná správa a algoritmické rozhodování.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
-## Časté pasti
+### 2. Vyhledání a rozsah rešerše
 
-- Objednatel zaplatil za vývoj, ale nemá licenci ke zdrojovým kódům ani právo software měnit - smlouva mlčí, práva zůstávají dodavateli (a jeho subdodavatelům-OSVČ).
-- Akceptace fikcí (uplynutím lhůty) přehlédnuta - vady se považují za vytknuté pozdě; naopak dodavatel bez fikce čeká na akceptaci roky.
-- Agilní vývoj s fixní cenou a bez změnového řízení - spor o rozsah; T&M bez capu - spor o cenu.
-- Limitace odpovědnosti na 100 % ceny bez výjimek - neúčinná pro úmysl/hrubou nedbalost, ale klient o tom neví a neuplatní.
-- Subdodavatel dodavatele (freelancer) bez písemné licence - řetězec práv přerušen, objednatel nemá nic.
-- GPL/AGPL komponenta v proprietárním produktu - povinnost zveřejnit zdroj, riziko při prodeji firmy (due diligence).
-- Firma pod NIS2 „počká na výzvu NÚKIB" - registrace je povinnost subjektu ve lhůtě; pokuta i za neregistraci.
-- Incident hlášen jen ÚOOÚ, ne NÚKIB (nebo naopak); lhůta 72 h počítána od „potvrzení", ne od zjištění.
-- Výkupné zaplaceno bez sankčního screeningu - porušení sankcí.
-- Kybernetické pojištění: platba/výdaje bez souhlasu pojistitele - odmítnutí plnění.
-- Prostý elektronický podpis (klik) u smlouvy, kde zákon vyžaduje úředně ověřený podpis nebo kvalifikovaný - neplatnost/nevkladatelnost.
-- SaaS bez exit plánu a formátu exportu - data „v zajetí" po výpovědi.
-- DORA přehlédnuta u fintech/pojišťovacího klienta - smlouvy s ICT dodavateli bez povinných náležitostí.
-- Doplňování čísel vyhlášek, prahů, lhůt a sazeb pokut z paměti - vždy z aktuálního znění nebo `[DOPLNIT]`.
+Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
 
-## Struktura odpovědi
+První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-1. **Závěr a nejbližší lhůta** (co udělat, komu hlásit / co vytknout, do kdy).
-2. **Kvalifikace** - typ vztahu/služby, role stran, regulační režim (ZKB vyšší × nižší, DORA, GDPR), datum a znění.
-3. **Právní rámec** - OZ / AZ / ZKB / EU nařízení v aktuálním znění, s odkazy.
-4. **Smluvní analýza nebo checklist povinností** - tabulka: klauzule/povinnost | právní základ | stav (OK / riziko / chybí) | doporučení | lhůta.
-5. **Rizika a odpovědnost** (limitace, sankce, trestní rovina, pojištění).
-6. **Judikatura** - jen ověřená v CODEXIS, kompaktní citace vč. SDEU.
-7. **Podklady a otevřené otázky**, placeholdery `[DOPLNIT]`.
+### 2a. Judikatura navázaná na rozhodný paragraf (R5)
 
-## Pravidla výstupu
+Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-- Odkazy jen přes resolvovanou `https://` URL ze source bloku; `cdx://` nikdy do výstupu; žádná raw ID.
-- Paragraf/článek jako klikací reference; rozhodnutí `SOUD - SP. ZN. - DD.MM.RRRR` (např. `NS - 23 Cdo 1234/2024 - …`, `SDEU - C-128/11 - 03.07.2012`) z metadat, nikdy vymyšlené.
-- Zachovej kvalifikátory („bez zbytečného odkladu, nejpozději do 72 hodin“, „považuje se za zaměstnanecké dílo“, „v rozsahu nezbytném“, „významný kybernetický bezpečnostní incident“).
-- Jeden časový řez; znění ZKB a nařízení EU k datu incidentu / smlouvy; u nových předpisů výslovně uvést datum použitelnosti.
+1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
+2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance; pro vývoj judikatury přidej `&sort=date`, další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
+3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
+4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
+   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
+   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+   - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
+5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
+6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
-## Hard Rules
+### 3. Předpis: úplný relevantní text a správný časový režim
 
-- Paragraf známý → žádný broad search; změny zákona → `/versions` k rozhodnému datu.
-- `/toc` → `elementId` → `/text?part=`; `docId` jen z API.
-- Prahy, lhůty hlášení, sazby pokut, čísla vyhlášek a data použitelnosti EU předpisů nikdy z paměti - vždy z aktuálního znění s odkazem.
-- Mimo CODEXIS jen oficiální zdroje (nukib.gov.cz, uoou.gov.cz, eur-lex, digitalni-agentura.gov.cz, ctu.gov.cz) když CODEXIS neodpovídá.
-- Nikdy neradit, jak obejít hlášení incidentu, zatajit únik dat nebo zaplatit výkupné sankcionované osobě.
+Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
+
+Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+
+Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
+
+### 4. Judikatura: celý dokument, skutečný závěr a použitelnost
+
+U každého rozhodnutí použitého jako právní opora načti celý text od výroku po závěr odůvodnění, včetně samostatných pokračování, příloh či odlišných stanovisek, jsou-li součástí dokumentu. Vyčerpej dostupné pokračování obsahu; shrnutí, vyhledávací úryvek, metadata ani právní věta nenahrazují rozhodnutí. Pokud nástroj dodá jen část, stav zůstává neúplný. Odděleně eviduj, zda byl dokument nalezen, celý načten a zda jeho závěr skutečně podporuje právní tezi; neodvozuj jeden stav z druhého.
+
+Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
+
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+
+### 5. Zdrojový přehled, argumentace a výstup
+
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+
+Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
+
+### 6. Konečný artefakt, náklady a smlouvy
+
+Před odevzdáním porovnej se zdrojovým přehledem i původními podklady celý konečný text včetně shrnutí, petitu, realizačního checklistu, rozpočtu a příloh. Nový závěr či nárok doplněný při psaní vyžaduje doplnění rešerše a opakování souvisejících kontrol. Vlastní předchozí shrnutí není náhradou původního pramene.
+
+U procesního výstupu odděl pravomoc, věcnou a místní příslušnost, přípustnost, lhůtu a důvodnost. Každý výrok petitu musí odpovídat nároku, účastníkům, předmětu, rozsahu a času plnění a mít konkrétní skutkovou a právní oporu. Náklady prověř podle všech konečně navržených nároků a úkonů: osvobození, zpoplatněný předmět, položka, základ, sazba, počet úkonů, paušály a případná daň. Jistota není poplatek a smluvní odměna není automaticky náhradou přiznatelnou soudem. Výpočty uváděj s mezikroky a nezávislým přepočtem; neznámý parametr nenahrazuj nulou. U lhůty dolož událost, počátek, délku, pravidla běhu a konec. Interní bezpečnostní termín odliš od zákonného konce.
+
+U smlouvy nebo revize dodej skutečně požadované úplné znění, ne jen seznam rizik. Odděl rozhodné právo od fóra, ověř kogentní ochranu, vazby definic, plnění, ukončení, vypořádání a alokace odpovědnosti. Varianty ekonomické a daňové výhodnosti porovnávej na doložených předpokladech včetně nákladů, nikoli jen nominální sazby. Omezení odpovědnosti formuluj ve prospěch klienta jen po ověření jeho přípustných mezí; nepředstírej platnost plošného zřeknutí. Redline musí zachovat originál a dohledatelné změny; u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.
+
+Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k revizi určený výstup pravdivě. Uložení, odeslání, doručení, podpis a podání jsou odlišné stavy; žádný nepředstírej. Bez výslovného pokynu nic neposílej ani nepodávej. Nedodané části a neověřené rozhodné zdroje nesmějí být skryty prohlášením „hotovo“ nebo „vše ověřeno“.
+
+## Oborové otázky a požadované výstupy
+
+## Mandát a technické skutečnosti
+
+Urči klienta, jeho roli dodavatele, objednatele, provozovatele či regulované osoby a obchodní cíl. Rozliš zakázkový software, implementaci, licenci, SaaS, cloud, outsourcing, hardware, IoT, platformu a AI. Zjisti spotřebitelský, podnikatelský, veřejný nebo finanční kontext. Zmapuj služby, dodavatele, země hostingu, data, kritické závislosti, smlouvy, skutečné technické možnosti a rozhodná data; právní klasifikaci neopírej o marketingový název produktu.
+
+Každý závěr o právu vyhledej v nativním CODEXIS pro relevantní období, včetně přechodných pravidel, přímo použitelných unijních předpisů a prováděcích aktů. Technické tvrzení odděl od doloženého testu. Nefunkční záloha, neověřený export nebo chybějící klíče se nezhojí právní deklarací o předání.
+
+## Dodávka, akceptace a obchodní podmínky
+
+U smlouvy stanov funkční a technický rozsah, rozhraní, dokumentaci, metodiku vývoje, backlog a odpovědnost za změny. Rozliš pevný rozsah od průběžně řízeného vývoje. Uprav milníky, závislosti, součinnost, prostředí, testovací data a testy, kategorie vad, opakování testu a skutečné předpoklady akceptace. Prověř, kdy může mít mlčení či užívání akceptační význam; nezakládej převzetí neotestovaného díla na nepřiměřené automatické fikci bez právního a obchodního posouzení.
+
+U ceny rozliš pevnou částku, odhad a časovou odměnu, rozpočtový strop, výdaje a platební milníky. Změnové řízení má před zahájením práce zachytit cenu, termín a dopad na rozsah. Uprav prodlení a příčinnou součinnost klienta, zadržení přiměřené platby, nápravu, částečné ukončení, vracení plateb a rozpracovaný výsledek. Odděl odpovědnost za vady, záruku, údržbu a následný rozvoj.
+
+## Práva a použitelnost výsledku
+
+Zmapuj autorský řetězec podle skutečného autora, pracovního vztahu, přímé objednávky a subdodávky. Vyhledej zvláštní režim objednaného počítačového programu či databáze a jeho podmínky; nepředpokládej, že každý samostatný dodavatel vyžaduje stejnou licenční konstrukci. Odděl oprávnění vykonávat majetková práva, licenci, vlastnictví nosiče a oprávnění třetích osob.
+
+Licenci vymez podle užití, změn, spojení, území, doby, počtu uživatelů, převodu, sublicencí, výhradnosti a formy. Prověř zaměstnanecké odměny, dekompilaci, vyčerpání a limity smluvních zákazů. U open-source komponent zjisti konkrétní licenci, propojení, distribuci či vzdálené poskytování; nepřipisuj každé komponentě automatický dopad na celý zdrojový kód. Zahrň SDK, data, modely a práva k výstupům AI, obchodní tajemství a podmínky textového a datového vytěžování.
+
+Praktickou nezávislost zajisti doloženým předáním zdrojů, sestavení, dokumentace, přístupů, klíčů, formátů dat a potřebných oprávnění. U úschovy zdrojů řeš kontrolu úplnosti a použitelnosti již před akceptací, aktualizace, podmínky vydání a oprávnění náhradního dodavatele. Step-in bez souhlasů a přístupů nemusí být proveditelný.
+
+## Provoz, data a ukončení
+
+SLA navrhni s měřitelnou dostupností, časovým základem, výlukami, údržbou, měřením, reakcí a obnovou. Rozliš cíl doby obnovy služby od cíle maximální ztráty dat vyjádřené časem; nezaměňuj tyto veličiny ani deklaraci s provedeným testem. Kredity neposuzuj automaticky jako jedinou nápravu. Limity odpovědnosti a její případné vyloučení vyvaž ve prospěch klienta v ověřených mezích, včetně výjimek, pojištění a vztahu k smluvní pokutě.
+
+U osobních údajů vyhledej role, zpracovatelská ujednání, subdodavatele, audit, zabezpečení, předání do třetích zemí a právní použitelnost zvoleného mechanismu. U cloudu řeš koncentraci, umístění a dostupnost dat, změnu ceny, přenositelnost, export, přechodnou podporu, výmaz a doložení jeho rozsahu. Ve veřejném sektoru ověř zvláštní cloudové, evidenční či atestační požadavky, zadávání, změny závazku a riziko vendor lock-in. U finančního klienta samostatně vyhledej požadavky na ICT třetí strany, smlouvy, dohled a odolnost.
+
+## Kybernetická regulace a incident
+
+Klasifikuj službu podle skutečné činnosti, velikosti, skupinových vazeb, zvláštních kritérií a výjimek. Zjisti příslušný režim povinností a zda na digitální infrastrukturu dopadá zvláštní nebo přímá unijní úprava. Odděl účinnost předpisu, splnění podmínek regulované služby, registraci, doručení rozhodnutí a počátek jednotlivé povinnosti; nevztahuj datum jednoho úkonu mechanicky na vše.
+
+Sestav přiměřený plán řízení rizik, odpovědných rolí, aktiv, přístupů, logování, kryptografie, záloh, kontinuity, školení a dodavatelského řetězce včetně případných omezení rizikových dodavatelů. U každé povinnosti uveď ověřený počátek, adaptační pravidlo, odpovědnou osobu a důkaz plnění.
+
+Při incidentu zachovej logy, časovou osu, důkazní integritu, důvěrnost a bezpečné obnovení. Rozliš hlášení kybernetickému orgánu, ochranu osobních údajů, finanční dohled, policii, smluvní oznámení a pojištění. Každá větev má vlastní spouštěč, obsah a čas; vyhledej prvotní, návazné a závěrečné hlášení, případný průběžný stav při trvajícím incidentu a povinnosti po vyřešení. Prověř zvláštnosti poskytovatele důvěryhodných služeb. Oznamovací tabulku ani kontaktní návrh neoznačuj za uskutečněné hlášení. U vydírání zohledni sankce, trestní rizika a pojistné podmínky; nedoporučuj zatajení incidentu nebo protiprávní platbu.
+
+## Elektronické jednání, digitální služby a AI
+
+U elektronického úkonu ověř požadovanou formu a úroveň podpisu, zvláštní požadavky na ověření, podpis fyzické osoby versus pečeť, časové razítko, dlouhodobé uchování a prokazování identity. Samostatně posuď datové schránky, doručení, výjimky fikce, elektronickou identifikaci, bankovní identitu a digitální peněženky podle použitelné úpravy.
+
+Podle produktu prověř hostování a obsah, digitální spotřebitelské plnění, platformové povinnosti, cookies a marketing, kybernetické požadavky na produkty a zranitelnosti i kritickou odolnost. U AI klasifikuj systém, poskytovatele, nasazujícího a další role podle účelu a použití; vyhledej zákazy, rizikovou kategorii, obecné modely, transparentnost, automatizované rozhodování a postupnou použitelnost. Zahrň výcviková data, zaměstnaneckou politiku a veřejné použití, pokud souvisejí se zadáním.
+
+## Výstup
+
+Dodej úplné požadované smluvní znění, akceptační či incidentní přílohu, zdrojově doloženou matici povinností a plán exitu. Zachovej otevřené incidentní úkoly až do splnění skutečných podmínek, nikoli do uplynutí univerzální doby. Připoj klientské varianty odpovědnosti, protinámitky, důkazní mezery a při sporu konkrétní nárok, petit a kontrolovatelný výpočet nákladů.
