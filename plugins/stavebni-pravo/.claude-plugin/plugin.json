@@ -1,7 +1,7 @@
 {
   "uuid": "660aa208-7e0b-4589-9ee7-2ae703b57e61",
   "name": "stavebni-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech construction and planning law practice skill - permits under the new Building Act (283/2021 Sb.), transitional regime, participants and neighbours, unauthorised structures, removal, occupancy, nuisance and boundary disputes, construction contracts and defects, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

@@ -1,7 +1,7 @@
 {
   "uuid": "0bee16bb-e182-4e25-a7dc-44f2314c6fc5",
   "name": "exekuce-obrana-dluznika",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech enforcement defence practice skill - auditing the enforcement title, motions to stay and stop enforcement, protected minimum and protected account, seizure of movables, real estate and marital property, third-party claims, costs, complaints against bailiffs and the debt-relief exit, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

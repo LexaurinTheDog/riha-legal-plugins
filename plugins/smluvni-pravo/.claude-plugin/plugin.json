@@ -1,7 +1,7 @@
 {
   "uuid": "1a5d6452-24d6-4e09-9daa-9e66935fe02a",
   "name": "smluvni-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech contract law practice skill - contract review and deficiency analysis, drafting and revision under the Civil Code (89/2012 Sb.), B2B/B2C/public-sector regimes, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

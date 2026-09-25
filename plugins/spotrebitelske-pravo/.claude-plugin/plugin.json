@@ -1,7 +1,7 @@
 {
   "uuid": "18e7ea07-0dca-4c91-a35f-0f5349996b2f",
   "name": "spotrebitelske-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech consumer law practice skill - consumer contracts and e-commerce, withdrawal, defects and complaints, unfair terms and practices, consumer credit, ADR and collective redress, and compliance for traders, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

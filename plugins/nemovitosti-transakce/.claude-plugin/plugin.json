@@ -1,7 +1,7 @@
 {
   "uuid": "6dcc0792-5e12-4f46-9e2c-a2784de34a97",
   "name": "nemovitosti-transakce",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech real estate transactions practice skill - purchase contracts, escrow, cadastre filings, liens, pre-emption rights, co-ownership, leases and transaction taxes on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

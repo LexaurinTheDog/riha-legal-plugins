@@ -1,7 +1,7 @@
 {
   "uuid": "6b42ab7e-cda4-4b61-aebc-5491119894b7",
   "name": "bytove-pravo-najem-svj",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech housing law practice skill - residential and commercial leases, termination and eviction, rent and service charges, owners' associations (SVJ), housing cooperatives and short-term rentals, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

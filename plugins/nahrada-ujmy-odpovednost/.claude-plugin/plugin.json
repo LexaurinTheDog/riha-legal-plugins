@@ -1,7 +1,7 @@
 {
   "uuid": "2e5922f3-6d1a-4661-9296-ca12348537c0",
   "name": "nahrada-ujmy-odpovednost",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech tort and liability practice skill - general and strict liability under the Civil Code, damage to property and pure economic loss, personal injury and the Supreme Court methodology for non-pecuniary harm, wrongful death and secondary victims, product liability, liability of employers, professionals and public bodies, causation and contributory fault, limitation, insurance interplay and quantification, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

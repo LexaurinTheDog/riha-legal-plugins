@@ -1,7 +1,7 @@
 {
   "uuid": "afd1cc2a-21fd-4468-8664-5a29101c3bae",
   "name": "dedicke-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech inheritance law practice skill - wills and inheritance contracts, forced heirs, disinheritance, renunciation and inventory reservation, debts of the estate, probate proceedings before the notary, disputes and estate planning, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

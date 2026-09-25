@@ -1,7 +1,7 @@
 {
   "uuid": "960a7e4a-b3a6-4a5e-a3e2-a7afc5f3d16d",
   "name": "energeticke-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech energy law practice skill - Energy Act licences and ERÚ regulation, electricity and gas supply contracts and switching, renewable sources support and permitting, community energy and self-consumption, grid connection, price regulation and disputes, heat supply, energy performance of buildings, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

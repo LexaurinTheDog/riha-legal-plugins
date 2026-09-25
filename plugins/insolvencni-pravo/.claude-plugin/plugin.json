@@ -1,7 +1,7 @@
 {
   "uuid": "8f79dc16-0c3f-4b99-906f-f921fd2df76f",
   "name": "insolvencni-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech insolvency law practice skill - creditor claims, claim review and denial, incidental disputes, debt relief, bankruptcy, moratorium and ISIR workflow on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

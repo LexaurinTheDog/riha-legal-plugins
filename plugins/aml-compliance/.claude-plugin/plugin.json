@@ -1,7 +1,7 @@
 {
   "uuid": "2cdd74f1-a8d6-41c7-afd7-ace2b1f7deb2",
   "name": "aml-compliance",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech AML/CFT compliance practice skill - obliged persons, customer identification and due diligence, beneficial owner and PEP checks, sanctions screening, suspicious transaction reports to FAÚ, internal policies and training, attorney-specific duties and privilege, real-estate and escrow triggers, beneficial owner register, inspections and penalties, EU AML package, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

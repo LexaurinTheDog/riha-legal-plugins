@@ -1,7 +1,7 @@
 {
   "uuid": "110729b6-f846-4b8e-8b00-65e3ae40db75",
   "name": "spolky-nadace-neziskovy-sektor",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech non-profit law practice skill - associations, foundations, endowment funds and institutes: formation and registers, governance and member disputes, review of body decisions, donations, public collections, grants, tax status of public-benefit taxpayers, accounting duties, dissolution and liability, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

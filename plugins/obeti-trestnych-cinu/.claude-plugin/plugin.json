@@ -1,7 +1,7 @@
 {
   "uuid": "656fea00-42a1-4856-ab7e-8742f3881ccf",
   "name": "obeti-trestnych-cinu",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech crime-victim and injured-party representation skill - victims' rights under Act 45/2013, especially vulnerable victims, injured party in criminal proceedings, adhesion claims for damages and non-pecuniary harm, state financial assistance, protective and preliminary measures, interview protection, confidant and counsel, complaints against dismissal, settlement and mediation, domestic and sexual violence cases, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

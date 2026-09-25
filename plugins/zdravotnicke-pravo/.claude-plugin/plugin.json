@@ -1,7 +1,7 @@
 {
   "uuid": "8ca08a12-3b9c-4138-83ef-58775acbed71",
   "name": "zdravotnicke-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech medical and health law practice skill - patient rights and informed consent, medical records, malpractice and personal injury claims, complaints and disciplinary proceedings, public health insurance coverage, providers' licensing and compliance, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

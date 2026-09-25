@@ -1,7 +1,7 @@
 {
   "uuid": "d811e4e0-77f1-4bb4-981c-ef739f721b71",
   "name": "sportovni-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech sports law practice skill - athlete and club contracts, federation rules and disciplinary review, transfers and arbitration, liability for sports injuries, event organisation, sponsorship, donations and public funding, anti-doping and minors, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

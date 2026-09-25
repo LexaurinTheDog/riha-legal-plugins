@@ -1,7 +1,7 @@
 {
   "uuid": "9c257c89-0cd6-4678-b46b-3eb15738fba0",
   "name": "rozhodci-rizeni-mediace",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech arbitration and mediation practice skill - validity of arbitration clauses, consumer and employment limits, permanent courts of arbitration and ad hoc tribunals, conduct of proceedings, setting aside and enforcement of awards, New York Convention, mediation act, mediation agreements and court-ordered first meetings, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

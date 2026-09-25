@@ -1,7 +1,7 @@
 {
   "uuid": "bf1cd5be-8ffc-4522-8f2d-a61a878a3d36",
   "name": "opatrovnictvi-svepravnost",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech legal capacity and guardianship practice skill - limitation of legal capacity and its review, supportive measures (assistance in decision-making, representation by a household member, advance directive), guardianship of adults and its supervision, guardian's duties and court approvals, public guardians, detention in health-care facilities, protection of vulnerable adults, dementia and estate planning, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

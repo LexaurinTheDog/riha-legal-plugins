@@ -1,7 +1,7 @@
 {
   "uuid": "045a0bcb-4cc0-4973-aa39-064f34a64b04",
   "name": "obcanske-procesni-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech civil procedure practice skill - jurisdiction and venue, drafting claims and petitions, court fees, service and deadlines, evidence and burden of proof, judgments by default and payment orders, interim measures, appeals and extraordinary remedies including admissibility of dovolání, costs of proceedings and attorney tariff, non-contentious proceedings, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

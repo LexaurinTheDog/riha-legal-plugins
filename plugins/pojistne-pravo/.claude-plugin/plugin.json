@@ -1,7 +1,7 @@
 {
   "uuid": "0ac6cf03-3bb7-47a5-86aa-cb9f0bdf26c1",
   "name": "pojistne-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech insurance law practice skill - insurance contract under the Civil Code, pre-contractual duties and disclosure, claims handling deadlines, refusal and reduction of indemnity, motor third-party liability and the guarantee fund, property, liability, life and travel insurance, insurance distribution rules, ombudsman and financial arbiter, limitation periods, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

@@ -1,7 +1,7 @@
 {
   "uuid": "047e367f-d9f0-4c32-81a1-65598b160b72",
   "name": "pracovni-pravo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech labour law practice skill - employment contracts, termination and its invalidity, working time and pay, liability, non-compete, agency work, disguised employment and labour disputes under zákoník práce, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

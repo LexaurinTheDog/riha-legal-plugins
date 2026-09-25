@@ -1,7 +1,7 @@
 {
   "uuid": "0c539963-11d3-42c3-bcec-838314ba51cc",
   "name": "socialni-zabezpeceni",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech social security law practice skill - old-age, invalidity and survivors' pensions, sickness and maternity benefits, state social support and assistance in material need, disability allowances and care allowance, social insurance contributions and penalties, appeals against ČSSZ and labour office decisions, medical assessment review, EU coordination of social security, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {

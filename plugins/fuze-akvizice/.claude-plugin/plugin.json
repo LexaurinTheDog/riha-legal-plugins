@@ -1,7 +1,7 @@
 {
   "uuid": "3844909e-222f-486b-a855-3694aa03b394",
   "name": "fuze-akvizice",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Czech M&A practice skill - share deals and asset deals, letters of intent and exclusivity, due diligence, SPA structure with price mechanisms, representations and warranties, indemnities and escrow, conditions precedent, shareholders' agreements, corporate transformations under the Transformations Act, merger control before the Czech competition office and the Commission, FDI screening, transfer of employees, regulatory approvals, tax structuring, closing and post-closing disputes, on top of the CODEXIS legal database.",
   "icon": "./icon.svg",
   "author": {
