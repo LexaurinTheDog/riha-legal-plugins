@@ -1,0 +1,31 @@
+{
+ "titulek": "Zamítnutá reklamace notebooku",
+ "podtitul": [
+  "Prodávající tvrdí „mechanické poškození“ – nic nedoložil.",
+  "Smyšlená spotřebitelka, chybějící údaje ponechány jako [DOPLNIT]."
+ ],
+ "skill": "spotrebitelske-pravo",
+ "zabery": [
+  [
+   "01_zadani.png",
+   "Zadání: koupě 3. 3. 2026, vada 1. 9., zamítnutí 25. 9. 2026"
+  ],
+  [
+   "02_zaver.png",
+   "Závěr agenta: lhůty, ADR u ČOI a judikatura"
+  ]
+ ],
+ "stranky": [
+  [
+   "str-1.png",
+   "Výstup",
+   "Výzva k uznání reklamace",
+   [
+    "Vada do 1 roku od převzetí: domněnka vady při převzetí (§ 2161 odst. 5 OZ)",
+    "Nedoložené „mechanické poškození“ domněnku nevyvrací",
+    "Volba nároku: dodání nové věci (§ 2169 OZ)",
+    "Návrh na ADR u ČOI do 2. 9. 2027 (§ 20e ZOS)"
+   ]
+  ]
+ ]
+}

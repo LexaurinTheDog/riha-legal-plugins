@@ -1,0 +1,50 @@
+{
+ "titulek": "Výpověď pro nadbytečnost – a na místo nastoupí nová účetní",
+ "podtitul": [
+  "Oznámení zaměstnavateli a žaloba na neplatnost výpovědi.",
+  "Smyšlená klientka, chybějící údaje ponechány jako [DOPLNIT]."
+ ],
+ "skill": "pracovni-pravo",
+ "zabery": [
+  [
+   "01_zadani.png",
+   "Zadání: skutkový stav, dvě listiny, hlavičkový papír kanceláře"
+  ],
+  [
+   "02_zaver.png",
+   "Závěr agenta: rozhodná úprava, běžící lhůty a judikatura NS"
+  ]
+ ],
+ "stranky": [
+  [
+   "str-1.png",
+   "Výstup 1",
+   "Oznámení, že zaměstnankyně trvá na dalším zaměstnávání",
+   [
+    "§ 69 odst. 1 ZP – zachová nárok na náhradu mzdy",
+    "Doručit prokazatelně, doklad uschovat",
+    "Identifikační údaje [DOPLNIT]"
+   ]
+  ],
+  [
+   "str-2.png",
+   "Výstup 2 · strana 1",
+   "Žaloba o určení neplatnosti výpovědi",
+   [
+    "Nová účetní = zpravidla důkaz o neopodstatněnosti výpovědního důvodu (NS 21 Cdo 2212/2025)",
+    "Výpovědní doba běží ode dne doručení (§ 51 ZP po novele): konec 10. 11. 2026",
+    "Žalobní lhůta § 72 ZP: 10. 1. 2027 je neděle, tedy pondělí 11. 1. 2027"
+   ]
+  ],
+  [
+   "str-3.png",
+   "Výstup 2 · strana 2",
+   "Důkazy a petit",
+   [
+    "Rozhodnutí o organizační změně předloží žalovaná",
+    "Petit na určení neplatnosti výpovědi",
+    "Spisové značky ověřeny v databázi NS"
+   ]
+  ]
+ ]
+}

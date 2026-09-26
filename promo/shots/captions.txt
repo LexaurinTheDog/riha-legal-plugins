@@ -1,0 +1,4 @@
+01_marketplace.png|Nástroje → Doplňky → Add Marketplace → URL repozitáře
+02_zadani.png|Dotaz: smluvní pokuta 960 000 Kč, smlouva z března 2023
+03_prubeh.png|Skill načte znění OZ k datu smlouvy a judikaturu navázanou na § 2051
+04_vysledek.png|Výsledek: tříkrokový test, břemeno dlužníka, ověřená judikatura NS
