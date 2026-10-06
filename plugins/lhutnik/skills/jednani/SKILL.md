@@ -1,119 +1,95 @@
 ---
-name: jednani
-description: Záznam z jednání soudu → hlídané lhůty v kalendáři. Z volných poznámek po jednání vytáhne lhůty všech stran a termín dalšího jednání, spočítá konce lhůt dle § 57 o. s. ř. a založí události s upomínkami. Triggers: /jednani, záznam z jednání, byl jsem u soudu, po jednání, zapiš lhůtu, odročeno, lhůtník, procesní lhůta.
+name: "Lhůtník – záznam z jednání"
+description: "Z poznámek po jednání soudu vytáhne lhůty všech stran a termín dalšího jednání, spočítá konce lhůt a po schválení je založí v Evoliu jako události a úkoly ke spisu."
+whenToUse: "Uživatel se vrátil z jednání nebo poslal poznámky, usnesení či protokol a potřebuje ohlídat lhůty: záznam z jednání, byl jsem u soudu, po jednání, odročeno, zapiš lhůtu, lhůtník, procesní lhůta, kdy končí lhůta, spočítej lhůtu, výzva soudu s lhůtou."
 ---
 
-# Záznam z jednání → hlídané lhůty
+# Lhůtník – záznam z jednání → hlídané lhůty v Evoliu
 
-Účel: aby se poznámka z jednací síně **ve stejném úkonu** změnila na termín s budíkem. Dva oddělené kroky („zapsat" a „zanést do lhůtníku") selhávají na tom druhém — proto se tady dělají naráz.
+Účel: poznámka z jednací síně se **ve stejném úkonu** změní na termín s upomínkou ve spisu v Evoliu. Zapsat a zanést do lhůtníku jako dva oddělené kroky selhává na tom druhém — proto se to tady dělá naráz.
 
-Skill je soběstačný: kalkulátor lhůt leží vedle tohoto souboru (`lhuta.py`).
+## Železná pravidla
 
-## Konfigurace
+1. **Nikdy nehádej lhůtu.** Nevíš-li jistě rozhodnou skutečnost (od čeho lhůta běží) nebo její délku, polož otázku nástrojem `ask_user`. Chybný termín v lhůtníku je horší než žádný — vypadá jako ohlídaný.
+2. **Zachyť lhůty VŠECH stran** — naše, protistrany, soudu. Zmeškaná lhůta protistrany je procesní příležitost.
+3. **Rozhodná skutečnost není vždy den jednání.** Bývá jí doručení, zveřejnění v rejstříku, právní moc. V pochybnosti se ptej.
+4. **Každý výpočet ukaž s mezikroky** (rozhodná skutečnost → první den běhu → nominální konec → posun) a proveď ho **dvakrát nezávisle** (jednou po dnech/měsících dopředu, jednou kontrolou zpětně od výsledku). Při neshodě výsledek nepoužij a řekni to.
+5. **Nic nezakládej bez schválení.** Před zápisem do Evolia předlož souhrn a vyžádej souhlas nástrojem `request_approval`.
+6. Nic neodesílej soudu, klientovi ani protistraně.
 
-Výchozí hodnoty pro toto prostředí. Při nasazení jinde uprav jen tuhle sekci — zbytek skillu je na ní nezávislý.
+## 1. Vstup
 
-| Klíč | Hodnota |
-|---|---|
-| Kalendář (zdroj pravdy pro lhůty) | `gog calendar create primary` |
-| Časové pásmo | `Europe/Prague` |
-| Záchyt z mobilu | chat se sebou (WhatsApp/Signal), JID `<tvoje-cislo>@s.whatsapp.net` — vyplň |
-| Kam ukládat záznam | do složky kauzy; neznáš-li ji, zeptej se |
-| Upomínky u lhůty | `popup:7d`, `popup:3d`, `popup:1d` |
-| Upomínky u jednání | `popup:7d`, `popup:1d` |
+- Poznámky ze zadání, přiložený protokol, usnesení nebo výzva soudu (čti je `file_read`).
+- Je-li připojen konektor Evolia, dohledej spis (`load_connector_instructions` pro `evolio_pripady`; jinak `database_agent` nad `evolioprod` jen ke čtení) — spisovou značku, soud a klienta přebírej ze spisu, ne z odhadu.
+- Pro kontext případu projdi `search_workspace_memory` podle klienta nebo sp. zn.
 
-Není-li k dispozici `gog`, zeptej se, kam termíny zapsat — **nikdy je nezakládej „naslepo" jinam**, než co uživatel potvrdí.
+## 2. Vytěž fakta
 
-## ŽELEZNÁ PRAVIDLA
-
-1. **Nikdy nehádat lhůtu.** Nevíš-li jistě rozhodnou skutečnost (od čeho lhůta běží) nebo její délku, ZEPTEJ SE. Chybný termín v kalendáři je horší než žádný — vypadá jako ohlídaný.
-2. **Zachytit lhůty VŠECH stran**, ne jen klientovy: moje / protistrany / soudu. Zmeškaná lhůta protistrany je procesní příležitost, ne cizí starost.
-3. **Konce lhůt počítat výhradně skriptem**, nikdy zpaměti ani odhadem.
-4. **Rozhodná skutečnost není vždy den jednání.** Bývá i doručení, zveřejnění v rejstříku, právní moc. Rozliš to a v pochybnosti se ptej.
-5. Před založením událostí předlož **souhrn ke schválení**. Teprve po potvrzení zakládej.
-
-## Postup
-
-### 1. Získej vstup
-
-- **Z terminálu:** poznámky jsou v argumentu skillu, jinak o ně požádej.
-- **Z mobilu** (řekne-li uživatel „poslal jsem si to", „z whatsappu"): načti poslední zprávy z chatu se sebou dle konfigurace, vyber ty od posledního jednání a nech uživatele potvrdit, které patří k věci.
-
-### 2. Vytěž fakta
-
-Sestav tabulku z toho, co v poznámkách je. Co chybí, **vypiš jako otázky** — nedomýšlej:
+Sestav tabulku z toho, co v podkladech je. Co chybí, vypiš jako otázky — nedomýšlej:
 
 | Pole | Pozn. |
 |---|---|
-| Klient / spis | |
+| Klient / spis v Evoliu | |
 | Sp. zn. / č. j. | přesně dle záhlaví |
-| Soud, senát/samosoudce | |
+| Soud, senát / samosoudce | |
 | Datum jednání | |
-| Co se stalo | přednesy, dokazování, uznané/sporné skutečnosti |
-| **Lhůty** | pro každou: *kdo*, *co má udělat*, *délka*, *od jaké skutečnosti* |
+| Co se stalo | přednesy, dokazování, uznané / sporné skutečnosti |
+| **Lhůty** | pro každou: *kdo*, *co má udělat*, *délka*, *od jaké skutečnosti*, *procesní režim* |
 | **Další jednání** | datum, čas, síň, adresa |
-| Poučení | zejm. § 118a, § 118b odst. 1 (koncentrace) |
-| Úkoly pro mě | co sepsat, co doložit, koho oslovit |
+| Poučení | zejm. § 118a, § 118b odst. 1 o. s. ř. (koncentrace) |
+| Úkoly pro nás | co sepsat, co doložit, koho oslovit |
 
-### 3. Spočítej lhůty
+## 3. Spočítej lhůty
 
-Pro každou lhůtu zavolej kalkulátor a použij `posledni_den`:
+**Nejdřív ověř pravidlo** v platném znění k rozhodnému dni nástrojem `laws__law_get_provision` (případně `laws__get_provision_timeline`): u civilního řízení § 57 o. s. ř., u jiného režimu jeho vlastní ustanovení (správní řád § 40, trestní řád § 60, daňový řád § 33, insolvenční zákon odkazuje na o. s. ř. přes § 7). U hmotněprávních lhůt (promlčení, prekluze dle o. z. §§ 605–608) platí jiná pravidla a **musí dojít včas** — ověř je zvlášť a výsledek označ jako hmotněprávní.
 
-```bash
-python3 "$SKILL_DIR/lhuta.py" 2026-02-02 30d --json
-```
+Postup podle § 57 o. s. ř. (po ověření znění):
+- Do běhu se nezapočítává den, kdy došlo ke skutečnosti určující počátek; lhůta začíná běžet následujícím dnem.
+- Lhůta v týdnech, měsících či letech končí dnem, který se pojmenováním nebo číslem shoduje se dnem, kdy nastala rozhodná skutečnost; takový den v měsíci není-li, končí posledním dnem měsíce.
+- Připadne-li konec na sobotu, neděli nebo svátek, je posledním dnem nejblíže následující pracovní den.
+- Lhůta je zachována, je-li posledního dne podání učiněno u soudu nebo odevzdáno orgánu, který má povinnost je doručit (pošta, datová schránka).
 
-Podporuje `Nd` / `Nt` / `Nm` / `Nr` (dny, týdny, měsíce, roky). Implementuje § 57 o. s. ř.: běh od následujícího dne po rozhodné skutečnosti; u týdnů/měsíců/let shoda označení dne (není-li takový den, poslední den měsíce); posun z víkendu a svátku na nejblíže následující pracovní den. Svátky včetně pohyblivých Velikonoc.
+**Svátky a dny pracovního klidu ČR** (zákon č. 245/2000 Sb. — při pochybnosti ověř `laws__law_get_provision`):
+pevné: 1. 1., 1. 5., 8. 5., 5. 7., 6. 7., 28. 9., 28. 10., 17. 11., 24. 12., 25. 12., 26. 12.;
+pohyblivé:
 
-### 4. Předlož souhrn ke schválení
+| Rok | Velký pátek | Velikonoční pondělí |
+|---|---|---|
+| 2026 | 3. 4. | 6. 4. |
+| 2027 | 26. 3. | 29. 3. |
+| 2028 | 14. 4. | 17. 4. |
+| 2029 | 30. 3. | 2. 4. |
+| 2030 | 19. 4. | 22. 4. |
+| 2031 | 11. 4. | 14. 4. |
 
-Vypiš, co se založí — každou lhůtu s posledním dnem a upomínkami, jednání s časem a síní. Vyžádej potvrzení.
+Den v týdnu u výsledku vždy uveď slovem (např. „pondělí 2. 11. 2026“) — nesoulad data a dne v týdnu je signál chyby výpočtu.
 
-### 5. Založ události
+## 4. Předlož souhrn ke schválení
 
-Vždy s časovým pásmem z konfigurace a vždy s private properties (podle nich lze později stavět kontrolní přejezd):
-`lhutnik=1`, `typ=lhuta|jednani|kontrola`, `kdo=my|protistrana|soud`, `spis="<sp. zn.>"`.
+Tabulka: kdo · co · rozhodná skutečnost · délka · výpočet · **poslední den (den v týdnu)** · upomínky · co se stane při nesplnění. U jednání datum, čas, síň, adresa. Pak `request_approval`.
 
-**Lhůta** — celodenní událost na poslední den:
+## 5. Založ v Evoliu
 
-```bash
-gog calendar create primary \
-  --summary "LHŮTA (protistrana): <co> — <sp. zn.>" \
-  --from 2026-03-04 --to 2026-03-05 --all-day --timezone Europe/Prague \
-  --description "<od čeho běží, co se stane při nesplnění, kde ověřit>" \
-  --reminder popup:7d --reminder popup:3d --reminder popup:1d \
-  --private-prop lhutnik=1 --private-prop typ=lhuta --private-prop kdo=protistrana \
-  --private-prop spis="<sp. zn.>"
-```
+Po schválení načti `load_connector_instructions` pro `evolio_udalosti` a `evolio_ukoly` a postupuj podle nich. Není-li konektor připojen (uživatel není přihlášen), **nic nezakládej jinam** — řekni, že je potřeba připojit konektor „evolio.cz“ v nastavení Coworku, a předej hotovou tabulku k ručnímu zápisu.
 
-**Jednání** — časovaná událost:
+- **Lhůta** — celodenní událost na poslední den ke spisu; název `LHŮTA (my|protistrana|soud): <co> — <sp. zn.>`; popis: od čeho běží, výpočet, následek nesplnění, kde ověřit. Upomínky 7, 3 a 1 den předem (pokud konektor upomínky umí; jinak úkol s termínem o 3 pracovní dny dřív).
+- **Jednání** — časovaná událost s místem (soud, adresa, síň), upomínky 7 a 1 den předem. Neznáš-li délku, počítej 90 minut a řekni to.
+- **U lhůty protistrany** navíc úkol den po uplynutí: „ověřit ve spisu / ISIR, zda protistrana splnila“.
+- **Úkoly pro nás** jako úkoly ke spisu s termínem nejpozději 2 pracovní dny před koncem lhůty.
 
-```bash
-gog calendar create primary \
-  --summary "Jednání: <klient> — <sp. zn.>" \
-  --from "2026-06-15T15:00:00+02:00" --to "2026-06-15T16:30:00+02:00" \
-  --timezone Europe/Prague \
-  --location "<soud, adresa, jednací síň>" \
-  --reminder popup:7d --reminder popup:1d \
-  --private-prop lhutnik=1 --private-prop typ=jednani --private-prop spis="<sp. zn.>"
-```
+## 6. Ulož záznam
 
-U lhůty protistrany založ **navíc kontrolní událost** den po jejím uplynutí: „ověřit ve spisu/rejstříku, zda protistrana doplnila" (`--private-prop typ=kontrola`).
+Záznam z jednání ulož jako soubor (`file_write`, případně `export__export_document` do .docx) a klíčová fakta do paměti workspace (`save_memory`: sp. zn., další jednání, lhůty a jejich konce).
 
-Neznáš-li délku jednání, počítej 90 minut a řekni to uživateli.
+## 7. Uzavři
 
-### 6. Ulož strukturovaný záznam
-
-`Zaznam_z_jednani_YYYY-MM-DD.md` do složky kauzy, s frontmatter `spis`, `sp_zn`, `soud`, `datum`, `lhuty`, `dalsi_jednani`, `zalozeno_v_kalendari: true`.
-
-### 7. Uzavři
-
-Shrň, co bylo založeno, a **výslovně vyjmenuj, co jsi nezaložil a proč** (chybějící údaj, nejasná rozhodná skutečnost). Nedopověděné údaje musí zůstat viditelné, ne zmizet.
+Shrň, co bylo založeno, a **výslovně vyjmenuj, co založeno nebylo a proč** (chybějící údaj, nejasná rozhodná skutečnost, nepřipojený konektor). Nedořešené údaje musí zůstat viditelné.
 
 ## Časté pasti
 
-- **§ 118b odst. 1 poslední věta**: byla-li dána výzva dle § 118a, smí soud přihlédnout i k později uvedeným skutečnostem. Zmeškání takové lhůty protistranou tedy *není* prekluze — argumentovat neunesením břemene tvrzení, ne prekluzí.
-- Lhůta „ode dne zveřejnění v rejstříku" běží od zveřejnění, ne od jednání ani od doručení.
-- Odročeno „na neurčito" = žádná událost jednání, ale **založ kontrolu za 3 měsíce**, ať věc nezapadne.
-- Vyhlásí-li soud rozhodnutí při jednání, běží lhůta k opravnému prostředku typicky od **doručení písemného vyhotovení** — v den jednání ji tedy ještě nelze uzavřít; založ kontrolu na očekávané doručení.
-- Lhůty hmotněprávní (promlčecí, prekluzivní dle o. z.) se počítají jinak než procesní a **musí dojít včas**, ne jen být odeslány. Kalkulátor je stavěný na procesní lhůty dle § 57 o. s. ř. — u hmotněprávních jeho výsledek nepoužívej bez kontroly.
+- **§ 118b odst. 1 poslední věta o. s. ř.**: byla-li dána výzva dle § 118a, smí soud přihlédnout i k později uvedeným skutečnostem. Zmeškání takové lhůty protistranou tedy není prekluze — argumentuj neunesením břemene tvrzení.
+- Lhůta „ode dne zveřejnění v rejstříku“ (ISIR) běží od zveřejnění, ne od jednání ani doručení — datum zveřejnění ověř `isir__list_events`.
+- Odročeno „na neurčito“ = žádná událost jednání, ale úkol kontroly za 3 měsíce.
+- Vyhlásí-li soud rozhodnutí při jednání, lhůta k odvolání běží od **doručení písemného vyhotovení** — založ jen kontrolu očekávaného doručení.
+- Soudcovská lhůta (určená soudem) může být prodloužena; zákonnou lhůtu soud prodloužit nemůže — v popisu rozliš.
+- Doručení fikcí do datové schránky: 10. den po dodání, nepřihlásí-li se adresát dříve — rozhodnou skutečnost ověř z doručenky, ne z data odeslání.

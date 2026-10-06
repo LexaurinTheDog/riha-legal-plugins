@@ -1,44 +1,52 @@
 ---
-uuid: 780180e9-2aca-4484-b30a-6e8c2bd28510
-name: startupy-investice-esop
-version: 1.1.1
-jurisdictions: [CZ]
-i18n:
-  cs:
-    displayName: "Startupy, investice a ESOP ČR"
-    summary: "Založení a cap table, zakladatelské dohody a vesting, konvertibilní zápůjčky a SAFE, seed a VC kola s akcionářskou dohodou, likvidační preference, anti-dilution a drag/tag, zaměstnanecké akcie a opční plány včetně českého daňového odkladu, převod IP a zaměstnanecká díla, zákaz konkurence a mlčenlivost, dotace a odpočet na výzkum, crowdfunding a limity veřejné nabídky, exit a zdanění zakladatelů."
-    examplePrompts:
-      - "Tři zakladatelé s.r.o. chtějí nastavit vesting 4 roky s 1 rokem cliff, ochranu při odchodu „bad leaver“ a přípravu na seed kolo. Jak to strukturovat v české s.r.o. a co dát do společenské smlouvy versus akcionářské dohody?"
-      - "Angel investor nabízí konvertibilní zápůjčku 5 mil. Kč s 20% slevou a cap 60 mil. Kč. Zreviduj term sheet, navrhni mechanismus konverze v s.r.o. a daňové dopady pro obě strany."
-      - "Klient chce zavést ESOP pro 15 zaměstnanců v s.r.o. Jaké jsou varianty (opce na podíl, phantom, nová třída podílu), jak funguje daňový odklad od 2024/2025 a co musí zaměstnavatel oznámit?"
-  en:
-    displayName: "Czech Startups, Investments & ESOP"
-    summary: "Founding and cap table, founders' agreements and vesting, convertible loans and SAFE-type instruments, seed and VC rounds with shareholders' agreements, liquidation preference, anti-dilution and drag/tag, employee share and option plans including Czech tax deferral, IP assignment and employee works, non-compete and confidentiality, grants and R&D deductions, crowdfunding and public-offer limits, exits and founder taxation."
-    examplePrompts:
-      - "Three founders of an s.r.o. want 4-year vesting with a 1-year cliff, bad-leaver protection and preparation for a seed round. How to structure it in a Czech s.r.o. and what belongs in the articles versus the shareholders' agreement?"
-      - "An angel offers a CZK 5m convertible loan with a 20% discount and a CZK 60m cap. Review the term sheet, propose the conversion mechanics in an s.r.o. and the tax consequences for both sides."
-      - "My client wants an ESOP for 15 employees in an s.r.o. What are the options (share options, phantom shares, a new share class), how does the 2024/2025 tax deferral work and what must the employer notify?"
-  sk:
-    displayName: "Startupy, investície a ESOP ČR"
-    summary: "Založenie a cap table, zakladateľské dohody a vesting, konvertibilné pôžičky a SAFE, seed a VC kolá s akcionárskou dohodou, likvidačná preferencia, anti-dilution a drag/tag, zamestnanecké akcie a opčné plány vrátane českého daňového odkladu, prevod IP a zamestnanecké diela, zákaz konkurencie a mlčanlivosť, dotácie a odpočet na výskum, crowdfunding a limity verejnej ponuky, exit a zdanenie zakladateľov."
-    examplePrompts:
-      - "Traja zakladatelia s.r.o. chcú nastaviť vesting 4 roky s 1 rokom cliff, ochranu pri odchode „bad leaver“ a prípravu na seed kolo. Ako to štruktúrovať v českej s.r.o. a čo dať do spoločenskej zmluvy versus akcionárskej dohody?"
-      - "Angel investor ponúka konvertibilnú pôžičku 5 mil. Kč s 20% zľavou a cap 60 mil. Kč. Zreviduj term sheet, navrhni mechanizmus konverzie v s.r.o. a daňové dopady pre obe strany."
-      - "Klient chce zaviesť ESOP pre 15 zamestnancov v s.r.o. Aké sú varianty (opcia na podiel, phantom, nová trieda podielu), ako funguje daňový odklad od 2024/2025 a čo musí zamestnávateľ oznámiť?"
-description: 'Use for Czech startups, founders, venture investors and employee equity: formation, cap table, founder agreements, vesting/leavers, convertible loans, SAFE, term sheets, SHA, preferences, anti-dilution, drag/tag, vetoes, equity rounds, ESOP, qualified options and phantom shares, IP chain, employee/contractor roles, tax and social insurance, R&D, subsidies, crowdfunding and exit. Coordinate general corporate, M&A, capital-market and IT specialties. Research legal sources only through native CODEXIS in the application.'
+name: "Startupy, investice a ESOP ČR"
+description: "Založení a cap table, zakladatelské dohody a vesting, konvertibilní zápůjčky a SAFE, seed a VC kola s akcionářskou dohodou, likvidační preference, anti-dilution a drag/tag, zaměstnanecké akcie a opční plány včetně českého daňového odkladu, převod IP a zaměstnanecká díla, zákaz konkurence a mlčenlivost, dotace a odpočet na výzkum, crowdfunding a limity veřejné nabídky, exit a zdanění zakladatelů."
+whenToUse: "Use for Czech startups, founders, venture investors and employee equity: formation, cap table, founder agreements, vesting/leavers, convertible loans, SAFE, term sheets, SHA, preferences, anti-dilution, drag/tag, vetoes, equity rounds, ESOP, qualified options and phantom shares, IP chain, employee/contractor roles, tax and social insurance, R&D, subsidies, crowdfunding and exit. Coordinate general corporate, M&A, capital-market and IT specialties."
 ---
 
 # Startupy, investice a ESOP ČR
 
-## Výhradní zdrojový režim: nativní CODEXIS ve vm.codexis.ai
+> **Povinný postup v Coworku (v tomto pořadí, nevynechávej):**
+> 1. `search_workspace_memory` — klient, IČO, protistrana, sp. zn.; převezmi dřívější zjištění a zákazy citací.
+> 2. `laws__laws_set_context` — nastav rozhodný den, než začneš číst předpisy.
+> 3. Rešerše podle metodiky níže; zvláštní úprava daného smluvního typu či řízení jako samostatná linie; nosná i nepříznivá rozhodnutí čti celá a urči, jak soud skutečně rozhodl.
+> 4. Údaje o právnických osobách do externích textů ověř `ares__get_company_detail`, jinak `[DOPLNIT z OR]`.
+> 5. Před odevzdáním `delegate` — oponentní kontrola nosných citací a nejsilnějšího protiargumentu; výsledek zapracuj.
+> 6. Každý výpočet (částky, úroky, lhůty) proveď dvakrát s mezikroky.
+> 7. `save_memory` — stav věci, lhůty, ověřené prameny, otevřené otázky (jen ověřená čísla).
+> Předpisy v odpovědi cituj s číslem (např. § 2051 zákona č. 89/2012 Sb.). Podrobnosti: oddíl „Pracovní standard RIHA legal“.
 
-Tento skill pracuje pouze v aplikaci vm.codexis.ai. Právní předpisy, judikaturu, komentáře a vzory získávej výhradně jejím nativním nástrojem CODEXIS. Žádné externí vyhledávání, webové zdroje, náhradní databáze ani přímá API mimo tento nástroj. To platí i při výpadku, nenalezení dokumentu, potřebě historického nebo cizojazyčného znění a u podkladů správních orgánů. Pokud obecný návod jiného skillu dovoluje externí zdroje, pro tuto úlohu se tato možnost nepoužije. Odkaz na externí web nalezený uvnitř dokumentu není oprávněním přejít mimo CODEXIS.
 
-Použij skutečně dostupné nativní rozhraní a jeho dokumentované parametry. V této aplikaci může být nativní CODEXIS zpřístupněn vestavěným aplikačním konektorem `cdx-cli`; jeho použití uvnitř aplikace výhradně pro CODEXIS je dovoleno. Není tím dovoleno spouštět CLI na uživatelově počítači, instalovat software, prohledávat přihlašovací údaje, konfigurovat vlastní klienty ani nahrazovat nativní konektor vlastními síťovými požadavky. Technickou syntaxi vezmi z dostupného návodu nativního nástroje; nevymýšlej názvy funkcí, identifikátory, parametry ani endpointy. Pokud je potřeba načíst dodávaný návod CODEXIS, použij z něj pouze technické rozhraní slučitelné s tímto výhradním zdrojovým režimem.
+## Zdrojový režim v Evolio Cowork
 
-Začni skutečným cíleným požadavkem. Výsledek nástroje určuje, zda byl obsah získán; existence skillu nebo konektoru sama nedokládá funkční rešerši. Rozliš prázdné výsledky, odmítnutý přístup, nedostupný nástroj a neúplný obsah. Identický neúspěšný požadavek neopakuj bez změny okolností; zkus jen věcně odůvodněnou alternativu uvnitř CODEXIS, pak přesně označ mezeru. Nikdy ji nepřekryj pamětí nebo údajně provedeným ověřením.
+Tento skill běží v Evolio Cowork. Právní prameny získávej nástroji Coworku podle mapy níže a v uvedeném pořadí zdrojů; jiné zdroje jen tehdy, když tyto nástroje pramen nemají.
 
-Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci, předej mu výslovně stejný výhradní zdrojový režim, rozhodné skutky a časové otázky. Vyžádej jeho konkrétní zdrojové pasáže a omezení. Jeho shrnutí ani prohlášení o ověření nenahrazují skutečné výsledky nativního nástroje; za jejich sjednocení a kontrolu konečné citace odpovídá hlavní zpracovatel.
+Pořadí zdrojů: (1) nástroje `laws__*` — oficiální korpus e-Sbírky, česká judikatura a EUR-Lex; (2) oficiální primární weby přes `web__fetch`, když `laws__*` pramen nemá: e-Sbírka, databáze Nejvyššího soudu, Nejvyššího správního soudu, Ústavního soudu (NALUS), rozhodnuti.justice.cz, EUR-Lex, CURIA, HUDOC; (3) komentáře, literatura a sekundární weby (`web__search`) pouze jako navigace, nikdy jako citovaná opora.
+
+Mapa nástrojů Coworku pro rešerši:
+- předpis a jeho znění k rozhodnému dni: `laws__law_search`, `laws__law_get_provision`, `laws__get_statute_outline`, `laws__get_provision_timeline`, `laws__get_amendment_history`, `laws__get_transitional_provisions`; platnost předpisu `laws__check_good_law`;
+- judikatura navázaná na paragraf (krok 2a): `laws__find_case_law_for_provision`, pak `laws__search_case_law` a `laws__search_by_concept`; celý text rozhodnutí `laws__get_case_text`; překonání a pozdější linie `laws__get_treatment_history` a `laws__check_case_good_law`; ověření citace `laws__resolve_case_citation` a `laws__validate_legal_citation`; odkazy uvnitř pramene `laws__follow_reference`, `laws__law_citations`;
+- unijní právo `laws__eu_law_search`; úrokové a referenční sazby `laws__get_reference_rates`;
+- subjekty a rejstříky: `ares__find_by_ico`, `ares__get_company_detail`, `ares__get_history`, `ares__check_vat_payer`; insolvence `isir__search_subject`, `isir__get_proceeding`, `isir__list_events`, `isir__list_documents`, `isir__download_document`;
+- data Evolia (spis, klient, dokumenty): konektory Evolia, jsou-li připojené (`load_connector_instructions`), jinak `database_agent` jen ke čtení; kontext kauzy a dřívější poučení `search_workspace_memory`;
+- rozsáhlá rešerše nebo oponentní kontrola: `delegate_parallel` s předáním těchto pravidel; výstup .docx `export__export_document`.
+
+## Pracovní standard RIHA legal (platí vedle oborové metodiky)
+
+1. **Kontinuita kauzy.** Na začátku prohledej `search_workspace_memory` podle klienta, IČO, protistrany a spisové značky — dřívější zjištění, ověřené prameny, opravy od advokáta a záznamy o judikátech, které se nemají citovat. Na konci ulož `save_memory`: stav věci, rozhodná data a lhůty, ověřené prameny (sp. zn. + datum), otevřené otázky. Opraví-li tě uživatel, zapiš to `record_correction`.
+2. **Rozhodné datum.** Před čtením předpisů nastav `laws__laws_set_context` na rozhodný den (vznik závazku, porušení, podání). Má-li věc víc rozhodných dnů, uveď u každé otázky, podle kterého znění postupuješ.
+3. **Citace ověřitelné strojem.** Předpis poprvé cituj s číslem („zákon č. 89/2012 Sb., občanský zákoník (dále „o. z.“)“); v závěrečné odpovědi v chatu uváděj u nosných ustanovení vždy číslo předpisu, jinak je validátor Coworku neověří. Rozhodnutí: soud, spisová značka, datum, bod; sdílí-li sp. zn. víc rozhodnutí, přidej datum nebo ECLI.
+4. **Zvláštní úprava daného typu.** Vedle obecných pravidel vždy projdi ustanovení, která pro konkrétní smluvní typ, řízení nebo režim mění lhůty, rozložení rizika nebo odpovědnost (u díla např. § 2591, § 2594, § 2627 o. z.), a pokud se uplatní, postav na nich samostatnou linii, ne jen poznámku.
+5. **Nosná a nepříznivá judikatura celá.** Každé rozhodnutí, o které opíráš primární linii, a každé, které nejspíš použije protistrana, přečti celé včetně výroku. U každého zjisti, jak NS věc skutečně rozhodl (potvrdil / zrušil / odmítl dovolání — usnesení o odmítnutí má nízkou precedenční váhu), zda jde o předchozí úpravu (obch. zák., starý o. z.) a zda závěr nepřekonal velký senát nebo sjednocující stanovisko. Rozhodnutí, které působí oběma směry, výslovně označ jako obousečné a vysvětli proč.
+6. **Argument, který se dá otočit, nepoužívej.** Každý argument otestuj z pozice protistrany. Co judikatura opakovaně aprobovala (např. výše sazby, kterou soudy nechaly bez zásahu), v externím textu neatakuj; slabé nebo obratitelné argumenty nech jen v interní analýze s vysvětlením.
+7. **Oponentní kontrola před odevzdáním.** Předej `delegate` seznam nosných citací (předpis, §, citovaná pasáž; soud, sp. zn., datum, bod) s úkolem ověřit každou proti primárnímu textu, odlišit vlastní závěr soudu od rekapitulace nižšího soudu a tvrzení účastníků a najít nejsilnější protiargument. Výsledek zapracuj; co neobstojí, vyřaď nebo označ. Není-li ve workspace agent pro `delegate` (`list_agents`), proveď kontrolu sám jako samostatný krok až po dopsání textu: každou nosnou citaci znovu načti a výsledek zapiš do tabulky „citace — načteno — souhlasí / nesouhlasí“.
+8. **Údaje o osobách.** Název, IČO, sídlo, statutární orgán a způsob jednání právnické osoby do externího dokumentu ověř v reálném čase (`ares__get_company_detail`, vymazané osoby vynech); u rozporu s listinou upozorni. Nelze-li ověřit, použij `[DOPLNIT z OR]`. Údaje fyzických osob přebírej jen z listin ve spisu, nikdy je nedoplňuj.
+9. **Interní vs. externí výstup.** Interní analýza obsahuje rizika, slabiny, odhad šancí a stav ověření; text pro protistranu, soud nebo úřad je neobsahuje. V externím textu neuváděj vlastní čísla ani formulace, které by mohly být uznáním (délka prodlení, výše dluhu, „uznáváme“) — pracuj s tvrzením protistrany.
+10. **Výpočty dvakrát.** Každou částku, sazbu, úrok a lhůtu spočítej se zapsanými mezikroky a pak znovu jinou cestou (např. úrok: repo sazba + 8 p. b. = výsledná sazba, a zpětně výsledná sazba − 8 = repo). Nesoulad je chyba — nepoužij výsledek, dokud ho nevyřešíš. Totéž platí před zápisem do paměti: do `save_memory` nikdy neukládej neověřené číslo.
+
+Každé ustanovení a každé rozhodnutí použité jako opora ověř načtením primárního textu; znění, soud, spisovou značku a datum přebírej jen z načteného zdroje. Nelze-li pramen načíst, nepřekrývej mezeru pamětí ani údajným ověřením — použij `[DOPLNIT]` a mezeru výslovně označ. Rozliš prázdný výsledek, odmítnutý přístup, nedostupný nástroj a neúplný obsah; identický neúspěšný dotaz neopakuj bez změny okolností.
+
+Skutkové podklady čerpej ze zadání, příloh a dat zpřístupněných ve workspace (včetně spisu v Evoliu); právní tvrzení v nich nejsou ověřeným právem. Předáváš-li dílčí práci jinému agentovi nebo skillu, předej mu stejná pravidla ověřování, rozhodné skutky a časové otázky a vyžádej si konkrétní zdrojové pasáže; jeho shrnutí nenahrazuje načtený pramen.
 
 ## Pracovní postup se zdrojovou oporou
 
@@ -46,35 +54,34 @@ Je-li pro dílčí práci použit další dostupný agent nebo skill v aplikaci,
 
 Urči klienta a jeho roli, cíl, adresáta, požadované artefakty, rozhodné události a nejbližší možnou lhůtu. Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň. Odliš doložený fakt, tvrzení jednotlivých stran, inferenci, rozpor a neznámý údaj. Neznámá částka není nula, připravený krok není uskutečněný a chybějící důkaz neprokazuje opak tvrzení.
 
-Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v CODEXIS. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
+Sestav konkrétní rozhodné právní otázky a jejich vazbu na fakta. Oborová témata níže jsou otázky pro rešerši, nikoli hotové právní závěry. Uvedený název nebo číslo předpisu je pouze vyhledávací vodítko, dokud není ověřen v primárních pramenech. Nejprve prověř relevantní zvláštní režim; obecný předpis nesmí automaticky vytlačit oborovou úpravu. Nejasnost měnící osobu, nárok, rozhodný režim či lhůtu vyřeš cílenou otázkou nebo výslovnými podmíněnými variantami.
 
 ### 2. Vyhledání a rozsah rešerše
 
-Pro každou otázku vyhledej odpovídající předpisy a autority v CODEXIS. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. V dokumentovaném členění CODEXIS jsou české předpisy CR, česká judikatura JD, unijní předpisy EU, evropská judikatura ES, slovenské předpisy SK, komentáře COMMENT, literatura LT a vzory VS; globální ALL použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor nalezené v CODEXIS slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů v CODEXIS.
+Pro každou otázku vyhledej odpovídající předpisy a autority v primárních pramenech. Je-li znám konkrétní předpis či rozhodnutí, začni přesnou identifikací; pokud znám není, formuluj dotazy podle právního problému a jeho synonym. Identifikátory dokumentů přebírej pouze z odpovědí nástroje. Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu. České a unijní předpisy a judikaturu hledej nástroji `laws__*` podle mapy výše; obecné webové vyhledávání použij jen k orientaci a poté ověř konkrétní pramen. Komentář, literatura a vzor slouží jako navigace; jejich odkazy na normy a rozhodnutí ověř samostatným načtením těchto pramenů.
 
 První stránka výsledků ani předem zvolený malý počet nálezů nejsou úplná rešerše. Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty. Hledej také protichůdnou právní linii, výjimky a pozdější změnu názoru. Veď stručný přehled dotazů, filtrů, prohlédnutého rozsahu a důvodů zahrnutí či vyřazení autorit. Rešerši uzavři až po pokrytí rozhodných otázek, protiargumentů a relevantních odkazů; nedostupná pokračování nebo vyčerpaný rozpočet označ jako omezení, nikoli úplnost. Netvrď vyčerpání veškeré existující judikatury.
 
-### 2a. Judikatura navázaná na rozhodný paragraf (R5.1)
+### 2a. Judikatura navázaná na rozhodný paragraf
 
-Tato cesta je dokumentována ve schématu nativního konektoru (`cdx-cli schema related`, parametr `part`) a byla ověřena v aplikaci 25. 9. 2026. **Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf **oba** příkazy z bodů 1 a 2. Samotný počet z `/related/counts` nic nevybírá a krok nesplňuje. Fulltextové hledání v `JD` je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
+**Povinný krok:** jakmile máš z kroku 1 a 3 určen rozhodný předpis a paragraf, spusť pro každý nosný paragraf `laws__find_case_law_for_provision`. Samotný počet nalezených rozhodnutí nic nevybírá a krok nesplňuje. Fulltextové hledání je až druhý krok a slouží k doplnění skutkové shody; nenahrazuje seznam navázaných rozhodnutí.
 
-1. **Počet navázané judikatury:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related/counts?part=paragraf<N>'` (např. `paragraf198`, `paragraf19c`; `elementId` ověř přes `/toc`).
-2. **Kandidáti:** `cdx-cli get 'cdx://cz_law/<číslo>/<rok>/related?part=paragraf<N>&type=SOUVISEJICI_JUDIKATURA&limit=20'` - řazeno podle relevance. **Spusť ho vždy dvakrát:** podle relevance a s `&sort=date` (nejnovějších 20), aby ti neunikla rozhodnutí z posledních let; další stránky `&offset=20`, `&offset=40` … Projdi alespoň prvních 20 kandidátů (titulek, `/meta`) a relevantní zařaď do výběru. Vrácená `docId` lze přímo použít v `cdx://doc/<docId>/meta` a `/text`.
-3. **Skutková shoda:** doplň fulltextem `search JD` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2-5 slov). Filtr soudu používej jen s přesnými hodnotami facety: `Nejvyšší soud`, `Nejvyšší správní soud`, `Ústavní soud`, `Vrchní soud` (Praha × Olomouc přes `--city "Praha"` / `--city "Olomouc"`); jiné hodnoty ověř přes `--with-facets`. Pro novou úpravu omez stáří přes `--issued-from`.
-4. **Třídění kandidátů podle `/meta`** (před načtením celého textu podle kroku 4):
-   - `derogated: true` → rozhodnutí je v CODEXIS označeno jako překonané; jako oporu je nepoužij. `false` nevylučuje pozdější odklon - ten prověř podle kroku 4;
-   - **sjednocující rozhodnutí:** zjisti, zda k témuž paragrafu a téže otázce existuje pozdější rozhodnutí velkého senátu NS či NSS, stanovisko pléna nebo kolegia, nebo nález pléna ÚS (výsledek `&sort=date` z bodu 2 a fulltext `"velký senát" <právní pojem>`). Rozhodnutí vydané **před** ním použij jen tehdy, když ho sjednocující rozhodnutí výslovně přejímá; jinak ho označ jako překonané nebo neaplikovatelné a uveď proč. Ve zdrojovém přehledu uveď data obou rozhodnutí. Stejně prověř **každý judikát citovaný protistranou**: datum, předpis, k němuž byl vydán (např. obch. zák., ObčZ 1964), a zda nebyl překonán;
-   - vyplněné `sbirkoveCislo` (např. `Rc 105/2013`) = publikováno v oficiální sbírce; má přednost před nepublikovaným rozhodnutím téhož soudu;
+1. **Kandidáti:** projdi alespoň prvních 20 rozhodnutí navázaných na paragraf a relevantní zařaď do výběru. Zvlášť dohledej nejnovější rozhodnutí (`laws__search_case_law` s časovým omezením na poslední roky), aby ti neunikl pozdější vývoj.
+2. **Skutková shoda:** doplň `laws__search_case_law` nebo `laws__search_by_concept` s krátkým dotazem (právní pojem + klíčový skutkový znak, 2–5 slov). Filtr soudu a data používej jen v hodnotách, které nástroj skutečně nabízí.
+3. **Třídění kandidátů** (před načtením celého textu podle kroku 4):
+   - platnost a pozdější osud rozhodnutí ověř `laws__check_case_good_law` a `laws__get_treatment_history`; rozhodnutí označené jako překonané nepoužij jako oporu. Chybějící negativní signál nevylučuje pozdější odklon — ten prověř podle kroku 4;
+   - **sjednocující rozhodnutí:** zjisti, zda k témuž paragrafu a téže otázce existuje pozdější rozhodnutí velkého senátu NS či NSS, stanovisko pléna nebo kolegia, nebo nález pléna ÚS. Rozhodnutí vydané **před** ním použij jen tehdy, když ho sjednocující rozhodnutí výslovně přejímá; jinak ho označ jako překonané nebo neaplikovatelné a uveď proč. Ve zdrojovém přehledu uveď data obou rozhodnutí. Stejně prověř **každý judikát citovaný protistranou**: datum, předpis, k němuž byl vydán (např. obch. zák., ObčZ 1964), a zda nebyl překonán;
+   - rozhodnutí publikované v oficiální sbírce má přednost před nepublikovaným rozhodnutím téhož soudu;
    - stanovisko a velký senát > běžný senát; nález ÚS > usnesení ÚS; NS / NSS / ÚS > vrchní > krajský soud;
-   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření, že se pravidlo věcně nezměnilo.
-5. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf vrací nulu, uveď to a pokračuj fulltextem.
-6. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
+   - rozhodnutí vydané k jinému znění paragrafu, než je rozhodné podle kroku 3, použij jen po ověření (`laws__get_provision_timeline`), že se pravidlo věcně nezměnilo.
+4. Ve zdrojovém přehledu (krok 5) u každého judikátu uveď, zda pochází z vazby na paragraf, nebo z fulltextu. Když vazba na rozhodný paragraf nic nevrací, uveď to a pokračuj fulltextem.
+5. **Nerozšiřuj závěr rozhodnutí na otázku, kterou soud neřešil.** Např. rozhodnutí o náležitostech výpovědi neřeší, *kdy* výpověď nabyla účinnosti, a rozhodnutí o povaze lhůty neřeší, na který den připadá její konec; takovou dílčí otázku odpověz samostatně podle zákona a případně další judikatury, jinak ji označ jako neověřenou.
 
 ### 3. Předpis: úplný relevantní text a správný časový režim
 
 Pro každou nosnou normu vytvoř vazbu: právní otázka → rozhodná událost a datum → vybrané znění → přechodné pravidlo → důvod použitelnosti. Odděl hmotněprávní režim, procesní úkon, zdaňovací období a datum relevantní pro sazbu či náklady. Dnešní znění nesmí nahradit historicky nebo přechodně rozhodné znění. Seznam verzí nebo informace, že k určitému dni nebyla novela, neprokazují obsah ani použitelnost ustanovení.
 
-Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
+Načti v primárních pramenech úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky. Připoj relevantní definice, odkazovaná ustanovení, zvláštní a prováděcí předpisy, přílohy a přechodná ustanovení novel. Odkazy sleduj, dokud je vysvětlen rozhodný právní následek; nepřeskakuj výjimku nebo negativní podmínku. U rozsáhlého předpisu nepostačuje izolovaný fragment bez systematického kontextu, ale není třeba vkládat celý zákon do odpovědi. Rozliš platnost, účinnost a případně odloženou použitelnost. Uchovej nástrojem vrácenou identitu verze a skutečně dostupná časová metadata; chybějící údaje nevytvářej.
 
 Čísla, sazby, prahy, lhůty, koeficienty a jejich podmínky přebírej až z takto načteného znění. Samostatně dolož, proč se hodí na konkrétní skutkový stav. Cituj přesný paragraf či článek, odstavec a písmeno; neopírej závěr o obecný odkaz na celý zákon, pokud rozhoduje konkrétní pravidlo.
 
@@ -84,13 +91,13 @@ U každého rozhodnutí použitého jako právní opora načti celý text od vý
 
 Z úplného textu vytěž rozhodnou otázku, podstatné skutky, procesní situaci, výrok, vlastní nosné důvody soudu, omezení a případné odlišné stanovisko. Výslovně odliš tvrzení účastníka, rekapitulaci nižšího soudu, citaci jiné autority a vlastní právní závěr rozhodujícího soudu. Právní věta vydavatele ani odmítací výrok samy neurčují meritorní závěr.
 
-Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
+Ke každé použité tezi připoj konkrétní bod; nejsou-li body, stránku nebo dohledatelný oddíl a krátkou identifikující pasáž. Ze zdroje přebírej soud, spisovou značku nebo číslo jednací a datum; ECLI uveď jen je-li dostupné. Doslovnou citaci porovnej s načteným textem, parafrázi označ a zachovej podmínky i výhrady. Uveď, proč je věc skutkově a právně srovnatelná a v čem se liší. Prověř v primárních pramenech relevantní pozdější, překonávající a nepříznivou judikaturu. Odkaz uvnitř rozhodnutí není důkaz samostatného ověření citované věci.
 
 ### 5. Zdrojový přehled, argumentace a výstup
 
-Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v CODEXIS.
+Interně udržuj pro každou nosnou právní tezi: otázku, zdroj a jeho identitu, časový režim, načtenou pasáž, stav úplnosti, důvod použitelnosti a omezení. Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci. Neověřenou tezi nepoužívej jako nepodmíněnou rozhodnou oporu. Při mezeře dodej užitečnou ověřenou část a přesně odděl, co vyžaduje další podklad nebo načtení v primárních pramenech.
 
-Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
+Každý nosný argument spoj s ověřeným pravidlem, konkrétním faktem a důkazem, subsumpcí, následkem a vazbou na požadované řešení. Zachovej primární, podpůrnou a eventuální linii; odchylku od pokynu odůvodni. Vypořádej nejsilnější protiargument bez zbytečného přiznání sporné skutečnosti. Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v primárních pramenech; obecná judikatura soudu není náhradou. Nedostupnost popiš bez domyšleného trendu.
 
 Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ. U citovaného ustanovení kontroluj přesnost textu, nikoli pouze funkční odkaz. V klientském textu neuváděj interní technický protokol, není-li vyžádán; omezení rozhodného závěru však musí zůstat viditelné.
 
@@ -110,7 +117,7 @@ Zkontroluj všechny požadované artefakty. Označ pracovní, neúplný či k re
 
 Urči, zda zastupuješ zakladatele, společnost, investora, zaměstnance nebo akcelerátor. Zjisti fázi financování, právní formu a jurisdikci, současné podíly, práva, zápůjčky, opce, fond a vyjednané podmínky. Čti společenskou smlouvu, dohodu společníků, investiční listiny, IP smlouvy, pracovní vztahy a dotační závazky jako propojený celek.
 
-Anglický název nástroje není právní mechanismus. V CODEXIS ověř, která práva lze založit společenskou smlouvou, smluvním závazkem, převodem, zvýšením kapitálu nebo jiným institutem; odděl účinky vůči společnosti, smluvním stranám a nabyvatelům. Zahraniční vzor nepoužívej jako důkaz české vymahatelnosti.
+Anglický název nástroje není právní mechanismus. V primárních pramenech ověř, která práva lze založit společenskou smlouvou, smluvním závazkem, převodem, zvýšením kapitálu nebo jiným institutem; odděl účinky vůči společnosti, smluvním stranám a nabyvatelům. Zahraniční vzor nepoužívej jako důkaz české vymahatelnosti.
 
 ### Zakladatelé a investiční kolo
 
@@ -125,13 +132,13 @@ Anglický název nástroje není právní mechanismus. V CODEXIS ověř, která 
 
 Porovnej skutečný podíl, opci, novou třídu, akcie společnosti a phantom či virtuální plnění. Jak se plán schvaluje, kdo poskytuje podíl nebo peníze, jak vzniká grant, vesting, exercise, expirace a vypořádání při odchodu či exitu? Otestuj celou časovou osu; good-leaver okno nesmí bez vysvětlení skončit před nejčasnějším přípustným exercise.
 
-V CODEXIS ověř standardní zaměstnanecký benefit, jeho případný odklad a samostatný režim kvalifikované opce. U kvalifikované větve odděl diskont oproti grantové hodnotě od případného kvalifikovaného růstu. Pro každou větev zjisti podmínky, ocenění, okamžik příjmu, oznámení, ukončení odkladu, výjimky, maximální dobu a pojistné. Nepřebírej žádnou historickou délku odkladu či limit osvobození. Srážky z peněžní mzdy, nepeněžní plnění, náklad zaměstnavatele a pozdější prodej posuzuj odděleně.
+V primárních pramenech ověř standardní zaměstnanecký benefit, jeho případný odklad a samostatný režim kvalifikované opce. U kvalifikované větve odděl diskont oproti grantové hodnotě od případného kvalifikovaného růstu. Pro každou větev zjisti podmínky, ocenění, okamžik příjmu, oznámení, ukončení odkladu, výjimky, maximální dobu a pojistné. Nepřebírej žádnou historickou délku odkladu či limit osvobození. Srážky z peněžní mzdy, nepeněžní plnění, náklad zaměstnavatele a pozdější prodej posuzuj odděleně.
 
 Prověř zaměstnance, jednatele, zakladatele a kontraktora podle skutečného vztahu, nikoli jediné nálepky. U práce na dálku a cizinců řeš pobyt, oprávnění, pojistnou koordinaci a daňové smlouvy. Konkurenční doložku, mlčenlivost a odměnu funkcionáře posuď v příslušném režimu.
 
 ### IP, podpora a transakční kontrola
 
-Vytvoř řetězec autor, čas vytvoření, smluvní vztah, právo vykonávané společností a chybějící souhlas. V CODEXIS ověř zaměstnanecká a objednaná díla včetně zvláštního režimu software a databází, činnost orgánu společnosti, licence, průmyslová práva a odměnu původce. Nepředpokládej, že každý zakladatel je zaměstnanec, ani opačný univerzální výsledek. Rozliš převoditelná práva a licenci. Prověř open source, sublicence, agentury, cizí práva, AI výstupy, data, obchodní tajemství, známky a domény; nápravu neantedatuj.
+Vytvoř řetězec autor, čas vytvoření, smluvní vztah, právo vykonávané společností a chybějící souhlas. V primárních pramenech ověř zaměstnanecká a objednaná díla včetně zvláštního režimu software a databází, činnost orgánu společnosti, licence, průmyslová práva a odměnu původce. Nepředpokládej, že každý zakladatel je zaměstnanec, ani opačný univerzální výsledek. Rozliš převoditelná práva a licenci. Prověř open source, sublicence, agentury, cizí práva, AI výstupy, data, obchodní tajemství, známky a domény; nápravu neantedatuj.
 
 U financování zkontroluj veřejnou nabídku, crowdfunding, fond či syndikát, tokeny, sankce, prověřování investic a AML. Regulaci produktu, ochranu spotřebitele a údajů vyhodnoť podle skutečné činnosti. U dotací a VaV ověř způsobilé náklady, okamžiky dokumentace a oznámení, podnikové vazby a status malého podniku, kumulaci podpory, udržitelnost a změnu vlastníka. Daňovou ztrátu, úroky, spojené osoby, holding a prodej podílu posuď zvlášť podle rozhodného roku.
 

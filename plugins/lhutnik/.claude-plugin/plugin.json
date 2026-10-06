@@ -1,6 +1,6 @@
 {
   "name": "lhutnik",
-  "description": "Lhůtník pro českou advokátní praxi — ze záznamu z jednání založí hlídané lhůty a termíny v kalendáři",
+  "description": "Lhůtník pro českou advokátní praxi — ze záznamu z jednání spočítá konce lhůt a po schválení je založí jako události a úkoly ke spisu v Evoliu",
   "icon": "./icon.svg",
   "version": "1.0.0",
   "author": {

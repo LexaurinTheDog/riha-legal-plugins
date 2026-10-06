@@ -2,17 +2,18 @@
 
 Mění jen: frontmatter na formát Cowork (name/description/whenToUse), větu o CODEXIS
 v popisu a oddíl „Výhradní zdrojový režim“ v těle. Zbytek metodiky zůstává 1:1.
-Spuštění: python3 cowork-evolio/build.py  → cowork-evolio/out/
+Zdroj: větev main (plugins/*/skills/*/SKILL.md pro CODEXIS AI). Výstup: plugins/ na větvi cowork-evolio.
+Spuštění (na větvi cowork-evolio): python3 cowork-evolio/build.py
 """
 import json
 import re
-import shutil
+import subprocess
 from pathlib import Path
 
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = Path(__file__).resolve().parent / "out"
+SOURCE_REF = "main"  # zdrojové (CODEXIS) texty skillů
 
 SECTION_RE = re.compile(r"## Výhradní zdrojový režim.*?(?=^## Pracovní postup)", re.S | re.M)
 CDX_SENTENCE_RE = re.compile(
@@ -131,8 +132,13 @@ def frontmatter(name, description, when):
     return "---\n" + "\n".join(lines) + "\n---"
 
 
+def git_main(path):
+    return subprocess.run(["git", "show", f"{SOURCE_REF}:{path}"], cwd=ROOT, check=True,
+                          capture_output=True, text=True).stdout
+
+
 def build_domain(skill_md):
-    fm_raw, body = split(skill_md.read_text())
+    fm_raw, body = split(git_main(skill_md))
     fm = yaml.safe_load(fm_raw)
     when, n = CDX_SENTENCE_RE.subn("", fm["description"].replace("vm.codexis.ai", "vm_codexis"))
     when = re.sub(r"\s*\S*vm_codexis\S*", "", when)
@@ -147,20 +153,26 @@ def build_domain(skill_md):
 
 
 def main():
-    shutil.rmtree(OUT, ignore_errors=True)
-    OUT.mkdir()
-    for skill_md in sorted(ROOT.glob("plugins/*/skills/*/SKILL.md")):
-        slug = skill_md.parent.name
-        if slug == "jednani":
-            # Cowork nemá Python ani gog → ručně přepsaná verze v cowork-evolio/lhutnik/
-            shutil.copy(Path(__file__).parent / "lhutnik" / "SKILL.md", OUT / "lhutnik.md")
-            continue
-        md = build_domain(skill_md)
-        assert "vm.codexis.ai" not in md.split("## Pracovní postup")[0]
+    paths = subprocess.run(["git", "ls-tree", "-r", "--name-only", SOURCE_REF, "plugins"], cwd=ROOT,
+                           check=True, capture_output=True, text=True).stdout.split()
+    n = 0
+    for path in sorted(p for p in paths if re.fullmatch(r"plugins/[^/]+/skills/[^/]+/SKILL.md", p)):
+        slug = path.split("/")[1]
+        if slug == "lhutnik":
+            continue  # Cowork verze lhůtníku se udržuje ručně přímo v plugins/lhutnik/
+        md = build_domain(path)
         yaml.safe_load(md.split("---")[1])  # frontmatter musí jít naparsovat
         assert not re.search(r"codexis|cdx", md, re.I), f"{slug}: zbyla zmínka o CODEXIS/cdx"
-        (OUT / f"{slug}.md").write_text(md)
-    print(len(list(OUT.iterdir())), "souborů v", OUT)
+        (ROOT / path).write_text(md)
+        # popis pluginu: anglický text z i18n (původní description zmiňuje CODEXIS)
+        pj = ROOT / "plugins" / slug / ".claude-plugin" / "plugin.json"
+        meta = json.loads(git_main(f"plugins/{slug}/.claude-plugin/plugin.json"))
+        meta["description"] = meta["i18n"]["en"]["description"]
+        out = json.dumps(meta, ensure_ascii=False, indent=2) + "\n"
+        assert not re.search(r"codexis|cdx", out, re.I), f"{slug}: plugin.json zmiňuje CODEXIS"
+        pj.write_text(out)
+        n += 1
+    print(n, "skillů zapsáno do plugins/")
 
 
 if __name__ == "__main__":

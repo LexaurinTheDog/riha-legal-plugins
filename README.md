@@ -1,154 +1,126 @@
 <img src="icon.svg" width="56" alt="">
 
-# riha-legal-plugins
+# riha-legal-plugins — verze pro Evolio Cowork
 
-Marketplace pluginů pro Claude Code zaměřených na českou advokátní praxi. Obsahuje **50 oborových právních skillů** a nástroj na hlídání lhůt.
+Právní skilly pro českou advokátní praxi upravené pro **Evolio Cowork** (cowork.evolio.cz): **50 oborových skillů** a **Lhůtník**. Skilly se do Coworku nahrávají jako jednotlivé soubory `SKILL.md` (Skills → Importovat), aktualizace jdou jako nová verze skillu.
 
-## Instalace
+## Jak skilly pracují
 
-```
-/plugin marketplace add LexaurinTheDog/riha-legal-plugins
-/plugin install lhutnik@riha-legal-plugins
-/plugin install smluvni-pravo@riha-legal-plugins
-```
+Právní prameny berou z nástrojů Coworku: `laws__*` (e-Sbírka se zněním k rozhodnému dni, česká judikatura, EUR-Lex, kontrola platnosti a pozdějšího osudu rozhodnutí, referenční sazby), `ares__*` pro údaje o právnických osobách a `isir__*` pro insolvence. Komentáře a weby slouží jen k orientaci, citovat se smí jen ověřený primární pramen; co ověřit nejde, zůstává jako `[DOPLNIT]`.
 
-Ikona pluginu je v jeho kořeni jako `icon.svg` a barva odpovídá oborové skupině; Claude Code pole `icon` ignoruje, používá ho katalog marketplace.
+Každý oborový skill začíná povinným postupem:
 
-## Pluginy
+1. hledání v paměti workspace (klient, protistrana, spisová značka),
+2. nastavení rozhodného data rešerše,
+3. rešerše podle oborové metodiky — zvláštní úprava daného typu jako samostatná linie, nosná i nepříznivá rozhodnutí celá,
+4. ověření právnických osob v ARES,
+5. oponentní kontrola nosných citací před odevzdáním,
+6. každý výpočet dvakrát s mezikroky,
+7. uložení stavu věci do paměti workspace (jen ověřená čísla).
 
-### Oborové právní skilly (50)
+Interní analýza a text pro protistranu, soud či úřad jsou vždy oddělené; nic se neodesílá bez pokynu.
 
-Každý skill je samostatný pracovní postup pro jeden obor: ví, které předpisy otevřít, jakou judikaturu hledat, čím začít odpověď a kde se v oboru nejčastěji chybuje. Metodika práce s právní databází je zabudovaná uvnitř, obecný rešeršní skill se nenačítá.
+**Lhůtník** spočítá konce lhůt z poznámek po jednání (s mezikroky, dvakrát, s tabulkou svátků) a po schválení je založí jako události a úkoly ke spisu v Evoliu.
 
-Skilly jsou psané pro aplikaci CODEXIS® AI (vm.codexis.ai) a jako právní zdroj používají výhradně nativní CODEXIS - žádné externí vyhledávání ani náhradní databáze. Všech padesát sdílí společný pracovní postup (verze 1.1.1): mapa právních otázek a nejdřív zvláštní režim, znění předpisu rozhodné k datu události včetně přechodných ustanovení, judikatura navázaná přímo na rozhodný paragraf (podle relevance i nejnovější) a teprve potom fulltext, kontrola překonání velkým senátem či stanoviskem, načtení celého rozhodnutí a oddělení nosných důvodů od tvrzení účastníků či rekapitulace nižšího soudu. Oborová část pak určuje, co v daném oboru ověřit. Lhůty, sazby a prahové hodnoty se neuvádějí z paměti; nedostupný pramen se výslovně označí. Společné texty jsou v adresáři `shared/`.
+## Skilly
 
-#### Civilní právo (11)
+### Civilní právo (11)
 
-| Plugin | Obor | Klíčové předpisy |
-|---|---|---|
-| `dedicke-pravo` | Dědické právo | 89/2012 Sb., 292/2013 Sb., 91/2012 Sb. |
-| `mezinarodni-pravo-soukrome` | Mezinárodní právo soukromé | 91/2012 Sb., 74/1959 Sb., 216/1994 Sb. |
-| `nahrada-ujmy-odpovednost` | Náhrada újmy a odpovědnost | 89/2012 Sb., 262/2006 Sb., 276/2015 Sb. |
-| `obcanske-procesni-pravo` | Občanské procesní právo | 99/1963 Sb., 292/2013 Sb., 549/1991 Sb. |
-| `ochrana-osobnosti-gdpr` | Ochrana osobnosti a GDPR | 89/2012 Sb., 46/2000 Sb., 231/2001 Sb. |
-| `opatrovnictvi-svepravnost` | Opatrovnictví a svéprávnost | 89/2012 Sb., 292/2013 Sb., 372/2011 Sb. |
-| `rodinne-pravo` | Rodinné právo | 89/2012 Sb., 292/2013 Sb., 99/1963 Sb. |
-| `rozhodci-rizeni-mediace` | Rozhodčí řízení a mediace | 216/1994 Sb., 74/1959 Sb., 176/1964 Sb. |
-| `smluvni-pravo` | Smluvní právo | 89/2012 Sb., 90/2012 Sb., 634/1992 Sb. |
-| `spotrebitelske-pravo` | Spotřebitelské právo | 89/2012 Sb., 634/1992 Sb., 257/2016 Sb. |
-| `vecna-prava-sousedske-spory` | Věcná práva a sousedské spory | 89/2012 Sb., 256/2013 Sb., 357/2013 Sb. |
+| Skill v Coworku | Obor |
+|---|---|
+| Dědické právo ČR | Závěť a dědická smlouva, nepominutelní dědici, vydědění, odmítnutí a výhrada soupisu, dluhy zůstavitele, pozůstalostní řízení u notáře, spory, plánování majetku. |
+| Mezinárodní právo soukromé ČR | Přeshraniční spory a smlouvy - pravomoc soudů a rozhodné právo podle nařízení EU a ZMPS, doručování a dokazování do ciziny, uznání a výkon cizích rozhodnutí a rozhodčích nálezů, ověřování listin, doložky o volbě práva a soudu. |
+| Náhrada újmy a odpovědnost ČR | Obecná a objektivní odpovědnost podle OZ, škoda na věci a čistě ekonomická újma, újma na zdraví a Metodika NS k nemajetkové újmě, usmrcení a sekundární oběti, odpovědnost za výrobek, odpovědnost zaměstnavatelů, profesionálů a státu, příčinná souvislost a spoluzavinění, promlčení, vazba na pojištění a vyčíslení. |
+| Občanské procesní právo ČR | Pravomoc a příslušnost, sepis žaloby a petitu, soudní poplatky, doručování a lhůty, dokazování a důkazní břemeno, rozsudek pro zmeškání a platební rozkaz, předběžná opatření, odvolání a mimořádné opravné prostředky včetně přípustnosti dovolání, náklady řízení a advokátní tarif, nesporná řízení. |
+| Ochrana osobnosti a GDPR ČR | Zásahy do cti, soukromí a podoby, pomluva, právo na odpověď, omluva a peněžité zadostiučinění, práva subjektu údajů, GDPR compliance, ÚOOÚ, DSA. |
+| Opatrovnictví a svéprávnost ČR | Omezení svéprávnosti a jeho přezkum, podpůrná opatření (nápomoc při rozhodování, zastoupení členem domácnosti, předběžné prohlášení), opatrovnictví dospělých a dohled, povinnosti opatrovníka a schvalování soudem, veřejný opatrovník, detence ve zdravotnickém zařízení, ochrana zranitelných dospělých, demence a plánování majetku. |
+| Rodinné právo ČR | Rozvod, péče o děti a styk, výživné, vypořádání SJM, rodičovství, domácí násilí, přeshraniční věci - hmotné právo OZ i řízení podle ZŘS. |
+| Rozhodčí řízení a mediace ČR | Platnost rozhodčích doložek, spotřebitelské a pracovní limity, stálé rozhodčí soudy a ad hoc rozhodci, průběh řízení, zrušení a výkon nálezů, Newyorská úmluva, zákon o mediaci, mediační dohody a soudem nařízené první setkání. |
+| Smluvní právo ČR | Analýza, revize a tvorba smluv podle občanského zákoníku - vady, neplatnost, rizikové klauzule, B2B / spotřebitel / veřejný sektor. |
+| Spotřebitelské právo ČR | Spotřebitelské smlouvy a e-shopy, odstoupení, vady a reklamace, zakázaná ujednání a nekalé praktiky, spotřebitelský úvěr, mimosoudní řešení a hromadné řízení, compliance obchodníka. |
+| Věcná práva a sousedské spory ČR | Vlastnické a držební žaloby, spoluvlastnictví a jeho zrušení, hranice a sousedské imise, služebnosti a cesty, nezbytná cesta, stavba na cizím pozemku, superficiální zásada a přechodná ustanovení, vydržení, opravy a spory v katastru nemovitostí. |
 
-#### Nemovitosti a stavebnictví (4)
+### Nemovitosti a stavebnictví (4)
 
-| Plugin | Obor | Klíčové předpisy |
-|---|---|---|
-| `bytove-pravo-najem-svj` | Bytové právo - nájem a SVJ | 89/2012 Sb., 366/2013 Sb., 67/2013 Sb. |
-| `nemovitosti-transakce` | Nemovitosti a realitní transakce | 89/2012 Sb., 256/2013 Sb., 357/2013 Sb. |
-| `stavebni-pravo` | Stavební právo | 283/2021 Sb., 183/2006 Sb., 500/2004 Sb. |
-| `zemedelske-pravo` | Zemědělské právo | 89/2012 Sb., 252/1997 Sb., 334/1992 Sb. |
+| Skill v Coworku | Obor |
+|---|---|
+| Bytové právo - nájem a SVJ ČR | Nájem bytu a prostor sloužících podnikání, výpověď a vyklizení, nájemné a vyúčtování služeb, společenství vlastníků, bytová družstva, krátkodobé pronájmy. |
+| Nemovitosti a realitní transakce ČR | Převody nemovitostí od prověrky listu vlastnictví po vklad - kupní smlouva, úschova, zástavní a předkupní práva, spoluvlastnictví, SVJ, nájem, daně. |
+| Stavební právo ČR | Povolování staveb podle nového stavebního zákona a přechodný režim, účastníci a sousedé, černé stavby a odstranění, kolaudace, imise a hranice, smlouva o dílo na stavbu a vady. |
+| Zemědělské právo ČR | Zemědělský pacht a jeho výpověď, pozemkové úpravy, ochrana zemědělského půdního fondu a vynětí, přímé platby SZP a podmíněnost, sankce a odvolání u dotací, LPIS a evidence zemědělského podnikatele, škody zvěří a myslivost, vodní právo a hnojiva, welfare zvířat a veterinární právo, prvovýroba potravin a prodej ze dvora, ekologické zemědělství, agrovoltaika, předání farmy a zdanění zemědělců. |
 
-#### Obchod a korporace (10)
+### Obchod a korporace (10)
 
-| Plugin | Obor | Klíčové předpisy |
-|---|---|---|
-| `dusevni-vlastnictvi` | Duševní vlastnictví | 121/2000 Sb., 89/2012 Sb., 441/2003 Sb. |
-| `e-commerce-digitalni-sluzby` | E-commerce a digitální služby | 89/2012 Sb., 634/1992 Sb., 179/2024 Sb. |
-| `franchising-distribuce-obchodni-zastoupeni` | Franchising, distribuce a obchodní zastoupení | 89/2012 Sb., 143/2001 Sb., 262/2017 Sb. |
-| `fuze-akvizice` | Fúze a akvizice | 90/2012 Sb., 89/2012 Sb., 408/2010 Sb. |
-| `hospodarska-a-nekala-soutez` | Hospodářská a nekalá soutěž | 143/2001 Sb., 262/2017 Sb., 395/2009 Sb. |
-| `it-pravo-kyberbezpecnost` | IT právo a kyberbezpečnost | 264/2025 Sb., 181/2014 Sb., 121/2000 Sb. |
-| `korporatni-pravo` | Korporátní právo | 90/2012 Sb., 89/2012 Sb., 304/2013 Sb. |
-| `medialni-pravo-reklama` | Mediální právo a reklama | 46/2000 Sb., 231/2001 Sb., 132/2010 Sb. |
-| `sportovni-pravo` | Sportovní právo | 115/2001 Sb., 89/2012 Sb., 435/2004 Sb. |
-| `startupy-investice-esop` | Startupy, investice a ESOP | 90/2012 Sb., 33/2020 Sb., 89/2012 Sb. |
+| Skill v Coworku | Obor |
+|---|---|
+| Duševní vlastnictví ČR | Autorské právo a software, zaměstnanecká díla a díla na objednávku, licence, ochranné známky, patenty, vzory, domény, obchodní tajemství, vymáhání a řízení před ÚPV. |
+| E-commerce a digitální služby ČR | E-shopy a distanční smlouvy, informační povinnosti a 14denní odstoupení, obchodní podmínky, shoda a záruka u zboží a digitálního obsahu, reklamace a ADR, nekalé praktiky a pravidla slev, online tržiště a povinnosti platforem dle DSA a P2B, cookies a přímý marketing, platební služby a chargeback, bezpečnost výrobků, přístupnost, přeshraniční prodej, příslušnost a DPH OSS. |
+| Franchising, distribuce a obchodní zastoupení ČR | Franšízové smlouvy a předsmluvní informace, licence know-how a značky, výhradní a selektivní distribuce, vertikální omezení a bloková výjimka, určování cen pro další prodej a zákazy online prodeje, provize obchodního zástupce, ukončení a zvláštní odměna, konkurenční doložky, riziko zastřeného zaměstnání, přeshraniční rozhodné právo a příslušnost, DPH a srážková daň z licenčních poplatků. |
+| Fúze a akvizice ČR | Share deal a asset deal, letter of intent a exkluzivita, due diligence, struktura SPA s cenovými mechanismy, prohlášení a záruky, odškodnění a escrow, odkládací podmínky, akcionářské dohody, přeměny dle zákona o přeměnách, kontrola spojení u ÚOHS a Komise, prověřování zahraničních investic, přechod zaměstnanců, regulatorní souhlasy, daňové strukturování, closing a spory po closingu. |
+| Hospodářská a nekalá soutěž ČR | Kartely, zneužití dominance, spojování soutěžitelů a řízení před ÚOHS, náhrada škody, nekalá soutěž a její nároky, regulace reklamy a nekalé obchodní praktiky. |
+| IT právo a kyberbezpečnost ČR | Smlouvy o vývoji a licencování software, SaaS a cloud, IT outsourcing a SLA, open source, NIS2 a nový zákon o kybernetické bezpečnosti, regulované subjekty a hlášení incidentů, DORA, odpovědnost za bezpečnostní incident, platformy a DSA, elektronické podpisy a eIDAS. |
+| Korporátní právo ČR | Založení a fungování s.r.o. a a.s. - valná hromada, převod podílu, odpovědnost jednatelů, akcionářské dohody, rozdělení zisku, obchodní rejstřík, skuteční majitelé, přeměny, likvidace. |
+| Mediální právo a reklama ČR | Tiskový zákon a právo na odpověď, regulace vysílání a audiovizuálních služeb na vyžádání, regulace reklamy včetně léčiv, alkoholu, tabáku, hazardu a potravin, klamavá a srovnávací reklama, nekalé obchodní praktiky a ochrana spotřebitele, influencer marketing, difamace a ochrana osobnosti versus svoboda projevu, ochrana zdroje novináře, DSA a EMFA, přímý marketing a spam. |
+| Sportovní právo ČR | Smlouvy sportovců a klubů, svazové řády a přezkum disciplinárních rozhodnutí, přestupy a arbitráž, odpovědnost za sportovní úrazy, pořádání akcí, sponzoring, dary a veřejná podpora, antidoping, mládež. |
+| Startupy, investice a ESOP ČR | Založení a cap table, zakladatelské dohody a vesting, konvertibilní zápůjčky a SAFE, seed a VC kola s akcionářskou dohodou, likvidační preference, anti-dilution a drag/tag, zaměstnanecké akcie a opční plány včetně českého daňového odkladu, převod IP a zaměstnanecká díla, zákaz konkurence a mlčenlivost, dotace a odpočet na výzkum, crowdfunding a limity veřejné nabídky, exit a zdanění zakladatelů. |
 
-#### Finance a pohledávky (8)
+### Finance a pohledávky (8)
 
-| Plugin | Obor | Klíčové předpisy |
-|---|---|---|
-| `aml-compliance` | AML compliance | 253/2008 Sb., 37/2021 Sb., 69/2006 Sb. |
-| `bankovnictvi-a-uvery` | Bankovnictví a úvěry | 257/2016 Sb., 89/2012 Sb., 370/2017 Sb. |
-| `danove-pravo-hmotne` | Daňové právo hmotné | 586/1992 Sb., 235/2004 Sb., 280/2009 Sb. |
-| `exekuce-obrana-dluznika` | Exekuce - obrana povinného | 120/2001 Sb., 99/1963 Sb., 595/2006 Sb. |
-| `insolvencni-pravo` | Insolvenční právo | 182/2006 Sb., 312/2006 Sb., 99/1963 Sb. |
-| `kapitalovy-trh-investice` | Kapitálový trh a investice | 256/2004 Sb., 240/2013 Sb., 190/2004 Sb. |
-| `pojistne-pravo` | Pojistné právo | 89/2012 Sb., 37/2004 Sb., 30/2024 Sb. |
-| `vymahani-pohledavek` | Vymáhání pohledávek | 89/2012 Sb., 351/2013 Sb., 99/1963 Sb. |
+| Skill v Coworku | Obor |
+|---|---|
+| AML compliance ČR | Povinné osoby, identifikace a kontrola klienta, skutečný majitel a PEP, sankční screening, oznámení podezřelého obchodu FAÚ, systém vnitřních zásad a školení, zvláštní povinnosti advokáta a mlčenlivost, spouštěče u nemovitostí a úschov, evidence skutečných majitelů, kontroly a sankce, AML balíček EU. |
+| Bankovnictví a úvěry ČR | Smlouvy o úvěru a zápůjčce, zákon o spotřebitelském úvěru a posouzení úvěruschopnosti, předčasné splacení a prodlení, hypotéky a zajištění, ručení a akcesorická zajištění, platební služby a neautorizované transakce, bankovní tajemství a blokace účtů, finanční arbitr, dohled a licence ČNB, nebankovní poskytovatelé. |
+| Daňové právo hmotné ČR | Daň z příjmů FO a PO, DPH včetně odpočtu, reverse charge a řetězových podvodů, daň z nemovitých věcí, daňová rezidence a smlouvy o zamezení dvojího zdanění, převodní ceny, zneužití práva, daňové aspekty transakcí a přeměn, zaměstnanec × OSVČ, kryptoaktiva. |
+| Exekuce - obrana povinného ČR | Audit exekučního titulu, návrhy na odklad a zastavení, nezabavitelné minimum a chráněný účet, mobiliární exekuce, nemovitost a SJM, vylučovací žaloby třetích osob, náklady, stížnosti, oddlužení jako východisko. |
+| Insolvenční právo ČR | Insolvenční řízení z pohledu věřitele, dlužníka i správce - přihlášky, přezkum a popření, incidenční spory, oddlužení, konkurs, moratorium, ISIR. |
+| Kapitálový trh a investice ČR | Obchodníci s cennými papíry a zprostředkovatelé dle MiFID II, vhodnost a přiměřenost, nároky investorů vůči obchodníkům, veřejná nabídka a výjimky z prospektu, dluhopisy a schůze vlastníků, investiční fondy a režimy ZISIF, crowdfunding, kryptoaktiva dle MiCA, zneužití trhu a insider dealing, informační povinnosti emitentů a oznámení podílů, nabídky převzetí a squeeze-out, dohled a sankce ČNB, finanční arbitr, zdanění investičních příjmů. |
+| Pojistné právo ČR | Pojistná smlouva podle OZ, předsmluvní povinnosti a pravdivé odpovědi, lhůty likvidace, odmítnutí a snížení plnění, povinné ručení a garanční fond, majetkové, odpovědnostní, životní a cestovní pojištění, distribuce pojištění, ombudsman a finanční arbitr, promlčení. |
+| Vymáhání pohledávek ČR | Od promlčení a předžalobní výzvy přes platební rozkaz a žalobu po exekuci - příslušenství, náklady, poplatky, insolvenční křižovatka. |
 
-#### Trestní a správní trestání (4)
+### Trestní a správní trestání (4)
 
-| Plugin | Obor | Klíčové předpisy |
-|---|---|---|
-| `trestni-pravo-hospodarske` | Hospodářské trestní právo | 40/2009 Sb., 418/2011 Sb., 141/1961 Sb. |
-| `obeti-trestnych-cinu` | Oběti trestných činů a poškození | 45/2013 Sb., 141/1961 Sb., 89/2012 Sb. |
-| `prestupkove-pravo-spravni-trestani` | Přestupkové právo a správní trestání | 250/2016 Sb., 520/2005 Sb., 251/2016 Sb. |
-| `trestni-obhajoba` | Trestní právo a obhajoba | 141/1961 Sb., 40/2009 Sb., 418/2011 Sb. |
+| Skill v Coworku | Obor |
+|---|---|
+| Hospodářské trestní právo ČR | Podvod, úvěrový a dotační podvod, zpronevěra, porušení povinnosti při správě cizího majetku, úpadkové a věřitelské delikty, zkrácení daně a účinná lítost, korupce a zakázkové delikty, legalizace, trestní odpovědnost právnických osob a compliance obhajoba, zajištění majetku, strategie obhajoby a spolupráce s orgány. |
+| Oběti trestných činů a poškození ČR | Práva obětí dle zákona 45/2013, zvlášť zranitelná oběť, poškozený v trestním řízení, adhezní nárok na náhradu škody a nemajetkové újmy, peněžitá pomoc státu, předběžná a ochranná opatření, ochrana při výslechu, důvěrník a zmocněnec, stížnost proti odložení, narovnání a mediace, domácí a sexuální násilí. |
+| Přestupkové právo a správní trestání ČR | Odpovědnost za přestupek dle zákona 250/2016, přestupky fyzických osob, podnikatelů a právnických osob s liberací, promlčení, správní tresty a jejich výměra, příkaz a odpor, příkazový blok, ústní jednání a dokazování, dopravní přestupky a bodový systém, odvolání se zákazem reformationis in peius, přezkumné řízení, správní žaloba a moderace trestu, ne bis in idem s trestním právem. |
+| Trestní právo a obhajoba ČR | Obhajoba a zastupování poškozeného ve všech fázích trestního řízení - lhůty, vazba, zajištění majetku, odklony, opravné prostředky, trestní odpovědnost právnických osob. |
 
-#### Veřejná správa a regulace (11)
+### Veřejná správa a regulace (11)
 
-| Plugin | Obor | Klíčové předpisy |
-|---|---|---|
-| `cizinecke-a-azylove-pravo` | Cizinecké a azylové právo | 326/1999 Sb., 325/1999 Sb., 221/2003 Sb. |
-| `dopravni-pravo-nehody` | Dopravní právo a nehody | 361/2000 Sb., 250/2016 Sb., 168/1999 Sb. |
-| `energeticke-pravo` | Energetické právo | 458/2000 Sb., 165/2012 Sb., 406/2000 Sb. |
-| `obce-a-verejna-sprava` | Obce a veřejná správa | 128/2000 Sb., 131/2000 Sb., 250/2000 Sb. |
-| `pravo-zivotniho-prostredi` | Právo životního prostředí | 100/2001 Sb., 76/2002 Sb., 148/2023 Sb. |
-| `spolky-nadace-neziskovy-sektor` | Spolky, nadace a neziskový sektor | 89/2012 Sb., 304/2013 Sb., 90/2012 Sb. |
-| `spravni-a-danove-rizeni` | Správní a daňové řízení | 500/2004 Sb., 280/2009 Sb., 150/2002 Sb. |
-| `verejne-zakazky-dotace` | Veřejné zakázky a dotace | 134/2016 Sb., 340/2015 Sb., 218/2000 Sb. |
-| `zdravotnicke-pravo` | Zdravotnické právo | 372/2011 Sb., 373/2011 Sb., 48/1997 Sb. |
-| `ustavni-stiznost-lidska-prava` | Ústavní stížnost a lidská práva | 1/1993 Sb., 2/1993 Sb., 182/1993 Sb. |
-| `skolske-pravo` | Školské právo | 561/2004 Sb., 563/2004 Sb., 75/2005 Sb. |
+| Skill v Coworku | Obor |
+|---|---|
+| Cizinecké a azylové právo ČR | Víza a pobytová oprávnění, zaměstnanecké a modré karty, občané EU a rodinní příslušníci, vyhoštění a zajištění, mezinárodní a dočasná ochrana, státní občanství, zaměstnávání cizinců. |
+| Dopravní právo a nehody ČR | Odpovědnost a náhrada újmy z dopravní nehody, pojistné plnění z povinného ručení, dopravní přestupky a bodový systém, zadržení řidičského průkazu, trestné činy v dopravě, dopravci a cestující. |
+| Energetické právo ČR | Licence a regulace ERÚ, smlouvy o dodávce elektřiny a plynu a změna dodavatele, podpora a povolování OZE, komunitní energetika a sdílení, připojení k síti, cenová regulace a spory, teplárenství, energetická náročnost budov. |
+| Obce a veřejná správa ČR | Působnost orgánů obce, nakládání s obecním majetkem a záměr, vyhlášky a jejich přezkum, svobodný přístup k informacím, dotace a obecní společnosti, referendum, dozor a přezkoumání hospodaření, odpovědnost zastupitelů. |
+| Právo životního prostředí ČR | EIA a integrované povolování, vodní právo a povolení k vypouštění, ochrana ovzduší, odpady a obaly, ochrana přírody a krajiny, lesy a zemědělská půda, hluk, ekologická újma a sanace, kontroly a pokuty ČIŽP, účast veřejnosti a spolků. |
+| Spolky, nadace a neziskový sektor ČR | Spolky, nadace, nadační fondy a ústavy - založení a rejstříky, vnitřní správa a spory členů, přezkum rozhodnutí orgánů, dary, veřejné sbírky, dotace, daňový režim, účetní povinnosti, zánik a odpovědnost. |
+| Správní a daňové řízení ČR | Obrana proti rozhodnutím a postupům úřadů a správce daně - odvolání, přezkum, správní žaloba, kasační stížnost, daňová kontrola, sankce, prekluze, lhůty. |
+| Veřejné zakázky a dotace ČR | Režimy a druhy zadávacích řízení, námitky a návrh k ÚOHS, změny závazku, dotační podmínky, nesrovnalosti, porušení rozpočtové kázně a odvody, audity veřejného sektoru. |
+| Zdravotnické právo ČR | Práva pacienta a informovaný souhlas, zdravotnická dokumentace, újma na zdraví a postup non lege artis, stížnosti a disciplinární řízení, úhrady z veřejného zdravotního pojištění, provoz poskytovatelů. |
+| Ústavní stížnost a lidská práva | Přípustnost a vyčerpání opravných prostředků, dvouměsíční lhůta, sepis ústavní stížnosti, argumentace základními právy, test proporcionality, stížnost k ESLP, Listina EU a předběžná otázka. |
+| Školské právo ČR | Přijímání do škol a odvolání, spádovost, speciální vzdělávací potřeby a podpůrná opatření, kázeňská opatření a vyloučení, šikana a bezpečnost, pracovní vztahy pedagogů, škola jako právnická osoba a zřizovatel, ČŠI, úplata a školné, vysoké školy a studenti. |
 
-#### Práce a sociální zabezpečení (2)
+### Práce a sociální zabezpečení (2)
 
-| Plugin | Obor | Klíčové předpisy |
-|---|---|---|
-| `pracovni-pravo` | Pracovní právo | 262/2006 Sb., 89/2012 Sb., 435/2004 Sb. |
-| `socialni-zabezpeceni` | Sociální zabezpečení | 155/1995 Sb., 582/1991 Sb., 187/2006 Sb. |
+| Skill v Coworku | Obor |
+|---|---|
+| Pracovní právo ČR | Pracovní poměr od vzniku po skončení - výpověď a její neplatnost, odstupné, mzda a pracovní doba, odpovědnost, konkurenční doložka, dohody, švarcsystém, spory. |
+| Sociální zabezpečení ČR | Starobní, invalidní a pozůstalostní důchody, nemocenské a mateřská, státní sociální podpora a hmotná nouze, příspěvek na péči a dávky pro OZP, pojistné a penále, námitky a žaloby proti ČSSZ a úřadu práce, přezkum posudků, koordinace sociálního zabezpečení v EU. |
+### Nástroje
 
-### `lhutnik` — lhůty a termíny z jednání
+| Skill v Coworku | Obor |
+|---|---|
+| Lhůtník – záznam z jednání | Lhůty ze záznamu z jednání → události a úkoly v Evoliu |
 
-Řeší konkrétní selhání advokátní praxe: poznámka z jednací síně vznikne, ale nikdy se z ní nestane termín s budíkem. Skill `/jednani` proto **záchyt a převod na termín spojuje do jednoho úkonu** — každý postup, kde je „zapsat" a „zanést do lhůtníku" odděleně, selhává na tom druhém kroku.
+## Generování
 
-Z volných poznámek po jednání vytáhne lhůty a termín dalšího jednání, spočítá konce lhůt, předloží souhrn ke schválení a založí události v kalendáři s upomínkami.
-
-**Dvě věci, kterými se liší od běžného lhůtníku:**
-
-- Hlídá lhůty **všech stran a soudu**, ne jen vlastní. Zmeškaná lhůta protistrany je procesní příležitost — u lhůty protistrany zakládá i kontrolu den po jejím uplynutí.
-- **Nehádá.** Nevyplývá-li z poznámek jednoznačně rozhodná skutečnost nebo délka lhůty, zeptá se a raději nezaloží nic. Chybný termín v kalendáři je horší než žádný, protože vypadá jako ohlídaný.
-
-#### Kalkulátor lhůt
-
-Součástí je `lhuta.py`, použitelný i samostatně:
-
-```bash
-python3 skills/jednani/lhuta.py 2026-02-02 30d
-python3 skills/jednani/lhuta.py 2026-10-18 30d --json
-```
-
-Implementuje **§ 57 o. s. ř.**: běh od následujícího dne po rozhodné skutečnosti; u lhůt podle týdnů, měsíců a let shoda označení dne (není-li takový den v měsíci, poslední den měsíce); připadne-li konec na sobotu, neděli nebo svátek, posun na nejblíže následující pracovní den. Svátky dle z. č. 245/2000 Sb. včetně pohyblivých Velikonoc (Meeusův algoritmus), takže výpočet nezastará.
+Oborové skilly vznikají skriptem `cowork-evolio/build.py` z hlavní větve repozitáře a zapisují se do `plugins/*/skills/*/SKILL.md`; skript odmítne výstup, který by obsahoval odkaz na jinou právní databázi. Lhůtník se udržuje ručně v `plugins/lhutnik/skills/jednani/SKILL.md`.
 
 ```
-$ python3 lhuta.py 2026-10-18 30d
-Rozhodná skutečnost:  2026-10-18  (neděle)
-Lhůta běží od:        2026-10-19  (pondělí)
-POSLEDNÍ DEN LHŮTY:   2026-11-18  (středa)
-  (posunuto z 2026-11-17 — svátek)
+git switch cowork-evolio
+python3 cowork-evolio/build.py
 ```
 
-Podporuje `Nd` / `Nt` / `Nm` / `Nr` — dny, týdny, měsíce, roky.
-
-#### Konfigurace
-
-Prostředí-specifická nastavení jsou v tabulce „Konfigurace" na začátku `SKILL.md` — kalendář, časové pásmo, JID chatu se sebou pro záchyt z mobilu, kam ukládat záznam, intervaly upomínek. Tělo skillu je na nich nezávislé, takže nasazení jinam znamená upravit jen tuhle tabulku.
-
-Výchozí zápis termínů používá [`gog`](https://github.com/steipete/gogcli) (Google Kalendář). Není-li k dispozici, skill se zeptá, kam termíny zapsat.
-
-## Upozornění
-
-Nástroj nenahrazuje kontrolu advokáta. Kalkulátor je stavěný na **procesní** lhůty dle § 57 o. s. ř.; hmotněprávní lhůty (promlčecí, prekluzivní dle o. z.) se počítají jinak a podání u nich musí dojít včas, ne jen být odesláno.
-
-## Licence
-
-Apache-2.0
+Testováno na reálné kauze (smluvní pokuta ze smlouvy o dílo) s modelem Claude Sonnet 5.5 v Coworku.
