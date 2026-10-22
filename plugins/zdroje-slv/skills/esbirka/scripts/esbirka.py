@@ -131,7 +131,8 @@ class Client:
         headers = {"Accept": "application/json", "User-Agent": UA}
         if body is not None:
             headers["Content-Type"] = "application/json"
-        if self.key and auth:
+        # klíč jen na oficiální API — jiná --base / ESBIRKA_BASE ho nedostane (ochrana proti vynesení klíče)
+        if self.key and auth and urllib.parse.urlparse(url).hostname == urllib.parse.urlparse(API_BASE).hostname:
             mode, name = auth
             if mode == "header":
                 headers[name] = self.key
@@ -146,7 +147,8 @@ class Client:
 
     def _do(self, req):
         if self.verbose:
-            print(f"→ {req.get_method()} {req.full_url}", file=sys.stderr)
+            shown = req.full_url.replace(urllib.parse.quote_plus(self.key), "***") if self.key else req.full_url
+            print(f"→ {req.get_method()} {shown}", file=sys.stderr)
         try:
             with urllib.request.urlopen(req, timeout=60) as r:
                 raw = r.read()
