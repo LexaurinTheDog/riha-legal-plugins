@@ -1,26 +1,39 @@
 <img src="icon.svg" width="56" alt="">
 
-# riha-legal-plugins
+# riha-legal-plugins — varianta SLV, e-Sbírka a Sagasu
 
-Marketplace pluginů pro Claude Code zaměřených na českou advokátní praxi. Obsahuje **50 oborových právních skillů** a nástroj na hlídání lhůt.
+Marketplace pluginů pro Claude Code zaměřených na českou advokátní praxi. Tato větev (`slv-esbirka-sagasu`) obsahuje **50 oborových právních skillů** a orchestrátor, které místo databáze CODEXIS pracují s veřejně dostupnými zdroji:
+
+- **SLV (Salvia)** — MCP server `https://mcp.slv.cz`: judikatura NS, NSS, ÚS, obecných soudů a insolvenčního rejstříku, vyhledání předpisů. Rozhodnutí se hledají přímo podle citovaného ustanovení (`reg_num`/`reg_year`/`reg_par`) a citační graf (`citedBy`) ukáže pozdější odklon či sjednocení.
+- **e-Sbírka** — skill `esbirka`: úřední znění předpisu účinné k rozhodnému dni, historie znění, rozdíly mezi zněními, novely a nálezy ÚS. Bez API klíče funguje přes veřejnou cache portálu.
+- **Sagasu** — MCP server `https://sagasu.slv.cz`: ARES a obchodní rejstřík vč. zaniklých subjektů, sbírka listin, ISIR s plným textem dokumentů, datové schránky, DPH, advokáti ČAK/SAK a kalkulačky úroku z prodlení, odměny advokáta a soudního poplatku.
+
+Hlavní větev `main` obsahuje verzi pro aplikaci CODEXIS® AI, větev `cowork-evolio` verzi pro Evolio Cowork. Texty této větve generuje `slv/build.py` z `main`; ruční úpravy v `plugins/*/skills/*/SKILL.md` by další build přepsal.
 
 ## Instalace
 
 ```
-/plugin marketplace add LexaurinTheDog/riha-legal-plugins
-/plugin install lhutnik@riha-legal-plugins
-/plugin install smluvni-pravo@riha-legal-plugins
+/plugin marketplace add LexaurinTheDog/riha-legal-plugins@slv-esbirka-sagasu
+/plugin install zdroje-slv@riha-legal-plugins
+/plugin install legal-general-cee@riha-legal-plugins
+/plugin install insolvencni-pravo@riha-legal-plugins
 ```
 
-Ikona pluginu je v jeho kořeni jako `icon.svg` a barva odpovídá oborové skupině; Claude Code pole `icon` ignoruje, používá ho katalog marketplace.
+Plugin `zdroje-slv` je povinný základ: obsahuje skill `esbirka` a připojení obou MCP serverů. Po instalaci spusťte `/mcp` a u serverů `slv` a `sagasu` dokončete přihlášení (Sagasu přes Google účet). SLV má v základu limit volání (viz mcp.slv.cz); Sagasu je od června 2026 zdarma. Volitelný API klíč e-Sbírky patří do `~/.claude/esbirka.env` (`ESBIRKA_API_KEY=…`, chmod 600).
 
 ## Pluginy
 
+### `zdroje-slv` — zdroje
+
+Skill `esbirka` (`/esbirka`) a konfigurace MCP `slv` a `sagasu` (`.mcp.json`). Oborové skilly na něj odkazují v oddílu „Zdrojový režim“.
+
+### `legal-general-cee` — všeobecný specialista a orchestrátor
+
+Vstupní bod pro obecná a víceoborová zadání. Z cíle a podkladů sestaví mapu právních otázek, načte příslušné oborové skilly, oddělitelné otázky deleguje pracovním agentům se stejným zdrojovým režimem a vrácenou práci přejímá až po kontrole pramenů. Výsledkem je jeden konečný dokument (zdroj: verze 1.2.0, R10).
+
 ### Oborové právní skilly (50)
 
-Každý skill je samostatný pracovní postup pro jeden obor: ví, které předpisy otevřít, jakou judikaturu hledat, čím začít odpověď a kde se v oboru nejčastěji chybuje. Metodika práce s právní databází je zabudovaná uvnitř, obecný rešeršní skill se nenačítá.
-
-Skilly jsou psané pro aplikaci CODEXIS® AI (vm.codexis.ai) a jako právní zdroj používají výhradně nativní CODEXIS - žádné externí vyhledávání ani náhradní databáze. Všech padesát sdílí společný pracovní postup (verze 1.1.1): mapa právních otázek a nejdřív zvláštní režim, znění předpisu rozhodné k datu události včetně přechodných ustanovení, judikatura navázaná přímo na rozhodný paragraf (podle relevance i nejnovější) a teprve potom fulltext, kontrola překonání velkým senátem či stanoviskem, načtení celého rozhodnutí a oddělení nosných důvodů od tvrzení účastníků či rekapitulace nižšího soudu. Oborová část pak určuje, co v daném oboru ověřit. Lhůty, sazby a prahové hodnoty se neuvádějí z paměti; nedostupný pramen se výslovně označí. Společné texty jsou v adresáři `shared/`.
+Každý skill je samostatný pracovní postup pro jeden obor: ví, které předpisy otevřít, jakou judikaturu hledat, čím začít odpověď a kde se v oboru nejčastěji chybuje. Všech padesát sdílí společný postup: mapa právních otázek a nejdřív zvláštní režim, znění předpisu rozhodné k datu události včetně přechodných ustanovení (e-Sbírka), judikatura navázaná na rozhodný paragraf a teprve potom fulltext (SLV), kontrola překonání velkým senátem či stanoviskem, načtení celého rozhodnutí a oddělení nosných důvodů od tvrzení účastníků. Údaje o subjektech, insolvenci a výpočty dodává Sagasu. Lhůty, sazby a prahové hodnoty se neuvádějí z paměti; nedostupný pramen se výslovně označí `[DOPLNIT]`.
 
 #### Civilní právo (11)
 

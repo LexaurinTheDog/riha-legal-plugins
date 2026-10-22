@@ -1,0 +1,12 @@
+{
+  "name": "zdroje-slv",
+  "version": "1.0.0",
+  "description": "Legal sources for the Czech practice skills: SLV (Salvia) case law and legislation MCP, Sagasu registries and legal calculators MCP, and the e-Sbírka skill for official statute versions at a given date.",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": ["e-Sbírka", "judikatura", "SLV", "Salvia", "Sagasu", "ARES", "ISIR", "czech", "legal"],
+  "license": "PROPRIETARY",
+  "skills": "./skills"
+}

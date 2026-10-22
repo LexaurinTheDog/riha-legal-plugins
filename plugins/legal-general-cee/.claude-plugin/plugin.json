@@ -1,0 +1,55 @@
+{
+  "uuid": "a0e96e0c-6648-41db-9f05-2fe2ce8f9d8d",
+  "name": "legal-general-cee",
+  "version": "1.2.0",
+  "description": "General Czech legal specialist and orchestrator - routes general and multi-area matters to the 50 specialist skills, delegates separable questions, verifies sources and merges one result on top of SLV case law, e-Sbírka and Sagasu.",
+  "icon": "./icon.svg",
+  "author": {
+    "name": "JUDr. Vojtěch Říha, Ph.D.",
+    "email": "vriha@ak-rihova.cz"
+  },
+  "keywords": [
+    "orchestrace",
+    "orchestrator",
+    "delegace",
+    "víceoborová věc",
+    "czech",
+    "legal"
+  ],
+  "license": "PROPRIETARY",
+  "tags": [
+    "legal",
+    "czech",
+    "orchestration"
+  ],
+  "i18n": {
+    "cs": {
+      "displayName": "Všeobecný právní specialista a orchestrátor",
+      "description": "Rozpozná dotčené právní obory, načte oborové skilly, deleguje oddělitelné otázky pracovním agentům, ověří jejich prameny v SLV a e-Sbírce a sjednotí jednu analýzu, podání či smlouvu.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "orchestration": "Orchestrace"
+      }
+    },
+    "en": {
+      "displayName": "General Legal Specialist and Orchestrator",
+      "description": "Identifies the affected areas of Czech law, loads the specialist skills, delegates separable questions to worker agents, verifies their sources in SLV and e-Sbírka and merges one analysis, filing or contract.",
+      "tagLabels": {
+        "legal": "Law",
+        "czech": "Czech Republic",
+        "orchestration": "Orchestration"
+      }
+    },
+    "sk": {
+      "displayName": "Všeobecný právny špecialista a orchestrátor",
+      "description": "Rozpozná dotknuté právne oblasti, načíta odborové skilly, deleguje oddeliteľné otázky pracovným agentom, overí ich pramene v SLV a e-Sbírke a zjednotí jednu analýzu, podanie či zmluvu.",
+      "tagLabels": {
+        "legal": "Právo",
+        "czech": "Česko",
+        "orchestration": "Orchestrácia"
+      }
+    }
+  },
+  "skills": "./skills"
+}

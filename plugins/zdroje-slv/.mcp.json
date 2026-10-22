@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "slv": {
+      "type": "http",
+      "url": "https://mcp.slv.cz"
+    },
+    "sagasu": {
+      "type": "http",
+      "url": "https://sagasu.slv.cz"
+    }
+  }
+}

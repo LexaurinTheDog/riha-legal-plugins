@@ -5,6 +5,13 @@
   },
   "plugins": [
     {
+      "name": "zdroje-slv",
+      "description": "Legal sources for the Czech practice skills: SLV (Salvia) case law and legislation MCP, Sagasu registries and legal calculators MCP, and the e-Sbírka skill for official statute versions at a given date.",
+      "source": "./plugins/zdroje-slv",
+      "category": "legal",
+      "icon": "./plugins/zdroje-slv/icon.svg"
+    },
+    {
       "name": "lhutnik",
       "description": "Lhůtník pro českou advokátní praxi — ze záznamu z jednání založí hlídané lhůty a termíny v kalendáři; konce lhůt počítá dle § 57 o. s. ř. včetně posunu z víkendů a svátků",
       "source": "./plugins/lhutnik",
@@ -12,9 +19,46 @@
       "icon": "./plugins/lhutnik/icon.svg"
     },
     {
+      "uuid": "a0e96e0c-6648-41db-9f05-2fe2ce8f9d8d",
+      "name": "legal-general-cee",
+      "description": "General Czech legal specialist and orchestrator - routes general and multi-area matters to the 50 specialist skills, delegates separable questions, verifies sources and merges one result on top of SLV case law, e-Sbírka and Sagasu.",
+      "source": "./plugins/legal-general-cee",
+      "category": "legal",
+      "i18n": {
+        "cs": {
+          "displayName": "Všeobecný právní specialista a orchestrátor",
+          "description": "Rozpozná dotčené právní obory, načte oborové skilly, deleguje oddělitelné otázky pracovním agentům, ověří jejich prameny v SLV a e-Sbírce a sjednotí jednu analýzu, podání či smlouvu.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "orchestration": "Orchestrace"
+          }
+        },
+        "en": {
+          "displayName": "General Legal Specialist and Orchestrator",
+          "description": "Identifies the affected areas of Czech law, loads the specialist skills, delegates separable questions to worker agents, verifies their sources in SLV and e-Sbírka and merges one analysis, filing or contract.",
+          "tagLabels": {
+            "legal": "Law",
+            "czech": "Czech Republic",
+            "orchestration": "Orchestration"
+          }
+        },
+        "sk": {
+          "displayName": "Všeobecný právny špecialista a orchestrátor",
+          "description": "Rozpozná dotknuté právne oblasti, načíta odborové skilly, deleguje oddeliteľné otázky pracovným agentom, overí ich pramene v SLV a e-Sbírke a zjednotí jednu analýzu, podanie či zmluvu.",
+          "tagLabels": {
+            "legal": "Právo",
+            "czech": "Česko",
+            "orchestration": "Orchestrácia"
+          }
+        }
+      },
+      "icon": "./plugins/legal-general-cee/icon.svg"
+    },
+    {
       "uuid": "8f79dc16-0c3f-4b99-906f-f921fd2df76f",
       "name": "insolvencni-pravo",
-      "description": "Czech insolvency law practice skill - creditor claims, claim review and denial, incidental disputes, debt relief, bankruptcy, moratorium and ISIR workflow on top of the CODEXIS legal database.",
+      "description": "Czech insolvency law practice skill - creditor claims, claim review and denial, incidental disputes, debt relief, bankruptcy, moratorium and ISIR workflow on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/insolvencni-pravo",
       "category": "legal",
       "i18n": {
@@ -51,7 +95,7 @@
     {
       "uuid": "6dcc0792-5e12-4f46-9e2c-a2784de34a97",
       "name": "nemovitosti-transakce",
-      "description": "Czech real estate transactions practice skill - purchase contracts, escrow, cadastre filings, liens, pre-emption rights, co-ownership, leases and transaction taxes on top of the CODEXIS legal database.",
+      "description": "Czech real estate transactions practice skill - purchase contracts, escrow, cadastre filings, liens, pre-emption rights, co-ownership, leases and transaction taxes on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/nemovitosti-transakce",
       "category": "legal",
       "i18n": {
@@ -88,7 +132,7 @@
     {
       "uuid": "1a5d6452-24d6-4e09-9daa-9e66935fe02a",
       "name": "smluvni-pravo",
-      "description": "Czech contract law practice skill - contract review and deficiency analysis, drafting and revision under the Civil Code (89/2012 Sb.), B2B/B2C/public-sector regimes, on top of the CODEXIS legal database.",
+      "description": "Czech contract law practice skill - contract review and deficiency analysis, drafting and revision under the Civil Code (89/2012 Sb.), B2B/B2C/public-sector regimes on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/smluvni-pravo",
       "category": "legal",
       "i18n": {
@@ -125,7 +169,7 @@
     {
       "uuid": "46fe5a16-047b-4b50-9735-256a256a5531",
       "name": "spravni-a-danove-rizeni",
-      "description": "Czech administrative and tax procedure practice skill - remedies against authorities under správní řád, daňový řád and soudní řád správní: appeals, judicial review, cassation, tax audits, penalties, deadlines, on top of the CODEXIS legal database.",
+      "description": "Czech administrative and tax procedure practice skill - remedies against authorities under správní řád, daňový řád and soudní řád správní: appeals, judicial review, cassation, tax audits, penalties, deadlines on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/spravni-a-danove-rizeni",
       "category": "legal",
       "i18n": {
@@ -162,7 +206,7 @@
     {
       "uuid": "d1587978-cd5a-46fe-bd7c-74f427cacb3c",
       "name": "trestni-obhajoba",
-      "description": "Czech criminal procedure practice skill - defence counsel and victim representation across all stages, custody, asset seizure, remedies and deadlines under trestní řád and trestní zákoník, on top of the CODEXIS legal database.",
+      "description": "Czech criminal procedure practice skill - defence counsel and victim representation across all stages, custody, asset seizure, remedies and deadlines under trestní řád and trestní zákoník on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/trestni-obhajoba",
       "category": "legal",
       "i18n": {
@@ -199,7 +243,7 @@
     {
       "uuid": "80ec02a0-b63b-40f1-b2f0-c6b8d60d92d4",
       "name": "vymahani-pohledavek",
-      "description": "Czech debt recovery practice skill - limitation check, pre-action notice, payment orders (EPR), litigation, costs and interest, enforcement (exekuce) and insolvency crossover on top of the CODEXIS legal database.",
+      "description": "Czech debt recovery practice skill - limitation check, pre-action notice, payment orders (EPR), litigation, costs and interest, enforcement (exekuce) and insolvency crossover on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/vymahani-pohledavek",
       "category": "legal",
       "i18n": {
@@ -236,7 +280,7 @@
     {
       "uuid": "c9daa96c-d953-423d-b5fd-04323b2c0184",
       "name": "korporatni-pravo",
-      "description": "Czech corporate law practice skill - company formation, general meetings, share transfers, directors' duties and liability, shareholder agreements, profit distribution, registers and transformations under ZOK and the Civil Code, on top of the CODEXIS legal database.",
+      "description": "Czech corporate law practice skill - company formation, general meetings, share transfers, directors' duties and liability, shareholder agreements, profit distribution, registers and transformations under ZOK and the Civil Code on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/korporatni-pravo",
       "category": "legal",
       "i18n": {
@@ -273,7 +317,7 @@
     {
       "uuid": "047e367f-d9f0-4c32-81a1-65598b160b72",
       "name": "pracovni-pravo",
-      "description": "Czech labour law practice skill - employment contracts, termination and its invalidity, working time and pay, liability, non-compete, agency work, disguised employment and labour disputes under zákoník práce, on top of the CODEXIS legal database.",
+      "description": "Czech labour law practice skill - employment contracts, termination and its invalidity, working time and pay, liability, non-compete, agency work, disguised employment and labour disputes under zákoník práce on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/pracovni-pravo",
       "category": "legal",
       "i18n": {
@@ -310,7 +354,7 @@
     {
       "uuid": "52e38692-8399-42a8-bc3f-e3dede0f2c78",
       "name": "rodinne-pravo",
-      "description": "Czech family law practice skill - divorce, child custody and contact, maintenance, matrimonial property (SJM), parentage, domestic violence and cross-border cases under the Civil Code and ZŘS, on top of the CODEXIS legal database.",
+      "description": "Czech family law practice skill - divorce, child custody and contact, maintenance, matrimonial property (SJM), parentage, domestic violence and cross-border cases under the Civil Code and ZŘS on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/rodinne-pravo",
       "category": "legal",
       "i18n": {
@@ -347,7 +391,7 @@
     {
       "uuid": "afd1cc2a-21fd-4468-8664-5a29101c3bae",
       "name": "dedicke-pravo",
-      "description": "Czech inheritance law practice skill - wills and inheritance contracts, forced heirs, disinheritance, renunciation and inventory reservation, debts of the estate, probate proceedings before the notary, disputes and estate planning, on top of the CODEXIS legal database.",
+      "description": "Czech inheritance law practice skill - wills and inheritance contracts, forced heirs, disinheritance, renunciation and inventory reservation, debts of the estate, probate proceedings before the notary, disputes and estate planning on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/dedicke-pravo",
       "category": "legal",
       "i18n": {
@@ -384,7 +428,7 @@
     {
       "uuid": "be8eb2b6-ece2-41e2-93ea-979d18ef1484",
       "name": "ochrana-osobnosti-gdpr",
-      "description": "Czech personality rights, defamation, media and data protection practice skill - claims against unlawful publications, right of reply, non-material damages, GDPR rights and compliance, ÚOOÚ proceedings, on top of the CODEXIS legal database.",
+      "description": "Czech personality rights, defamation, media and data protection practice skill - claims against unlawful publications, right of reply, non-material damages, GDPR rights and compliance, ÚOOÚ proceedings on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/ochrana-osobnosti-gdpr",
       "category": "legal",
       "i18n": {
@@ -421,7 +465,7 @@
     {
       "uuid": "660aa208-7e0b-4589-9ee7-2ae703b57e61",
       "name": "stavebni-pravo",
-      "description": "Czech construction and planning law practice skill - permits under the new Building Act (283/2021 Sb.), transitional regime, participants and neighbours, unauthorised structures, removal, occupancy, nuisance and boundary disputes, construction contracts and defects, on top of the CODEXIS legal database.",
+      "description": "Czech construction and planning law practice skill - permits under the new Building Act (283/2021 Sb.), transitional regime, participants and neighbours, unauthorised structures, removal, occupancy, nuisance and boundary disputes, construction contracts and defects on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/stavebni-pravo",
       "category": "legal",
       "i18n": {
@@ -458,7 +502,7 @@
     {
       "uuid": "4430e619-e56c-40c8-9837-0379e55b19cd",
       "name": "verejne-zakazky-dotace",
-      "description": "Czech public procurement and subsidies practice skill - procurement regimes and procedures under ZZVZ, objections and ÚOHS review, contract changes, subsidy conditions, irregularities, budget discipline breaches and audits of public bodies, on top of the CODEXIS legal database.",
+      "description": "Czech public procurement and subsidies practice skill - procurement regimes and procedures under ZZVZ, objections and ÚOHS review, contract changes, subsidy conditions, irregularities, budget discipline breaches and audits of public bodies on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/verejne-zakazky-dotace",
       "category": "legal",
       "i18n": {
@@ -495,7 +539,7 @@
     {
       "uuid": "25c2ac16-603b-4cab-a2ea-a5c633334c18",
       "name": "cizinecke-a-azylove-pravo",
-      "description": "Czech immigration and asylum practice skill - visas, long-term and permanent residence, employee and blue cards, EU citizens and family members, expulsion and detention, international protection, temporary protection, citizenship and employment of foreigners, on top of the CODEXIS legal database.",
+      "description": "Czech immigration and asylum practice skill - visas, long-term and permanent residence, employee and blue cards, EU citizens and family members, expulsion and detention, international protection, temporary protection, citizenship and employment of foreigners on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/cizinecke-a-azylove-pravo",
       "category": "legal",
       "i18n": {
@@ -532,7 +576,7 @@
     {
       "uuid": "b9d6ed9b-0b66-41f3-a3b5-2e8773cd2987",
       "name": "dusevni-vlastnictvi",
-      "description": "Czech intellectual property practice skill - copyright and software, employee and commissioned works, licences, trade marks, patents, utility and industrial designs, domain names, trade secrets, enforcement and ÚPV proceedings, on top of the CODEXIS legal database.",
+      "description": "Czech intellectual property practice skill - copyright and software, employee and commissioned works, licences, trade marks, patents, utility and industrial designs, domain names, trade secrets, enforcement and ÚPV proceedings on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/dusevni-vlastnictvi",
       "category": "legal",
       "i18n": {
@@ -569,7 +613,7 @@
     {
       "uuid": "d53bc586-1421-4b1f-8d92-8698e528c244",
       "name": "hospodarska-a-nekala-soutez",
-      "description": "Czech competition and unfair competition practice skill - cartels, abuse of dominance, merger control and ÚOHS proceedings, private damages, unfair competition claims, advertising and consumer practices, on top of the CODEXIS legal database.",
+      "description": "Czech competition and unfair competition practice skill - cartels, abuse of dominance, merger control and ÚOHS proceedings, private damages, unfair competition claims, advertising and consumer practices on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/hospodarska-a-nekala-soutez",
       "category": "legal",
       "i18n": {
@@ -606,7 +650,7 @@
     {
       "uuid": "8ca08a12-3b9c-4138-83ef-58775acbed71",
       "name": "zdravotnicke-pravo",
-      "description": "Czech medical and health law practice skill - patient rights and informed consent, medical records, malpractice and personal injury claims, complaints and disciplinary proceedings, public health insurance coverage, providers' licensing and compliance, on top of the CODEXIS legal database.",
+      "description": "Czech medical and health law practice skill - patient rights and informed consent, medical records, malpractice and personal injury claims, complaints and disciplinary proceedings, public health insurance coverage, providers' licensing and compliance on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/zdravotnicke-pravo",
       "category": "legal",
       "i18n": {
@@ -643,7 +687,7 @@
     {
       "uuid": "6b42ab7e-cda4-4b61-aebc-5491119894b7",
       "name": "bytove-pravo-najem-svj",
-      "description": "Czech housing law practice skill - residential and commercial leases, termination and eviction, rent and service charges, owners' associations (SVJ), housing cooperatives and short-term rentals, on top of the CODEXIS legal database.",
+      "description": "Czech housing law practice skill - residential and commercial leases, termination and eviction, rent and service charges, owners' associations (SVJ), housing cooperatives and short-term rentals on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/bytove-pravo-najem-svj",
       "category": "legal",
       "i18n": {
@@ -680,7 +724,7 @@
     {
       "uuid": "d0e414ae-a466-489b-86d4-f40db9319c9e",
       "name": "dopravni-pravo-nehody",
-      "description": "Czech traffic and road accident practice skill - accident liability and compensation, motor insurance claims, traffic offences and the points system, driving licence suspension, traffic crimes, carriers and passengers, on top of the CODEXIS legal database.",
+      "description": "Czech traffic and road accident practice skill - accident liability and compensation, motor insurance claims, traffic offences and the points system, driving licence suspension, traffic crimes, carriers and passengers on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/dopravni-pravo-nehody",
       "category": "legal",
       "i18n": {
@@ -717,7 +761,7 @@
     {
       "uuid": "0bee16bb-e182-4e25-a7dc-44f2314c6fc5",
       "name": "exekuce-obrana-dluznika",
-      "description": "Czech enforcement defence practice skill - auditing the enforcement title, motions to stay and stop enforcement, protected minimum and protected account, seizure of movables, real estate and marital property, third-party claims, costs, complaints against bailiffs and the debt-relief exit, on top of the CODEXIS legal database.",
+      "description": "Czech enforcement defence practice skill - auditing the enforcement title, motions to stay and stop enforcement, protected minimum and protected account, seizure of movables, real estate and marital property, third-party claims, costs, complaints against bailiffs and the debt-relief exit on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/exekuce-obrana-dluznika",
       "category": "legal",
       "i18n": {
@@ -754,7 +798,7 @@
     {
       "uuid": "18e7ea07-0dca-4c91-a35f-0f5349996b2f",
       "name": "spotrebitelske-pravo",
-      "description": "Czech consumer law practice skill - consumer contracts and e-commerce, withdrawal, defects and complaints, unfair terms and practices, consumer credit, ADR and collective redress, and compliance for traders, on top of the CODEXIS legal database.",
+      "description": "Czech consumer law practice skill - consumer contracts and e-commerce, withdrawal, defects and complaints, unfair terms and practices, consumer credit, ADR and collective redress, and compliance for traders on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/spotrebitelske-pravo",
       "category": "legal",
       "i18n": {
@@ -791,7 +835,7 @@
     {
       "uuid": "e3eb486c-304d-44ba-bc8d-fc459b7b1fa8",
       "name": "mezinarodni-pravo-soukrome",
-      "description": "Czech cross-border private law practice skill - jurisdiction and applicable law under EU regulations and the Czech PIL Act, service and evidence abroad, recognition and enforcement of foreign judgments and arbitral awards, legalisation of documents, drafting choice-of-law and forum clauses, on top of the CODEXIS legal database.",
+      "description": "Czech cross-border private law practice skill - jurisdiction and applicable law under EU regulations and the Czech PIL Act, service and evidence abroad, recognition and enforcement of foreign judgments and arbitral awards, legalisation of documents, drafting choice-of-law and forum clauses on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/mezinarodni-pravo-soukrome",
       "category": "legal",
       "i18n": {
@@ -828,7 +872,7 @@
     {
       "uuid": "11ff2fec-6a54-4668-b1e8-0975abeea7a9",
       "name": "obce-a-verejna-sprava",
-      "description": "Czech municipal and public-administration practice skill - competences of municipal bodies, disposal of municipal property and publication of intent, by-laws and their review, freedom of information, municipal grants and companies, referendum, supervision and audit, liability of councillors, on top of the CODEXIS legal database.",
+      "description": "Czech municipal and public-administration practice skill - competences of municipal bodies, disposal of municipal property and publication of intent, by-laws and their review, freedom of information, municipal grants and companies, referendum, supervision and audit, liability of councillors on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/obce-a-verejna-sprava",
       "category": "legal",
       "i18n": {
@@ -865,7 +909,7 @@
     {
       "uuid": "110729b6-f846-4b8e-8b00-65e3ae40db75",
       "name": "spolky-nadace-neziskovy-sektor",
-      "description": "Czech non-profit law practice skill - associations, foundations, endowment funds and institutes: formation and registers, governance and member disputes, review of body decisions, donations, public collections, grants, tax status of public-benefit taxpayers, accounting duties, dissolution and liability, on top of the CODEXIS legal database.",
+      "description": "Czech non-profit law practice skill - associations, foundations, endowment funds and institutes: formation and registers, governance and member disputes, review of body decisions, donations, public collections, grants, tax status of public-benefit taxpayers, accounting duties, dissolution and liability on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/spolky-nadace-neziskovy-sektor",
       "category": "legal",
       "i18n": {
@@ -902,7 +946,7 @@
     {
       "uuid": "d811e4e0-77f1-4bb4-981c-ef739f721b71",
       "name": "sportovni-pravo",
-      "description": "Czech sports law practice skill - athlete and club contracts, federation rules and disciplinary review, transfers and arbitration, liability for sports injuries, event organisation, sponsorship, donations and public funding, anti-doping and minors, on top of the CODEXIS legal database.",
+      "description": "Czech sports law practice skill - athlete and club contracts, federation rules and disciplinary review, transfers and arbitration, liability for sports injuries, event organisation, sponsorship, donations and public funding, anti-doping and minors on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/sportovni-pravo",
       "category": "legal",
       "i18n": {
@@ -939,7 +983,7 @@
     {
       "uuid": "1c16e9f2-7e56-422d-9b2b-5f469b7d5c34",
       "name": "ustavni-stiznost-lidska-prava",
-      "description": "Czech constitutional complaint and human-rights practice skill - admissibility and exhaustion of remedies, the two-month deadline, drafting the petition, fundamental-rights argumentation, proportionality test, ECHR application to Strasbourg, EU Charter and preliminary references, on top of the CODEXIS legal database.",
+      "description": "Czech constitutional complaint and human-rights practice skill - admissibility and exhaustion of remedies, the two-month deadline, drafting the petition, fundamental-rights argumentation, proportionality test, ECHR application to Strasbourg, EU Charter and preliminary references on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/ustavni-stiznost-lidska-prava",
       "category": "legal",
       "i18n": {
@@ -976,7 +1020,7 @@
     {
       "uuid": "9c257c89-0cd6-4678-b46b-3eb15738fba0",
       "name": "rozhodci-rizeni-mediace",
-      "description": "Czech arbitration and mediation practice skill - validity of arbitration clauses, consumer and employment limits, permanent courts of arbitration and ad hoc tribunals, conduct of proceedings, setting aside and enforcement of awards, New York Convention, mediation act, mediation agreements and court-ordered first meetings, on top of the CODEXIS legal database.",
+      "description": "Czech arbitration and mediation practice skill - validity of arbitration clauses, consumer and employment limits, permanent courts of arbitration and ad hoc tribunals, conduct of proceedings, setting aside and enforcement of awards, New York Convention, mediation act, mediation agreements and court-ordered first meetings on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/rozhodci-rizeni-mediace",
       "category": "legal",
       "i18n": {
@@ -1013,7 +1057,7 @@
     {
       "uuid": "0ac6cf03-3bb7-47a5-86aa-cb9f0bdf26c1",
       "name": "pojistne-pravo",
-      "description": "Czech insurance law practice skill - insurance contract under the Civil Code, pre-contractual duties and disclosure, claims handling deadlines, refusal and reduction of indemnity, motor third-party liability and the guarantee fund, property, liability, life and travel insurance, insurance distribution rules, ombudsman and financial arbiter, limitation periods, on top of the CODEXIS legal database.",
+      "description": "Czech insurance law practice skill - insurance contract under the Civil Code, pre-contractual duties and disclosure, claims handling deadlines, refusal and reduction of indemnity, motor third-party liability and the guarantee fund, property, liability, life and travel insurance, insurance distribution rules, ombudsman and financial arbiter, limitation periods on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/pojistne-pravo",
       "category": "legal",
       "i18n": {
@@ -1050,7 +1094,7 @@
     {
       "uuid": "2cdd74f1-a8d6-41c7-afd7-ace2b1f7deb2",
       "name": "aml-compliance",
-      "description": "Czech AML/CFT compliance practice skill - obliged persons, customer identification and due diligence, beneficial owner and PEP checks, sanctions screening, suspicious transaction reports to FAÚ, internal policies and training, attorney-specific duties and privilege, real-estate and escrow triggers, beneficial owner register, inspections and penalties, EU AML package, on top of the CODEXIS legal database.",
+      "description": "Czech AML/CFT compliance practice skill - obliged persons, customer identification and due diligence, beneficial owner and PEP checks, sanctions screening, suspicious transaction reports to FAÚ, internal policies and training, attorney-specific duties and privilege, real-estate and escrow triggers, beneficial owner register, inspections and penalties, EU AML package on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/aml-compliance",
       "category": "legal",
       "i18n": {
@@ -1087,7 +1131,7 @@
     {
       "uuid": "960a7e4a-b3a6-4a5e-a3e2-a7afc5f3d16d",
       "name": "energeticke-pravo",
-      "description": "Czech energy law practice skill - Energy Act licences and ERÚ regulation, electricity and gas supply contracts and switching, renewable sources support and permitting, community energy and self-consumption, grid connection, price regulation and disputes, heat supply, energy performance of buildings, on top of the CODEXIS legal database.",
+      "description": "Czech energy law practice skill - Energy Act licences and ERÚ regulation, electricity and gas supply contracts and switching, renewable sources support and permitting, community energy and self-consumption, grid connection, price regulation and disputes, heat supply, energy performance of buildings on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/energeticke-pravo",
       "category": "legal",
       "i18n": {
@@ -1124,7 +1168,7 @@
     {
       "uuid": "c286fa94-da7c-487e-874b-e16a852a8d1d",
       "name": "it-pravo-kyberbezpecnost",
-      "description": "Czech IT law and cybersecurity practice skill - software development and licensing contracts, SaaS and cloud, IT outsourcing and SLA, open source, NIS2 and the new Cybersecurity Act, regulated entities and incident reporting, DORA, security breach liability, e-commerce platforms and DSA, electronic signatures and eIDAS, data localisation, on top of the CODEXIS legal database.",
+      "description": "Czech IT law and cybersecurity practice skill - software development and licensing contracts, SaaS and cloud, IT outsourcing and SLA, open source, NIS2 and the new Cybersecurity Act, regulated entities and incident reporting, DORA, security breach liability, e-commerce platforms and DSA, electronic signatures and eIDAS, data localisation on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/it-pravo-kyberbezpecnost",
       "category": "legal",
       "i18n": {
@@ -1161,7 +1205,7 @@
     {
       "uuid": "262e5b75-e1a6-49b8-8fe7-a62495e569ef",
       "name": "pravo-zivotniho-prostredi",
-      "description": "Czech environmental law practice skill - EIA and integrated permitting, water law and discharge permits, air protection, waste and packaging, nature and landscape protection, forests and agricultural land, noise, environmental liability and remediation, inspections and penalties by ČIŽP, public participation and NGO standing, on top of the CODEXIS legal database.",
+      "description": "Czech environmental law practice skill - EIA and integrated permitting, water law and discharge permits, air protection, waste and packaging, nature and landscape protection, forests and agricultural land, noise, environmental liability and remediation, inspections and penalties by ČIŽP, public participation and NGO standing on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/pravo-zivotniho-prostredi",
       "category": "legal",
       "i18n": {
@@ -1198,7 +1242,7 @@
     {
       "uuid": "6043e129-b26a-4810-9e31-5db0cccee57a",
       "name": "skolske-pravo",
-      "description": "Czech education law practice skill - school admissions and appeals, catchment areas, special educational needs and support measures, school discipline and expulsion, bullying and safety, teachers' employment under the pedagogical staff act, school as a legal entity and its founder, school inspection, tuition and fees, universities and student status, on top of the CODEXIS legal database.",
+      "description": "Czech education law practice skill - school admissions and appeals, catchment areas, special educational needs and support measures, school discipline and expulsion, bullying and safety, teachers' employment under the pedagogical staff act, school as a legal entity and its founder, school inspection, tuition and fees, universities and student status on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/skolske-pravo",
       "category": "legal",
       "i18n": {
@@ -1235,7 +1279,7 @@
     {
       "uuid": "78300aa7-a794-4000-a079-cd282d82b81f",
       "name": "danove-pravo-hmotne",
-      "description": "Czech substantive tax law practice skill - personal and corporate income tax, VAT including deduction, reverse charge and chain fraud, real-estate transfer and property tax, tax residence and double-tax treaties, transfer pricing, abuse of law and substance, tax aspects of transactions and restructurings, employee vs. contractor, cryptoassets and digital economy, on top of the CODEXIS legal database.",
+      "description": "Czech substantive tax law practice skill - personal and corporate income tax, VAT including deduction, reverse charge and chain fraud, real-estate transfer and property tax, tax residence and double-tax treaties, transfer pricing, abuse of law and substance, tax aspects of transactions and restructurings, employee vs. contractor, cryptoassets and digital economy on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/danove-pravo-hmotne",
       "category": "legal",
       "i18n": {
@@ -1272,7 +1316,7 @@
     {
       "uuid": "6c97fbe9-6329-4fc0-bb95-c6868e179554",
       "name": "bankovnictvi-a-uvery",
-      "description": "Czech banking and credit law practice skill - loan and credit agreements, consumer credit act and creditworthiness assessment, early repayment and default, mortgages and security packages, guarantees and accessory security, payment services and unauthorised transactions, bank secrecy and account freezes, financial arbiter, ČNB supervision and licensing, non-bank lenders, on top of the CODEXIS legal database.",
+      "description": "Czech banking and credit law practice skill - loan and credit agreements, consumer credit act and creditworthiness assessment, early repayment and default, mortgages and security packages, guarantees and accessory security, payment services and unauthorised transactions, bank secrecy and account freezes, financial arbiter, ČNB supervision and licensing, non-bank lenders on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/bankovnictvi-a-uvery",
       "category": "legal",
       "i18n": {
@@ -1309,7 +1353,7 @@
     {
       "uuid": "0c539963-11d3-42c3-bcec-838314ba51cc",
       "name": "socialni-zabezpeceni",
-      "description": "Czech social security law practice skill - old-age, invalidity and survivors' pensions, sickness and maternity benefits, state social support and assistance in material need, disability allowances and care allowance, social insurance contributions and penalties, appeals against ČSSZ and labour office decisions, medical assessment review, EU coordination of social security, on top of the CODEXIS legal database.",
+      "description": "Czech social security law practice skill - old-age, invalidity and survivors' pensions, sickness and maternity benefits, state social support and assistance in material need, disability allowances and care allowance, social insurance contributions and penalties, appeals against ČSSZ and labour office decisions, medical assessment review, EU coordination of social security on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/socialni-zabezpeceni",
       "category": "legal",
       "i18n": {
@@ -1346,7 +1390,7 @@
     {
       "uuid": "045a0bcb-4cc0-4973-aa39-064f34a64b04",
       "name": "obcanske-procesni-pravo",
-      "description": "Czech civil procedure practice skill - jurisdiction and venue, drafting claims and petitions, court fees, service and deadlines, evidence and burden of proof, judgments by default and payment orders, interim measures, appeals and extraordinary remedies including admissibility of dovolání, costs of proceedings and attorney tariff, non-contentious proceedings, on top of the CODEXIS legal database.",
+      "description": "Czech civil procedure practice skill - jurisdiction and venue, drafting claims and petitions, court fees, service and deadlines, evidence and burden of proof, judgments by default and payment orders, interim measures, appeals and extraordinary remedies including admissibility of dovolání, costs of proceedings and attorney tariff, non-contentious proceedings on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/obcanske-procesni-pravo",
       "category": "legal",
       "i18n": {
@@ -1383,7 +1427,7 @@
     {
       "uuid": "2e5922f3-6d1a-4661-9296-ca12348537c0",
       "name": "nahrada-ujmy-odpovednost",
-      "description": "Czech tort and liability practice skill - general and strict liability under the Civil Code, damage to property and pure economic loss, personal injury and the Supreme Court methodology for non-pecuniary harm, wrongful death and secondary victims, product liability, liability of employers, professionals and public bodies, causation and contributory fault, limitation, insurance interplay and quantification, on top of the CODEXIS legal database.",
+      "description": "Czech tort and liability practice skill - general and strict liability under the Civil Code, damage to property and pure economic loss, personal injury and the Supreme Court methodology for non-pecuniary harm, wrongful death and secondary victims, product liability, liability of employers, professionals and public bodies, causation and contributory fault, limitation, insurance interplay and quantification on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/nahrada-ujmy-odpovednost",
       "category": "legal",
       "i18n": {
@@ -1420,7 +1464,7 @@
     {
       "uuid": "d603603f-c237-4b72-a62b-683a75d0db8a",
       "name": "vecna-prava-sousedske-spory",
-      "description": "Czech property-rights disputes practice skill - ownership and possession actions, co-ownership and its dissolution, boundaries and neighbour immissions, easements and rights of way, necessary access, building on another's land, superficies principle and transitional rules, acquisitive prescription, land registry corrections and disputes, on top of the CODEXIS legal database.",
+      "description": "Czech property-rights disputes practice skill - ownership and possession actions, co-ownership and its dissolution, boundaries and neighbour immissions, easements and rights of way, necessary access, building on another's land, superficies principle and transitional rules, acquisitive prescription, land registry corrections and disputes on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/vecna-prava-sousedske-spory",
       "category": "legal",
       "i18n": {
@@ -1457,7 +1501,7 @@
     {
       "uuid": "bf1cd5be-8ffc-4522-8f2d-a61a878a3d36",
       "name": "opatrovnictvi-svepravnost",
-      "description": "Czech legal capacity and guardianship practice skill - limitation of legal capacity and its review, supportive measures (assistance in decision-making, representation by a household member, advance directive), guardianship of adults and its supervision, guardian's duties and court approvals, public guardians, detention in health-care facilities, protection of vulnerable adults, dementia and estate planning, on top of the CODEXIS legal database.",
+      "description": "Czech legal capacity and guardianship practice skill - limitation of legal capacity and its review, supportive measures (assistance in decision-making, representation by a household member, advance directive), guardianship of adults and its supervision, guardian's duties and court approvals, public guardians, detention in health-care facilities, protection of vulnerable adults, dementia and estate planning on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/opatrovnictvi-svepravnost",
       "category": "legal",
       "i18n": {
@@ -1494,7 +1538,7 @@
     {
       "uuid": "fe09edac-afc0-400b-a58a-32098eaf5534",
       "name": "trestni-pravo-hospodarske",
-      "description": "Czech white-collar and economic crime practice skill - fraud, credit and subsidy fraud, embezzlement, breach of fiduciary duty, insolvency and creditor offences, tax evasion and effective repentance, corruption and public procurement crimes, money laundering, corporate criminal liability and compliance defence, asset seizure and freezing, defence strategy and cooperation with authorities, on top of the CODEXIS legal database.",
+      "description": "Czech white-collar and economic crime practice skill - fraud, credit and subsidy fraud, embezzlement, breach of fiduciary duty, insolvency and creditor offences, tax evasion and effective repentance, corruption and public procurement crimes, money laundering, corporate criminal liability and compliance defence, asset seizure and freezing, defence strategy and cooperation with authorities on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/trestni-pravo-hospodarske",
       "category": "legal",
       "i18n": {
@@ -1531,7 +1575,7 @@
     {
       "uuid": "656fea00-42a1-4856-ab7e-8742f3881ccf",
       "name": "obeti-trestnych-cinu",
-      "description": "Czech crime-victim and injured-party representation skill - victims' rights under Act 45/2013, especially vulnerable victims, injured party in criminal proceedings, adhesion claims for damages and non-pecuniary harm, state financial assistance, protective and preliminary measures, interview protection, confidant and counsel, complaints against dismissal, settlement and mediation, domestic and sexual violence cases, on top of the CODEXIS legal database.",
+      "description": "Czech crime-victim and injured-party representation skill - victims' rights under Act 45/2013, especially vulnerable victims, injured party in criminal proceedings, adhesion claims for damages and non-pecuniary harm, state financial assistance, protective and preliminary measures, interview protection, confidant and counsel, complaints against dismissal, settlement and mediation, domestic and sexual violence cases on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/obeti-trestnych-cinu",
       "category": "legal",
       "i18n": {
@@ -1568,7 +1612,7 @@
     {
       "uuid": "6fd7b845-12ab-4ed8-8b6d-de5988b8b8ab",
       "name": "prestupkove-pravo-spravni-trestani",
-      "description": "Czech misdemeanour and administrative-penalty practice skill - liability for administrative offences under Act 250/2016, offences of individuals, entrepreneurs and legal entities with exculpation, limitation periods, penalties and their assessment, penalty orders and objections, on-the-spot fines, oral hearings and evidence, traffic offences and the points system, appeals with the ban on reformatio in peius, review proceedings, judicial review and moderation of penalties, ne bis in idem with criminal law, on top of the CODEXIS legal database.",
+      "description": "Czech misdemeanour and administrative-penalty practice skill - liability for administrative offences under Act 250/2016, offences of individuals, entrepreneurs and legal entities with exculpation, limitation periods, penalties and their assessment, penalty orders and objections, on-the-spot fines, oral hearings and evidence, traffic offences and the points system, appeals with the ban on reformatio in peius, review proceedings, judicial review and moderation of penalties, ne bis in idem with criminal law on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/prestupkove-pravo-spravni-trestani",
       "category": "legal",
       "i18n": {
@@ -1605,7 +1649,7 @@
     {
       "uuid": "8da7c973-2190-4dd6-b7c0-64a6dd1b5c43",
       "name": "medialni-pravo-reklama",
-      "description": "Czech media and advertising law practice skill - press law and right of reply, broadcasting and on-demand audiovisual services regulation, advertising regulation including pharmaceuticals, alcohol, tobacco, gambling and food, misleading and comparative advertising, unfair commercial practices and consumer protection, influencer marketing, defamation and personality rights versus freedom of expression, journalists' source protection, Digital Services Act and European Media Freedom Act, direct marketing and spam, on top of the CODEXIS legal database.",
+      "description": "Czech media and advertising law practice skill - press law and right of reply, broadcasting and on-demand audiovisual services regulation, advertising regulation including pharmaceuticals, alcohol, tobacco, gambling and food, misleading and comparative advertising, unfair commercial practices and consumer protection, influencer marketing, defamation and personality rights versus freedom of expression, journalists' source protection, Digital Services Act and European Media Freedom Act, direct marketing and spam on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/medialni-pravo-reklama",
       "category": "legal",
       "i18n": {
@@ -1642,7 +1686,7 @@
     {
       "uuid": "c012ce8d-32dd-4c4e-90fc-52e2e242716e",
       "name": "e-commerce-digitalni-sluzby",
-      "description": "Czech e-commerce and digital-services practice skill - online shops and distance contracts, consumer information duties and the 14-day withdrawal, terms and conditions, sale of goods and digital content conformity and warranty, complaints handling and ADR, unfair commercial practices and price-reduction rules, online marketplaces and platform obligations under the DSA and P2B, cookies and direct marketing, payment services and chargebacks, product safety, accessibility, cross-border sales, jurisdiction and VAT OSS, on top of the CODEXIS legal database.",
+      "description": "Czech e-commerce and digital-services practice skill - online shops and distance contracts, consumer information duties and the 14-day withdrawal, terms and conditions, sale of goods and digital content conformity and warranty, complaints handling and ADR, unfair commercial practices and price-reduction rules, online marketplaces and platform obligations under the DSA and P2B, cookies and direct marketing, payment services and chargebacks, product safety, accessibility, cross-border sales, jurisdiction and VAT OSS on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/e-commerce-digitalni-sluzby",
       "category": "legal",
       "i18n": {
@@ -1679,7 +1723,7 @@
     {
       "uuid": "39034f0a-fefa-46f7-add3-101ff8b5d803",
       "name": "kapitalovy-trh-investice",
-      "description": "Czech capital-markets and investment-services practice skill - investment firms and intermediaries under MiFID II, suitability and appropriateness, investor claims against brokers, public offers and prospectus exemptions, bonds and bondholder meetings, investment funds and AIFMD regimes, crowdfunding, crypto-assets under MiCA, market abuse and insider dealing, issuer disclosure and major holdings, takeover bids and squeeze-outs, CNB supervision and sanctions, financial arbitrator, taxation of investment income, on top of the CODEXIS legal database.",
+      "description": "Czech capital-markets and investment-services practice skill - investment firms and intermediaries under MiFID II, suitability and appropriateness, investor claims against brokers, public offers and prospectus exemptions, bonds and bondholder meetings, investment funds and AIFMD regimes, crowdfunding, crypto-assets under MiCA, market abuse and insider dealing, issuer disclosure and major holdings, takeover bids and squeeze-outs, CNB supervision and sanctions, financial arbitrator, taxation of investment income on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/kapitalovy-trh-investice",
       "category": "legal",
       "i18n": {
@@ -1716,7 +1760,7 @@
     {
       "uuid": "3844909e-222f-486b-a855-3694aa03b394",
       "name": "fuze-akvizice",
-      "description": "Czech M&A practice skill - share deals and asset deals, letters of intent and exclusivity, due diligence, SPA structure with price mechanisms, representations and warranties, indemnities and escrow, conditions precedent, shareholders' agreements, corporate transformations under the Transformations Act, merger control before the Czech competition office and the Commission, FDI screening, transfer of employees, regulatory approvals, tax structuring, closing and post-closing disputes, on top of the CODEXIS legal database.",
+      "description": "Czech M&A practice skill - share deals and asset deals, letters of intent and exclusivity, due diligence, SPA structure with price mechanisms, representations and warranties, indemnities and escrow, conditions precedent, shareholders' agreements, corporate transformations under the Transformations Act, merger control before the Czech competition office and the Commission, FDI screening, transfer of employees, regulatory approvals, tax structuring, closing and post-closing disputes on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/fuze-akvizice",
       "category": "legal",
       "i18n": {
@@ -1753,7 +1797,7 @@
     {
       "uuid": "a71d6b3e-afc2-4ebd-9e59-690b8733cfeb",
       "name": "startupy-investice-esop",
-      "description": "Czech startup and venture-financing practice skill - founding and cap table, founders' agreements and vesting, convertible loans and SAFE-type instruments, seed and VC rounds with shareholders' agreements, liquidation preference, anti-dilution and drag/tag, employee share and option plans including Czech tax deferral, IP assignment and employee works, non-compete and confidentiality, grants and R&D deductions, crowdfunding and public-offer limits, exits and founder taxation, on top of the CODEXIS legal database.",
+      "description": "Czech startup and venture-financing practice skill - founding and cap table, founders' agreements and vesting, convertible loans and SAFE-type instruments, seed and VC rounds with shareholders' agreements, liquidation preference, anti-dilution and drag/tag, employee share and option plans including Czech tax deferral, IP assignment and employee works, non-compete and confidentiality, grants and R&D deductions, crowdfunding and public-offer limits, exits and founder taxation on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/startupy-investice-esop",
       "category": "legal",
       "i18n": {
@@ -1790,7 +1834,7 @@
     {
       "uuid": "2f479337-987d-46c2-9258-1899d6499753",
       "name": "franchising-distribuce-obchodni-zastoupeni",
-      "description": "Czech franchising, distribution and commercial-agency practice skill - franchise agreements and pre-contractual disclosure, know-how and brand licensing, exclusive and selective distribution, vertical restraints and the block exemption, resale price maintenance and online sales bans, commercial agents' commission, termination and goodwill indemnity, non-compete clauses, disguised employment risks, cross-border governing law and jurisdiction, VAT and withholding on royalties, on top of the CODEXIS legal database.",
+      "description": "Czech franchising, distribution and commercial-agency practice skill - franchise agreements and pre-contractual disclosure, know-how and brand licensing, exclusive and selective distribution, vertical restraints and the block exemption, resale price maintenance and online sales bans, commercial agents' commission, termination and goodwill indemnity, non-compete clauses, disguised employment risks, cross-border governing law and jurisdiction, VAT and withholding on royalties on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/franchising-distribuce-obchodni-zastoupeni",
       "category": "legal",
       "i18n": {
@@ -1827,7 +1871,7 @@
     {
       "uuid": "f542fffa-5645-46f2-82c8-972550235a71",
       "name": "zemedelske-pravo",
-      "description": "Czech agricultural law practice skill - agricultural lease and its termination, land consolidation, protection of the agricultural land fund and land withdrawal, CAP direct payments and conditionality, subsidy sanctions and appeals, LPIS and the farm register, game damage and hunting, water and fertiliser rules, animal welfare and veterinary law, food primary production and direct sales, organic farming, agri-photovoltaics, farm succession and taxation of farmers, on top of the CODEXIS legal database.",
+      "description": "Czech agricultural law practice skill - agricultural lease and its termination, land consolidation, protection of the agricultural land fund and land withdrawal, CAP direct payments and conditionality, subsidy sanctions and appeals, LPIS and the farm register, game damage and hunting, water and fertiliser rules, animal welfare and veterinary law, food primary production and direct sales, organic farming, agri-photovoltaics, farm succession and taxation of farmers on top of SLV case law, e-Sbírka and Sagasu.",
       "source": "./plugins/zemedelske-pravo",
       "category": "legal",
       "i18n": {

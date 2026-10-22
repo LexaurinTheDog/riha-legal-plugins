@@ -1,0 +1,1178 @@
+[
+ {
+  "target": "DECDX_EXACT",
+  "skills": "*",
+  "old": "Skutkové podklady čerpej ze zadání a příloh zpřístupněných uživatelem v aplikaci; právní tvrzení v nich nejsou nezávisle ověřeným právem. Nenačítej externí rejstříky ani místní archivy. Chybějící skutkový doklad si vyžádej jako podklad do aplikace a do té doby závěr podmiň.",
+  "new": "Skutkové podklady čerpej ze zadání a z listin, které uživatel předložil; právní tvrzení v nich nejsou nezávisle ověřeným právem. Rejstříkové údaje (subjekt, statutární orgán, sbírka listin, insolvence, datová schránka) ověřuj v Sagasu podle oddílu Zdrojový režim; jiné externí databáze a místní archivy bez pokynu nenačítej. Chybějící skutkový doklad si vyžádej od uživatele a do té doby závěr podmiň.",
+  "reason": "Zbytek vm.codexis.ai („v aplikaci“, „do aplikace“); zákaz externích rejstříků přímo odporuje bodu 3 zdrojového režimu (Sagasu). Sloučeno 7 duplicitních nálezů."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "*",
+  "old": "Používej dostupné oborové, soudní a časové filtry podle jejich skutečného významu.",
+  "new": "V SLV používej filtry podle jejich skutečného významu: index soudu (`idx`), vazbu na předpis (`reg_num`, `reg_year`, `reg_par`, případně `reg_num2`…), časový filtr `date_from` a režim hledání (`bm25`, `knn`, `hybrid`).",
+  "reason": "Oborové a soudní fasety jsou funkce CODEXIS; SLV má jen idx, reg_*, date_from a mode. Sloučeno 6 nálezů."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "*",
+  "old": "Projdi pokračování cílených výsledků, pokud je nativní nástroj zpřístupňuje, a prověř relevantní související i navazující dokumenty.",
+  "new": "Neomezuj se na první várku výsledků: rozšiř dotazy na další indexy, režimy a `date_from` a prověř související i navazující dokumenty (u rozhodnutí `citedBy` a `citedCaseLaw` z `fetch_decision`, u předpisu `souvislosti` v e-Sbírce).",
+  "reason": "„Nativní nástroj“ = CODEXIS; v SLV se navazující dokumenty hledají citačním grafem, v e-Sbírce přes souvislosti. Sloučeno 6 nálezů."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "*",
+  "old": "Načti v CODEXIS úplný text použitého ustanovení v dané verzi, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky.",
+  "new": "Načti v e-Sbírce (`par --k <datum>`, případně `text`) úplný text použitého ustanovení ve znění účinném k rozhodnému dni, včetně všech odstavců, písmen a vět, které určují podmínky a výjimky; SLV použij jen k identifikaci předpisu.",
+  "reason": "Regex „V CODEXIS“ → „v SLV a e-Sbírce“ stírá, že znění k datu dává jen e-Sbírka (bod 2 zdrojového režimu). Sloučeno 5 nálezů."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "*",
+  "old": "Prověř v CODEXIS relevantní pozdější, překonávající a nepříznivou judikaturu.",
+  "new": "Prověř v SLV relevantní pozdější, překonávající a nepříznivou judikaturu (`citedBy` z `fetch_decision`, `search_decisions` s `date_from`); nálezy ÚS rušící použité ustanovení ověř v e-Sbírce (`souvislosti`).",
+  "reason": "e-Sbírka judikaturu neobsahuje (kromě derogačních nálezů ÚS). Sloučeno 6 nálezů."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "*",
+  "old": "Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v CODEXIS;",
+  "new": "Je-li zadána praxe konkrétního senátu, identifikuj skutečný senát a jeho dostupná srovnávací rozhodnutí v SLV (`search_decisions` v příslušném indexu, `search_by_case_number`);",
+  "reason": "Rozhodnutí senátů v e-Sbírce nejsou. Sloučeno 6 nálezů."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "*",
+  "old": "Jde o evidenci skutečných výsledků nástroje, nikoli o tvrzení, že aplikace provedla neexistující automatickou certifikaci.",
+  "new": "Jde o evidenci skutečných výsledků nástrojů, nikoli o tvrzení o automatickém ověření, které neproběhlo.",
+  "reason": "„Aplikace“ = vm.codexis.ai. Sloučeno 6 nálezů."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "*",
+  "old": "u souboru netvrď jeho vytvoření, revize či kontrolu, pokud neproběhly dostupnými nástroji aplikace.",
+  "new": "u souboru netvrď jeho vytvoření, revizi či kontrolu, pokud skutečně neproběhly a nedokládá je výsledek nástroje.",
+  "reason": "„Nástroje aplikace“ = vm.codexis.ai (wordExec). Sloučeno 4 nálezy."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "*",
+  "old": "Odkazy přebírej ze zdrojového bloku nativního nástroje; nesestavuj neověřené URL a nepřecházej kvůli jejich ověření na externí web. Ve výstupu použij nástrojem vrácený uživatelský odkaz a přesnou právní citaci, nikoli interní ID či technickou adresu. Pokud uživatelský odkaz nebo metadata chybí, údaj nevymýšlej a stav označ.",
+  "new": "Odkazy přebírej jen z odpovědí SLV, e-Sbírky a Sagasu, u unijních pramenů a judikatury SDEU a ESLP z EUR-Lex, CURIA a HUDOC; URL nesestavuj ani nedomýšlej. Ve výstupu uveď přesnou právní citaci (soud, spisová značka, datum, případně ECLI; předpis číslem ve Sbírce, §, odstavec, písmeno), nikoli interní ID nástroje. Pokud odkaz nebo metadata chybí, údaj nevymýšlej a stav označ.",
+  "reason": "Zdrojový blok a „uživatelský odkaz vs. cdx:// ID“ jsou CODEXIS; zákaz externího webu odporuje EUR-Lex/CURIA/HUDOC v oddílu 2. Třetí věta přidána, protože také mluví o „uživatelském odkazu“. Sloučeno 6 nálezů."
+ },
+ {
+  "target": "SECTION",
+  "skills": "*",
+  "old": "Chybějící negativní signál nevylučuje pozdější odklon;",
+  "new": "Absence odklonu v `citedBy` pozdější odklon nevylučuje (citační graf nemusí být úplný), proto doplň i `search_decisions` s `date_from`;",
+  "reason": "SECTION_2A: pozůstatek příznaku `derogated` z CODEXIS; SLV žádný negativní signál nevrací."
+ },
+ {
+  "target": "SECTION",
+  "skills": "*",
+  "old": "2. **Skill e-Sbírka** (`/esbirka`, skript `scripts/esbirka.py` v adresáři skillu)",
+  "new": "2. **Skill e-Sbírka** (`/esbirka` z pluginu `zdroje-slv`, skript `scripts/esbirka.py` v adresáři skillu `esbirka`)",
+  "reason": "SOURCE_SECTION: „v adresáři skillu“ svádí hledat skript v adresáři oborového skillu."
+ },
+ {
+  "target": "SECTION",
+  "skills": "*",
+  "old": "Údaje fyzických osob přebírej jen z listin ve spisu.",
+  "new": "Údaje fyzických osob jednajících za právnickou osobu (statutární orgán, prokurista, likvidátor) ověř týmž způsobem v `obchodni_rejstrik` nebo `verejny_rejstrik`; ostatní údaje fyzických osob přebírej jen z listin ve spisu.",
+  "reason": "SOURCE_SECTION: vnitřní rozpor s předchozí větou (statutární orgán = fyzické osoby, vrací je obchodni_rejstrik); v souladu s pravidlem real-time lookupu v OR."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "allowed-tools:\n- readFile\n- shell\n- editFile\n- writeFile\n- skill\n- extract\n- spawn_agent\n- wordExec\n- excelExec\n- powerpointExec\n- outlookExec\n- script\n- workflow\n- ask_question\n",
+  "new": "",
+  "reason": "allowed-tools vyjmenovává nástroje vm.codexis.ai, které v Claude Code neexistují; v Claude Code by seznam omezil skill na neexistující nástroje. Odstranit (bez seznamu dědí nástroje session vč. MCP SLV/Sagasu)."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "načti nástrojem `skill` (Load skill) alespoň příslušný dostupný profil.",
+  "new": "načti nástrojem `Skill` alespoň příslušný dostupný oborový skill (plugin skill jako `<slug>:<slug>`, např. `vymahani-pohledavek:vymahani-pohledavek`).",
+  "reason": "V Claude Code se skill načítá nástrojem `Skill`."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "použij dostupný `spawn_agent` (Spawn subagent).",
+  "new": "použij nástroj `Agent` (subagent).",
+  "reason": "`spawn_agent` je nástroj vm.codexis.ai."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "povolávej specializované pracovní agenty nativním mechanismem aplikace.",
+  "new": "povolávej specializované subagenty nástrojem `Agent`.",
+  "reason": "„Nativní mechanismus aplikace“ = vm.codexis.ai."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "Prohlédni aktuální katalog skillů zpřístupněný agentovi aplikací a jejich popisy.",
+  "new": "Prohlédni aktuální seznam skillů v systémovém promptu Claude Code a jejich popisy.",
+  "reason": "Katalog skillů v Claude Code vypisuje systémový prompt."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "podle oddílu 2a (podle relevance i `&sort=date`)",
+  "new": "podle oddílu 2a (`search_decisions` s `reg_num`/`reg_year`/`reg_par` podle relevance i nejnovější přes `date_from`)",
+  "reason": "`&sort=date` je parametr cdx-cli."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "(oddíl 2a, bod 4)",
+  "new": "(oddíl 2a, bod 3)",
+  "reason": "SECTION_2A přečísloval body; kontrola sjednocujícího rozhodnutí je nyní v bodu 3 (ve zdroji byla v bodu 4)."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "zdrojové karty s dostupnými výsledky nativního nástroje",
+  "new": "zdrojové karty s dostupnými výsledky SLV, e-Sbírky a Sagasu",
+  "reason": "„Nativní nástroj“ = CODEXIS."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "přiděl samostatný pracovní výstup v aplikaci",
+  "new": "přiděl samostatnou výstupní cestu",
+  "reason": "„Výstup v aplikaci“ = vm.codexis.ai."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "a podle potřeby další nativní rešerši.",
+  "new": "a podle potřeby další rešerši v SLV a e-Sbírce.",
+  "reason": "„Nativní rešerše“ = CODEXIS."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "`docx`, `pdf`, `xlsx`, `pptx` či `ocr` načítej pouze pro požadovaný souborový výstup nebo podklady již zpřístupněné v aplikaci",
+  "new": "`docx`, `pdf`, `xlsx` či `pptx` načítej pouze pro požadovaný souborový výstup nebo pro čtení podkladů, které uživatel předložil",
+  "reason": "Skill `ocr` v Claude Code není; „zpřístupněné v aplikaci“ = vm.codexis.ai."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "U zahraničního prvku prověř nejprve použitelný režim a dostupnost pramenů v CODEXIS, nikoli automaticky zahraniční databázi.",
+  "new": "U zahraničního prvku nejprve urči použitelný režim (kolizní normy a mezinárodní smlouvy ověř v e-Sbírce, unijní nařízení v EUR-Lex); cizí právo dohledávej jen v oficiálních zdrojích dané země a mezeru výslovně označ.",
+  "reason": "SLV a e-Sbírka obsahují jen české prameny; regexová náhrada dává věcně prázdný pokyn."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "„Právní předpisy, judikaturu, komentáře a vzory těž pouze nativním CODEXIS uvnitř vm.codexis.ai. Žádný externí web, rejstřík, databáze, vlastní API klient ani externí fallback, včetně odkazů uvnitř dokumentů. Vestavěný konektor použij jen jeho dokumentovaným rozhraním pro CODEXIS. Nedostupnost přiznej; mezeru nedoplňuj z paměti.“",
+  "new": "„Judikaturu a vyhledání předpisů těž z MCP SLV, znění předpisu k rozhodnému dni ze skillu e-Sbírka, údaje o subjektech, insolvenci a výpočty z MCP Sagasu. Unijní předpisy a judikaturu SDEU a ESLP ověř v EUR-Lex, CURIA a HUDOC. Ostatní web, komentáře a jiné databáze jen k navigaci, nikdy jako citovaná opora, a to včetně odkazů uvnitř dokumentů. Nevymýšlej názvy nástrojů ani parametry. Nedostupnost přiznej; mezeru nedoplňuj z paměti.“",
+  "reason": "Úprava NOVÉ hodnoty existující položky ORCH_EXACT: kontrakt pro subagenty zakazoval i EUR-Lex/CURIA/HUDOC, které oddíl 2 připouští."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "aml-compliance",
+  "old": "Právní pravidla a dostupnou metodiku hledej pouze v CODEXIS a rozliš jejich právní sílu.",
+  "new": "Právní pravidla hledej v e-Sbírce a judikaturu v SLV; metodické pokyny FAÚ a stanoviska ČAK ověř na jejich oficiálních webech a rozliš jejich právní sílu (nejsou pramenem práva).",
+  "reason": "Metodiky FAÚ a stanoviska ČAK v SLV ani e-Sbírce nejsou; „pouze“ je vylučuje."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "aml-compliance",
+  "old": "Podklady k faktické struktuře vyžádej od uživatele;",
+  "new": "Podklady k faktické struktuře vyžádej od uživatele a zápisy ověř v Sagasu: `obchodni_rejstrik` (statutáři, společníci), `verejny_rejstrik_angazma_po` (řetězec ovládání), `sbirka_listin` → `listina_text` (zakladatelské listiny, závěrky), `insolvence_vyhledat`, `dph_status`; evidenci skutečných majitelů Sagasu nepokrývá, výpis z ní si vyžádej;",
+  "reason": "Strukturu klienta-PO lze ověřit v Sagasu; AML kontrola nemá jen přebírat tvrzení."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "aml-compliance",
+  "old": "Případné zahraniční vazby posuzuj jen z nativně dostupných pramenů.",
+  "new": "Případné zahraniční vazby posuzuj z pramenů SLV, e-Sbírky a Sagasu (slovenské subjekty `firma_sk_vyhledat`) a z oficiálních sankčních seznamů EU; mezeru označ.",
+  "reason": "„Nativně dostupné prameny“ = CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "dopravni-pravo-nehody",
+  "old": "V nativních pramenech zjisti povinnosti účastníka na místě,",
+  "new": "V e-Sbírce zjisti povinnosti účastníka na místě,",
+  "reason": "„Nativní prameny“ = CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "dopravni-pravo-nehody",
+  "old": "Metodiku soudu dostupnou v CODEXIS nepředstavuj jako závazný sazebník.",
+  "new": "Metodiku Nejvyššího soudu k náhradě nemajetkové újmy na zdraví nepředstavuj jako závazný sazebník; v SLV ani v e-Sbírce není, judikaturu k jejímu použití dohledej v SLV (index `ns`).",
+  "reason": "Metodika NS není předpis ani v e-Sbírce. (Upraveno: bez tvrzení recenzenta o Cpjn 206/2010.)"
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "fuze-akvizice",
+  "old": "Nativně prověř český a unijní režim, postoupení",
+  "new": "Český režim prověř v e-Sbírce a SLV, unijní (nařízení č. 139/2004) v EUR-Lex; dále prověř postoupení",
+  "reason": "„Nativně“ = CODEXIS; unijní režim není v SLV/e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "fuze-akvizice",
+  "old": "pojištění a relevantní ESG.",
+  "new": "pojištění a relevantní ESG. Rejstříkovou část ověř v Sagasu: `obchodni_rejstrik` (orgány, společníci, kapitál, zástava podílu), `verejny_rejstrik_angazma_po` (dceřiné společnosti a řetězec), `sbirka_listin` → `listina_text` (společenská smlouva, závěrky, projekty přeměn), `insolvence_vyhledat` → `insolvence_detail`, `dph_status` (nespolehlivý plátce, účty), `zivnostensky_rejstrik`.",
+  "reason": "Rejstříková část DD má přímé nástroje v Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "obce-a-verejna-sprava",
+  "old": "Vyžádej v aplikaci úplné dobové zápisy",
+  "new": "Vyžádej od uživatele úplné dobové zápisy",
+  "reason": "„V aplikaci“ = vm.codexis.ai."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "obce-a-verejna-sprava",
+  "old": "Neznámá čísla usnesení, parcely, hlasování a data nenahrazuj pamětí ani externím procházením registrů.",
+  "new": "Neznámá čísla usnesení, parcely, hlasování a data nenahrazuj pamětí; údaje o obecních společnostech, svazcích obcí a smluvních partnerech ověř v Sagasu (`obchodni_rejstrik`, `verejny_rejstrik`, `verejny_rejstrik_angazma_po`, `sbirka_listin`).",
+  "reason": "Plošný zákaz registrů vylučuje Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "obce-a-verejna-sprava",
+  "old": "Rešeršuj v CODEXIS i nejsilnější protiargument",
+  "new": "Rešeršuj v SLV (indexy `nss`, `us`, `ns`, `justice`) i nejsilnější protiargument",
+  "reason": "Praxe senátu se v e-Sbírce nehledá."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pravo-zivotniho-prostredi",
+  "old": "vyžádej podklad do aplikace; nevytvářej vlastní údaje ani externí prohlídku databází.",
+  "new": "vyžádej podklad od uživatele; nevytvářej vlastní údaje.",
+  "reason": "„Do aplikace“ + plošný zákaz databází z CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pravo-zivotniho-prostredi",
+  "old": "## Nativní prameny a povolování",
+  "new": "## Prameny a povolování",
+  "reason": "Nadpis „nativní“ = CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pravo-zivotniho-prostredi",
+  "old": "Judikaturu v CODEXIS porovnej",
+  "new": "Judikaturu ze SLV (zejména index `nss`) porovnej",
+  "reason": "Judikatura není v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "socialni-zabezpeceni",
+  "old": "dávkovým podmínkám a koordinaci načti v CODEXIS.",
+  "new": "dávkovým podmínkám a koordinaci načti v SLV (zejména index `nss`, dále `us`); judikaturu SDEU ke koordinaci ověř v CURIA.",
+  "reason": "Judikatura není v e-Sbírce; SDEU není v SLV."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "vymahani-pohledavek",
+  "old": "Úrok vypočti z doložené jistiny, skutečného počátku prodlení a ověřeného pravidla sazby.",
+  "new": "Úrok vypočti z doložené jistiny, skutečného počátku prodlení a ověřeného pravidla sazby; zákonný úrok z prodlení spočti v Sagasu `urok_z_prodleni` a výsledek přepočítej druhou cestou.",
+  "reason": "Chybí odkaz na kalkulačku Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "vymahani-pohledavek",
+  "old": "Doložený insolvenční stav vyhodnoť podle fáze,",
+  "new": "Insolvenční stav dlužníka ověř v Sagasu (`insolvence_vyhledat` → `insolvence_detail` → `insolvence_dokument_text`) a vyhodnoť podle fáze,",
+  "reason": "Insolvenci lze ověřit přímo."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "vymahani-pohledavek",
+  "old": "Připoj úplný rozpočet všech navržených nároků, poplatků, zastoupení a výkonu, hlavní rizika a variantu čistého ekonomického výnosu.",
+  "new": "Připoj úplný rozpočet všech navržených nároků, poplatků (`soudni_poplatek`), zastoupení (`odmena_advokata`, za každý úkon zvlášť) a výkonu, hlavní rizika a variantu čistého ekonomického výnosu. Identitu dlužníka ověř `firma_detail` nebo `obchodni_rejstrik` a ID jeho datové schránky `datova_schranka_vyhledat`.",
+  "reason": "Kalkulačky a ověření identity v Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "vymahani-pohledavek",
+  "old": "Při chybějícím nástroji či formuláři v povoleném prostředí dodej",
+  "new": "Nelze-li formulář vyplnit dostupnými nástroji, dodej",
+  "reason": "„Povolené prostředí“ = vm.codexis.ai."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "bankovnictvi-a-uvery",
+  "old": "Nedostupnou sazbu nedoplňuj externě.",
+  "new": "Referenční sazbu převezmi z oficiálního zdroje (ČNB) s datem a odkazem; není-li dostupná, nedoplňuj ji odhadem a označ `[DOPLNIT]`.",
+  "reason": "Zákaz externích zdrojů je pravidlo CODEXIS; nový režim jiné zdroje připouští, kde SLV/e-Sbírka/Sagasu pramen nemají."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "bankovnictvi-a-uvery",
+  "old": "Odděl jednotlivé splátky, jistinu, smluvní úrok, úrok z prodlení, pokutu a náklady.",
+  "new": "Odděl jednotlivé splátky, jistinu, smluvní úrok, úrok z prodlení (zákonnou sazbu spočti `urok_z_prodleni` a přepočítej), pokutu a náklady.",
+  "reason": "Kalkulačka Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "bankovnictvi-a-uvery",
+  "old": "v insolvenci přihlášku, neúčinnost zajištění a započtení.",
+  "new": "v insolvenci přihlášku, neúčinnost zajištění a započtení; stav řízení a přihlášky ověř přes `insolvence_vyhledat` → `insolvence_detail` → `insolvence_dokument_text`.",
+  "reason": "ISIR přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "dusevni-vlastnictvi",
+  "old": "pokud je nativní zdroj ani dodané listiny nedokládají,",
+  "new": "pokud je nedokládají dodané listiny ani oficiální rejstřík (ÚPV, EUIPO, WIPO),",
+  "reason": "„Nativní zdroj“ = CODEXIS; registrační stav v SLV/e-Sbírce není."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "dusevni-vlastnictvi",
+  "old": "Rozliš české, unijní a mezinárodní systémy v rozsahu pramenů dostupných v CODEXIS.",
+  "new": "Rozliš české, unijní a mezinárodní systémy; české předpisy ověř v e-Sbírce, unijní v EUR-Lex a judikaturu SDEU v CURIA.",
+  "reason": "Unijní a mezinárodní systémy v SLV/e-Sbírce nejsou."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "dusevni-vlastnictvi",
+  "old": "Judikaturu NS, NSS, ÚS a SDEU čerpej jen z nativně získaných úplných rozhodnutí;",
+  "new": "Judikaturu NS, NSS a ÚS čerpej jen z úplných rozhodnutí načtených v SLV (`fetch_decision`), judikaturu SDEU z CURIA;",
+  "reason": "„Nativně“ = CODEXIS; SDEU v SLV není."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "hospodarska-a-nekala-soutez",
+  "old": "V nativním CODEXIS vyhledej rozhodné české a unijní normy, prováděcí úpravu a výklad pro příslušné období;",
+  "new": "Rozhodné české normy a prováděcí úpravu pro příslušné období ověř v e-Sbírce, unijní normy a soft law v EUR-Lex, judikaturu v SLV (`nss` pro přezkum rozhodnutí ÚOHS) a CURIA;",
+  "reason": "Unijní normy a soft law v SLV/e-Sbírce nejsou."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "hospodarska-a-nekala-soutez",
+  "old": "U spojení prověř vznik či změnu kontroly, společný podnik, správný rozsah skupinových obratů a rozhodné období.",
+  "new": "U spojení prověř vznik či změnu kontroly, společný podnik, správný rozsah skupinových obratů a rozhodné období; skupinu zmapuj přes `verejny_rejstrik_angazma_po` a `obchodni_rejstrik`, obraty dolož z účetních závěrek (`sbirka_listin` → `listina_text`).",
+  "reason": "Skupina a obraty z rejstříku přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "medialni-pravo-reklama",
+  "old": "Chybějící podobu kampaně nebo vyjádření osoby vyžádej v aplikaci.",
+  "new": "Chybějící podobu kampaně nebo vyjádření osoby si vyžádej od uživatele.",
+  "reason": "„V aplikaci“ = vm.codexis.ai."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "medialni-pravo-reklama",
+  "old": "## Kvalifikace a nativní prameny",
+  "new": "## Kvalifikace a prameny",
+  "reason": "Nadpis „nativní“ = CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "medialni-pravo-reklama",
+  "old": "Podle věci přidej DSA, EMFA, politickou reklamu, AI Act a komoditní unijní předpisy.",
+  "new": "Podle věci přidej z EUR-Lex DSA, EMFA, nařízení o politické reklamě, AI Act a komoditní unijní předpisy.",
+  "reason": "Unijní akty nejsou v SLV/e-Sbírce (část nálezu k nadpisu)."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "medialni-pravo-reklama",
+  "old": "následně ověř povolená tvrzení a povinné informace pouze v dostupném nativním obsahu. Nedostupný registr nepřeklen prostřednictvím externího webu.",
+  "new": "následně ověř povolená tvrzení a povinné informace v předpisu (e-Sbírka, EUR-Lex) a v oficiálním registru (registr zdravotních tvrzení EU, SÚKL); co nelze ověřit, označ `[DOPLNIT]`.",
+  "reason": "„Nativní obsah“ a zákaz webu z CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "medialni-pravo-reklama",
+  "old": "samostatný rozpočet poplatků, jistoty a nákladů;",
+  "new": "samostatný rozpočet poplatků (`soudni_poplatek`), jistoty a nákladů (`odmena_advokata`);",
+  "reason": "Kalkulačky Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "obeti-trestnych-cinu",
+  "old": "## Nativní právní mapa",
+  "new": "## Právní mapa",
+  "reason": "Nadpis „nativní“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "obeti-trestnych-cinu",
+  "old": "Nedostupnou metodiku, formulář nebo podklad nepřebírej z externího webu.",
+  "new": "Metodiku nebo formulář, které SLV ani e-Sbírka nemají, převezmi jen z oficiálního zdroje vydavatele s odkazem a datem; jako právní oporu je necituj.",
+  "reason": "Zákaz webu z CODEXIS; metodiky MSp/PMS v SLV/e-Sbírce nejsou."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "obeti-trestnych-cinu",
+  "old": "a odpovídající nativně ověřenou judikaturou.",
+  "new": "a odpovídající judikaturou ověřenou v SLV (`us`, `ns`) a HUDOC.",
+  "reason": "„Nativně“ = CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "obeti-trestnych-cinu",
+  "old": "U výkonu a insolvence zjisti titul, zbytek nároku, přihlášení a rozsah případného osvobození dlužníka.",
+  "new": "U výkonu a insolvence zjisti titul, zbytek nároku, přihlášení a rozsah případného osvobození dlužníka (`insolvence_vyhledat` → `insolvence_detail`); úroky z nároku spočti `urok_z_prodleni`.",
+  "reason": "ISIR a úrok přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "prestupkove-pravo-spravni-trestani",
+  "old": "Nejprve z nativního práva stanov",
+  "new": "Nejprve ze znění předpisu ověřeného v e-Sbírce (`par --k`) stanov",
+  "reason": "„Nativní právo“ je nesmysl z CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "prestupkove-pravo-spravni-trestani",
+  "old": "## Nativní právní rámec",
+  "new": "## Právní rámec",
+  "reason": "Nadpis „nativní“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "prestupkove-pravo-spravni-trestani",
+  "old": "Rešerši judikatury prováděj pouze v CODEXIS;",
+  "new": "Rešerši judikatury prováděj v SLV (`nss`, `us`, u hranice trestného činu i `ns`), judikaturu ESLP v HUDOC;",
+  "reason": "Judikatura není v e-Sbírce; „pouze“ vylučuje HUDOC."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "prestupkove-pravo-spravni-trestani",
+  "old": "Prověř přechod odpovědnosti a zánik osoby.",
+  "new": "Prověř přechod odpovědnosti a zánik osoby; zánik, přeměnu a právního nástupce ověř ve `verejny_rejstrik` (zahrnuje vymazané osoby) a `obchodni_rejstrik`.",
+  "reason": "Zánik PO ověřitelný v Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "spolky-nadace-neziskovy-sektor",
+  "old": "V CODEXIS vyhledej přiléhavou judikaturu k autonomii,",
+  "new": "V SLV (`ns`, `us`, u daní `nss`) vyhledej přiléhavou judikaturu k autonomii,",
+  "reason": "Judikatura není v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "spolky-nadace-neziskovy-sektor",
+  "old": "Zjisti právní formu, čas založení, rejstříkový stav a rozhodné stanovy, statut či nadační listinu.",
+  "new": "Zjisti právní formu, čas založení, rejstříkový stav (`verejny_rejstrik`) a rozhodné stanovy, statut či nadační listinu (`sbirka_listin` → `listina_text`); u osob ve vedení `verejny_rejstrik_osoba`.",
+  "reason": "Spolkový a nadační rejstřík v Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "spolky-nadace-neziskovy-sektor",
+  "old": "Náklady rejstříkového úkonu a sporného přezkumu počítej odděleně:",
+  "new": "Náklady rejstříkového úkonu a sporného přezkumu počítej odděleně (`soudni_poplatek`, `odmena_advokata`, s přepočtem):",
+  "reason": "Kalkulačky Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "trestni-obhajoba",
+  "old": "Rozliš smluvní odměnu, ustanovenou obhajobu, náklady státu a náhradu poškozenému.",
+  "new": "Rozliš smluvní odměnu, ustanovenou obhajobu (tarifní odměnu za úkon spočti `odmena_advokata` a přepočítej), náklady státu a náhradu poškozenému.",
+  "reason": "Kalkulačka Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "zdravotnicke-pravo",
+  "old": "Vyžádej chybějící zprávy, operační protokol, obrazové nálezy, výsledky nebo souhlas jako podklady do aplikace.",
+  "new": "Vyžádej od uživatele chybějící zprávy, operační protokol, obrazové nálezy, výsledky nebo souhlas.",
+  "reason": "„Do aplikace“ = vm.codexis.ai."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "zdravotnicke-pravo",
+  "old": "U civilního řízení ověř příslušnost, nárokové členění, případné osvobození, náklady znalce a zastoupení.",
+  "new": "U civilního řízení ověř příslušnost, nárokové členění, případné osvobození a poplatek (`soudni_poplatek`), náklady znalce a zastoupení (`odmena_advokata`); identitu poskytovatele-PO ověř `firma_detail` nebo `obchodni_rejstrik`.",
+  "reason": "Kalkulačky a rejstřík Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "bytove-pravo-najem-svj",
+  "old": "Pokud je požadována praxe konkrétního senátu, vyhledej v CODEXIS jeho srovnatelná rozhodnutí a odděl od obecné judikatury soudu.",
+  "new": "Pokud je požadována praxe konkrétního senátu, vyhledej v SLV (indexy `justice`, `ns`; `search_by_case_number`) jeho srovnatelná rozhodnutí a odděl je od obecné judikatury soudu.",
+  "reason": "Rozhodnutí senátu nejsou v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "bytove-pravo-najem-svj",
+  "old": "Prověř prohlášení vlastníka, společné části, změny podílů, vznik a zápis SVJ, stanovy a působnost orgánů.",
+  "new": "Prověř prohlášení vlastníka, společné části a změny podílů; vznik, zápis a statutární orgán SVJ či družstva ověř `verejny_rejstrik` (u družstva i `obchodni_rejstrik`), platné stanovy `sbirka_listin` → `listina_text`; působnost orgánů posuď podle zákona i stanov.",
+  "reason": "SVJ a stanovy v Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "bytove-pravo-najem-svj",
+  "old": "Ověř pravomoc, příslušnost, předběžnou ochranu, náklady a následný výkon včetně nakládání s věcmi.",
+  "new": "Ověř pravomoc, příslušnost, předběžnou ochranu, náklady a následný výkon včetně nakládání s věcmi; úrok z prodlení z dlužného nájemného spočti `urok_z_prodleni`, poplatek `soudni_poplatek` a náklady zastoupení `odmena_advokata`, výpočty přepočítej druhou cestou.",
+  "reason": "Kalkulačky Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "e-commerce-digitalni-sluzby",
+  "old": "V CODEXIS ověř soukromoprávní, veřejnoprávní a platformní vrstvy včetně přechodných pravidel;",
+  "new": "Vnitrostátní soukromoprávní a veřejnoprávní vrstvu včetně přechodných pravidel ověř v e-Sbírce a judikaturu v SLV, unijní platformní předpisy (DSA, P2B, GPSR) a judikaturu SDEU v EUR-Lex a CURIA;",
+  "reason": "Unijní platformní vrstva není v SLV/e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "e-commerce-digitalni-sluzby",
+  "old": "Právní stav ADR či dřívější ODR infrastruktury ověř v CODEXIS, nepřebírej starý vzor.",
+  "new": "Právní stav ADR ověř v e-Sbírce (zákon o ochraně spotřebitele) a stav dřívější ODR platformy v EUR-Lex; nepřebírej starý text obchodních podmínek.",
+  "reason": "ODR je unijní nařízení; „starý vzor“ = VS v CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "insolvencni-pravo",
+  "old": "Podklady o spisu čerpej z poskytnutých dokumentů a dostupných nativních záznamů;",
+  "new": "Podklady o spisu čerpej z poskytnutých dokumentů a z insolvenčního rejstříku: `insolvence_vyhledat` (IČO, rodné číslo, jméno, sp. zn.) → `insolvence_detail` (události) → `insolvence_dokument_text`; rozhodnutí dohledáš i v SLV indexu `isir`;",
+  "reason": "„Nativní záznamy“ = CODEXIS; ISIR klíčový."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "insolvencni-pravo",
+  "old": "U každého rozhodnutí zaznamenej výrok, datum, zveřejnění,",
+  "new": "U každého rozhodnutí zaznamenej podle `insolvence_detail` a `insolvence_dokument_text` výrok, datum, zveřejnění v ISIR,",
+  "reason": "Bez ISIR hrozí použití zrušeného usnesení."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "insolvencni-pravo",
+  "old": "U věřitelského návrhu ověř splatnou pohledávku, další věřitele a důkazní požadavky;",
+  "new": "U věřitelského návrhu ověř `insolvence_vyhledat`, zda proti dlužníkovi již neběží řízení, dále splatnou pohledávku, další věřitele a důkazní požadavky, statutární orgán dlužníka (`obchodni_rejstrik`) a jeho finanční stav z účetních závěrek (`sbirka_listin` → `listina_text`);",
+  "reason": "Sagasu před návrhem."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "insolvencni-pravo",
+  "old": "Rozliš jistinu a příslušenství, vykonatelnost,",
+  "new": "Rozliš jistinu a příslušenství (zákonný úrok z prodlení k rozhodnému dni spočti `urok_z_prodleni` s rozpisem a přepočítej), vykonatelnost,",
+  "reason": "Kalkulačka Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "mezinarodni-pravo-soukrome",
+  "old": "Nativním CODEXIS rešeršuj podle otázky Brusel I bis, Luganskou úmluvu, Řím I a Řím II, zákon o mezinárodním právu soukromém, CISG, evropské procesní nástroje, rodinná a dědická nařízení, insolvenční a majetkové režimy manželů, Haagské úmluvy, Newyorskou úmluvu, přepravní úmluvy a bilaterální právní pomoc.",
+  "new": "Podle otázky rešeršuj: zákon o mezinárodním právu soukromém a mezinárodní smlouvy ze Sbírky mezinárodních smluv (Luganská úmluva, CISG, Haagské úmluvy, Newyorská úmluva, přepravní úmluvy, bilaterální smlouvy o právní pomoci) v e-Sbírce; nařízení EU (Brusel I bis, Řím I a II, evropské procesní nástroje, rodinná, dědická, insolvenční a majetkové režimy manželů) a judikaturu SDEU v EUR-Lex a CURIA; českou judikaturu v SLV.",
+  "reason": "Nařízení EU v SLV/e-Sbírce nejsou; e-Sbírka má ZMPS a Sb. m. s. (Luganská úmluva je fakticky smlouva EU – ponechána u úmluv, ověř v EUR-Lex, pokud v Sb. m. s. chybí)."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "mezinarodni-pravo-soukrome",
+  "old": "Zjisti konkrétní smluvní státy, výhrady, prohlášení a přechodná ustanovení pro rozhodné období v dostupném nativním obsahu.",
+  "new": "Zjisti konkrétní smluvní státy, výhrady, prohlášení a přechodná ustanovení pro rozhodné období v e-Sbírce (Sb. m. s., `souvislosti`), u unijních nástrojů v EUR-Lex a u haagských úmluv v oficiálním přehledu HCCH.",
+  "reason": "„Nativní obsah“ = CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "mezinarodni-pravo-soukrome",
+  "old": "nepřejdi k externím atlasům, databázím či webům.",
+  "new": "neopírej se o neoficiální atlasy, databáze či weby.",
+  "reason": "Plošný zákaz odporuje oddílu 2 (EUR-Lex, CURIA)."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "mezinarodni-pravo-soukrome",
+  "old": "Údaje cizí společnosti ponech podle dodaných listin s vyznačením aktuálnosti.",
+  "new": "Údaje slovenské společnosti ověř `firma_sk_vyhledat` → `firma_sk_detail`; u ostatních cizích společností ponech údaje podle dodaných listin s vyznačením aktuálnosti.",
+  "reason": "SK subjekty v Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "ochrana-osobnosti-gdpr",
+  "old": "Ústavní práva a judikaturu českých soudů, SDEU a ESLP získávej toutéž nativní cestou.",
+  "new": "Judikaturu českých soudů včetně ÚS získávej v SLV (indexy `us`, `ns`, `nss`, `justice`), judikaturu SDEU v CURIA a ESLP v HUDOC.",
+  "reason": "„Nativní cesta“; SDEU a ESLP nejsou v SLV."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "ochrana-osobnosti-gdpr",
+  "old": "V nativním CODEXIS vyhledej občanský zákoník, tiskový zákon, vysílání, GDPR, vnitrostátní zpracování údajů, DSA, služby informační společnosti, elektronické komunikace a monitoring v pracovním právu.",
+  "new": "V e-Sbírce načti občanský zákoník, tiskový zákon, zákon o vysílání, zákon o zpracování osobních údajů, zákon o některých službách informační společnosti, zákon o elektronických komunikacích a zákoník práce (monitoring); GDPR a DSA v EUR-Lex.",
+  "reason": "GDPR a DSA jsou nařízení EU."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "ochrana-osobnosti-gdpr",
+  "old": "## Výhradní právní rešerše",
+  "new": "## Právní rešerše",
+  "reason": "Nadpis z výhradního režimu CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "ochrana-osobnosti-gdpr",
+  "old": "Z nativně načteného textu vytvoř",
+  "new": "Z načteného textu vytvoř",
+  "reason": "„Nativně“ = CODEXIS. (Bez doplnění čl. 33 a 34 GDPR navrženého recenzentem – nejisté.)"
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "rodinne-pravo",
+  "old": "Judikaturu českých a evropských soudů hledej pouze v CODEXIS a porovnej časový režim.",
+  "new": "Judikaturu českých soudů hledej v SLV (`ns`, `us`, `justice`), judikaturu SDEU v CURIA a ESLP v HUDOC; porovnej časový režim.",
+  "reason": "Judikatura není v e-Sbírce; „pouze“ vylučuje CURIA/HUDOC."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "rodinne-pravo",
+  "old": "## Nativní právní a procesní mapa",
+  "new": "## Právní a procesní mapa",
+  "reason": "Nadpis „nativní“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "rodinne-pravo",
+  "old": "Orientační tabulku dostupnou nativně označ za doporučení, ne automatický právní výpočet.",
+  "new": "Orientační tabulky Ministerstva spravedlnosti k výživnému, pokud je uživatel dodá nebo pocházejí z oficiálního webu MSp, označ za doporučení, ne automatický právní výpočet.",
+  "reason": "Tabulky MSp v SLV/e-Sbírce nejsou."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "rodinne-pravo",
+  "old": "U cizího prvku přidej rodinná a výživná nařízení, Haagské úmluvy a mezinárodní právo soukromé.",
+  "new": "U cizího prvku přidej rodinná a výživná nařízení EU (EUR-Lex), Haagské úmluvy (e-Sbírka, Sb. m. s.) a zákon o mezinárodním právu soukromém (e-Sbírka).",
+  "reason": "Nařízení EU v SLV/e-Sbírce nejsou."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "rodinne-pravo",
+  "old": "U opravných prostředků a poplatků posuzuj každou větev samostatně;",
+  "new": "U opravných prostředků a poplatků posuzuj každou větev samostatně (poplatek a osvobození ověř `soudni_poplatek`, úrok z prodlení u dlužného výživného `urok_z_prodleni`);",
+  "reason": "Kalkulačky Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "sportovni-pravo",
+  "old": "Právní prameny a judikaturu ověřuj pouze nativně v CODEXIS.",
+  "new": "Předpisy ověřuj v e-Sbírce, českou judikaturu v SLV, unijní právo a judikaturu SDEU v EUR-Lex a CURIA.",
+  "reason": "Judikatura není v e-Sbírce; „pouze“ vylučuje EUR-Lex/CURIA."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "sportovni-pravo",
+  "old": "V CODEXIS vyhledej skutkově přiléhavé soudní závěry",
+  "new": "V SLV vyhledej skutkově přiléhavé soudní závěry",
+  "reason": "Judikatura není v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "sportovni-pravo",
+  "old": "U stanov, soutěžních, přestupních, licenčních a disciplinárních řádů, antidopingových pravidel a arbitráže zjisti, zda jejich úplná rozhodná verze je tímto způsobem dostupná.",
+  "new": "Stanovy klubu či svazu a jejich změny dohledej `verejny_rejstrik` a `sbirka_listin` → `listina_text`; u soutěžních, přestupních, licenčních a disciplinárních řádů, antidopingových pravidel a arbitráže zjisti, zda je jejich úplná rozhodná verze dostupná.",
+  "reason": "Stanovy spolků ve sbírce listin."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "sportovni-pravo",
+  "old": "nikoli důkaz nativního ověření její aktuálnosti.",
+  "new": "nikoli důkaz ověření její aktuálnosti.",
+  "reason": "„Nativní“ = CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "trestni-pravo-hospodarske",
+  "old": "dolož finanční stav, splatné závazky, dispozice s majetkem, postavení jednotlivých věřitelů a znalost jednajících osob.",
+  "new": "dolož finanční stav (účetní závěrky `sbirka_listin` → `listina_text`), splatné závazky, dispozice s majetkem, postavení jednotlivých věřitelů (`insolvence_vyhledat` → `insolvence_detail` → `insolvence_dokument_text`), funkce jednajících osob v rozhodné době (`verejny_rejstrik_osoba`, `obchodni_rejstrik`) a jejich znalost.",
+  "reason": "Objektivní data přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "trestni-pravo-hospodarske",
+  "old": "Prověř reálnost plnění, fakturaci, tok peněz, možnost dispozice a důkazy zavinění.",
+  "new": "Prověř reálnost plnění, fakturaci, tok peněz (u dodavatelů stav nespolehlivého plátce a zveřejněné účty `dph_status`), možnost dispozice a důkazy zavinění.",
+  "reason": "dph_status jako důkaz vědomosti."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "zemedelske-pravo",
+  "old": "V CODEXIS ověř každý příslušný časový režim včetně přechodných ustanovení.",
+  "new": "Vnitrostátní předpisy a nařízení vlády ověř v e-Sbírce (`info --k`, `souvislosti`), unijní předpisy SZP v EUR-Lex a judikaturu v SLV; u každého ověř příslušný časový režim včetně přechodných ustanovení.",
+  "reason": "SZP stojí na nařízeních EU."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "zemedelske-pravo",
+  "old": "U převodu farmy porovnej převod podílů a jednotlivých aktiv,",
+  "new": "U převodu farmy porovnej převod podílů (u podílů ověř `obchodni_rejstrik`, účetní závěrky `sbirka_listin` → `listina_text`, insolvenci `insolvence_vyhledat` a `dph_status`) a jednotlivých aktiv,",
+  "reason": "DD přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "cizinecke-a-azylove-pravo",
+  "old": "Judikaturu NSS, ÚS, SDEU a ESLP čerpej jen z CODEXIS,",
+  "new": "Judikaturu NSS a ÚS čerpej ze SLV (indexy `nss`, `us`), judikaturu SDEU z CURIA a ESLP z HUDOC,",
+  "reason": "e-Sbírka judikaturu nemá, SLV nemá SDEU/ESLP."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "cizinecke-a-azylove-pravo",
+  "old": "V nativním CODEXIS načti rozhodné pobytové, azylové, zaměstnanecké, procesní a unijní předpisy;",
+  "new": "V e-Sbírce načti rozhodné znění pobytových, azylových, zaměstnaneckých a procesních předpisů (`par --k`, `souvislosti` pro přechodná ustanovení), unijní předpisy v EUR-Lex;",
+  "reason": "Unijní předpisy nejsou v SLV/e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "cizinecke-a-azylove-pravo",
+  "old": "Odliš správní poplatek žádosti, soudní poplatek, náklady zastoupení a případné ustanovení zástupce.",
+  "new": "Odliš správní poplatek žádosti, soudní poplatek (výpočet a osvobození ověř `soudni_poplatek`), náklady zastoupení (`odmena_advokata`) a případné ustanovení zástupce.",
+  "reason": "Kalkulačky Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "energeticke-pravo",
+  "old": "V CODEXIS prověř energetický zákon, občanské a spotřebitelské právo, prováděcí předpisy, cenová rozhodnutí a unijní vrstvu.",
+  "new": "V e-Sbírce prověř znění energetického zákona, občanského a spotřebitelského práva a prováděcích předpisů; cenová rozhodnutí ERÚ ověř v Energetickém regulačním věstníku a unijní vrstvu v EUR-Lex. Nejsou-li dostupné, označ mezeru.",
+  "reason": "Cenová rozhodnutí ERÚ a unijní vrstva nejsou v SLV/e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "energeticke-pravo",
+  "old": "Všechny právní a judikatorní opory získávej výhradně nativním CODEXIS.",
+  "new": "Judikaturu získávej ze SLV, znění předpisů z e-Sbírky, unijní předpisy a judikaturu SDEU z EUR-Lex a CURIA a cenová rozhodnutí ERÚ z Energetického regulačního věstníku.",
+  "reason": "Výlučnost odporuje oboru; MUSÍ stát v DECDX_EXACT, jinak ji dřív přepíše regex „výhradně nativním CODEXIS“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "energeticke-pravo",
+  "old": "vytvoř mapu licence, podpory, pozemků, připojení, dotací a převoditelnosti smluv.",
+  "new": "vytvoř mapu licence, podpory, pozemků, připojení, dotací a převoditelnosti smluv; prodávajícího a SPV prověř v Sagasu (`obchodni_rejstrik`, `sbirka_listin` → `listina_text`, `insolvence_vyhledat`, `dph_status`).",
+  "reason": "Prověrka protistrany přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "it-pravo-kyberbezpecnost",
+  "old": "Každý závěr o právu vyhledej v nativním CODEXIS pro relevantní období, včetně přechodných pravidel, přímo použitelných unijních předpisů a prováděcích aktů.",
+  "new": "Každý závěr o právu ověř pro relevantní období: české předpisy a přechodná ustanovení v e-Sbírce (`par --k`, `souvislosti`), judikaturu v SLV, přímo použitelné unijní předpisy a prováděcí akty v EUR-Lex.",
+  "reason": "Unijní akty nejsou v SLV/e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "nahrada-ujmy-odpovednost",
+  "old": "## Titul a nativní rešerše",
+  "new": "## Titul a rešerše pramenů",
+  "reason": "Nadpis „nativní“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "nahrada-ujmy-odpovednost",
+  "old": "podle nativně ověřené judikatury použije?",
+  "new": "podle judikatury ověřené v SLV použije?",
+  "reason": "„Nativně“ = CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "nahrada-ujmy-odpovednost",
+  "old": "V CODEXIS vyhledej použitelnou Metodiku NS či zvláštní předpis a skutečný právní význam, aktuálnost a podmínky odchylky.",
+  "new": "Zvláštní předpis (např. pro pracovní úraz) načti v e-Sbírce; Metodiku NS a judikaturu k jejímu použití, aktuálnosti a podmínkám odchylky dohledej v SLV (index `ns`); není-li text Metodiky dostupný, označ mezeru a hodnotu bodu nedoplňuj.",
+  "reason": "Metodika NS není v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "nahrada-ujmy-odpovednost",
+  "old": "daňové důsledky, splatnost a úroky.",
+  "new": "daňové důsledky, splatnost a úroky (úrok z prodlení spočti `urok_z_prodleni` a přepočítej).",
+  "reason": "Kalkulačka Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "nahrada-ujmy-odpovednost",
+  "old": "Přiznaný nárok slaď s plněním, exekucí a insolvencí.",
+  "new": "Přiznaný nárok slaď s plněním, exekucí a insolvencí; insolvenci škůdce ověř `insolvence_vyhledat` → `insolvence_detail`.",
+  "reason": "ISIR přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "opatrovnictvi-svepravnost",
+  "old": "Chybějící lékařské nebo rejstříkové údaje ponech jako mezeru; žádný externí průzkum nenahrazuje podklady dodané do aplikace.",
+  "new": "Chybějící lékařské údaje ponech jako mezeru; žádný externí průzkum nenahrazuje podklady dodané uživatelem. Rejstříkové údaje (např. insolvenci dotčené osoby) ověř `insolvence_vyhledat`.",
+  "reason": "„Do aplikace“; zákaz rejstříků odporuje Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "opatrovnictvi-svepravnost",
+  "old": "duševní poruše a detenci vyhledej v CODEXIS",
+  "new": "duševní poruše a detenci vyhledej v SLV (indexy `ns`, `us`, `justice`)",
+  "reason": "Judikatura není v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "rozhodci-rizeni-mediace",
+  "old": "Rozhodné řády a sazebníky získávej pouze v rámci nativního obsahu; nejsou-li tam dostupné, označ omezení. Neotvírej web rozhodčí instituce ani externí seznam mediátorů.",
+  "new": "Rozhodné řády a sazebníky v SLV ani e-Sbírce nejsou; získej je z podkladů klienta nebo z oficiálního webu instituce ve znění rozhodném ke dni doložky či zahájení řízení, jinak označ omezení. Zápis mediátora ověř v oficiálním seznamu Ministerstva spravedlnosti.",
+  "reason": "Pokyn by vedl vždy k mezeře."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "rozhodci-rizeni-mediace",
+  "old": "## Výhradní nativní rešerše",
+  "new": "## Rešerše pramenů",
+  "reason": "Nadpis z CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "rozhodci-rizeni-mediace",
+  "old": "Při neúplném nativním pokrytí cizího práva označ",
+  "new": "Není-li cizí právo v dostupných zdrojích pokryto, označ",
+  "reason": "„Nativní pokrytí“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "spotrebitelske-pravo",
+  "old": "V CODEXIS vytěž přiléhavé rozhodnutí SDEU, domácích soudů a případně ústavní ochranu slabší strany.",
+  "new": "V SLV (indexy `ns`, `us`, `justice`) vytěž přiléhavá rozhodnutí domácích soudů a případně ústavní ochranu slabší strany, rozhodnutí SDEU v CURIA.",
+  "reason": "SDEU není v SLV; judikatura není v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "spotrebitelske-pravo",
+  "old": "V CODEXIS načti rozhodné znění občanských, spotřebitelských a sektorových pravidel, jejich přechody a relevantní unijní úpravu.",
+  "new": "V e-Sbírce načti rozhodné znění občanských, spotřebitelských a sektorových pravidel a jejich přechody (`par --k`, `souvislosti`), relevantní unijní úpravu v EUR-Lex.",
+  "reason": "Znění z e-Sbírky; unijní v EUR-Lex."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "spotrebitelske-pravo",
+  "old": "U online tržiště odliš provozovatele od skutečného prodejce.",
+  "new": "U online tržiště odliš provozovatele od skutečného prodejce; prodejce ověř podle IČO nebo názvu `firma_vyhledat` a `firma_sk_vyhledat` (zaniklého `verejny_rejstrik`), adresu pro doručení `datova_schranka_vyhledat` a insolvenci `insolvence_vyhledat`.",
+  "reason": "Identita prodejce přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "spotrebitelske-pravo",
+  "old": "snížení hodnoty a příslušenství, pro petit",
+  "new": "snížení hodnoty a příslušenství (úrok z prodlení `urok_z_prodleni`, soudní poplatek `soudni_poplatek`), pro petit",
+  "reason": "Kalkulačky Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "ustavni-stiznost-lidska-prava",
+  "old": "Zjisti skutečné požadavky na formulář, podpisy, přílohy, jazyk a podání z pramenů dostupných nativně v CODEXIS. Není-li potřebná verze nebo formulář dostupný, přesně označ mezeru a nepoužívej externí náhradu ani paměťové ujištění.",
+  "new": "Zjisti skutečné požadavky na formulář, podpisy, přílohy, jazyk a podání z oficiálních pramenů ESLP (Jednací řád soudu, praktický pokyn a formulář na echr.coe.int; judikatura v HUDOC); text Úmluvy ověř v e-Sbírce (č. 209/1992 Sb.). Není-li potřebná verze nebo formulář dostupný, přesně označ mezeru a nepoužívej paměťové ujištění.",
+  "reason": "Řád a formulář ESLP nejsou v SLV/e-Sbírce. MUSÍ být v DECDX_EXACT před regexem „nativně v CODEXIS“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "ustavni-stiznost-lidska-prava",
+  "old": "Ověř procesní legitimaci, povinné zastoupení, plnou moc a případný střet zájmů.",
+  "new": "Ověř procesní legitimaci, povinné zastoupení, plnou moc a případný střet zájmů; u právnické osoby ověř statutární orgán a způsob jednání `obchodni_rejstrik` nebo `verejny_rejstrik`.",
+  "reason": "Kdo podepisuje plnou moc za PO."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "danove-pravo-hmotne",
+  "old": "Metodiky, koordinační závěry a účetní standardy dostupné v CODEXIS odliš od zákona.",
+  "new": "Metodiky GFŘ, závěry Koordinačního výboru a účetní standardy (financnisprava.cz, mfcr.cz) používej jen k navigaci a odliš je od zákona načteného v e-Sbírce.",
+  "reason": "Nejsou v SLV ani e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "danove-pravo-hmotne",
+  "old": "Zjisti konkrétní rozumná opatření klienta bez fingování kontroly dodavatele.",
+  "new": "Zjisti konkrétní rozumná opatření klienta bez fingování kontroly dodavatele; status nespolehlivého plátce a zveřejněné účty dodavatele ověř `dph_status`, jeho identitu a historii `firma_detail`, `verejny_rejstrik` a `insolvence_vyhledat`.",
+  "reason": "dph_status k ručení."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "exekuce-obrana-dluznika",
+  "old": "podmínky ochrany před prodejem obydlí a souběh s insolvencí.",
+  "new": "podmínky ochrany před prodejem obydlí a souběh s insolvencí (stav dlužníka ověř `insolvence_vyhledat` → `insolvence_detail` → `insolvence_dokument_text`).",
+  "reason": "ISIR přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "exekuce-obrana-dluznika",
+  "old": "nepřípustné příslušenství a zvláštní ochranu",
+  "new": "nepřípustné příslušenství (výši zákonného úroku z prodlení přepočítej `urok_z_prodleni` a porovnej s vymáhanou částkou) a zvláštní ochranu",
+  "reason": "Kalkulačka Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "kapitalovy-trh-investice",
+  "old": "V nativním CODEXIS vyhledej české i unijní vrstvy, prováděcí akty a přechodná pravidla;",
+  "new": "České předpisy a přechodná pravidla ověř v e-Sbírce k rozhodnému dni, unijní vrstvy a prováděcí akty v EUR-Lex;",
+  "reason": "Unijní předpisy a pokyny ESMA/ČNB nejsou v SLV/e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "kapitalovy-trh-investice",
+  "old": "promlčení a souběh s insolvencí emitenta.",
+  "new": "promlčení a souběh s insolvencí emitenta (ověř `insolvence_vyhledat` → `insolvence_detail`; finanční situaci a korporátní oprávnění emitenta `obchodni_rejstrik` a `sbirka_listin` → `listina_text`).",
+  "reason": "ISIR a sbírka listin."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "nemovitosti-transakce",
+  "old": "Chybějící výpis, insolvenční či exekuční podklad vyžádej v aplikaci. Nedoplňuj aktuální vlastníky nebo plomby z paměti a neprováděj externí návštěvy registrů.",
+  "new": "Chybějící výpis z katastru a exekuční podklad si vyžádej od uživatele; insolvenci strany ověř `insolvence_vyhledat`. Nedoplňuj aktuální vlastníky nebo plomby z paměti.",
+  "reason": "„V aplikaci“; zákaz registrů odporuje Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "nemovitosti-transakce",
+  "old": "Judikaturu v CODEXIS hledej k dobré víře,",
+  "new": "Judikaturu v SLV (`ns`, `us`, případně `justice`) hledej k dobré víře,",
+  "reason": "Judikatura není v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "nemovitosti-transakce",
+  "old": "u právnických osob způsob jednání a schválení.",
+  "new": "u právnických osob způsob jednání a schválení (statutární orgán a způsob jednání ověř `obchodni_rejstrik`, zaniklé osoby `verejny_rejstrik`, společenskou smlouvu `sbirka_listin`).",
+  "reason": "Real-time ověření PO."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pojistne-pravo",
+  "old": "## Nativní zdroje a časový režim",
+  "new": "## Prameny a časový režim",
+  "reason": "Nadpis „nativní“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pojistne-pravo",
+  "old": "Z nativního znění vyhledej",
+  "new": "Ze znění načteného v e-Sbírce k rozhodnému dni (`par --k`) vyhledej",
+  "reason": "„Nativní znění“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pojistne-pravo",
+  "old": "a sazbu získanou nativní cestou.",
+  "new": "a sazbu; výpočet proveď v Sagasu `urok_z_prodleni` a přepočítej druhou cestou.",
+  "reason": "„Nativní cesta“; kalkulačka Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pojistne-pravo",
+  "old": "Nativní judikaturu k výlukám,",
+  "new": "Judikaturu ze SLV (`ns`, `us`, `justice`) k výlukám,",
+  "reason": "„Nativní“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pojistne-pravo",
+  "old": "Nedostupný právní nebo statistický údaj nehledej externě.",
+  "new": "Právní údaj ber ze SLV, e-Sbírky a Sagasu, u unijního rámce z EUR-Lex; nedostupný údaj označ `[DOPLNIT]`.",
+  "reason": "Zákaz externího hledání z CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "skolske-pravo",
+  "old": "V CODEXIS vyhledej přiléhavé správní, civilní a ústavní rozhodnutí",
+  "new": "V SLV vyhledej přiléhavá správní (`nss`), civilní (`ns`, `justice`) a ústavní (`us`) rozhodnutí",
+  "reason": "Judikatura není v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "skolske-pravo",
+  "old": "jejich nedostupnost nepřeklenutá nativním zdrojem zůstává otevřenou otázkou.",
+  "new": "co v nich chybí, zůstává otevřenou otázkou označenou `[DOPLNIT]`.",
+  "reason": "„Nativní zdroj“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "spravni-a-danove-rizeni",
+  "old": "načti z nativního právního zdroje.",
+  "new": "načti ze znění v e-Sbírce účinného k rozhodnému dni (`par --k`).",
+  "reason": "„Nativní právní zdroj“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "spravni-a-danove-rizeni",
+  "old": "V CODEXIS zpracuj rozhodnutí přiléhavá povaze aktu,",
+  "new": "V SLV (`nss`, `us`) zpracuj rozhodnutí přiléhavá povaze aktu,",
+  "reason": "Judikatura není v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "spravni-a-danove-rizeni",
+  "old": "zejména odděleně žalobu a návrh na odkladný účinek, zastoupení a případné další úkony;",
+  "new": "zejména odděleně žalobu a návrh na odkladný účinek (`soudni_poplatek`), zastoupení (`odmena_advokata` za každý úkon) a případné další úkony;",
+  "reason": "Kalkulačky Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "vecna-prava-sousedske-spory",
+  "old": "Odděl poplatek za prozatímní ochranu, jistotu, zastoupení, znalce a případnou daň.",
+  "new": "Odděl poplatek za prozatímní ochranu, jistotu, zastoupení, znalce a případnou daň; poplatky vypočti `soudni_poplatek` a odměnu za zastoupení `odmena_advokata`, obojí přepočítej druhou cestou.",
+  "reason": "Kalkulačky Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "korporatni-pravo",
+  "old": "Vyžádej potřebný výpis, úplné zakladatelské dokumenty, seznam společníků, dohody, zápisy orgánů, smlouvy o výkonu funkce a účetní podklady. Výpis nenahrazuje obsah stanov; stará smlouva nedokládá nynější jednající osobu. Chybějící rejstříkové či insolvenční podklady označ, neprováděj externí průzkum a nepředstírej jejich obsah v právní databázi.",
+  "new": "Výpis z OR (statutární orgán, způsob jednání, společníci, kapitál) načti `obchodni_rejstrik`, zaniklé subjekty `verejny_rejstrik`; úplné znění zakladatelského právního jednání, účetní závěrky a notářské zápisy ze sbírky listin `sbirka_listin` → `listina_text`, insolvenci `insolvence_vyhledat` → `insolvence_detail`. Dohody společníků, interní zápisy orgánů a smlouvy o výkonu funkce si vyžádej od klienta. Výpis nenahrazuje obsah stanov; stará smlouva nedokládá nynější jednající osobu. Co nelze ověřit, označ a nepředstírej.",
+  "reason": "Zákaz externího průzkumu z CODEXIS; korporátní skill je hlavní uživatel Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "korporatni-pravo",
+  "old": "## Mapa nativní rešerše",
+  "new": "## Mapa rešerše",
+  "reason": "Nadpis „nativní“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "korporatni-pravo",
+  "old": "Nativní judikaturu hledej zejména k neplatnosti usnesení, dispozitivnosti, péči orgánů, převodům, zisku a rejstříkovým požadavkům; výběr senátu ověř podle skutečných rozhodnutí, nikoli podle přednastavené značky.",
+  "new": "Judikaturu v SLV (`ns`, `us`, případně `justice`; s vazbou `reg_num=90`, `reg_year=2012`, `reg_par` na rozhodný § ZOK) hledej zejména k neplatnosti usnesení, dispozitivnosti, péči orgánů, převodům, zisku a rejstříkovým požadavkům; senát ověř podle spisové značky skutečných rozhodnutí.",
+  "reason": "„Nativní“ a „přednastavená značka“ jsou CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "korporatni-pravo",
+  "old": "zákaz konkurence a podmínky výkonu funkce.",
+  "new": "zákaz konkurence a podmínky výkonu funkce. Angažmá člena orgánu v jiných korporacích ověř `verejny_rejstrik_osoba`, koncernové vazby společnosti `verejny_rejstrik_angazma_po`.",
+  "reason": "Střet zájmů přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pracovni-pravo",
+  "old": "nahraď ověřeným zněním v nativním nástroji.",
+  "new": "nahraď zněním ověřeným v e-Sbírce k rozhodnému dni (`par --k`), u prováděcích nařízení vlády včetně aktuální novely (`souvislosti`).",
+  "reason": "„Nativní nástroj“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pracovni-pravo",
+  "old": "## Nativní právní a časová kontrola",
+  "new": "## Právní a časová kontrola",
+  "reason": "Nadpis „nativní“."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "pracovni-pravo",
+  "old": "Rozpočet zahrnuje každé podání, osvobození a tarifní úkony.",
+  "new": "Rozpočet zahrnuje každé podání, osvobození a tarifní úkony: poplatek spočti `soudni_poplatek`, tarifní odměnu po úkonech `odmena_advokata`, úrok z prodlení z dlužné mzdy či náhrady mzdy `urok_z_prodleni`; insolvenci zaměstnavatele ověř `insolvence_vyhledat`.",
+  "reason": "Kalkulačky a ISIR přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "smluvni-pravo",
+  "old": "Judikaturu k výkladu, dispozitivnosti, sankcím a odpovědnosti vytěž pouze v CODEXIS.",
+  "new": "Judikaturu k výkladu, dispozitivnosti, sankcím a odpovědnosti vytěž v SLV (`ns`, `us`, případně `justice`; s vazbou na rozhodný § OZ přes `reg_num`/`reg_year`/`reg_par`).",
+  "reason": "Judikatura není v e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "smluvni-pravo",
+  "old": "Vzor z databáze je konstrukční pomůcka,",
+  "new": "Vzor smlouvy (z podkladů klienta či jiného zdroje) je konstrukční pomůcka,",
+  "reason": "„Vzor z databáze“ = VS v CODEXIS."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "smluvni-pravo",
+  "old": "V CODEXIS zjisti, zda jde o podnikatele, spotřebitele, slabší stranu, adhezní kontrakt, veřejný subjekt či smíšený účel.",
+  "new": "Postavení stran ověř v Sagasu (`firma_vyhledat` → `firma_detail`, `obchodni_rejstrik`, `zivnostensky_rejstrik`), kritéria v e-Sbírce a judikaturu k nim v SLV; pak urči, zda jde o podnikatele, spotřebitele, slabší stranu, adhezní kontrakt, veřejný subjekt či smíšený účel.",
+  "reason": "Postavení strany je rejstříková otázka."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "smluvni-pravo",
+  "old": "Identitu stran, způsob zastoupení, prokuru, plnou moc, korporátní souhlasy a případný střet zájmů posuzuj k rozhodnému jednání. Neověřené identifikační údaje označ, nedoplňuj je ze starého vzoru.",
+  "new": "Identitu stran, způsob zastoupení a prokuru ověř k rozhodnému jednání v Sagasu `obchodni_rejstrik` (vymazané osoby vynech; zaniklé subjekty `verejny_rejstrik`), korporátní souhlasy podle stanov ze `sbirka_listin` → `listina_text`; plnou moc a střet zájmů posuzuj z listin. Neověřené identifikační údaje označ `[DOPLNIT z OR]`, nedoplňuj je ze starého vzoru.",
+  "reason": "Real-time ověření PO."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "smluvni-pravo",
+  "old": "Ověř zákonné a smluvní úroky, pokutu,",
+  "new": "Ověř zákonné a smluvní úroky (zákonný úrok spočti `urok_z_prodleni`), pokutu,",
+  "reason": "Kalkulačka Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "dedicke-pravo",
+  "old": "V nativním CODEXIS ověř rozhodné právo a pravomoc podle použitelného unijního rámce, mezinárodní smlouvy a vnitrostátního kolizního práva.",
+  "new": "Rozhodné právo a pravomoc ověř podle nařízení (EU) č. 650/2012 (EUR-Lex, judikatura SDEU v CURIA), mezinárodní smlouvy (e-Sbírka, Sb. m. s.) a vnitrostátního kolizního práva (ZMPS v e-Sbírce); českou judikaturu k nim hledej v SLV.",
+  "reason": "Nařízení 650/2012 není v SLV/e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "dedicke-pravo",
+  "old": "Veškerou právní oporu a relevantní judikaturu čerpej pouze z CODEXIS.",
+  "new": "Právní oporu čerpej z e-Sbírky (znění předpisů) a ze SLV (judikatura), unijní předpisy a judikaturu SDEU z EUR-Lex a CURIA.",
+  "reason": "„Pouze“ vylučuje EUR-Lex/CURIA."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "dedicke-pravo",
+  "old": "Zjisti dluhy zůstavitele, náklady pohřbu, zajištění, solidaritu a případné svolání věřitelů.",
+  "new": "Zjisti dluhy zůstavitele, náklady pohřbu, zajištění, solidaritu a případné svolání věřitelů; insolvenční řízení zůstavitele a přihlášené pohledávky ověř `insolvence_vyhledat` → `insolvence_detail` → `insolvence_dokument_text`.",
+  "reason": "ISIR přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "dedicke-pravo",
+  "old": "načti zakladatelské dokumenty z podkladů a ověř",
+  "new": "načti zakladatelské dokumenty z podkladů nebo ze sbírky listin (`sbirka_listin` → `listina_text`), zápis podílu `obchodni_rejstrik`, a ověř",
+  "reason": "Sbírka listin."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "obcanske-procesni-pravo",
+  "old": "Pak spočti každý úkon podle jeho data, tarifní hodnoty, sazby, rozsahu, paušálu, cestovného, času a podmínek DPH. Pro každý samostatný návrh ověř poplatek, osvobození, splatnost, následky neplacení a vrácení;",
+  "new": "Pak spočti každý úkon podle jeho data, tarifní hodnoty a sazby v Sagasu `odmena_advokata` a doplň rozsah, paušál, cestovné, čas a podmínky DPH. Pro každý samostatný návrh spočti poplatek `soudni_poplatek` a ověř osvobození, splatnost, následky neplacení a vrácení; zákonný úrok z prodlení v příslušenství spočti `urok_z_prodleni`;",
+  "reason": "Kalkulačky Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "obcanske-procesni-pravo",
+  "old": "Nejprve zjisti klienta, účastníky, zastoupení, soud, typ a fázi řízení, požadovanou ochranu a všechny napadené výroky.",
+  "new": "Nejprve zjisti klienta, účastníky, zastoupení, soud, typ a fázi řízení, požadovanou ochranu a všechny napadené výroky. Účastníka-PO ověř `obchodni_rejstrik` (zaniklého `verejny_rejstrik`), probíhající insolvenci účastníka `insolvence_vyhledat` a ID datové schránky soudu či účastníka `datova_schranka_vyhledat`.",
+  "reason": "Identita a insolvence účastníka."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "verejne-zakazky-dotace",
+  "old": "V CODEXIS prověř rozhodné právní režimy a vzájemný vztah zákona, unijní úpravy, programu a konkrétních podmínek.",
+  "new": "Zákon a prováděcí předpisy ověř v e-Sbírce, unijní úpravu v EUR-Lex, soudní přezkum (KS Brno, NSS) v SLV (`nss`); program a konkrétní podmínky ber z dokumentů poskytovatele. Pak prověř jejich vzájemný vztah.",
+  "reason": "Unijní směrnice a programy nejsou v SLV/e-Sbírce."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "verejne-zakazky-dotace",
+  "old": "Zkoumej rovné zacházení, přiměřenost, transparentnost, střety zájmů a účast osob zapojených do přípravy.",
+  "new": "Zkoumej rovné zacházení, přiměřenost, transparentnost, střety zájmů a účast osob zapojených do přípravy; propojení ověř `verejny_rejstrik_osoba` a `verejny_rejstrik_angazma_po`, údaje dodavatele `obchodni_rejstrik`, insolvenci `insolvence_vyhledat` a nespolehlivého plátce `dph_status`.",
+  "reason": "Propojení přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "verejne-zakazky-dotace",
+  "old": "skutečné doručení a přesný adresát.",
+  "new": "skutečné doručení a přesného adresáta (ID datové schránky zadavatele a ÚOHS ověř `datova_schranka_vyhledat`).",
+  "reason": "ID DS přes Sagasu; oprava pádu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "startupy-investice-esop",
+  "old": "podnikové vazby a status malého podniku,",
+  "new": "podnikové vazby (`verejny_rejstrik_angazma_po`, společníci v `obchodni_rejstrik`) a status malého podniku (účetní závěrky `sbirka_listin` → `listina_text`),",
+  "reason": "Podnikové vazby přes Sagasu."
+ },
+ {
+  "target": "DECDX_EXACT",
+  "skills": "startupy-investice-esop",
+  "old": "fond a vyjednané podmínky.",
+  "new": "fond a vyjednané podmínky. Zapsané podíly a společníky ověř `obchodni_rejstrik`, poslední úplné znění společenské smlouvy `sbirka_listin` → `listina_text`; rozdíl oproti podkladům klienta označ.",
+  "reason": "Cap table přes Sagasu."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "- Fakta a důkazy: označené podklady z aplikace a konkrétní pasáže;",
+  "new": "- Fakta a důkazy: označené podklady předložené uživatelem a konkrétní pasáže;",
+  "reason": "Zbytek vm.codexis.ai nalezený při simulaci buildu (mimo nálezy recenzentů)."
+ },
+ {
+  "target": "ORCH_EXACT",
+  "skills": "legal-general-cee",
+  "old": "Tyto instrukce nejsou tvrzením o existenci programové certifikace v aplikaci.",
+  "new": "Tyto instrukce nejsou tvrzením o existenci programové certifikace.",
+  "reason": "Zbytek vm.codexis.ai nalezený při simulaci buildu (mimo nálezy recenzentů)."
+ }
+]
